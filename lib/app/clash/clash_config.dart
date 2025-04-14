@@ -1,0 +1,1060 @@
+// ignore_for_file: non_constant_identifier_names
+// https://github.com/MetaCubeX/mihomo/blob/Alpha/docs/config.yaml
+import 'package:json_annotation/json_annotation.dart';
+part 'clash_config.g.dart';
+
+class MapHelper {
+  static Map<String, dynamic> removeNullOrEmpty(Map<String, dynamic> object) {
+    Set<String> toRemove = {};
+    object.forEach((key, value) {
+      if (value == null) {
+        toRemove.add(key);
+      }
+      if (value is Map) {
+        if (value["enable"] == false) {
+          toRemove.add(key);
+        }
+        if (value.isEmpty) {
+          toRemove.add(key);
+        }
+      }
+    });
+    for (var item in toRemove) {
+      object.remove(item);
+    }
+    return object;
+  }
+}
+
+enum ClashConfigsMode {
+  rule(name: "rule"),
+  global(name: "global"),
+  direct(name: "direct");
+
+  const ClashConfigsMode({required this.name});
+  final String name;
+}
+
+enum ClashProtocolType {
+  urltest(name: "URLTest"),
+  selector(name: "Selector"),
+  fallback(name: "Fallback"),
+  direct(name: "Direct"),
+  pass(name: "Pass"),
+  reject(name: "RejectDrop");
+
+  const ClashProtocolType({required this.name});
+  final String name;
+
+  static List<String> toList() {
+    return [
+      ClashProtocolType.urltest.name,
+      ClashProtocolType.selector.name,
+      ClashProtocolType.fallback.name,
+      ClashProtocolType.direct.name,
+      ClashProtocolType.pass.name,
+      ClashProtocolType.reject.name,
+    ];
+  }
+}
+
+enum ClashDnsEnhancedMode {
+  fakeIp(name: "fake-ip"),
+  redirHost(name: "redir-host"),
+  normal(name: "");
+  //hosts(name: "");
+
+  const ClashDnsEnhancedMode({required this.name});
+  final String name;
+
+  static List<String> toList() {
+    return [
+      ClashDnsEnhancedMode.fakeIp.name,
+      ClashDnsEnhancedMode.redirHost.name,
+      ClashDnsEnhancedMode.normal.name,
+    ];
+  }
+}
+
+enum ClashFakeIPFilterMode {
+  blacklist(name: "blacklist"),
+  whitelist(name: "whitelist");
+
+  const ClashFakeIPFilterMode({required this.name});
+  final String name;
+
+  static List<String> toList() {
+    return [
+      ClashFakeIPFilterMode.blacklist.name,
+      ClashFakeIPFilterMode.whitelist.name,
+    ];
+  }
+}
+
+enum ClashLogLevel {
+  debug(name: "debug"),
+  info(name: "info"),
+  warning(name: "warning"),
+  error(name: "error"),
+  silent(name: "silent");
+
+  const ClashLogLevel({required this.name});
+  final String name;
+
+  static List<String> toList() {
+    return [
+      ClashLogLevel.debug.name,
+      ClashLogLevel.info.name,
+      ClashLogLevel.warning.name,
+      ClashLogLevel.error.name,
+      ClashLogLevel.silent.name,
+    ];
+  }
+}
+
+enum ClashGlobalClientFingerprint {
+  none(name: "none"),
+  random(name: "random"),
+  chrome(name: "chrome"),
+  firefox(name: "firefox"),
+  safari(name: "safari"),
+  ios(name: "ios");
+
+  const ClashGlobalClientFingerprint({required this.name});
+  final String name;
+
+  static List<String> toList() {
+    return [
+      ClashGlobalClientFingerprint.none.name,
+      ClashGlobalClientFingerprint.random.name,
+      ClashGlobalClientFingerprint.chrome.name,
+      ClashGlobalClientFingerprint.firefox.name,
+      ClashGlobalClientFingerprint.safari.name,
+      ClashGlobalClientFingerprint.ios.name,
+    ];
+  }
+}
+
+enum ClashTunStack {
+  mixed(name: "mixed"),
+  gvisor(name: "gvisor"),
+  system(name: "system");
+
+  const ClashTunStack({required this.name});
+  final String name;
+  static List<String> toList() {
+    return [
+      ClashTunStack.mixed.name,
+      ClashTunStack.gvisor.name,
+      ClashTunStack.system.name,
+    ];
+  }
+}
+
+enum ClashFindProcessMode {
+  always(name: "always"),
+  strict(name: "strict"),
+  off(name: "off");
+
+  const ClashFindProcessMode({required this.name});
+  final String name;
+  static List<String> toList() {
+    return [
+      ClashFindProcessMode.always.name,
+      ClashFindProcessMode.strict.name,
+      ClashFindProcessMode.off.name,
+    ];
+  }
+}
+
+///Extension
+@JsonSerializable(explicitToJson: true)
+class RawExtensionTun {
+  @JsonKey(name: 'http_proxy_enable')
+  bool? HttpProxyEnable;
+  @JsonKey(name: 'http_proxy_server')
+  String? HttpProxyServer;
+  @JsonKey(name: 'http_proxy_server_port')
+  int? HttpProxyServerPort;
+  @JsonKey(name: 'http_proxy_bypass_domain')
+  List<String>? HttpProxyBypassDomain;
+  @JsonKey(name: 'http_proxy_match_domain')
+  List<String>? HttpProxyMatchDomain;
+  @JsonKey(name: 'allow_bypass')
+  bool? AllowBypass;
+
+  RawExtensionTun.by(
+      {this.HttpProxyEnable,
+      this.HttpProxyServer,
+      this.HttpProxyServerPort,
+      this.HttpProxyBypassDomain,
+      this.HttpProxyMatchDomain,
+      this.AllowBypass});
+  RawExtensionTun(
+      this.HttpProxyEnable,
+      this.HttpProxyServer,
+      this.HttpProxyServerPort,
+      this.HttpProxyBypassDomain,
+      this.HttpProxyMatchDomain,
+      this.AllowBypass);
+  factory RawExtensionTun.fromJson(Map<String, dynamic> json) =>
+      _$RawExtensionTunFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawExtensionTunToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawExtension {
+  @JsonKey(name: 'tun')
+  RawExtensionTun Tun;
+  @JsonKey(name: 'pprof-addr')
+  String? PprofAddr;
+  @JsonKey(name: 'delay-test-url')
+  String? DelayTestUrl;
+  @JsonKey(name: 'delay-test-timeout')
+  int? DelayTestTimeout;
+
+  RawExtension.by(
+      {required this.Tun,
+      this.PprofAddr,
+      this.DelayTestUrl,
+      this.DelayTestTimeout});
+  RawExtension(
+      this.Tun, this.PprofAddr, this.DelayTestUrl, this.DelayTestTimeout);
+  factory RawExtension.fromJson(Map<String, dynamic> json) =>
+      _$RawExtensionFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawExtensionToJson(this));
+}
+
+///
+
+@JsonSerializable(explicitToJson: true)
+class RawTunnel {
+  @JsonKey(name: 'network')
+  List<String>? Network;
+  @JsonKey(name: 'address')
+  String? Address;
+  @JsonKey(name: 'target')
+  String? Target;
+  @JsonKey(name: 'proxy')
+  String? Proxy;
+
+  RawTunnel.by({this.Network, this.Address, this.Target, this.Proxy});
+  RawTunnel(this.Network, this.Address, this.Target, this.Proxy);
+  factory RawTunnel.fromJson(Map<String, dynamic> json) =>
+      _$RawTunnelFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawTunnelToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawCors {
+  @JsonKey(name: 'allow-origins')
+  List<String>? AllowOrigins;
+  @JsonKey(name: 'allow-private-network')
+  bool? AllowPrivateNetwork;
+
+  RawCors.by({this.AllowOrigins, this.AllowPrivateNetwork});
+  RawCors(this.AllowOrigins, this.AllowPrivateNetwork);
+  factory RawCors.fromJson(Map<String, dynamic> json) =>
+      _$RawCorsFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawCorsToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawDNS {
+  @JsonKey(name: 'enable')
+  bool? Enable;
+  @JsonKey(name: 'prefer-h3')
+  bool? PreferH3;
+  @JsonKey(name: 'ipv6')
+  bool? IPv6;
+  @JsonKey(name: 'ipv6-timeout')
+  int? IPv6Timeout;
+  @JsonKey(name: 'use-hosts')
+  bool? UseHosts;
+  @JsonKey(name: 'use-system-hosts')
+  bool? UseSystemHosts;
+  @JsonKey(name: 'respect-rules')
+  bool? RespectRules;
+  @JsonKey(name: 'nameserver')
+  List<String>? NameServer;
+  @JsonKey(name: 'fallback')
+  List<String>? Fallback;
+  @JsonKey(name: 'fallback-filter')
+  RawFallbackFilter? FallbackFilter;
+  @JsonKey(name: 'listen')
+  String? Listen;
+  @JsonKey(name: 'enhanced-mode')
+  String? EnhancedMode;
+  @JsonKey(name: 'fake-ip-range')
+  String? FakeIPRange;
+  @JsonKey(name: 'fake-ip-filter')
+  List<String>? FakeIPFilter;
+  @JsonKey(name: 'fake-ip-filter-mode')
+  String? FakeIPFilterMode;
+  @JsonKey(name: 'default-nameserver')
+  List<String>? DefaultNameserver;
+  @JsonKey(name: 'cache-algorithm')
+  String? CacheAlgorithm;
+  @JsonKey(name: 'nameserver-policy')
+  Map<String, dynamic>? NameServerPolicy;
+  @JsonKey(name: 'proxy-server-nameserver')
+  List<String>? ProxyServerNameserver;
+  @JsonKey(name: 'direct-nameserver')
+  List<String>? DirectNameServer;
+  @JsonKey(name: 'direct-nameserver-follow-policy')
+  bool? DirectNameServerFollowPolicy;
+
+  RawDNS.by(
+      {this.Enable,
+      this.PreferH3,
+      this.IPv6,
+      this.IPv6Timeout,
+      this.UseHosts,
+      this.UseSystemHosts,
+      this.RespectRules,
+      this.NameServer,
+      this.Fallback,
+      this.FallbackFilter,
+      this.Listen,
+      this.EnhancedMode,
+      this.FakeIPRange,
+      this.FakeIPFilter,
+      this.FakeIPFilterMode,
+      this.DefaultNameserver,
+      this.CacheAlgorithm,
+      this.NameServerPolicy,
+      this.ProxyServerNameserver,
+      this.DirectNameServer,
+      this.DirectNameServerFollowPolicy});
+  RawDNS(
+      this.Enable,
+      this.PreferH3,
+      this.IPv6,
+      this.IPv6Timeout,
+      this.UseHosts,
+      this.UseSystemHosts,
+      this.RespectRules,
+      this.NameServer,
+      this.Fallback,
+      this.FallbackFilter,
+      this.Listen,
+      this.EnhancedMode,
+      this.FakeIPRange,
+      this.FakeIPFilter,
+      this.FakeIPFilterMode,
+      this.DefaultNameserver,
+      this.CacheAlgorithm,
+      this.NameServerPolicy,
+      this.ProxyServerNameserver,
+      this.DirectNameServer,
+      this.DirectNameServerFollowPolicy);
+  factory RawDNS.fromJson(Map<String, dynamic> json) => _$RawDNSFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawDNSToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawFallbackFilter {
+  @JsonKey(name: 'geoip')
+  bool? GeoIP;
+  @JsonKey(name: 'geoip-code')
+  String? GeoIPCode;
+  @JsonKey(name: 'ipcidr')
+  List<String>? IPCIDR;
+  @JsonKey(name: 'domain')
+  List<String>? Domain;
+  @JsonKey(name: 'domageositein')
+  List<String>? GeoSite;
+
+  RawFallbackFilter.by(
+      {this.GeoIP, this.GeoIPCode, this.IPCIDR, this.Domain, this.GeoSite});
+  RawFallbackFilter(
+      this.GeoIP, this.GeoIPCode, this.IPCIDR, this.Domain, this.GeoSite);
+  factory RawFallbackFilter.fromJson(Map<String, dynamic> json) =>
+      _$RawFallbackFilterFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawFallbackFilterToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawClashForAndroid {
+  @JsonKey(name: 'append-system-dns')
+  bool? AppendSystemDNS;
+  @JsonKey(name: 'ui-subtitle-pattern')
+  String? UiSubtitlePattern;
+
+  RawClashForAndroid.by({this.AppendSystemDNS, this.UiSubtitlePattern});
+  RawClashForAndroid(this.AppendSystemDNS, this.UiSubtitlePattern);
+  factory RawClashForAndroid.fromJson(Map<String, dynamic> json) =>
+      _$RawClashForAndroidFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawClashForAndroidToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawNTP {
+  @JsonKey(name: 'enable')
+  bool? Enable;
+  @JsonKey(name: 'server')
+  String? Server;
+  @JsonKey(name: 'port')
+  int? Port;
+  @JsonKey(name: 'interval')
+  int? Interval;
+  @JsonKey(name: 'dialer-proxy')
+  String? DialerProxy;
+  @JsonKey(name: 'write-to-system')
+  bool? WriteToSystem;
+
+  RawNTP.by(
+      {this.Enable,
+      this.Server,
+      this.Port,
+      this.Interval,
+      this.DialerProxy,
+      this.WriteToSystem});
+  RawNTP(this.Enable, this.Server, this.Port, this.Interval, this.DialerProxy,
+      this.WriteToSystem);
+  factory RawNTP.fromJson(Map<String, dynamic> json) => _$RawNTPFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawNTPToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawTun {
+  @JsonKey(name: 'enable')
+  bool? Enable;
+  @JsonKey(name: 'device')
+  String? Device;
+  @JsonKey(name: 'stack')
+  String? Stack;
+  @JsonKey(name: 'dns-hijack')
+  List<String>? DNSHijack;
+  @JsonKey(name: 'auto-route')
+  bool? AutoRoute;
+  @JsonKey(name: 'auto-detect-interface')
+  bool? AutoDetectInterface; //true
+  @JsonKey(name: 'mtu')
+  int? MTU;
+  @JsonKey(name: 'gso')
+  bool? GSO;
+  @JsonKey(name: 'gso-max-size')
+  int? GSOMaxSize;
+  @JsonKey(name: 'inet4-address')
+  List<String>? Inet4Address;
+  @JsonKey(name: 'inet6-address')
+  List<String>? Inet6Address;
+  @JsonKey(name: 'iproute2-table-index')
+  int? IPRoute2TableIndex;
+  @JsonKey(name: 'iproute2-rule-index')
+  int? IPRoute2RuleIndex;
+  @JsonKey(name: 'auto-redirect')
+  bool? AutoRedirect;
+  @JsonKey(name: 'auto-redirect-input-mark')
+  int? AutoRedirectInputMark;
+  @JsonKey(name: 'auto-redirect-output-mark')
+  int? AutoRedirectOutputMark;
+  @JsonKey(name: 'strict-route')
+  bool? StrictRoute;
+  @JsonKey(name: 'route-address')
+  List<String>? RouteAddress;
+  @JsonKey(name: 'route-address-set')
+  List<String>? RouteAddressSet;
+  @JsonKey(name: 'route-exclude-address')
+  List<String>? RouteExcludeAddress;
+  @JsonKey(name: 'route-exclude-address-set')
+  List<String>? RouteExcludeAddressSet;
+  @JsonKey(name: 'include-interface')
+  List<String>? IncludeInterface;
+  @JsonKey(name: 'exclude-interface')
+  List<String>? ExcludeInterface;
+  @JsonKey(name: 'include-uid')
+  List<int>? IncludeUID;
+  @JsonKey(name: 'include-uid-range')
+  List<String>? IncludeUIDRange;
+  @JsonKey(name: 'exclude-uid')
+  List<int>? ExcludeUID;
+  @JsonKey(name: 'exclude-uid-range')
+  List<String>? ExcludeUIDRange;
+  @JsonKey(name: 'include-android-user')
+  List<int>? IncludeAndroidUser;
+  @JsonKey(name: 'include-package')
+  List<String>? IncludePackage;
+  @JsonKey(name: 'exclude-package')
+  List<String>? ExcludePackage;
+  @JsonKey(name: 'endpoint-independent-nat')
+  bool? EndpointIndependentNat;
+  @JsonKey(name: 'udp-timeout')
+  int? UDPTimeout;
+  @JsonKey(name: 'file-descriptor')
+  int? FileDescriptor;
+  @JsonKey(name: 'inet4-route-address')
+  List<String>? Inet4RouteAddress;
+  @JsonKey(name: 'inet6-route-address')
+  List<String>? Inet6RouteAddress;
+  @JsonKey(name: 'inet4-route-exclude-address')
+  List<String>? Inet4RouteExcludeAddress;
+  @JsonKey(name: 'inet6-route-exclude-address')
+  List<String>? Inet6RouteExcludeAddress;
+  RawTun.by(
+      {this.Enable,
+      this.Device,
+      this.Stack,
+      this.DNSHijack,
+      this.AutoRoute,
+      this.AutoDetectInterface,
+      this.MTU,
+      this.GSO,
+      this.GSOMaxSize,
+      this.Inet4Address,
+      this.Inet6Address,
+      this.IPRoute2TableIndex,
+      this.IPRoute2RuleIndex,
+      this.AutoRedirect,
+      this.AutoRedirectInputMark,
+      this.AutoRedirectOutputMark,
+      this.StrictRoute,
+      this.RouteAddress,
+      this.RouteAddressSet,
+      this.RouteExcludeAddress,
+      this.RouteExcludeAddressSet,
+      this.IncludeInterface,
+      this.ExcludeInterface,
+      this.IncludeUID,
+      this.IncludeUIDRange,
+      this.ExcludeUID,
+      this.ExcludeUIDRange,
+      this.IncludeAndroidUser,
+      this.IncludePackage,
+      this.ExcludePackage,
+      this.EndpointIndependentNat,
+      this.UDPTimeout,
+      this.FileDescriptor,
+      this.Inet4RouteAddress,
+      this.Inet6RouteAddress,
+      this.Inet4RouteExcludeAddress,
+      this.Inet6RouteExcludeAddress});
+  RawTun(
+      this.Enable,
+      this.Device,
+      this.Stack,
+      this.DNSHijack,
+      this.AutoRoute,
+      this.AutoDetectInterface,
+      this.MTU,
+      this.GSO,
+      this.GSOMaxSize,
+      this.Inet4Address,
+      this.Inet6Address,
+      this.IPRoute2TableIndex,
+      this.IPRoute2RuleIndex,
+      this.AutoRedirect,
+      this.AutoRedirectInputMark,
+      this.AutoRedirectOutputMark,
+      this.StrictRoute,
+      this.RouteAddress,
+      this.RouteAddressSet,
+      this.RouteExcludeAddress,
+      this.RouteExcludeAddressSet,
+      this.IncludeInterface,
+      this.ExcludeInterface,
+      this.IncludeUID,
+      this.IncludeUIDRange,
+      this.ExcludeUID,
+      this.ExcludeUIDRange,
+      this.IncludeAndroidUser,
+      this.IncludePackage,
+      this.ExcludePackage,
+      this.EndpointIndependentNat,
+      this.UDPTimeout,
+      this.FileDescriptor,
+      this.Inet4RouteAddress,
+      this.Inet6RouteAddress,
+      this.Inet4RouteExcludeAddress,
+      this.Inet6RouteExcludeAddress);
+  factory RawTun.fromJson(Map<String, dynamic> json) => _$RawTunFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawTunToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawTuicServer {
+  @JsonKey(name: 'enable')
+  bool? Enable;
+  @JsonKey(name: 'listen')
+  String? Listen;
+  @JsonKey(name: 'token')
+  List<String>? Token;
+  @JsonKey(name: 'users')
+  Map<String, String>? Users;
+  @JsonKey(name: 'certificate')
+  String? Certificate;
+  @JsonKey(name: 'private-key')
+  String? PrivateKey;
+  @JsonKey(name: 'congestion-controller')
+  String? CongestionController;
+  @JsonKey(name: 'max-idle-time')
+  int? MaxIdleTime;
+  @JsonKey(name: 'authentication-timeout')
+  int? AuthenticationTimeout;
+  @JsonKey(name: 'alpn')
+  List<String>? ALPN;
+  @JsonKey(name: 'max-udp-relay-packet-size')
+  int? MaxUdpRelayPacketSize;
+  @JsonKey(name: 'cwnd')
+  int? CWND;
+
+  RawTuicServer.by(
+      {this.Enable,
+      this.Listen,
+      this.Token,
+      this.Users,
+      this.Certificate,
+      this.PrivateKey,
+      this.CongestionController,
+      this.MaxIdleTime,
+      this.AuthenticationTimeout,
+      this.ALPN,
+      this.MaxUdpRelayPacketSize,
+      this.CWND});
+  RawTuicServer(
+      this.Enable,
+      this.Listen,
+      this.Token,
+      this.Users,
+      this.Certificate,
+      this.PrivateKey,
+      this.CongestionController,
+      this.MaxIdleTime,
+      this.AuthenticationTimeout,
+      this.ALPN,
+      this.MaxUdpRelayPacketSize,
+      this.CWND);
+  factory RawTuicServer.fromJson(Map<String, dynamic> json) =>
+      _$RawTuicServerFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawTuicServerToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawIPTables {
+  @JsonKey(name: 'enable')
+  bool? Enable;
+  @JsonKey(name: 'inbound-interface')
+  String? InboundInterface;
+  @JsonKey(name: 'bypass')
+  List<String>? Bypass;
+  @JsonKey(name: 'dns-redirect')
+  bool? DnsRedirect;
+
+  RawIPTables.by(
+      {this.Enable, this.InboundInterface, this.Bypass, this.DnsRedirect});
+  RawIPTables(
+      this.Enable, this.InboundInterface, this.Bypass, this.DnsRedirect);
+  factory RawIPTables.fromJson(Map<String, dynamic> json) =>
+      _$RawIPTablesFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawIPTablesToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawExperimental {
+  @JsonKey(name: 'fingerprints')
+  List<String>? Fingerprints;
+  @JsonKey(name: 'quic-go-disable-gso')
+  bool? QUICGoDisableGSO;
+  @JsonKey(name: 'quic-go-disable-ecn')
+  bool? QUICGoDisableECN;
+  @JsonKey(name: 'dialer-ip4p-convert')
+  bool? IP4PEnable;
+
+  RawExperimental.by(
+      {this.Fingerprints,
+      this.QUICGoDisableGSO,
+      this.QUICGoDisableECN,
+      this.IP4PEnable});
+  RawExperimental(this.Fingerprints, this.QUICGoDisableGSO,
+      this.QUICGoDisableECN, this.IP4PEnable);
+  factory RawExperimental.fromJson(Map<String, dynamic> json) =>
+      _$RawExperimentalFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawExperimentalToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawProfile {
+  @JsonKey(name: 'store-selected')
+  bool? StoreSelected;
+  @JsonKey(name: 'store-fake-ip')
+  bool? StoreFakeIP;
+
+  RawProfile.by({this.StoreSelected, this.StoreFakeIP});
+  RawProfile(this.StoreSelected, this.StoreFakeIP);
+  factory RawProfile.fromJson(Map<String, dynamic> json) =>
+      _$RawProfileFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawProfileToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawGeoXUrl {
+  @JsonKey(name: 'geoip')
+  String? GeoIp;
+  @JsonKey(name: 'mmdb')
+  String? Mmdb;
+  @JsonKey(name: 'asn')
+  String? ASN;
+  @JsonKey(name: 'geosite')
+  String? GeoSite;
+
+  RawGeoXUrl.by({this.GeoIp, this.Mmdb, this.ASN, this.GeoSite});
+  RawGeoXUrl(this.GeoIp, this.Mmdb, this.ASN, this.GeoSite);
+  factory RawGeoXUrl.fromJson(Map<String, dynamic> json) =>
+      _$RawGeoXUrlFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawGeoXUrlToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawSniffer {
+  @JsonKey(name: 'enable')
+  bool? Enable;
+  @JsonKey(name: 'override-destination')
+  bool? OverrideDest;
+  @JsonKey(name: 'sniffing')
+  List<String>? Sniffing;
+  @JsonKey(name: 'force-domain')
+  List<String>? ForceDomain;
+  @JsonKey(name: 'skip-src-address')
+  List<String>? SkipSrcAddress;
+  @JsonKey(name: 'skip-dst-address')
+  List<String>? SkipDstAddress;
+  @JsonKey(name: 'skip-domain')
+  List<String>? SkipDomain;
+  @JsonKey(name: 'port-whitelist')
+  List<String>? Ports;
+  @JsonKey(name: 'force-dns-mapping')
+  bool? ForceDnsMapping;
+  @JsonKey(name: 'parse-pure-ip')
+  bool? ParsePureIp;
+  @JsonKey(name: 'sniff')
+  Map<String, RawSniffingConfig>? Sniff;
+
+  RawSniffer.by(
+      {this.Enable,
+      this.OverrideDest,
+      this.Sniffing,
+      this.ForceDomain,
+      this.SkipSrcAddress,
+      this.SkipDstAddress,
+      this.SkipDomain,
+      this.Ports,
+      this.ForceDnsMapping,
+      this.ParsePureIp,
+      this.Sniff});
+  RawSniffer(
+      this.Enable,
+      this.OverrideDest,
+      this.Sniffing,
+      this.ForceDomain,
+      this.SkipSrcAddress,
+      this.SkipDstAddress,
+      this.SkipDomain,
+      this.Ports,
+      this.ForceDnsMapping,
+      this.ParsePureIp,
+      this.Sniff);
+  factory RawSniffer.fromJson(Map<String, dynamic> json) =>
+      _$RawSnifferFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawSnifferToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawSniffingConfig {
+  @JsonKey(name: 'ports')
+  List<String>? Ports;
+  @JsonKey(name: 'override-destination')
+  bool? OverrideDest;
+
+  RawSniffingConfig.by({this.Ports, this.OverrideDest});
+  RawSniffingConfig(this.Ports, this.OverrideDest);
+  factory RawSniffingConfig.fromJson(Map<String, dynamic> json) =>
+      _$RawSniffingConfigFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawSniffingConfigToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawTLS {
+  @JsonKey(name: 'certificate')
+  String? Certificate;
+  @JsonKey(name: 'private-key')
+  String? PrivateKey;
+  @JsonKey(name: 'custom-certifactes')
+  List<String>? CustomTrustCert;
+
+  RawTLS.by({this.Certificate, this.PrivateKey, this.CustomTrustCert});
+  RawTLS(this.Certificate, this.PrivateKey, this.CustomTrustCert);
+  factory RawTLS.fromJson(Map<String, dynamic> json) => _$RawTLSFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawTLSToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawConfig {
+  @JsonKey(name: 'port')
+  int? Port;
+  @JsonKey(name: 'socks-port')
+  int? SocksPort;
+  @JsonKey(name: 'redir-port')
+  int? RedirPort;
+  @JsonKey(name: 'tproxy-port')
+  int? TProxyPort;
+  @JsonKey(name: 'mixed-port')
+  int? MixedPort;
+  @JsonKey(name: 'ss-config')
+  String? ShadowSocksConfig;
+  @JsonKey(name: 'vmess-config')
+  String? VmessConfig;
+  @JsonKey(name: 'inbound-tfo')
+  bool? InboundTfo;
+  @JsonKey(name: 'inbound-mptcp')
+  bool? InboundMPTCP;
+  @JsonKey(name: 'authentication')
+  List<String>? Authentication;
+  @JsonKey(name: 'skip-auth-prefixes')
+  List<String>? SkipAuthPrefixes;
+  @JsonKey(name: 'lan-allowed-ips')
+  List<String>? LanAllowedIPs;
+  @JsonKey(name: 'lan-disallowed-ips')
+  List<String>? LanDisAllowedIPs;
+  @JsonKey(name: 'allow-lan')
+  bool? AllowLan;
+  @JsonKey(name: 'bind-address')
+  String? BindAddress;
+  @JsonKey(name: 'mode')
+  String? Mode; //ClashConfigsMode
+  @JsonKey(name: 'unified-delay')
+  bool? UnifiedDelay;
+  @JsonKey(name: 'log-level')
+  String? LogLevel;
+  @JsonKey(name: 'ipv6')
+  bool? IPv6;
+  @JsonKey(name: 'external-controller')
+  String? ExternalController;
+  @JsonKey(name: 'external-controller-pipe')
+  String? ExternalControllerPipe;
+  @JsonKey(name: 'external-controller-unix')
+  String? ExternalControllerUnix;
+  @JsonKey(name: 'external-controller-tls')
+  String? ExternalControllerTLS;
+  @JsonKey(name: 'external-controller-cors')
+  RawCors? ExternalControllerCors;
+  @JsonKey(name: 'external-ui')
+  String? ExternalUI;
+  @JsonKey(name: 'external-ui-url')
+  String? ExternalUIURL;
+  @JsonKey(name: 'external-ui-name')
+  String? ExternalUIName;
+  @JsonKey(name: 'external-doh-server')
+  String? ExternalDohServer;
+  @JsonKey(name: 'secret')
+  String? Secret;
+  @JsonKey(name: 'interface-name')
+  String? Interface;
+  @JsonKey(name: 'routing-mark')
+  int? RoutingMark;
+  @JsonKey(name: 'tunnels')
+  List<RawTunnel>? Tunnels;
+  @JsonKey(name: 'geo-auto-update')
+  bool? GeoAutoUpdate;
+  @JsonKey(name: 'geo-update-interval')
+  int? GeoUpdateInterval;
+  @JsonKey(name: 'geodata-mode')
+  bool? GeodataMode;
+  @JsonKey(name: 'geodata-loader')
+  String? GeodataLoader;
+  @JsonKey(name: 'geosite-matcher')
+  String? GeositeMatcher;
+  @JsonKey(name: 'tcp-concurrent')
+  bool? TCPConcurrent;
+  @JsonKey(name: 'find-process-mode')
+  String? FindProcessMode;
+  @JsonKey(name: 'global-client-fingerprint')
+  String? GlobalClientFingerprint;
+  @JsonKey(name: 'global-ua')
+  String? GlobalUA;
+  @JsonKey(name: 'etag-support')
+  bool? ETagSupport;
+  @JsonKey(name: 'keep-alive-idle')
+  int? KeepAliveIdle;
+  @JsonKey(name: 'keep-alive-interval')
+  int? KeepAliveInterval;
+  @JsonKey(name: 'disable-keep-alive')
+  bool? DisableKeepAlive;
+
+  //map[string]map[string]any ProxyProvider  `yaml:"proxy-providers" json:"proxy-providers"`
+  //map[string]map[string]any RuleProvider   `yaml:"rule-providers" json:"rule-providers"`
+  //[]map[string]any Proxy                   `yaml:"proxies" json:"proxies"`
+  //[]map[string]any ProxyGroup              `yaml:"proxy-groups" json:"proxy-groups"`
+  //List<String>? Rule                       `yaml:"rules" json:"rule"`
+  //map[string][]string SubRules             `yaml:"sub-rules" json:"sub-rules"`
+  @JsonKey(name: 'listeners')
+  Map<String, dynamic>? Listeners;
+  @JsonKey(name: 'hosts')
+  Map<String, dynamic>? Hosts;
+  @JsonKey(name: 'dns')
+  RawDNS DNS;
+  @JsonKey(name: 'ntp')
+  RawNTP NTP;
+  @JsonKey(name: 'tun')
+  RawTun Tun;
+  @JsonKey(name: 'tuic-server')
+  RawTuicServer? TuicServer;
+  @JsonKey(name: 'iptables')
+  RawIPTables? IPTables;
+  @JsonKey(name: 'experimental')
+  RawExperimental? Experimental;
+  @JsonKey(name: 'profile')
+  RawProfile? Profile;
+  @JsonKey(name: 'geox-url')
+  RawGeoXUrl GeoXUrl;
+  @JsonKey(name: 'sniffer')
+  RawSniffer Sniffer;
+  @JsonKey(name: 'tls')
+  RawTLS TLS;
+  @JsonKey(name: 'clash-for-android')
+  RawClashForAndroid? ClashForAndroid;
+  @JsonKey(name: 'extension')
+  RawExtension Extension;
+
+  RawConfig.by(
+      {this.Port,
+      this.SocksPort,
+      this.RedirPort,
+      this.TProxyPort,
+      this.MixedPort,
+      this.ShadowSocksConfig,
+      this.VmessConfig,
+      this.InboundTfo,
+      this.InboundMPTCP,
+      this.Authentication,
+      this.SkipAuthPrefixes,
+      this.LanAllowedIPs,
+      this.LanDisAllowedIPs,
+      this.AllowLan,
+      this.BindAddress,
+      this.Mode,
+      this.UnifiedDelay,
+      this.LogLevel,
+      this.IPv6,
+      this.ExternalController,
+      this.ExternalControllerPipe,
+      this.ExternalControllerUnix,
+      this.ExternalControllerTLS,
+      this.ExternalControllerCors,
+      this.ExternalUI,
+      this.ExternalUIURL,
+      this.ExternalUIName,
+      this.ExternalDohServer,
+      this.Secret,
+      this.Interface,
+      this.RoutingMark,
+      this.Tunnels,
+      this.GeoAutoUpdate,
+      this.GeoUpdateInterval,
+      this.GeodataMode,
+      this.GeodataLoader,
+      this.GeositeMatcher,
+      this.TCPConcurrent,
+      this.FindProcessMode,
+      this.GlobalClientFingerprint,
+      this.GlobalUA,
+      this.ETagSupport,
+      this.KeepAliveIdle,
+      this.KeepAliveInterval,
+      this.DisableKeepAlive,
+      this.Listeners,
+      this.Hosts,
+      required this.DNS,
+      required this.NTP,
+      required this.Tun,
+      this.TuicServer,
+      this.IPTables,
+      this.Experimental,
+      this.Profile,
+      required this.GeoXUrl,
+      required this.Sniffer,
+      required this.TLS,
+      this.ClashForAndroid,
+      required this.Extension});
+  RawConfig(
+      this.Port,
+      this.SocksPort,
+      this.RedirPort,
+      this.TProxyPort,
+      this.MixedPort,
+      this.ShadowSocksConfig,
+      this.VmessConfig,
+      this.InboundTfo,
+      this.InboundMPTCP,
+      this.Authentication,
+      this.SkipAuthPrefixes,
+      this.LanAllowedIPs,
+      this.LanDisAllowedIPs,
+      this.AllowLan,
+      this.BindAddress,
+      this.Mode,
+      this.UnifiedDelay,
+      this.LogLevel,
+      this.IPv6,
+      this.ExternalController,
+      this.ExternalControllerPipe,
+      this.ExternalControllerUnix,
+      this.ExternalControllerTLS,
+      this.ExternalControllerCors,
+      this.ExternalUI,
+      this.ExternalUIURL,
+      this.ExternalUIName,
+      this.ExternalDohServer,
+      this.Secret,
+      this.Interface,
+      this.RoutingMark,
+      this.Tunnels,
+      this.GeoAutoUpdate,
+      this.GeoUpdateInterval,
+      this.GeodataMode,
+      this.GeodataLoader,
+      this.GeositeMatcher,
+      this.TCPConcurrent,
+      this.FindProcessMode,
+      this.GlobalClientFingerprint,
+      this.GlobalUA,
+      this.ETagSupport,
+      this.KeepAliveIdle,
+      this.KeepAliveInterval,
+      this.DisableKeepAlive,
+      this.Listeners,
+      this.Hosts,
+      this.DNS,
+      this.NTP,
+      this.Tun,
+      this.TuicServer,
+      this.IPTables,
+      this.Experimental,
+      this.Profile,
+      this.GeoXUrl,
+      this.Sniffer,
+      this.TLS,
+      this.ClashForAndroid,
+      this.Extension);
+  factory RawConfig.fromJson(Map<String, dynamic> json) =>
+      _$RawConfigFromJson(json);
+  Map<String, dynamic> toJson() =>
+      MapHelper.removeNullOrEmpty(_$RawConfigToJson(this));
+}
