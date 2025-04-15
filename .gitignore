@@ -58,3 +58,4 @@ app.*.map.json
 /todo.txt
 /.vscode
 /private
+*.hprof
