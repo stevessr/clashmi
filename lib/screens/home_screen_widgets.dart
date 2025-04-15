@@ -434,7 +434,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
       _proxyNowUpdating = true;
       final result = await ClashHttpApi.getNowProxy(
           ClashSettingManager.getConfig().Mode ?? ClashConfigsMode.rule.name);
-      if (result.error != null) {
+      if (result.error != null || result.data!.isEmpty) {
         _proxyNow.value = "";
       } else {
         if (result.data!.length >= 2) {
