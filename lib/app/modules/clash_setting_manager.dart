@@ -29,6 +29,7 @@ class ClashSettingManager {
     return RawConfig.by(
       IPv6: false,
       LogLevel: ClashLogLevel.debug.name,
+      Mode: ClashConfigsMode.rule.name,
       MixedPort: 7890,
       ExternalController: "127.0.0.1:9090",
       GlobalClientFingerprint: ClashGlobalClientFingerprint.chrome.name,
@@ -112,6 +113,7 @@ class ClashSettingManager {
 
   static Future<RawConfig> defaultConfigNoOverwrite() async {
     return RawConfig.by(
+      Mode: _setting.Mode,
       ExternalController: _setting.ExternalController,
       Secret: await ClashHttpApi.getSecret(),
       DNS: RawDNS.by(
@@ -238,6 +240,7 @@ class ClashSettingManager {
       ClashConfigsMode mode) async {
     _setting.Mode = mode.name;
     await saveSetting();
+    await saveSettingNoOverwrite();
     bool run = await VPNService.getStarted();
     if (!run) {
       return null;

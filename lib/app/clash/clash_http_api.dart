@@ -345,21 +345,27 @@ class ClashHttpApi {
     }
   }
 
-  static ClashProxiesNode getNow(
-      List<ClashProxiesNode> proxies, ClashProxiesNode node) {
+  static List<ClashProxiesNode> getNowChain(
+      List<ClashProxiesNode> proxies, ClashProxiesNode node, String mode) {
     if (node.all.isEmpty) {
-      return node;
+      return [node];
     }
     for (var proxy in proxies) {
       if (proxy.name == node.now) {
-        return getNow(proxies, proxy);
+        List<ClashProxiesNode> nodes = getNowChain(proxies, proxy, mode);
+        nodes.add(node);
+        return nodes;
       }
     }
 
-    return node;
+    return [node];
   }
 
-  static Future<ReturnResult<ClashProxiesNode?>> getNowProxy() async {
+  static Future<ReturnResult<List<ClashProxiesNode>>> getNowProxy(
+      String mode) async {
+    if (mode.isEmpty) {
+      return ReturnResult(data: null);
+    }
     ReturnResult<List<ClashProxiesNode>> result = await getProxies();
     if (result.error != null) {
       return ReturnResult(error: result.error);
@@ -368,7 +374,7 @@ class ClashHttpApi {
       return ReturnResult(data: null);
     }
     if (result.data!.last.all.isEmpty) {
-      return ReturnResult(data: result.data!.last);
+      return ReturnResult(data: [result.data!.last]);
     }
     ClashProxiesNode? firstNode;
     for (var proxy in result.data!) {
@@ -378,9 +384,23 @@ class ClashHttpApi {
       }
     }
     if (firstNode == null) {
-      return ReturnResult(data: result.data!.last);
+      return ReturnResult(data: [result.data!.last]);
     }
-    return ReturnResult(data: getNow(result.data!, firstNode));
+    final proxies = result.data!;
+    if (mode == ClashConfigsMode.direct.name) {
+      for (var proxy in proxies) {
+        if (proxy.type == ClashProtocolType.direct.name) {
+          return ReturnResult(data: [proxy]);
+        }
+      }
+    } else if (mode == ClashConfigsMode.global.name) {
+      for (var proxy in proxies) {
+        if (proxy.name == "GLOBAL") {
+          return ReturnResult(data: getNowChain(proxies, proxy, mode));
+        }
+      }
+    }
+    return ReturnResult(data: getNowChain(proxies, firstNode, mode));
   }
 
   static Future<ReturnResultError?> setProxiesNode(

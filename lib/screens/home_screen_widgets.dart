@@ -42,10 +42,12 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   bool _working = false;
   FlutterVpnServiceState _state = FlutterVpnServiceState.disconnected;
   Timer? _timerStateChecker;
+
   Websocket? _websocket;
 
   final ValueNotifier<String> _trafficSpeed = ValueNotifier<String>(_kNoSpeed);
-  String _trafficSpeedNotify = _kNoSpeed;
+  final ValueNotifier<String> _proxyNow = ValueNotifier<String>("");
+  bool _proxyNowUpdating = false;
 
   @override
   void initState() {
@@ -191,6 +193,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
               DialogUtils.showAlertDialog(context, error.message);
               return;
             }
+            _updateProxyNow();
           },
         ),
       ),
@@ -218,6 +221,10 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     if (started) {
       widgets.add(ListTile(
         title: Text(tcontext.meta.proxy),
+        subtitle: ValueListenableBuilder<String>(
+          builder: _buildWithValue,
+          valueListenable: _proxyNow,
+        ),
         trailing: Icon(
           Icons.keyboard_arrow_right,
           size: 20,
@@ -291,6 +298,15 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     );
   }
 
+  Widget _buildWithValue(BuildContext context, String value, Widget? child) {
+    return SizedBox(
+      child: Text(
+        value,
+        textAlign: TextAlign.start,
+      ),
+    );
+  }
+
   Future<void> _onStateChanged(
       FlutterVpnServiceState state, Map<String, String> params) async {
     if (_state == state) {
@@ -309,6 +325,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
       _disconnectToTraffic();
     } else if (state == FlutterVpnServiceState.disconnecting) {
       _stopStateCheckTimer();
+
       Zashboard.stop();
     } else {
       _disconnectToTraffic();
@@ -384,9 +401,14 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
           var obj = jsonDecode(message);
           ClashTraffic traffic = ClashTraffic();
           traffic.fromJson(obj);
-          _trafficSpeedNotify =
+          final trafficSpeedNotify =
               "↑ ${ClashHttpApi.convertTrafficToStringDouble(traffic.upload)}/s  ↓ ${ClashHttpApi.convertTrafficToStringDouble(traffic.download)}/s";
-          _trafficSpeed.value = _trafficSpeedNotify;
+          _trafficSpeed.value = trafficSpeedNotify;
+
+          final duration = Duration(seconds: _proxyNow.value.isEmpty ? 1 : 5);
+          Future.delayed(duration, () async {
+            _updateProxyNow();
+          });
         },
         onDone: () {
           _disconnectToTraffic();
@@ -399,8 +421,43 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
 
   Future<void> _disconnectToTraffic() async {
     await _websocket?.disconnect();
-    _trafficSpeedNotify = _kNoSpeed;
-    _trafficSpeed.value = _trafficSpeedNotify;
+
+    _trafficSpeed.value = _kNoSpeed;
+    _proxyNow.value = "";
+  }
+
+  Future<void> _updateProxyNow() async {
+    if (_state == FlutterVpnServiceState.connected) {
+      if (_proxyNowUpdating) {
+        return;
+      }
+      _proxyNowUpdating = true;
+      final result = await ClashHttpApi.getNowProxy(
+          ClashSettingManager.getConfig().Mode ?? ClashConfigsMode.rule.name);
+      if (result.error != null) {
+        _proxyNow.value = "";
+      } else {
+        if (result.data!.length >= 2) {
+          if (result.data!.first.delay != null) {
+            _proxyNow.value =
+                "${result.data![1].name} -> ${result.data!.first.name} (${result.data!.first.delay} ms)";
+          } else {
+            _proxyNow.value =
+                "${result.data![1].name} -> ${result.data!.first.name}";
+          }
+        } else {
+          if (result.data!.first.delay != null) {
+            _proxyNow.value =
+                "${result.data!.first.name} (${result.data!.first.delay} ms)";
+          } else {
+            _proxyNow.value = result.data!.first.name;
+          }
+        }
+      }
+      _proxyNowUpdating = false;
+    } else {
+      _proxyNow.value = "";
+    }
   }
 }
 
