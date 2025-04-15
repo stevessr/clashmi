@@ -6,7 +6,6 @@ import 'package:clashmi/app/modules/clash_setting_manager.dart';
 import 'package:clashmi/app/modules/profile_manager.dart';
 import 'package:clashmi/app/utils/app_lifecycle_state_notify.dart';
 import 'package:clashmi/app/utils/log.dart';
-import 'package:clashmi/app/utils/main_channel_utils.dart';
 
 class Biz {
   static final List<void Function()> onEventInitFinish = [];
@@ -19,12 +18,9 @@ class Biz {
   static void Function(bool)? onEventVPNStateChanged;
 
   static Future<void> init(bool launchAtStartup) async {
-    //await PersistStorage.init();
-
     await ClashSettingManager.init();
     await ProfileManager.init();
     await VPNService.init();
-    MainChannel.init();
 
     for (var callback in onEventInitFinish) {
       callback();
@@ -40,15 +36,13 @@ class Biz {
   static Future<void> uninit() async {
     await AutoUpdateManager.uninit();
     AppLifecycleStateNofity.uninit();
-    MainChannel.uninit();
+
     await VPNService.uninit();
     await ProfileManager.uninit();
     await ClashSettingManager.uninit();
   }
 
-  static void clearCache() {
-    //PersistStorage.cleanAll();
-  }
+  static void clearCache() {}
 
   static void initHomeFinish() {
     for (var callback in onEventInitHomeFinish) {

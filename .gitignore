@@ -48,10 +48,7 @@ app.*.map.json
 /logs
 /.vs
 /*.zip
-/dist/*.apk
-/dist/*.exe
-/dist/*.zip
-/dist/*.xcarchive
+/dist
 /bind/apple/Libclash.xcframework
 /bind/android
 /bind/windows
@@ -59,9 +56,6 @@ app.*.map.json
 /lib/app/private
 /android/app/build
 /.sentry-native
-/dist/ios
-/dist/macos
 /todo.txt
 /.vscode
-/dist
 /private

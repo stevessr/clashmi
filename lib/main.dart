@@ -17,7 +17,6 @@ import 'package:clashmi/app/utils/system_scheme_utils.dart';
 import 'package:clashmi/app/utils/windows_version_helper.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/home_screen.dart';
-//import 'package:clashmi/screens/splash_screen.dart';
 import 'package:clashmi/screens/launch_failed_screen.dart';
 import 'package:clashmi/screens/theme_data_dark.dart';
 import 'package:clashmi/screens/themes.dart';
@@ -40,20 +39,14 @@ StartFailedReason? startFailedReason;
 String? startFailedReasonDesc;
 
 void main(List<String> args) async {
-  //runZonedGuarded(() async {
   processArgs = args;
   WidgetsFlutterBinding.ensureInitialized();
   await RemoteConfigManager.init();
-  //await SentryUtilsPrivate.init();
   await LocaleSettings.useDeviceLocale();
 
-  SemanticsBinding.instance.ensureSemantics(); //showSemanticsDebugger
+  SemanticsBinding.instance.ensureSemantics();
 
   await run(args);
-  //}, (exception, stackTrace) async {
-  //  print("$exception, ${stackTrace.toString()}");
-  //await Sentry.captureException(exception, stackTrace: stackTrace);
-  //});
 }
 
 Future<void> run(List<String> args) async {
