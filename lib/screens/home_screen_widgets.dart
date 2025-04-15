@@ -338,7 +338,6 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   Future<void> _onStateResumed() async {
     _checkState();
     _startStateCheckTimer();
-    _updateProxyNow();
   }
 
   Future<void> _onStatePaused() async {
@@ -406,6 +405,11 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
           final trafficSpeedNotify =
               "↑ ${ClashHttpApi.convertTrafficToStringDouble(traffic.upload)}/s  ↓ ${ClashHttpApi.convertTrafficToStringDouble(traffic.download)}/s";
           _trafficSpeed.value = trafficSpeedNotify;
+
+          final duration = Duration(seconds: _proxyNow.value.isEmpty ? 1 : 5);
+          Future.delayed(duration, () async {
+            _updateProxyNow();
+          });
         },
         onDone: () {
           _disconnectToTraffic();
@@ -414,9 +418,6 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
           _disconnectToTraffic();
         });
     await _websocket!.connect();
-    Future.delayed(const Duration(seconds: 1), () async {
-      _updateProxyNow();
-    });
   }
 
   Future<void> _disconnectToTraffic() async {
