@@ -247,7 +247,8 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get termOfUse => 'Условия использования';
 	@override String get privacyPolicy => 'Политика конфиденциальности';
 	@override String get log => 'бревно';
-	@override String get vpnLog => 'Журнал керна';
+	@override String get coreLog => 'Журнал керна';
+	@override String get core => 'основной';
 	@override String get help => 'помощь';
 	@override String get board => 'панель';
 	@override String get proxy => 'действующий';
@@ -525,7 +526,8 @@ extension on TranslationsRu {
 			case 'meta.termOfUse': return 'Условия использования';
 			case 'meta.privacyPolicy': return 'Политика конфиденциальности';
 			case 'meta.log': return 'бревно';
-			case 'meta.vpnLog': return 'Журнал керна';
+			case 'meta.coreLog': return 'Журнал керна';
+			case 'meta.core': return 'основной';
 			case 'meta.help': return 'помощь';
 			case 'meta.board': return 'панель';
 			case 'meta.proxy': return 'действующий';

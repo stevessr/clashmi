@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:clashmi/app/clash/clash_config.dart';
+import 'package:clashmi/app/local_services/vpn_service.dart';
 import 'package:clashmi/app/modules/auto_update_manager.dart';
 import 'package:clashmi/app/modules/clash_setting_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
@@ -15,6 +16,7 @@ import 'package:clashmi/screens/language_settings_screen.dart';
 import 'package:clashmi/screens/list_add_screen.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/themes.dart';
+import 'package:clashmi/screens/webview_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
@@ -95,6 +97,8 @@ Future<void> showAppSettings(BuildContext context) async {
 Future<void> showClashSettings(BuildContext context) async {
   final tcontext = Translations.of(context);
   Future<List<GroupItem>> getOptions(BuildContext context) async {
+    const inProduction = bool.fromEnvironment("dart.vm.product");
+    final started = await VPNService.getStarted();
     var appSetting = SettingManager.getConfig();
     var setting = ClashSettingManager.getConfig();
     final logLevels = ClashLogLevel.toList();
@@ -115,6 +119,7 @@ Future<void> showClashSettings(BuildContext context) async {
               switchValue: appSetting.coreSettingOverwrite,
               onSwitch: (bool value) async {
                 appSetting.coreSettingOverwrite = value;
+                SettingManager.saveConfig();
               })),
       GroupItemOptions(
           textFormFieldOptions: GroupItemTextFieldOptions(
@@ -135,6 +140,32 @@ Future<void> showClashSettings(BuildContext context) async {
                       ClipboardData(text: setting.Secret ?? ""));
                 } catch (e) {}
               })),
+      !inProduction
+          ? GroupItemOptions(
+              textFormFieldOptions: GroupItemTextFieldOptions(
+                  name: "Pprof Address",
+                  text: setting.Extension.PprofAddr,
+                  textWidthPercent: 0.5,
+                  onChanged: (String value) {
+                    setting.Extension.PprofAddr = value;
+                  }))
+          : GroupItemOptions(),
+      !inProduction
+          ? GroupItemOptions(
+              pushOptions: GroupItemPushOptions(
+                  name: "Pprof",
+                  onPush: () async {
+                    if (setting.Extension.PprofAddr == null ||
+                        setting.Extension.PprofAddr!.isEmpty) {
+                      return;
+                    }
+                    await WebviewHelper.loadUrl(
+                        context,
+                        "http://${setting.Extension.PprofAddr}/debug/pprof/",
+                        "pprof",
+                        title: "Pprof");
+                  }))
+          : GroupItemOptions(),
     ];
     List<GroupItemOptions> options = [
       GroupItemOptions(
@@ -259,21 +290,24 @@ Future<void> showClashSettings(BuildContext context) async {
                 showClashSettingsGEO(context);
               })),
     ];
-    if (!appSetting.coreSettingOverwrite) {
-      return [
-        GroupItem(options: options00),
-        GroupItem(options: options0),
-      ];
+    List<GroupItem> groups = [];
+    if (started) {
+      groups.add(GroupItem(options: options00));
     }
-    return [
-      GroupItem(options: options00),
-      GroupItem(options: options0),
-      GroupItem(options: options),
-      GroupItem(options: options1),
-      GroupItem(options: options2),
-      GroupItem(options: options3),
-      GroupItem(options: options4),
-    ];
+    if (!appSetting.coreSettingOverwrite) {
+      groups.add(GroupItem(options: options0));
+    } else {
+      groups.addAll([
+        GroupItem(options: options0),
+        GroupItem(options: options),
+        GroupItem(options: options1),
+        GroupItem(options: options2),
+        GroupItem(options: options3),
+        GroupItem(options: options4),
+      ]);
+    }
+
+    return groups;
   }
 
   await Navigator.push(

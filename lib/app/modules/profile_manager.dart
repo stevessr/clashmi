@@ -331,7 +331,7 @@ class ProfileManager {
     if (result.error != null) {
       return ReturnResult(error: result.error);
     }
-    await FileUtils.append(savePath, "$urlComment$url");
+    await FileUtils.append(savePath, "\n$urlComment$url\n");
 
     var siteTitle = remark;
     if (remark.isEmpty) {
@@ -399,7 +399,7 @@ class ProfileManager {
       }
       return result.error;
     }
-    await FileUtils.append(savePath, "$urlComment${profile.url}");
+    await FileUtils.append(savePath, "\n$urlComment${profile.url}\n");
     if (profile.remark.isEmpty) {
       final result = await HttpUtils.httpGetTitle(profile.url!, userAgent);
       profile.remark = result.data ?? "";

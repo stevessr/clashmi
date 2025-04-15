@@ -247,7 +247,8 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get termOfUse => '使用条款';
 	@override String get privacyPolicy => '隐私政策';
 	@override String get log => '日志';
-	@override String get vpnLog => '核心日志';
+	@override String get coreLog => '核心日志';
+	@override String get core => '核心';
 	@override String get help => '帮助';
 	@override String get board => '面板';
 	@override String get proxy => '代理';
@@ -525,7 +526,8 @@ extension on TranslationsZhCn {
 			case 'meta.termOfUse': return '使用条款';
 			case 'meta.privacyPolicy': return '隐私政策';
 			case 'meta.log': return '日志';
-			case 'meta.vpnLog': return '核心日志';
+			case 'meta.coreLog': return '核心日志';
+			case 'meta.core': return '核心';
 			case 'meta.help': return '帮助';
 			case 'meta.board': return '面板';
 			case 'meta.proxy': return '代理';

@@ -247,7 +247,8 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get termOfUse => 'شرط الخدمة';
 	@override String get privacyPolicy => 'سياسة الخصوصية';
 	@override String get log => 'سجل';
-	@override String get vpnLog => 'سجل النواة';
+	@override String get coreLog => 'سجل النواة';
+	@override String get core => 'جوهر';
 	@override String get help => 'يساعد';
 	@override String get board => 'لوحة';
 	@override String get proxy => 'التمثيل';
@@ -525,7 +526,8 @@ extension on TranslationsAr {
 			case 'meta.termOfUse': return 'شرط الخدمة';
 			case 'meta.privacyPolicy': return 'سياسة الخصوصية';
 			case 'meta.log': return 'سجل';
-			case 'meta.vpnLog': return 'سجل النواة';
+			case 'meta.coreLog': return 'سجل النواة';
+			case 'meta.core': return 'جوهر';
 			case 'meta.help': return 'يساعد';
 			case 'meta.board': return 'لوحة';
 			case 'meta.proxy': return 'التمثيل';

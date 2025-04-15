@@ -1,15 +1,20 @@
 // ignore_for_file: unused_catch_stack
 
+import 'dart:io';
+
+import 'package:clashmi/app/modules/remote_config_manager.dart';
 import 'package:clashmi/app/utils/app_utils.dart';
 import 'package:clashmi/app/utils/file_utils.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/app/utils/platform_utils.dart';
+import 'package:clashmi/app/utils/url_launcher_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/group_item_creator.dart';
 import 'package:clashmi/screens/group_item_options.dart';
 import 'package:clashmi/screens/group_screen.dart';
 import 'package:clashmi/screens/theme_config.dart';
 import 'package:clashmi/screens/themes.dart';
+import 'package:clashmi/screens/webview_helper.dart';
 import 'package:clashmi/screens/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -120,27 +125,51 @@ class AboutScreenState extends LasyRenderingState<AboutScreen> {
 
   Future<List<GroupItem>> getGroupOptions() async {
     final tcontext = Translations.of(context);
-
+    var remoteConfig = RemoteConfigManager.getConfig();
     List<GroupItem> groupOptions = [];
 
-    {
-      List<GroupItemOptions> options = [
-        GroupItemOptions(
-            textOptions: GroupItemTextOptions(
-          name: tcontext.meta.name,
-          text: AppUtils.getName(),
-        )),
-        GroupItemOptions(
-            textOptions: GroupItemTextOptions(
-          name: tcontext.meta.version,
-          text: AppUtils.getBuildinVersion(),
-        )),
-      ];
+    List<GroupItemOptions> options = [
+      GroupItemOptions(
+          textOptions: GroupItemTextOptions(
+        name: tcontext.meta.name,
+        text: AppUtils.getName(),
+      )),
+      GroupItemOptions(
+          textOptions: GroupItemTextOptions(
+        name: tcontext.meta.version,
+        text: AppUtils.getBuildinVersion(),
+      )),
+      GroupItemOptions(
+          textOptions: GroupItemTextOptions(
+        name: tcontext.meta.core,
+        text: "mihomo 1.19.3",
+      )),
+    ];
 
-      groupOptions.add(GroupItem(options: options));
+    groupOptions.add(GroupItem(options: options));
+
+    if (!Platform.isIOS &&
+        !Platform.isMacOS &&
+        remoteConfig.donateUrl.isNotEmpty) {
+      List<GroupItemOptions> options1 = [
+        GroupItemOptions(
+            pushOptions: GroupItemPushOptions(
+                name: tcontext.meta.donate,
+                onPush: () async {
+                  String url =
+                      await UrlLauncherUtils.reorganizationUrlWithAnchor(
+                          remoteConfig.donateUrl);
+                  if (!mounted) {
+                    return;
+                  }
+                  await WebviewHelper.loadUrl(context, url, "donate",
+                      title: tcontext.meta.donate);
+                }))
+      ];
+      groupOptions.add(GroupItem(options: options1));
     }
 
-    List<GroupItemOptions> options = [
+    List<GroupItemOptions> options2 = [
       GroupItemOptions(
           pushOptions: GroupItemPushOptions(
               name: tcontext.meta.devOptions,
@@ -148,7 +177,7 @@ class AboutScreenState extends LasyRenderingState<AboutScreen> {
                 onTapDevOptions();
               }))
     ];
-    groupOptions.add(GroupItem(options: options));
+    groupOptions.add(GroupItem(options: options2));
 
     return groupOptions;
   }

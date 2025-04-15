@@ -501,7 +501,7 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
         },
       ),
       ListTile(
-        title: Text(tcontext.meta.vpnLog),
+        title: Text(tcontext.meta.coreLog),
         leading: Icon(
           Icons.set_meal,
           size: 20,
@@ -528,7 +528,7 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
               MaterialPageRoute(
                   settings: RichtextViewScreen.routSettings(),
                   builder: (context) => RichtextViewScreen(
-                      title: tcontext.meta.vpnLog,
+                      title: tcontext.meta.coreLog,
                       file: "",
                       content: content)));
         },

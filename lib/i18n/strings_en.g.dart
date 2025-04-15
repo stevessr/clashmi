@@ -250,7 +250,8 @@ class TranslationsMetaEn {
 	String get termOfUse => 'Terms of Service';
 	String get privacyPolicy => 'Privacy & Policy';
 	String get log => 'Log';
-	String get vpnLog => 'Core Log';
+	String get coreLog => 'Core Log';
+	String get core => 'Core';
 	String get help => 'Help';
 	String get board => 'Board';
 	String get proxy => 'Proxy';
@@ -528,7 +529,8 @@ extension on Translations {
 			case 'meta.termOfUse': return 'Terms of Service';
 			case 'meta.privacyPolicy': return 'Privacy & Policy';
 			case 'meta.log': return 'Log';
-			case 'meta.vpnLog': return 'Core Log';
+			case 'meta.coreLog': return 'Core Log';
+			case 'meta.core': return 'Core';
 			case 'meta.help': return 'Help';
 			case 'meta.board': return 'Board';
 			case 'meta.proxy': return 'Proxy';

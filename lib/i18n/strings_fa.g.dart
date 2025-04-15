@@ -247,7 +247,8 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get termOfUse => 'شرایط استفاده';
 	@override String get privacyPolicy => 'سیاست حریم خصوصی';
 	@override String get log => 'ورود به سیستم';
-	@override String get vpnLog => 'گزارش هسته';
+	@override String get coreLog => 'گزارش هسته';
+	@override String get core => 'هسته';
 	@override String get help => 'کمک کند';
 	@override String get board => 'پانل';
 	@override String get proxy => 'بازیگری';
@@ -525,7 +526,8 @@ extension on TranslationsFa {
 			case 'meta.termOfUse': return 'شرایط استفاده';
 			case 'meta.privacyPolicy': return 'سیاست حریم خصوصی';
 			case 'meta.log': return 'ورود به سیستم';
-			case 'meta.vpnLog': return 'گزارش هسته';
+			case 'meta.coreLog': return 'گزارش هسته';
+			case 'meta.core': return 'هسته';
 			case 'meta.help': return 'کمک کند';
 			case 'meta.board': return 'پانل';
 			case 'meta.proxy': return 'بازیگری';

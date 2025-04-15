@@ -124,8 +124,11 @@ class ClashSettingManager {
       GeoXUrl: RawGeoXUrl.by(),
       Sniffer: RawSniffer.by(Enable: null),
       TLS: RawTLS.by(),
-      Extension:
-          RawExtension.by(Tun: RawExtensionTun.by(HttpProxyEnable: null)),
+      Extension: RawExtension.by(
+          Tun: RawExtensionTun.by(HttpProxyEnable: null),
+          PprofAddr: _setting.Extension.PprofAddr,
+          DelayTestUrl: _setting.Extension.DelayTestUrl,
+          DelayTestTimeout: _setting.Extension.DelayTestTimeout),
     );
   }
 

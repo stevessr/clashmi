@@ -88,7 +88,8 @@ class RemoteConfig {
       "https://dot.$kDefaultHost/autoupdate.json";
   static const String kDefaultOutpost = "https://outpost.$kDefaultHost/put";
 
-  static const String kDefaultGetTranffic = "https://1.x31415926.top/";
+  static const String kDefaultGetTranffic =
+      "https://1.x31415926.top/?ref=clashmi";
 
   static const String kDefaultTutorial = "https://$kDefaultHost/quickstart/";
   static const String kDefaultFaq = "https://$kDefaultHost/faq/";
