@@ -373,19 +373,19 @@ class ClashHttpApi {
     if (result.data!.isEmpty) {
       return ReturnResult(data: null);
     }
-    if (result.data!.last.all.isEmpty) {
-      return ReturnResult(data: [result.data!.last]);
-    }
-    ClashProxiesNode? firstNode;
-    for (var proxy in result.data!) {
-      if (proxy.name == result.data!.last.all.last) {
-        firstNode = proxy;
-        break;
+    List<ClashProxiesNode> filtered = [];
+    for (var node in result.data!) {
+      if (node.type == ClashProtocolType.urltest.name ||
+          node.type == ClashProtocolType.selector.name ||
+          node.type == ClashProtocolType.fallback.name) {
+        filtered.add(node);
       }
     }
-    if (firstNode == null) {
-      return ReturnResult(data: [result.data!.last]);
+
+    if (filtered.isEmpty) {
+      return ReturnResult(data: null);
     }
+
     final proxies = result.data!;
     if (mode == ClashConfigsMode.direct.name) {
       for (var proxy in proxies) {
@@ -400,7 +400,7 @@ class ClashHttpApi {
         }
       }
     }
-    return ReturnResult(data: getNowChain(proxies, firstNode, mode));
+    return ReturnResult(data: getNowChain(proxies, filtered.first, mode));
   }
 
   static Future<ReturnResultError?> setProxiesNode(
