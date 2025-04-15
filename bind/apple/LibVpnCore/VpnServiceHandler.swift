@@ -101,11 +101,7 @@ class VpnServiceHandler {
 
 extension VpnServiceHandler {
     fileprivate func createProviderManager() -> NETunnelProviderManager {
-        // #if os(macOS)
-        // let manager = NETunnelProviderManager.forPerAppVPN()
-        // #else
         let manager = NETunnelProviderManager()
-        // #endif
 
         let conf = NETunnelProviderProtocol()
         conf.serverAddress = uiServerAddress

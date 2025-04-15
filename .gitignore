@@ -55,7 +55,6 @@ app.*.map.json
 /.idea/workspace.xml
 /lib/app/private
 /android/app/build
-/.sentry-native
 /todo.txt
 /.vscode
 /private

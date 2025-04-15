@@ -1,7 +1,6 @@
 import Foundation
 import Libclash
 
-// import Sentry
 import NetworkExtension
 
 #if os(iOS)
@@ -14,7 +13,6 @@ import NetworkExtension
 // #endif
 
 class VpnServiceConfig: Codable {
-    // var control_port: Int32 = 0
     var base_dir: String = ""
     var work_dir: String = ""
     var cache_dir: String = ""
@@ -25,8 +23,6 @@ class VpnServiceConfig: Codable {
     var id: String = ""
     var version: String = ""
     var name: String = ""
-    // var secret: String = ""
-    // var install_refer: String = ""
 }
 
 struct ProviderMessage: Codable {
@@ -50,11 +46,7 @@ open class ExtensionProvider: NEPacketTunnelProvider {
     override open func startTunnel(
         options: [String: NSObject]?
     ) async throws {
-        // if options != nil && options!["noStart"] is NSString {
-        //    return
-        // }
-
-        do {
+         do {
             try await start()
         }
         catch let VpnError.Error(err) {
@@ -70,21 +62,8 @@ open class ExtensionProvider: NEPacketTunnelProvider {
     override open func stopTunnel(
         with reason: NEProviderStopReason, completionHandler: @escaping () -> Void
     ) {
-        completionHandler() // completionHandler faster than syn
+        completionHandler()
         exit(EXIT_SUCCESS)
-        /* runBlocking { [self] in
-             do {
-                 try await stopService()
-             }
-             catch VpnError.Error(let err) {
-                 NSLog(err)
-             }
-             catch let err {
-                 NSLog(err.localizedDescription)
-             }
-             completionHandler() // completionHandler faster than syn
-             exit(EXIT_SUCCESS)
-         } */
     }
 
     override open func handleAppMessage(_ messageData: Data) async -> Data? {
@@ -96,9 +75,6 @@ open class ExtensionProvider: NEPacketTunnelProvider {
 #endif
         do {
             let message = try! JSONDecoder().decode(ProviderMessage.self, from: messageData)
-            // if message.messageId == "start" {
-            //    try await start()
-            // }
             if message.messageId == "restart" {
                 try await restartService(extra: &messageResponse.extra)
             }
