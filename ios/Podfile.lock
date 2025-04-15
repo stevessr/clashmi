@@ -83,9 +83,6 @@ PODS:
   - SDWebImage (5.21.0):
     - SDWebImage/Core (= 5.21.0)
   - SDWebImage/Core (5.21.0)
-  - Sentry (8.46.0):
-    - Sentry/Core (= 8.46.0)
-  - Sentry/Core (8.46.0)
   - share_plus (0.0.1):
     - Flutter
   - SwiftyGif (5.4.5)
@@ -114,7 +111,6 @@ DEPENDENCIES:
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - protocol_handler (from `.symlinks/plugins/protocol_handler/ios`)
   - qr_code_scanner_plus (from `.symlinks/plugins/qr_code_scanner_plus/ios`)
-  - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `8.46.0`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/darwin`)
@@ -167,20 +163,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/protocol_handler/ios"
   qr_code_scanner_plus:
     :path: ".symlinks/plugins/qr_code_scanner_plus/ios"
-  Sentry:
-    :git: https://github.com/getsentry/sentry-cocoa.git
-    :tag: 8.46.0
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   webview_flutter_wkwebview:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
-
-CHECKOUT OPTIONS:
-  Sentry:
-    :git: https://github.com/getsentry/sentry-cocoa.git
-    :tag: 8.46.0
 
 SPEC CHECKSUMS:
   app_installer: 33dc04135cd44cbeadf243d332a717b2bc761a6c
@@ -208,12 +196,11 @@ SPEC CHECKSUMS:
   protocol_handler: ae9efcf3b307f3fdffcd9d5252775b9f7d9f0d09
   qr_code_scanner_plus: 3bfe4deb7f28996a63a2a580819d49dae80d5ed3
   SDWebImage: f84b0feeb08d2d11e6a9b843cb06d75ebf5b8868
-  Sentry: da60d980b197a46db0b35ea12cb8f39af48d8854
   share_plus: 8b6f8b3447e494cca5317c8c3073de39b3600d1f
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
   webview_flutter_wkwebview: a4af96a051138e28e29f60101d094683b9f82188
 
-PODFILE CHECKSUM: 6f2d3bbda3f9d20d08fafc4406271367ca6af837
+PODFILE CHECKSUM: 8474f7b3d90d4aa9da30c235f20c60cf0eb88028
 
 COCOAPODS: 1.16.2
