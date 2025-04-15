@@ -250,7 +250,7 @@ class TranslationsMetaEn {
 	String get termOfUse => 'Terms of Service';
 	String get privacyPolicy => 'Privacy & Policy';
 	String get log => 'Log';
-	String get vpnLog => 'VPN Log';
+	String get vpnLog => 'Core Log';
 	String get help => 'Help';
 	String get board => 'Board';
 	String get proxy => 'Proxy';
@@ -272,7 +272,7 @@ class TranslationsMetaEn {
 	String get port => 'Port';
 	String get donate => 'Donate';
 	String get setting => 'Settings';
-	String get settingCore => 'VPN Settings';
+	String get settingCore => 'Core Settings';
 	String get settingApp => 'App Settings';
 	String get iCloud => 'iCloud';
 	String get webdav => 'Webdav';
@@ -528,7 +528,7 @@ extension on Translations {
 			case 'meta.termOfUse': return 'Terms of Service';
 			case 'meta.privacyPolicy': return 'Privacy & Policy';
 			case 'meta.log': return 'Log';
-			case 'meta.vpnLog': return 'VPN Log';
+			case 'meta.vpnLog': return 'Core Log';
 			case 'meta.help': return 'Help';
 			case 'meta.board': return 'Board';
 			case 'meta.proxy': return 'Proxy';
@@ -550,7 +550,7 @@ extension on Translations {
 			case 'meta.port': return 'Port';
 			case 'meta.donate': return 'Donate';
 			case 'meta.setting': return 'Settings';
-			case 'meta.settingCore': return 'VPN Settings';
+			case 'meta.settingCore': return 'Core Settings';
 			case 'meta.settingApp': return 'App Settings';
 			case 'meta.iCloud': return 'iCloud';
 			case 'meta.webdav': return 'Webdav';

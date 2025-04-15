@@ -247,7 +247,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get termOfUse => 'شرط الخدمة';
 	@override String get privacyPolicy => 'سياسة الخصوصية';
 	@override String get log => 'سجل';
-	@override String get vpnLog => 'سجلات VPN';
+	@override String get vpnLog => 'سجل النواة';
 	@override String get help => 'يساعد';
 	@override String get board => 'لوحة';
 	@override String get proxy => 'التمثيل';
@@ -269,7 +269,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get port => 'ميناء';
 	@override String get donate => 'يتبرع';
 	@override String get setting => 'إعدادات';
-	@override String get settingCore => 'إعدادات VPN';
+	@override String get settingCore => 'الإعدادات الأساسية';
 	@override String get settingApp => 'إعدادات التطبيق';
 	@override String get iCloud => 'iCloud';
 	@override String get webdav => 'Webdav';
@@ -525,7 +525,7 @@ extension on TranslationsAr {
 			case 'meta.termOfUse': return 'شرط الخدمة';
 			case 'meta.privacyPolicy': return 'سياسة الخصوصية';
 			case 'meta.log': return 'سجل';
-			case 'meta.vpnLog': return 'سجلات VPN';
+			case 'meta.vpnLog': return 'سجل النواة';
 			case 'meta.help': return 'يساعد';
 			case 'meta.board': return 'لوحة';
 			case 'meta.proxy': return 'التمثيل';
@@ -547,7 +547,7 @@ extension on TranslationsAr {
 			case 'meta.port': return 'ميناء';
 			case 'meta.donate': return 'يتبرع';
 			case 'meta.setting': return 'إعدادات';
-			case 'meta.settingCore': return 'إعدادات VPN';
+			case 'meta.settingCore': return 'الإعدادات الأساسية';
 			case 'meta.settingApp': return 'إعدادات التطبيق';
 			case 'meta.iCloud': return 'iCloud';
 			case 'meta.webdav': return 'Webdav';

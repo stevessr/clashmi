@@ -247,7 +247,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get termOfUse => 'شرایط استفاده';
 	@override String get privacyPolicy => 'سیاست حریم خصوصی';
 	@override String get log => 'ورود به سیستم';
-	@override String get vpnLog => 'گزارش های VPN';
+	@override String get vpnLog => 'گزارش هسته';
 	@override String get help => 'کمک کند';
 	@override String get board => 'پانل';
 	@override String get proxy => 'بازیگری';
@@ -269,7 +269,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get port => 'بندر';
 	@override String get donate => 'اهدا کنید';
 	@override String get setting => 'تنظیمات';
-	@override String get settingCore => 'تنظیمات VPN';
+	@override String get settingCore => 'تنظیمات اصلی';
 	@override String get settingApp => 'تنظیمات برنامه';
 	@override String get iCloud => 'iCloud';
 	@override String get webdav => 'Webdav';
@@ -525,7 +525,7 @@ extension on TranslationsFa {
 			case 'meta.termOfUse': return 'شرایط استفاده';
 			case 'meta.privacyPolicy': return 'سیاست حریم خصوصی';
 			case 'meta.log': return 'ورود به سیستم';
-			case 'meta.vpnLog': return 'گزارش های VPN';
+			case 'meta.vpnLog': return 'گزارش هسته';
 			case 'meta.help': return 'کمک کند';
 			case 'meta.board': return 'پانل';
 			case 'meta.proxy': return 'بازیگری';
@@ -547,7 +547,7 @@ extension on TranslationsFa {
 			case 'meta.port': return 'بندر';
 			case 'meta.donate': return 'اهدا کنید';
 			case 'meta.setting': return 'تنظیمات';
-			case 'meta.settingCore': return 'تنظیمات VPN';
+			case 'meta.settingCore': return 'تنظیمات اصلی';
 			case 'meta.settingApp': return 'تنظیمات برنامه';
 			case 'meta.iCloud': return 'iCloud';
 			case 'meta.webdav': return 'Webdav';

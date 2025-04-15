@@ -247,7 +247,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get termOfUse => '使用条款';
 	@override String get privacyPolicy => '隐私政策';
 	@override String get log => '日志';
-	@override String get vpnLog => 'VPN日志';
+	@override String get vpnLog => '核心日志';
 	@override String get help => '帮助';
 	@override String get board => '面板';
 	@override String get proxy => '代理';
@@ -269,7 +269,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get port => '端口';
 	@override String get donate => '捐助';
 	@override String get setting => '设置';
-	@override String get settingCore => 'VPN设置';
+	@override String get settingCore => '核心设置';
 	@override String get settingApp => '应用设置';
 	@override String get iCloud => 'iCloud';
 	@override String get webdav => 'Webdav';
@@ -525,7 +525,7 @@ extension on TranslationsZhCn {
 			case 'meta.termOfUse': return '使用条款';
 			case 'meta.privacyPolicy': return '隐私政策';
 			case 'meta.log': return '日志';
-			case 'meta.vpnLog': return 'VPN日志';
+			case 'meta.vpnLog': return '核心日志';
 			case 'meta.help': return '帮助';
 			case 'meta.board': return '面板';
 			case 'meta.proxy': return '代理';
@@ -547,7 +547,7 @@ extension on TranslationsZhCn {
 			case 'meta.port': return '端口';
 			case 'meta.donate': return '捐助';
 			case 'meta.setting': return '设置';
-			case 'meta.settingCore': return 'VPN设置';
+			case 'meta.settingCore': return '核心设置';
 			case 'meta.settingApp': return '应用设置';
 			case 'meta.iCloud': return 'iCloud';
 			case 'meta.webdav': return 'Webdav';

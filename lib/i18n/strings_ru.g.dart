@@ -247,7 +247,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get termOfUse => 'Условия использования';
 	@override String get privacyPolicy => 'Политика конфиденциальности';
 	@override String get log => 'бревно';
-	@override String get vpnLog => 'Журналы VPN';
+	@override String get vpnLog => 'Журнал керна';
 	@override String get help => 'помощь';
 	@override String get board => 'панель';
 	@override String get proxy => 'действующий';
@@ -269,7 +269,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get port => 'порт';
 	@override String get donate => 'Пожертвовать';
 	@override String get setting => 'Настройки';
-	@override String get settingCore => 'Настройки VPN';
+	@override String get settingCore => 'Основные настройки';
 	@override String get settingApp => 'Настройки приложения';
 	@override String get iCloud => 'iCloud';
 	@override String get webdav => 'Webdav';
@@ -525,7 +525,7 @@ extension on TranslationsRu {
 			case 'meta.termOfUse': return 'Условия использования';
 			case 'meta.privacyPolicy': return 'Политика конфиденциальности';
 			case 'meta.log': return 'бревно';
-			case 'meta.vpnLog': return 'Журналы VPN';
+			case 'meta.vpnLog': return 'Журнал керна';
 			case 'meta.help': return 'помощь';
 			case 'meta.board': return 'панель';
 			case 'meta.proxy': return 'действующий';
@@ -547,7 +547,7 @@ extension on TranslationsRu {
 			case 'meta.port': return 'порт';
 			case 'meta.donate': return 'Пожертвовать';
 			case 'meta.setting': return 'Настройки';
-			case 'meta.settingCore': return 'Настройки VPN';
+			case 'meta.settingCore': return 'Основные настройки';
 			case 'meta.settingApp': return 'Настройки приложения';
 			case 'meta.iCloud': return 'iCloud';
 			case 'meta.webdav': return 'Webdav';
