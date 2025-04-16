@@ -142,7 +142,7 @@ class AboutScreenState extends LasyRenderingState<AboutScreen> {
       GroupItemOptions(
           textOptions: GroupItemTextOptions(
         name: tcontext.meta.core,
-        text: "mihomo 1.19.3",
+        text: "mihomo 1.19.4",
       )),
     ];
 
