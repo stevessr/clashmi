@@ -161,24 +161,30 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
               ]),
             ],
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            ValueListenableBuilder<String>(
-              builder: _buildWithTrafficSpeedValue,
-              valueListenable: _memory,
-            ),
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            ValueListenableBuilder<String>(
-              builder: _buildWithTrafficSpeedValue,
-              valueListenable: _connections,
-            ),
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            ValueListenableBuilder<String>(
-              builder: _buildWithTrafficSpeedValue,
-              valueListenable: _trafficSpeed,
-            ),
-          ]),
+          _state == FlutterVpnServiceState.connected
+              ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  ValueListenableBuilder<String>(
+                    builder: _buildWithTrafficSpeedValue,
+                    valueListenable: _memory,
+                  ),
+                ])
+              : const SizedBox.shrink(),
+          _state == FlutterVpnServiceState.connected
+              ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  ValueListenableBuilder<String>(
+                    builder: _buildWithTrafficSpeedValue,
+                    valueListenable: _connections,
+                  ),
+                ])
+              : const SizedBox.shrink(),
+          _state == FlutterVpnServiceState.connected
+              ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  ValueListenableBuilder<String>(
+                    builder: _buildWithTrafficSpeedValue,
+                    valueListenable: _trafficSpeed,
+                  ),
+                ])
+              : const SizedBox.shrink(),
           SizedBox(
             height: 10,
           ),
