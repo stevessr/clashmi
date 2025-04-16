@@ -28,7 +28,7 @@ class ClashSettingManager {
   static RawConfig defaultConfig() {
     return RawConfig.by(
       IPv6: false,
-      LogLevel: ClashLogLevel.debug.name,
+      LogLevel: ClashLogLevel.error.name,
       Mode: ClashConfigsMode.rule.name,
       MixedPort: 7890,
       ExternalController: "127.0.0.1:9090",

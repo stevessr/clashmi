@@ -429,6 +429,9 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
 
   Future<void> _updateProxyNow() async {
     if (_state == FlutterVpnServiceState.connected) {
+      if (AppLifecycleStateNofity.isPaused()) {
+        return;
+      }
       if (_proxyNowUpdating) {
         return;
       }
