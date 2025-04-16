@@ -143,7 +143,7 @@ class GroupItemStringPickerOptions {
     this.strings,
     this.tupleStrings,
     this.selected,
-    this.textWidthPercent = 0.4,
+    this.textWidthPercent = 0.3,
     this.onPicker,
   });
 

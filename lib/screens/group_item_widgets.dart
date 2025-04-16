@@ -4,6 +4,7 @@ import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/group_item_options.dart';
 import 'package:clashmi/screens/theme_define.dart';
+import 'package:clashmi/screens/widgets/sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
@@ -399,96 +400,121 @@ class GroupItemStringPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        (options.tips != null) && options.tips!.isNotEmpty
-            ? InkWell(
-                onTap: () {
-                  DialogUtils.showAlertDialog(context, options.tips!);
-                },
-                child: Tooltip(
-                  message: options.tips,
-                  child: const Icon(
-                    Icons.info_outlined,
-                    size: 26,
-                  ),
-                ))
-            : const SizedBox.shrink(),
-        (options.tips != null) && options.tips!.isNotEmpty
-            ? const SizedBox(
-                width: 5,
-              )
-            : const SizedBox.shrink(),
-        options.reddot == true
-            ? Container(
-                width: 8,
-                height: 8,
-                decoration: const BoxDecoration(
-                  color: Colors.red,
-                  shape: BoxShape.circle,
-                ))
-            : const SizedBox.shrink(),
-        Expanded(
-          flex: ((1 - options.textWidthPercent) * 10).toInt(),
-          child: Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: Text(
-              options.name,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
+    var widgets = [];
+    if (options.tupleStrings != null) {
+      for (var key in options.tupleStrings!) {
+        widgets.add(ListTile(
+          title: Text(
+            key.item2,
+            style: TextStyle(
+                color: options.selected == key.item1 ? Colors.blue : null),
           ),
-        ),
-        Expanded(
-          flex: (options.textWidthPercent * 10).toInt(),
-          child: Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: DropdownButton(
-              value: options.selected,
-              alignment: AlignmentDirectional.centerEnd,
-              items:
-                  _buildDropButtonList(options.strings, options.tupleStrings),
-              menuWidth: 200,
-              onChanged: options.onPicker == null
-                  ? null
-                  : (String? sel) {
-                      if (options.tupleStrings != null) {
-                        options.selected =
-                            sel ?? options.tupleStrings!.first.item1;
-                      } else if (options.strings != null) {
-                        options.selected = sel ?? options.strings!.first;
-                      }
-
-                      options.onPicker!(options.selected);
-                    },
-            ),
+          minLeadingWidth: 40,
+          onTap: () async {
+            Navigator.of(context).pop();
+            options.selected = key.item1;
+            options.onPicker?.call(options.selected);
+          },
+        ));
+      }
+    } else if (options.strings != null) {
+      for (var key in options.strings!) {
+        widgets.add(ListTile(
+          title: Text(
+            key,
+            style:
+                TextStyle(color: options.selected == key ? Colors.blue : null),
           ),
-        ),
-      ],
-    );
-  }
-
-  static List<DropdownMenuItem<String>> _buildDropButtonList(
-      List<String>? data, List<Tuple2<String, String>>? dataTuple2) {
-    if (dataTuple2 != null) {
-      return dataTuple2.map((Tuple2 value) {
-        return DropdownMenuItem<String>(
-          value: value.item1,
-          child: Align(
-              alignment: AlignmentDirectional.centerEnd,
-              child: Text(value.item2)),
-        );
-      }).toList();
-    } else if (data != null) {
-      return data.map((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Align(
-              alignment: AlignmentDirectional.centerEnd, child: Text(value)),
-        );
-      }).toList();
+          minLeadingWidth: 40,
+          onTap: () async {
+            Navigator.of(context).pop();
+            options.selected = key;
+            options.onPicker?.call(options.selected);
+          },
+        ));
+      }
     }
-    return [];
+    return InkWell(
+        onTap: () {
+          showSheet(
+            title: "",
+            context: context,
+            body: SizedBox(
+                height: 400,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: Scrollbar(
+                      child: ListView.separated(
+                    itemBuilder: (BuildContext context, int index) {
+                      return widgets[index];
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider(
+                        height: 1,
+                        thickness: 0.3,
+                      );
+                    },
+                    itemCount: widgets.length,
+                  )),
+                )),
+          );
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            (options.tips != null) && options.tips!.isNotEmpty
+                ? InkWell(
+                    onTap: () {
+                      DialogUtils.showAlertDialog(context, options.tips!);
+                    },
+                    child: Tooltip(
+                      message: options.tips,
+                      child: const Icon(
+                        Icons.info_outlined,
+                        size: 26,
+                      ),
+                    ))
+                : const SizedBox.shrink(),
+            (options.tips != null) && options.tips!.isNotEmpty
+                ? const SizedBox(
+                    width: 5,
+                  )
+                : const SizedBox.shrink(),
+            options.reddot == true
+                ? Container(
+                    width: 8,
+                    height: 8,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ))
+                : const SizedBox.shrink(),
+            Expanded(
+              flex: ((1 - options.textWidthPercent) * 10).toInt(),
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  options.name,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: (options.textWidthPercent * 10).toInt(),
+              child: Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: Text(
+                    options.selected ?? "",
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  )),
+            ),
+            Icon(
+              Icons.arrow_drop_down,
+              size: 16,
+            ),
+          ],
+        ));
   }
 }
