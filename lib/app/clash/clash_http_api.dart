@@ -131,12 +131,10 @@ class ClashConnections {
   num uploadTotal = 0;
   num downloadTotal = 0;
   num memory = 0;
-  num memoryRSS = 0;
   Map<String, dynamic> toJson() => {
         'uploadTotal': uploadTotal,
         'downloadTotal': downloadTotal,
         'memory': memory,
-        'memoryrss': memoryRSS,
       };
   void fromJson(Map<String, dynamic>? map) {
     if (map == null) {
@@ -146,7 +144,6 @@ class ClashConnections {
     uploadTotal = map['uploadTotal'] ?? 0;
     downloadTotal = map['downloadTotal'] ?? 0;
     memory = map['memory'] ?? 0;
-    memoryRSS = map['memoryrss'] ?? 0;
   }
 }
 

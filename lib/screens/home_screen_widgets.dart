@@ -434,7 +434,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
           ClashConnections body = ClashConnections();
           body.fromJson(obj);
           _memory.value =
-              "${ClashHttpApi.convertTrafficToStringDouble(body.memory)}/${ClashHttpApi.convertTrafficToStringDouble(body.memoryRSS)}";
+              ClashHttpApi.convertTrafficToStringDouble(body.memory);
           _connections.value =
               "↑ ${ClashHttpApi.convertTrafficToStringDouble(body.uploadTotal)}  ↓ ${ClashHttpApi.convertTrafficToStringDouble(body.downloadTotal)} ";
         },
