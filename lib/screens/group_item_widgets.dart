@@ -6,7 +6,6 @@ import 'package:clashmi/screens/group_item_options.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/widgets/sheet.dart';
 import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
 
 class GroupItemText extends StatelessWidget {
   const GroupItemText({
