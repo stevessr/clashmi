@@ -36,11 +36,12 @@ class Websocket {
     if (_connecting) {
       return;
     }
-
+    _connecting = true;
     try {
       await _subscriptions?.cancel();
       _httpClient?.close(force: true);
-      _httpClient ??= HttpClient();
+      _httpClient = null;
+      _httpClient = HttpClient();
       _httpClient!.userAgent = userAgent;
       _httpClient!.connectionTimeout =
           connectionTimeout ?? const Duration(seconds: 3);
