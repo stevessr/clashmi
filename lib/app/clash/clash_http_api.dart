@@ -127,6 +127,29 @@ class ClashTraffic {
   }
 }
 
+class ClashConnections {
+  num uploadTotal = 0;
+  num downloadTotal = 0;
+  num memory = 0;
+  num memoryRSS = 0;
+  Map<String, dynamic> toJson() => {
+        'uploadTotal': uploadTotal,
+        'downloadTotal': downloadTotal,
+        'memory': memory,
+        'memoryrss': memoryRSS,
+      };
+  void fromJson(Map<String, dynamic>? map) {
+    if (map == null) {
+      return;
+    }
+
+    uploadTotal = map['uploadTotal'] ?? 0;
+    downloadTotal = map['downloadTotal'] ?? 0;
+    memory = map['memory'] ?? 0;
+    memoryRSS = map['memoryrss'] ?? 0;
+  }
+}
+
 class ClashLog {
   String type = "";
   String payload = "";
@@ -442,13 +465,16 @@ class ClashHttpApi {
 
   static Future<String> getTrafficUrl() async {
     String secret = await getSecret();
-
     return "$wshost:${getControlPort?.call()}/traffic?token=$secret";
+  }
+
+  static Future<String> getConnectionsUrl() async {
+    String secret = await getSecret();
+    return "$wshost:${getControlPort?.call()}/connections?token=$secret";
   }
 
   static Future<String> getLogUrl() async {
     String secret = await getSecret();
-
     return "$wshost:${getControlPort?.call()}/logs?token=$secret&level=info";
   }
 

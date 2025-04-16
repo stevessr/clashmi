@@ -39,13 +39,18 @@ class HomeScreenWidgetPart1 extends StatefulWidget {
 
 class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   static final String _kNoSpeed = "↑ 0 B/s   ↓ 0 B/s";
+  static final String _kNoConnection = "↑ 0 B   ↓ 0 B";
+  static final String _kNoMemory = "0 B   0 B";
   bool _working = false;
   FlutterVpnServiceState _state = FlutterVpnServiceState.disconnected;
   Timer? _timerStateChecker;
 
-  Websocket? _websocket;
-
+  Websocket? _websocketTraffic;
+  Websocket? _websocketConnections;
+  final ValueNotifier<String> _memory = ValueNotifier<String>(_kNoMemory);
   final ValueNotifier<String> _trafficSpeed = ValueNotifier<String>(_kNoSpeed);
+  final ValueNotifier<String> _connections =
+      ValueNotifier<String>(_kNoConnection);
   final ValueNotifier<String> _proxyNow = ValueNotifier<String>("");
   bool _proxyNowUpdating = false;
 
@@ -156,6 +161,18 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
               ]),
             ],
           ),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            ValueListenableBuilder<String>(
+              builder: _buildWithTrafficSpeedValue,
+              valueListenable: _memory,
+            ),
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            ValueListenableBuilder<String>(
+              builder: _buildWithTrafficSpeedValue,
+              valueListenable: _connections,
+            ),
+          ]),
           Row(mainAxisAlignment: MainAxisAlignment.start, children: [
             ValueListenableBuilder<String>(
               builder: _buildWithTrafficSpeedValue,
@@ -316,19 +333,23 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     //print("_onStateChanged $_state->$state");
     _state = state;
     if (state == FlutterVpnServiceState.disconnected) {
+      _disconnectToConntection();
       _disconnectToTraffic();
     } else if (state == FlutterVpnServiceState.connecting) {
     } else if (state == FlutterVpnServiceState.connected) {
       if (!AppLifecycleStateNofity.isPaused()) {
+        _connectToConntection();
         _connectToTraffic();
       }
     } else if (state == FlutterVpnServiceState.reasserting) {
+      _disconnectToConntection();
       _disconnectToTraffic();
     } else if (state == FlutterVpnServiceState.disconnecting) {
       _stopStateCheckTimer();
 
       Zashboard.stop();
     } else {
+      _disconnectToConntection();
       _disconnectToTraffic();
     }
 
@@ -338,10 +359,14 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   Future<void> _onStateResumed() async {
     _checkState();
     _startStateCheckTimer();
+    _connectToConntection();
+    _connectToTraffic();
   }
 
   Future<void> _onStatePaused() async {
     _stopStateCheckTimer();
+    _disconnectToConntection();
+    _disconnectToTraffic();
   }
 
   Future<void> _onCurrentChanged(String id) async {
@@ -380,6 +405,48 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     _timerStateChecker = null;
   }
 
+  Future<void> _connectToConntection() async {
+    bool started = await VPNService.getStarted();
+    if (!started) {
+      return;
+    }
+    if (AppLifecycleStateNofity.isPaused()) {
+      return;
+    }
+
+    _websocketConnections ??= Websocket(
+        url: await ClashHttpApi.getConnectionsUrl(),
+        userAgent: await HttpUtils.getUserAgent(),
+        onMessage: (String message) {
+          if (AppLifecycleStateNofity.isPaused()) {
+            Future.delayed(const Duration(seconds: 0), () async {
+              _disconnectToConntection();
+            });
+            return;
+          }
+          var obj = jsonDecode(message);
+          ClashConnections body = ClashConnections();
+          body.fromJson(obj);
+          _memory.value =
+              "${ClashHttpApi.convertTrafficToStringDouble(body.memory)}/${ClashHttpApi.convertTrafficToStringDouble(body.memoryRSS)}";
+          _connections.value =
+              "↑ ${ClashHttpApi.convertTrafficToStringDouble(body.uploadTotal)}  ↓ ${ClashHttpApi.convertTrafficToStringDouble(body.downloadTotal)} ";
+        },
+        onDone: () {
+          _disconnectToConntection();
+        },
+        onError: (err) {
+          _disconnectToConntection();
+        });
+    await _websocketConnections!.connect();
+  }
+
+  Future<void> _disconnectToConntection() async {
+    await _websocketConnections?.disconnect();
+    _connections.value = _kNoConnection;
+    _memory.value = _kNoMemory;
+  }
+
   Future<void> _connectToTraffic() async {
     bool started = await VPNService.getStarted();
     if (!started) {
@@ -389,7 +456,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
       return;
     }
 
-    _websocket ??= Websocket(
+    _websocketTraffic ??= Websocket(
         url: await ClashHttpApi.getTrafficUrl(),
         userAgent: await HttpUtils.getUserAgent(),
         onMessage: (String message) {
@@ -402,9 +469,8 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
           var obj = jsonDecode(message);
           ClashTraffic traffic = ClashTraffic();
           traffic.fromJson(obj);
-          final trafficSpeedNotify =
+          _trafficSpeed.value =
               "↑ ${ClashHttpApi.convertTrafficToStringDouble(traffic.upload)}/s  ↓ ${ClashHttpApi.convertTrafficToStringDouble(traffic.download)}/s";
-          _trafficSpeed.value = trafficSpeedNotify;
 
           final duration = Duration(seconds: _proxyNow.value.isEmpty ? 1 : 5);
           Future.delayed(duration, () async {
@@ -417,12 +483,11 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
         onError: (err) {
           _disconnectToTraffic();
         });
-    await _websocket!.connect();
+    await _websocketTraffic!.connect();
   }
 
   Future<void> _disconnectToTraffic() async {
-    await _websocket?.disconnect();
-
+    await _websocketTraffic?.disconnect();
     _trafficSpeed.value = _kNoSpeed;
     _proxyNow.value = "";
   }
