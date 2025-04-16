@@ -72,11 +72,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   @override
   Widget build(BuildContext context) {
     final tcontext = Translations.of(context);
-    bool running = _state == FlutterVpnServiceState.connected ||
-        _state == FlutterVpnServiceState.connecting ||
-        _state == FlutterVpnServiceState.disconnecting ||
-        _state == FlutterVpnServiceState.reasserting;
-    bool started = _state == FlutterVpnServiceState.connected;
+    bool connected = _state == FlutterVpnServiceState.connected;
     final currentProfile = ProfileManager.getCurrent();
     var widgets = [
       Column(
@@ -90,14 +86,14 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
                     width: 8,
                     height: 8,
                     decoration: BoxDecoration(
-                      color: running ? Colors.green : Colors.grey,
+                      color: connected ? Colors.green : Colors.grey,
                       shape: BoxShape.circle,
                     )),
                 SizedBox(
                   width: 10,
                 ),
                 Text(
-                  running
+                  connected
                       ? tcontext.meta.connected
                       : tcontext.meta.disconnected,
                   textAlign: TextAlign.left,
@@ -161,7 +157,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
               ]),
             ],
           ),
-          _state == FlutterVpnServiceState.connected
+          connected
               ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                   ValueListenableBuilder<String>(
                     builder: _buildWithTrafficSpeedValue,
@@ -169,7 +165,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
                   ),
                 ])
               : const SizedBox.shrink(),
-          _state == FlutterVpnServiceState.connected
+          connected
               ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                   ValueListenableBuilder<String>(
                     builder: _buildWithTrafficSpeedValue,
@@ -177,7 +173,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
                   ),
                 ])
               : const SizedBox.shrink(),
-          _state == FlutterVpnServiceState.connected
+          connected
               ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                   ValueListenableBuilder<String>(
                     builder: _buildWithTrafficSpeedValue,
@@ -241,7 +237,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
       ),
     ];
 
-    if (started) {
+    if (connected) {
       widgets.add(ListTile(
         title: Text(tcontext.meta.proxy),
         subtitle: ValueListenableBuilder<String>(
@@ -341,6 +337,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     if (state == FlutterVpnServiceState.disconnected) {
       _disconnectToConntection();
       _disconnectToTraffic();
+      _proxyNow.value = "";
     } else if (state == FlutterVpnServiceState.connecting) {
     } else if (state == FlutterVpnServiceState.connected) {
       if (!AppLifecycleStateNofity.isPaused()) {
@@ -350,13 +347,14 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     } else if (state == FlutterVpnServiceState.reasserting) {
       _disconnectToConntection();
       _disconnectToTraffic();
+      _proxyNow.value = "";
     } else if (state == FlutterVpnServiceState.disconnecting) {
       _stopStateCheckTimer();
-
       Zashboard.stop();
     } else {
       _disconnectToConntection();
       _disconnectToTraffic();
+      _proxyNow.value = "";
     }
 
     setState(() {});
@@ -495,7 +493,6 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   Future<void> _disconnectToTraffic() async {
     await _websocketTraffic?.disconnect();
     _trafficSpeed.value = _kNoSpeed;
-    _proxyNow.value = "";
   }
 
   Future<void> _updateProxyNow() async {
