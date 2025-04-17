@@ -518,9 +518,15 @@ RawConfig _$RawConfigFromJson(Map<String, dynamic> json) => RawConfig(
       json['disable-keep-alive'] as bool?,
       json['listeners'] as Map<String, dynamic>?,
       json['hosts'] as Map<String, dynamic>?,
-      RawDNS.fromJson(json['dns'] as Map<String, dynamic>),
-      RawNTP.fromJson(json['ntp'] as Map<String, dynamic>),
-      RawTun.fromJson(json['tun'] as Map<String, dynamic>),
+      json['dns'] == null
+          ? null
+          : RawDNS.fromJson(json['dns'] as Map<String, dynamic>),
+      json['ntp'] == null
+          ? null
+          : RawNTP.fromJson(json['ntp'] as Map<String, dynamic>),
+      json['tun'] == null
+          ? null
+          : RawTun.fromJson(json['tun'] as Map<String, dynamic>),
       json['tuic-server'] == null
           ? null
           : RawTuicServer.fromJson(json['tuic-server'] as Map<String, dynamic>),
@@ -534,14 +540,22 @@ RawConfig _$RawConfigFromJson(Map<String, dynamic> json) => RawConfig(
       json['profile'] == null
           ? null
           : RawProfile.fromJson(json['profile'] as Map<String, dynamic>),
-      RawGeoXUrl.fromJson(json['geox-url'] as Map<String, dynamic>),
-      RawSniffer.fromJson(json['sniffer'] as Map<String, dynamic>),
-      RawTLS.fromJson(json['tls'] as Map<String, dynamic>),
+      json['geox-url'] == null
+          ? null
+          : RawGeoXUrl.fromJson(json['geox-url'] as Map<String, dynamic>),
+      json['sniffer'] == null
+          ? null
+          : RawSniffer.fromJson(json['sniffer'] as Map<String, dynamic>),
+      json['tls'] == null
+          ? null
+          : RawTLS.fromJson(json['tls'] as Map<String, dynamic>),
       json['clash-for-android'] == null
           ? null
           : RawClashForAndroid.fromJson(
               json['clash-for-android'] as Map<String, dynamic>),
-      RawExtension.fromJson(json['extension'] as Map<String, dynamic>),
+      json['extension'] == null
+          ? null
+          : RawExtension.fromJson(json['extension'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$RawConfigToJson(RawConfig instance) => <String, dynamic>{
@@ -592,16 +606,16 @@ Map<String, dynamic> _$RawConfigToJson(RawConfig instance) => <String, dynamic>{
       'disable-keep-alive': instance.DisableKeepAlive,
       'listeners': instance.Listeners,
       'hosts': instance.Hosts,
-      'dns': instance.DNS.toJson(),
-      'ntp': instance.NTP.toJson(),
-      'tun': instance.Tun.toJson(),
+      'dns': instance.DNS?.toJson(),
+      'ntp': instance.NTP?.toJson(),
+      'tun': instance.Tun?.toJson(),
       'tuic-server': instance.TuicServer?.toJson(),
       'iptables': instance.IPTables?.toJson(),
       'experimental': instance.Experimental?.toJson(),
       'profile': instance.Profile?.toJson(),
-      'geox-url': instance.GeoXUrl.toJson(),
-      'sniffer': instance.Sniffer.toJson(),
-      'tls': instance.TLS.toJson(),
+      'geox-url': instance.GeoXUrl?.toJson(),
+      'sniffer': instance.Sniffer?.toJson(),
+      'tls': instance.TLS?.toJson(),
       'clash-for-android': instance.ClashForAndroid?.toJson(),
-      'extension': instance.Extension.toJson(),
+      'extension': instance.Extension?.toJson(),
     };

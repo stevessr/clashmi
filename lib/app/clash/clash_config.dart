@@ -909,11 +909,11 @@ class RawConfig {
   @JsonKey(name: 'hosts')
   Map<String, dynamic>? Hosts;
   @JsonKey(name: 'dns')
-  RawDNS DNS;
+  RawDNS? DNS;
   @JsonKey(name: 'ntp')
-  RawNTP NTP;
+  RawNTP? NTP;
   @JsonKey(name: 'tun')
-  RawTun Tun;
+  RawTun? Tun;
   @JsonKey(name: 'tuic-server')
   RawTuicServer? TuicServer;
   @JsonKey(name: 'iptables')
@@ -923,15 +923,15 @@ class RawConfig {
   @JsonKey(name: 'profile')
   RawProfile? Profile;
   @JsonKey(name: 'geox-url')
-  RawGeoXUrl GeoXUrl;
+  RawGeoXUrl? GeoXUrl;
   @JsonKey(name: 'sniffer')
-  RawSniffer Sniffer;
+  RawSniffer? Sniffer;
   @JsonKey(name: 'tls')
-  RawTLS TLS;
+  RawTLS? TLS;
   @JsonKey(name: 'clash-for-android')
   RawClashForAndroid? ClashForAndroid;
   @JsonKey(name: 'extension')
-  RawExtension Extension;
+  RawExtension? Extension;
 
   RawConfig.by(
       {this.Port,

@@ -57,7 +57,6 @@ Future<void> showAppSettings(BuildContext context) async {
                 }
                 setting.ui.theme = selected;
 
-                SettingManager.saveConfig();
                 Provider.of<Themes>(context, listen: false)
                     .setTheme(selected, true);
               })),
@@ -93,6 +92,7 @@ Future<void> showAppSettings(BuildContext context) async {
                 title: tcontext.meta.settingApp,
                 getOptions: getOptions,
               )));
+  SettingManager.saveConfig();
 }
 
 Future<void> showClashSettings(BuildContext context) async {
@@ -102,6 +102,8 @@ Future<void> showClashSettings(BuildContext context) async {
     final started = await VPNService.getStarted();
     var appSetting = SettingManager.getConfig();
     var setting = ClashSettingManager.getConfig();
+    var dns = setting.DNS!;
+    var extensions = setting.Extension!;
     final logLevels = ClashLogLevel.toList();
     final globalFingerprints = ClashGlobalClientFingerprint.toList();
     List<GroupItemOptions> options00 = [
@@ -145,10 +147,10 @@ Future<void> showClashSettings(BuildContext context) async {
           ? GroupItemOptions(
               textFormFieldOptions: GroupItemTextFieldOptions(
                   name: "Pprof Address",
-                  text: setting.Extension.PprofAddr,
+                  text: extensions.PprofAddr,
                   textWidthPercent: 0.5,
                   onChanged: (String value) {
-                    setting.Extension.PprofAddr = value;
+                    extensions.PprofAddr = value;
                   }))
           : GroupItemOptions(),
       !inProduction
@@ -156,14 +158,12 @@ Future<void> showClashSettings(BuildContext context) async {
               pushOptions: GroupItemPushOptions(
                   name: "Pprof",
                   onPush: () async {
-                    if (setting.Extension.PprofAddr == null ||
-                        setting.Extension.PprofAddr!.isEmpty) {
+                    if (extensions.PprofAddr == null ||
+                        extensions.PprofAddr!.isEmpty) {
                       return;
                     }
-                    await WebviewHelper.loadUrl(
-                        context,
-                        "http://${setting.Extension.PprofAddr}/debug/pprof/",
-                        "pprof",
+                    await WebviewHelper.loadUrl(context,
+                        "http://${extensions.PprofAddr}/debug/pprof/", "pprof",
                         title: "Pprof");
                   }))
           : GroupItemOptions(),
@@ -187,6 +187,7 @@ Future<void> showClashSettings(BuildContext context) async {
               switchValue: setting.IPv6,
               onSwitch: (bool value) async {
                 setting.IPv6 = value;
+                dns.IPv6 = value;
               })),
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
@@ -239,18 +240,18 @@ Future<void> showClashSettings(BuildContext context) async {
       GroupItemOptions(
           textFormFieldOptions: GroupItemTextFieldOptions(
               name: tcontext.meta.delayTestUrl,
-              text: setting.Extension.DelayTestUrl,
+              text: extensions.DelayTestUrl,
               textWidthPercent: 0.5,
               onChanged: (String value) {
-                setting.Extension.DelayTestUrl = value;
+                extensions.DelayTestUrl = value;
               })),
       GroupItemOptions(
           textFormFieldOptions: GroupItemTextFieldOptions(
               name: tcontext.meta.delayTestTimeout,
-              text: setting.Extension.DelayTestTimeout?.toString(),
+              text: extensions.DelayTestTimeout?.toString(),
               textWidthPercent: 0.5,
               onChanged: (String value) {
-                setting.Extension.DelayTestTimeout = int.tryParse(value);
+                extensions.DelayTestTimeout = int.tryParse(value);
               })),
     ];
     List<GroupItemOptions> options4 = [
@@ -319,14 +320,15 @@ Future<void> showClashSettings(BuildContext context) async {
                 title: tcontext.meta.settingCore,
                 getOptions: getOptions,
               )));
+  ClashSettingManager.saveSetting();
 }
 
 Future<void> showClashSettingsTUN(BuildContext context) async {
   final tcontext = Translations.of(context);
   Future<List<GroupItem>> getOptions(BuildContext context) async {
     var setting = ClashSettingManager.getConfig();
-    var tun = setting.Tun;
-    var extensions = setting.Extension;
+    var tun = setting.Tun!;
+    var extensions = setting.Extension!;
     final tunStacks = ClashTunStack.toList();
     List<GroupItemOptions> options = [
       GroupItemOptions(
@@ -431,7 +433,8 @@ Future<void> showClashSettingsTUN(BuildContext context) async {
 Future<void> showClashSettingsDNS(BuildContext context) async {
   final tcontext = Translations.of(context);
   Future<List<GroupItem>> getOptions(BuildContext context) async {
-    var dns = ClashSettingManager.getConfig().DNS;
+    var setting = ClashSettingManager.getConfig();
+    var dns = setting.DNS!;
     final enhancedModes = ClashDnsEnhancedMode.toList();
     final fakeIPFilterModes = ClashFakeIPFilterMode.toList();
     List<GroupItemOptions> options = [
@@ -628,8 +631,8 @@ Future<void> showClashSettingsDNS(BuildContext context) async {
 Future<void> showClashSettingsNTP(BuildContext context) async {
   final tcontext = Translations.of(context);
   Future<List<GroupItem>> getOptions(BuildContext context) async {
-    var ntp = ClashSettingManager.getConfig().NTP;
-
+    var setting = ClashSettingManager.getConfig();
+    var ntp = setting.NTP!;
     List<GroupItemOptions> options = [
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
@@ -676,7 +679,8 @@ Future<void> showClashSettingsNTP(BuildContext context) async {
 Future<void> showClashSettingsTLS(BuildContext context) async {
   final tcontext = Translations.of(context);
   Future<List<GroupItem>> getOptions(BuildContext context) async {
-    var tls = ClashSettingManager.getConfig().TLS;
+    var setting = ClashSettingManager.getConfig();
+    var tls = setting.TLS!;
     List<GroupItemOptions> options = [
       GroupItemOptions(
           textFormFieldOptions: GroupItemTextFieldOptions(
@@ -728,7 +732,8 @@ Future<void> showClashSettingsTLS(BuildContext context) async {
 Future<void> showClashSettingsSniffer(BuildContext context) async {
   final tcontext = Translations.of(context);
   Future<List<GroupItem>> getOptions(BuildContext context) async {
-    var sniffer = ClashSettingManager.getConfig().Sniffer;
+    var setting = ClashSettingManager.getConfig();
+    var sniffer = setting.Sniffer!;
     List<GroupItemOptions> options = [
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
@@ -765,7 +770,7 @@ Future<void> showClashSettingsGEO(BuildContext context) async {
   final tcontext = Translations.of(context);
   Future<List<GroupItem>> getOptions(BuildContext context) async {
     var setting = ClashSettingManager.getConfig();
-    var geo = setting.GeoXUrl;
+    var geo = setting.GeoXUrl!;
     List<GroupItemOptions> options = [
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(

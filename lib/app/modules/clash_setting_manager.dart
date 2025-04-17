@@ -15,15 +15,109 @@ import 'package:clashmi/app/utils/app_utils.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 
 class ClashSettingManager {
+  static const _gateWay = "172.19.0";
   static RawConfig _setting = defaultConfig();
 
   static Future<void> init() async {
     ClashHttpApi.getControlPort = () {
       return getControlPort();
     };
-    await loadFromSetting();
-
+    await loadSetting();
     await initGeo();
+  }
+
+  static RawTun defaultTun() {
+    return RawTun.by(
+        Enable:
+            true, //Platform.isAndroid || Platform.isIOS || Platform.isMacOS,
+        Stack: "gvisor",
+        MTU: 9000,
+        Inet4Address: ["$_gateWay.1/30"],
+        DNSHijack: ["$_gateWay.2:53"]);
+  }
+
+  static RawDNS defaultDNS() {
+    return RawDNS.by(
+      Enable: true,
+      IPv6: false,
+      UseHosts: true,
+      UseSystemHosts: true,
+      NameServer: [
+        "tls://8.8.4.4",
+        "tls://1.1.1.1",
+        "tls://223.5.5.5:853",
+        "https://dns.alidns.com/dns-query#h3=true",
+        "https://mozilla.cloudflare-dns.com/dns-query#DNS&h3=true",
+        "quic://dns.adguard.com:784",
+      ],
+      DefaultNameserver: [
+        "114.114.114.114",
+        "8.8.8.8",
+        "223.5.5.5",
+        "119.29.29.29",
+      ],
+      NameServerPolicy: {
+        "www.baidu.com": "114.114.114.114",
+        "+.internal.crop.com": "10.0.0.1",
+      },
+      ProxyServerNameserver: [
+        "tls://8.8.4.4",
+        "tls://1.1.1.1",
+        "tls://223.5.5.5:853",
+        "https://dns.alidns.com/dns-query#h3=true",
+      ],
+      Fallback: [
+        "tls://223.5.5.5:853",
+        "https://dns.alidns.com/dns-query#h3=true",
+        "https://cloudflare-dns.com/dns-query",
+        "https://1.12.12.12/dns-query",
+        "https://120.53.53.53/dns-query"
+      ],
+      FallbackFilter: RawFallbackFilter.by(GeoIP: false),
+      EnhancedMode: ClashDnsEnhancedMode.fakeIp.name,
+      FakeIPRange: "$_gateWay.1/16",
+      FakeIPFilterMode: ClashFakeIPFilterMode.blacklist.name,
+      FakeIPFilter: [
+        "*.lan",
+        "localhost.ptlogin2.qq.com",
+      ],
+    );
+  }
+
+  static RawNTP defaultNTP() {
+    return RawNTP.by(Enable: null);
+  }
+
+  static RawGeoXUrl defaultGeoXUrl() {
+    return RawGeoXUrl.by(
+        GeoIp:
+            "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat",
+        Mmdb:
+            "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb",
+        ASN:
+            "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb",
+        GeoSite:
+            "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat");
+  }
+
+  static RawSniffer defaultSniffer() {
+    return RawSniffer.by(Enable: null);
+  }
+
+  static RawTLS defaultTLS() {
+    return RawTLS.by(
+        Certificate: null, PrivateKey: null, CustomTrustCert: null);
+  }
+
+  static RawExtension defaultExtension() {
+    return RawExtension.by(
+        Tun: RawExtensionTun.by(
+          HttpProxyEnable: null,
+          HttpProxyServer: "127.0.0.1",
+        ),
+        PprofAddr: "127.0.0.1:4578",
+        DelayTestUrl: "https://www.gstatic.com",
+        DelayTestTimeout: 5000);
   }
 
   static RawConfig defaultConfig() {
@@ -34,81 +128,15 @@ class ClashSettingManager {
       MixedPort: 7890,
       ExternalController: "127.0.0.1:9090",
       GlobalClientFingerprint: ClashGlobalClientFingerprint.chrome.name,
-      DNS: RawDNS.by(
-        Enable: true,
-        IPv6: false,
-        UseHosts: true,
-        UseSystemHosts: true,
-        NameServer: [
-          "tls://8.8.4.4",
-          "tls://1.1.1.1",
-          "tls://223.5.5.5:853",
-          "https://dns.alidns.com/dns-query#h3=true",
-          "https://mozilla.cloudflare-dns.com/dns-query#DNS&h3=true",
-          "quic://dns.adguard.com:784",
-        ],
-        DefaultNameserver: [
-          "114.114.114.114",
-          "8.8.8.8",
-          "223.5.5.5",
-          "119.29.29.29",
-        ],
-        NameServerPolicy: {
-          "www.baidu.com": "114.114.114.114",
-          "+.internal.crop.com": "10.0.0.1",
-        },
-        ProxyServerNameserver: [
-          "tls://8.8.4.4",
-          "tls://1.1.1.1",
-          "tls://223.5.5.5:853",
-          "https://dns.alidns.com/dns-query#h3=true",
-        ],
-        Fallback: [
-          "tls://223.5.5.5:853",
-          "https://dns.alidns.com/dns-query#h3=true",
-          "https://cloudflare-dns.com/dns-query",
-          "https://1.12.12.12/dns-query",
-          "https://120.53.53.53/dns-query"
-        ],
-        FallbackFilter: RawFallbackFilter.by(GeoIP: false),
-        EnhancedMode: ClashDnsEnhancedMode.fakeIp.name,
-        FakeIPRange: "172.19.0.1/16",
-        FakeIPFilterMode: ClashFakeIPFilterMode.blacklist.name,
-        FakeIPFilter: [
-          "*.lan",
-          "localhost.ptlogin2.qq.com",
-        ],
-      ),
-      NTP: RawNTP.by(Enable: null),
-      Tun: RawTun.by(
-          Enable:
-              true, //Platform.isAndroid || Platform.isIOS || Platform.isMacOS,
-          Stack: "gvisor",
-          MTU: 9000,
-          Inet4Address: ["172.19.0.1/30"],
-          DNSHijack: ["172.19.0.2:53"]),
+      DNS: defaultDNS(),
+      NTP: defaultNTP(),
+      Tun: defaultTun(),
       GeoAutoUpdate: false,
       GeoUpdateInterval: 7 * 24 * 3600,
-      GeoXUrl: RawGeoXUrl.by(
-          GeoIp:
-              "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat",
-          Mmdb:
-              "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb",
-          ASN:
-              "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb",
-          GeoSite:
-              "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"),
-      Sniffer: RawSniffer.by(Enable: null),
-      TLS:
-          RawTLS.by(Certificate: null, PrivateKey: null, CustomTrustCert: null),
-      Extension: RawExtension.by(
-          Tun: RawExtensionTun.by(
-            HttpProxyEnable: null,
-            HttpProxyServer: "127.0.0.1",
-          ),
-          PprofAddr: "127.0.0.1:4578",
-          DelayTestUrl: "https://www.gstatic.com",
-          DelayTestTimeout: 5000),
+      GeoXUrl: defaultGeoXUrl(),
+      Sniffer: defaultSniffer(),
+      TLS: defaultTLS(),
+      Extension: defaultExtension(),
     );
   }
 
@@ -127,9 +155,9 @@ class ClashSettingManager {
       TLS: RawTLS.by(),
       Extension: RawExtension.by(
           Tun: RawExtensionTun.by(HttpProxyEnable: null),
-          PprofAddr: _setting.Extension.PprofAddr,
-          DelayTestUrl: _setting.Extension.DelayTestUrl,
-          DelayTestTimeout: _setting.Extension.DelayTestTimeout),
+          PprofAddr: _setting.Extension?.PprofAddr,
+          DelayTestUrl: _setting.Extension?.DelayTestUrl,
+          DelayTestTimeout: _setting.Extension?.DelayTestTimeout),
     );
   }
 
@@ -166,25 +194,25 @@ class ClashSettingManager {
   }
 
   static Future<void> saveSetting() async {
-    _setting.Extension.Tun.HttpProxyServerPort = _setting.MixedPort;
+    _setting.Extension?.Tun.HttpProxyServerPort = _setting.MixedPort;
     if (Platform.isAndroid) {
       final perapp = SettingManager.getConfig().perapp;
       if (perapp.enable) {
         if (perapp.isInclude) {
-          _setting.Tun.IncludePackage = [AppUtils.getId()];
-          _setting.Tun.IncludePackage!.addAll(perapp.list);
-          _setting.Tun.ExcludePackage = [];
+          _setting.Tun?.IncludePackage = [AppUtils.getId()];
+          _setting.Tun?.IncludePackage!.addAll(perapp.list);
+          _setting.Tun?.ExcludePackage = [];
         } else {
-          _setting.Tun.IncludePackage = [];
-          _setting.Tun.ExcludePackage = perapp.list;
+          _setting.Tun?.IncludePackage = [];
+          _setting.Tun?.ExcludePackage = perapp.list;
         }
       } else {
-        _setting.Tun.IncludePackage = null;
-        _setting.Tun.ExcludePackage = null;
+        _setting.Tun?.IncludePackage = null;
+        _setting.Tun?.ExcludePackage = null;
       }
     } else {
-      _setting.Tun.IncludePackage = null;
-      _setting.Tun.ExcludePackage = null;
+      _setting.Tun?.IncludePackage = null;
+      _setting.Tun?.ExcludePackage = null;
     }
 
     String filePath = await PathUtils.serviceCoreSettingFilePath();
@@ -205,7 +233,7 @@ class ClashSettingManager {
     } catch (err, stacktrace) {}
   }
 
-  static Future<void> loadFromSetting() async {
+  static Future<void> loadSetting() async {
     String filePath = await PathUtils.serviceCoreSettingFilePath();
     var file = File(filePath);
     bool exists = await file.exists();
@@ -213,35 +241,33 @@ class ClashSettingManager {
       try {
         String content = await file.readAsString();
         if (content.isNotEmpty) {
-          if (await _load(content)) {
-            await _initFixed();
-            return;
-          }
+          await _load(content);
         }
       } catch (err, stacktrace) {
-        Log.w(
-            "ClashSettingManager.loadFromSetting exception ${err.toString()} ");
+        Log.w("ClashSettingManager.loadSetting exception ${err.toString()} ");
       }
     }
-    await loadFromDefault();
-  }
-
-  static Future<void> loadFromDefault() async {
-    await _load("{}");
     await _initFixed();
   }
 
-  static Future<bool> _load(String content) async {
-    bool ok = true;
+  static Future<void> _load(String content) async {
+    late RawConfig setting;
     try {
       var config = jsonDecode(content);
-      _setting = RawConfig.fromJson(config);
+      setting = RawConfig.fromJson(config);
     } catch (err, stacktrace) {
       Log.w("ClashSettingManager.load exception ${err.toString()} ");
-      ok = false;
+      return;
     }
+    _setting = setting;
+    _setting.DNS ??= defaultDNS();
+    _setting.NTP ??= defaultNTP();
+    _setting.Tun ??= defaultTun();
 
-    return ok;
+    _setting.GeoXUrl ??= defaultGeoXUrl();
+    _setting.Sniffer ??= defaultSniffer();
+    _setting.TLS ??= defaultTLS();
+    _setting.Extension ??= defaultExtension();
   }
 
   static Future<void> _initFixed() async {
@@ -251,9 +277,9 @@ class ClashSettingManager {
     _setting.UnifiedDelay = true;
     _setting.ExternalUIURL = "";
     _setting.ExternalControllerCors = null;
-    _setting.Tun.Device = AppUtils.getName();
-    _setting.Tun.AutoRoute = !Platform.isAndroid;
-    _setting.Tun.AutoDetectInterface = !Platform.isAndroid;
+    _setting.Tun?.Device = AppUtils.getName();
+    _setting.Tun?.AutoRoute = !Platform.isAndroid;
+    _setting.Tun?.AutoDetectInterface = !Platform.isAndroid;
     _setting.Profile = RawProfile.by(StoreSelected: true);
     _setting.FindProcessMode = Platform.isIOS
         ? ClashFindProcessMode.off.name
