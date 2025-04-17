@@ -20,6 +20,14 @@ public class ExtensionPlatformInterface: NSObject, LibclashTunInterfaceProtocol{
         }
     }
 
+    public func findConnectionOwner(_: Int32, sourceAddress _: String?, sourcePort _: Int32, destinationAddress _: String?, destinationPort _: Int32, ret0_ _: UnsafeMutablePointer<Int32>?) throws {
+        throw NSError(domain: "not implemented", code: 0)
+    }
+
+    public func packageName(byUid _: Int32, error _: NSErrorPointer) -> String {
+        ""
+    }
+    
     private func openTun0(_ options: LibclashTunOptionsProtocol?, _ ret0_: UnsafeMutablePointer<Int32>?) async throws {
         guard let options else {
             throw NSError(domain: "nil options", code: 0)
