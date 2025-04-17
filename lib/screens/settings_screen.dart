@@ -410,10 +410,7 @@ Future<void> showClashSettingsTUN(BuildContext context) async {
                 }))
       ]);
     }
-    if (Platform.isAndroid) {
-      //List<String>? IncludePackage;
-      //List<String>? ExcludePackage;
-    }
+
     return [
       GroupItem(options: options),
       GroupItem(options: options1),
