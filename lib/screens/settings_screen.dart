@@ -14,6 +14,7 @@ import 'package:clashmi/screens/group_item_options.dart';
 import 'package:clashmi/screens/group_screen.dart';
 import 'package:clashmi/screens/language_settings_screen.dart';
 import 'package:clashmi/screens/list_add_screen.dart';
+import 'package:clashmi/screens/perapp_android_screen.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/themes.dart';
 import 'package:clashmi/screens/webview_helper.dart';
@@ -360,33 +361,48 @@ Future<void> showClashSettingsTUN(BuildContext context) async {
               })),
     ];
     List<GroupItemOptions> options1 = [];
-    if (Platform.isAndroid || Platform.isIOS) {
+    if (Platform.isAndroid) {
       options1.addAll([
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
-                name: tcontext.tun.appendSystemProxy,
-                switchValue: extensions.Tun.HttpProxyEnable,
-                onSwitch: (bool value) async {
-                  extensions.Tun.HttpProxyEnable = value;
-                })),
-        GroupItemOptions(
-            switchOptions: GroupItemSwitchOptions(
-                name: tcontext.tun.allowBypassSystemProxy,
+                name: tcontext.tun.allowBypass,
                 switchValue: extensions.Tun.AllowBypass,
                 onSwitch: (bool value) async {
                   extensions.Tun.AllowBypass = value;
                 })),
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
-                name: tcontext.tun.bypassDomain,
+                name: tcontext.PerAppAndroidScreen.title,
+                onPush: () async {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          settings: PerAppAndroidScreen.routSettings(),
+                          builder: (context) => const PerAppAndroidScreen()));
+                }))
+      ]);
+    }
+    if (Platform.isAndroid || Platform.isIOS) {
+      options1.addAll([
+        GroupItemOptions(
+            switchOptions: GroupItemSwitchOptions(
+                name: tcontext.tun.appendHttpProxy,
+                switchValue: extensions.Tun.HttpProxyEnable,
+                onSwitch: (bool value) async {
+                  extensions.Tun.HttpProxyEnable = value;
+                })),
+        GroupItemOptions(
+            pushOptions: GroupItemPushOptions(
+                name: tcontext.tun.bypassHttpProxyDomain,
                 onPush: () async {
                   extensions.Tun.HttpProxyBypassDomain ??= [];
                   await Navigator.push(
                       context,
                       MaterialPageRoute(
-                          settings: ListAddScreen.routSettings("BypassDomain"),
+                          settings: ListAddScreen.routSettings(
+                              "HttpProxyBypassDomain"),
                           builder: (context) => ListAddScreen(
-                                title: tcontext.tun.bypassDomain,
+                                title: tcontext.tun.bypassHttpProxyDomain,
                                 data: extensions.Tun.HttpProxyBypassDomain!,
                               )));
                 }))

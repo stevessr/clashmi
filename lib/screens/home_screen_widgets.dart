@@ -40,14 +40,14 @@ class HomeScreenWidgetPart1 extends StatefulWidget {
 class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   static final String _kNoSpeed = "↑ 0 B/s   ↓ 0 B/s";
   static final String _kNoConnection = "↑ 0 B   ↓ 0 B";
-  static final String _kNoMemory = "0 B   0 B";
+  //static final String _kNoMemory = "0 B   0 B";
   bool _working = false;
   FlutterVpnServiceState _state = FlutterVpnServiceState.disconnected;
   Timer? _timerStateChecker;
 
   Websocket? _websocketTraffic;
   Websocket? _websocketConnections;
-  final ValueNotifier<String> _memory = ValueNotifier<String>(_kNoMemory);
+  //final ValueNotifier<String> _memory = ValueNotifier<String>(_kNoMemory);
   final ValueNotifier<String> _trafficSpeed = ValueNotifier<String>(_kNoSpeed);
   final ValueNotifier<String> _connections =
       ValueNotifier<String>(_kNoConnection);
@@ -157,14 +157,14 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
               ]),
             ],
           ),
-          connected
+          /*connected
               ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                   ValueListenableBuilder<String>(
                     builder: _buildWithTrafficSpeedValue,
                     valueListenable: _memory,
                   ),
                 ])
-              : const SizedBox.shrink(),
+              : const SizedBox.shrink(),*/
           connected
               ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                   ValueListenableBuilder<String>(
@@ -431,8 +431,8 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
           var obj = jsonDecode(message);
           ClashConnections body = ClashConnections();
           body.fromJson(obj);
-          _memory.value =
-              ClashHttpApi.convertTrafficToStringDouble(body.memory);
+          //_memory.value =
+          //    ClashHttpApi.convertTrafficToStringDouble(body.memory);
           _connections.value =
               "↑ ${ClashHttpApi.convertTrafficToStringDouble(body.uploadTotal)}  ↓ ${ClashHttpApi.convertTrafficToStringDouble(body.downloadTotal)} ";
         },
@@ -448,7 +448,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   Future<void> _disconnectToConntection() async {
     await _websocketConnections?.disconnect();
     _connections.value = _kNoConnection;
-    _memory.value = _kNoMemory;
+    // _memory.value = _kNoMemory;
   }
 
   Future<void> _connectToTraffic() async {

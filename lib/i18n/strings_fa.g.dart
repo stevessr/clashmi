@@ -334,9 +334,9 @@ class _TranslationsTunFa implements TranslationsTunEn {
 	@override String get stack => 'پشته شبکه';
 	@override String get dnsHijack => 'ربودن DNS';
 	@override String get strictRoute => 'مسیریابی دقیق';
-	@override String get appendSystemProxy => 'به عامل سیستم پیوست کنید';
-	@override String get allowBypassSystemProxy => 'اجازه دور زدن پراکسی سیستم';
-	@override String get bypassDomain => 'نام های دامنه ای که مجاز به دور زدن پراکسی سیستم هستند';
+	@override String get allowBypass => 'به برنامه‌ها اجازه دهید VPN را دور بزنند';
+	@override String get appendHttpProxy => 'پیوست دادن پروکسی HTTP به وی‌پی‌ان';
+	@override String get bypassHttpProxyDomain => 'دامنه ها مجاز به دور زدن پروکسی HTTP هستند';
 }
 
 // Path: dns
@@ -586,9 +586,9 @@ extension on TranslationsFa {
 			case 'tun.stack': return 'پشته شبکه';
 			case 'tun.dnsHijack': return 'ربودن DNS';
 			case 'tun.strictRoute': return 'مسیریابی دقیق';
-			case 'tun.appendSystemProxy': return 'به عامل سیستم پیوست کنید';
-			case 'tun.allowBypassSystemProxy': return 'اجازه دور زدن پراکسی سیستم';
-			case 'tun.bypassDomain': return 'نام های دامنه ای که مجاز به دور زدن پراکسی سیستم هستند';
+			case 'tun.allowBypass': return 'به برنامه‌ها اجازه دهید VPN را دور بزنند';
+			case 'tun.appendHttpProxy': return 'پیوست دادن پروکسی HTTP به وی‌پی‌ان';
+			case 'tun.bypassHttpProxyDomain': return 'دامنه ها مجاز به دور زدن پروکسی HTTP هستند';
 			case 'dns.fakeIp': return 'fake-ip';
 			case 'dns.fallback': return 'Fallback';
 			case 'dns.preferH3': return 'اولویت DoH H3';

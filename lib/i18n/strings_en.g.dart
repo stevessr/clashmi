@@ -337,9 +337,9 @@ class TranslationsTunEn {
 	String get stack => 'Network stack';
 	String get dnsHijack => 'DNS Hijack';
 	String get strictRoute => 'Strict Route';
-	String get appendSystemProxy => 'Append to System Proxy';
-	String get allowBypassSystemProxy => 'Allow Bypass System Proxy';
-	String get bypassDomain => 'Domains that are allowed to bypass the system proxy';
+	String get allowBypass => 'Allow Apps to Bypass VPN';
+	String get appendHttpProxy => 'Append HTTP Proxy to VPN';
+	String get bypassHttpProxyDomain => 'Domains allowed to bypass HTTP proxy';
 }
 
 // Path: dns
@@ -589,9 +589,9 @@ extension on Translations {
 			case 'tun.stack': return 'Network stack';
 			case 'tun.dnsHijack': return 'DNS Hijack';
 			case 'tun.strictRoute': return 'Strict Route';
-			case 'tun.appendSystemProxy': return 'Append to System Proxy';
-			case 'tun.allowBypassSystemProxy': return 'Allow Bypass System Proxy';
-			case 'tun.bypassDomain': return 'Domains that are allowed to bypass the system proxy';
+			case 'tun.allowBypass': return 'Allow Apps to Bypass VPN';
+			case 'tun.appendHttpProxy': return 'Append HTTP Proxy to VPN';
+			case 'tun.bypassHttpProxyDomain': return 'Domains allowed to bypass HTTP proxy';
 			case 'dns.fakeIp': return 'fake-ip';
 			case 'dns.fallback': return 'Fallback';
 			case 'dns.preferH3': return 'Prefer DoH H3';

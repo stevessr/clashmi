@@ -334,9 +334,9 @@ class _TranslationsTunZhCn implements TranslationsTunEn {
 	@override String get stack => '网络栈';
 	@override String get dnsHijack => 'DNS劫持';
 	@override String get strictRoute => '严格路由';
-	@override String get appendSystemProxy => '附加到系统代理';
-	@override String get allowBypassSystemProxy => '允许绕过系统代理';
-	@override String get bypassDomain => '允许绕过系统代理的域名';
+	@override String get allowBypass => '允许应用绕过VPN';
+	@override String get appendHttpProxy => '附加HTTP代理到VPN';
+	@override String get bypassHttpProxyDomain => '允许绕过HTTP代理的域名';
 }
 
 // Path: dns
@@ -586,9 +586,9 @@ extension on TranslationsZhCn {
 			case 'tun.stack': return '网络栈';
 			case 'tun.dnsHijack': return 'DNS劫持';
 			case 'tun.strictRoute': return '严格路由';
-			case 'tun.appendSystemProxy': return '附加到系统代理';
-			case 'tun.allowBypassSystemProxy': return '允许绕过系统代理';
-			case 'tun.bypassDomain': return '允许绕过系统代理的域名';
+			case 'tun.allowBypass': return '允许应用绕过VPN';
+			case 'tun.appendHttpProxy': return '附加HTTP代理到VPN';
+			case 'tun.bypassHttpProxyDomain': return '允许绕过HTTP代理的域名';
 			case 'dns.fakeIp': return 'fake-ip';
 			case 'dns.fallback': return 'Fallback';
 			case 'dns.preferH3': return 'DoH H3优先';

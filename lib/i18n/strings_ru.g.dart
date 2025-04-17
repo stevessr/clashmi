@@ -334,9 +334,9 @@ class _TranslationsTunRu implements TranslationsTunEn {
 	@override String get stack => 'Сетевой стек';
 	@override String get dnsHijack => 'Взлом DNS';
 	@override String get strictRoute => 'Строгая маршрутизация';
-	@override String get appendSystemProxy => 'Присоединиться к системному агенту';
-	@override String get allowBypassSystemProxy => 'Разрешить обход системного прокси';
-	@override String get bypassDomain => 'Доменные имена, которым разрешено обходить системный прокси-сервер';
+	@override String get allowBypass => 'Разрешить приложениям обходить VPN';
+	@override String get appendHttpProxy => 'Подключите HTTP-прокси к VPN';
+	@override String get bypassHttpProxyDomain => 'Домены, которым разрешено обходить HTTP-прокси';
 }
 
 // Path: dns
@@ -586,9 +586,9 @@ extension on TranslationsRu {
 			case 'tun.stack': return 'Сетевой стек';
 			case 'tun.dnsHijack': return 'Взлом DNS';
 			case 'tun.strictRoute': return 'Строгая маршрутизация';
-			case 'tun.appendSystemProxy': return 'Присоединиться к системному агенту';
-			case 'tun.allowBypassSystemProxy': return 'Разрешить обход системного прокси';
-			case 'tun.bypassDomain': return 'Доменные имена, которым разрешено обходить системный прокси-сервер';
+			case 'tun.allowBypass': return 'Разрешить приложениям обходить VPN';
+			case 'tun.appendHttpProxy': return 'Подключите HTTP-прокси к VPN';
+			case 'tun.bypassHttpProxyDomain': return 'Домены, которым разрешено обходить HTTP-прокси';
 			case 'dns.fakeIp': return 'fake-ip';
 			case 'dns.fallback': return 'Fallback';
 			case 'dns.preferH3': return 'Приоритет DoH H3';

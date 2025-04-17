@@ -206,9 +206,9 @@
         "stack": "Сетевой стек",
         "dnsHijack": "Взлом DNS",
         "strictRoute": "Строгая маршрутизация",
-        "appendSystemProxy": "Присоединиться к системному агенту",
-        "allowBypassSystemProxy": "Разрешить обход системного прокси",
-        "bypassDomain": "Доменные имена, которым разрешено обходить системный прокси-сервер"
+        "allowBypass": "Разрешить приложениям обходить VPN",
+        "appendHttpProxy": "Подключите HTTP-прокси к VPN",
+        "bypassHttpProxyDomain": "Домены, которым разрешено обходить HTTP-прокси"
     },
     "dns": {
         "fakeIp": "fake-ip",

@@ -334,9 +334,9 @@ class _TranslationsTunAr implements TranslationsTunEn {
 	@override String get stack => 'مكدس الشبكة';
 	@override String get dnsHijack => 'اختطاف DNS';
 	@override String get strictRoute => 'التوجيه الصارم';
-	@override String get appendSystemProxy => 'الارتباط بوكيل النظام';
-	@override String get allowBypassSystemProxy => 'السماح بتجاوز وكيل النظام';
-	@override String get bypassDomain => 'أسماء النطاقات المسموح لها بتجاوز وكيل النظام';
+	@override String get allowBypass => 'السماح للتطبيقات بتجاوز VPN';
+	@override String get appendHttpProxy => 'إلحاق وكيل HTTP إلى VPN';
+	@override String get bypassHttpProxyDomain => 'المجالات المسموح لها بتجاوز وكيل HTTP';
 }
 
 // Path: dns
@@ -586,9 +586,9 @@ extension on TranslationsAr {
 			case 'tun.stack': return 'مكدس الشبكة';
 			case 'tun.dnsHijack': return 'اختطاف DNS';
 			case 'tun.strictRoute': return 'التوجيه الصارم';
-			case 'tun.appendSystemProxy': return 'الارتباط بوكيل النظام';
-			case 'tun.allowBypassSystemProxy': return 'السماح بتجاوز وكيل النظام';
-			case 'tun.bypassDomain': return 'أسماء النطاقات المسموح لها بتجاوز وكيل النظام';
+			case 'tun.allowBypass': return 'السماح للتطبيقات بتجاوز VPN';
+			case 'tun.appendHttpProxy': return 'إلحاق وكيل HTTP إلى VPN';
+			case 'tun.bypassHttpProxyDomain': return 'المجالات المسموح لها بتجاوز وكيل HTTP';
 			case 'dns.fakeIp': return 'fake-ip';
 			case 'dns.fallback': return 'Fallback';
 			case 'dns.preferH3': return 'أولوية DoH H3';

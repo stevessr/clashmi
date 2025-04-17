@@ -206,9 +206,9 @@
         "stack": "网络栈",
         "dnsHijack": "DNS劫持",
         "strictRoute": "严格路由",
-        "appendSystemProxy": "附加到系统代理",
-        "allowBypassSystemProxy": "允许绕过系统代理",
-        "bypassDomain": "允许绕过系统代理的域名"
+        "allowBypass": "允许应用绕过VPN",
+        "appendHttpProxy": "附加HTTP代理到VPN",
+        "bypassHttpProxyDomain": "允许绕过HTTP代理的域名"
     },
     "dns": {
         "fakeIp": "fake-ip",

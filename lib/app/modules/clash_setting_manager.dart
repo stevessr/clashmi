@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:clashmi/app/local_services/vpn_service.dart';
+import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/log.dart';
 import 'package:flutter/services.dart';
@@ -166,6 +167,26 @@ class ClashSettingManager {
 
   static Future<void> saveSetting() async {
     _setting.Extension.Tun.HttpProxyServerPort = _setting.MixedPort;
+    if (Platform.isAndroid) {
+      final perapp = SettingManager.getConfig().perapp;
+      if (perapp.enable) {
+        if (perapp.isInclude) {
+          _setting.Tun.IncludePackage = [AppUtils.getId()];
+          _setting.Tun.IncludePackage!.addAll(perapp.list);
+          _setting.Tun.ExcludePackage = [];
+        } else {
+          _setting.Tun.IncludePackage = [];
+          _setting.Tun.ExcludePackage = perapp.list;
+        }
+      } else {
+        _setting.Tun.IncludePackage = null;
+        _setting.Tun.ExcludePackage = null;
+      }
+    } else {
+      _setting.Tun.IncludePackage = null;
+      _setting.Tun.ExcludePackage = null;
+    }
+
     String filePath = await PathUtils.serviceCoreSettingFilePath();
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     String content = encoder.convert(_setting);

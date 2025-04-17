@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:clashmi/app/utils/convert_utils.dart';
 import 'package:clashmi/app/utils/log.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
@@ -158,6 +159,70 @@ class SettingConfigItemProxy {
   }
 }
 
+class SettingConfigItemPerapp {
+  bool enable = true;
+  bool isInclude = true; //android
+  List<String> _listAndroid = [];
+  List<String> _listMacos = [];
+  bool hideSystemApp = true;
+  bool hideAppIcon = false;
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> ret = {
+      'enable': enable,
+      'is_include': isInclude,
+      'list_android': _listAndroid,
+      'list_macos': _listMacos,
+      'hide_system_app': hideSystemApp,
+      'hide_app_icon': hideAppIcon,
+    };
+    return ret;
+  }
+
+  void fromJson(Map<String, dynamic>? map) {
+    if (map == null) {
+      return;
+    }
+
+    enable = map["enable"] ?? map["perapp_enable"] ?? true;
+    isInclude = map["is_include"] ?? map["perapp_is_include"] ?? true;
+    _listAndroid =
+        ConvertUtils.getListStringFromDynamic(map["list_android"], true, [])!;
+    _listMacos =
+        ConvertUtils.getListStringFromDynamic(map["list_macos"], true, [])!;
+    if (_listAndroid.isEmpty) {
+      _listAndroid = ConvertUtils.getListStringFromDynamic(
+          map["list"] ?? map["perapp"], true, [])!;
+    }
+
+    hideSystemApp = map["hide_system_app"] ?? true;
+    hideAppIcon = map["hide_app_icon"] ?? false;
+  }
+
+  static SettingConfigItemPerapp fromJsonStatic(Map<String, dynamic>? map) {
+    SettingConfigItemPerapp config = SettingConfigItemPerapp();
+    config.fromJson(map);
+    return config;
+  }
+
+  List<String> get list {
+    if (Platform.isAndroid) {
+      return _listAndroid;
+    } else if (Platform.isMacOS) {
+      return _listMacos;
+    }
+    return [];
+  }
+
+  set list(List<String> list) {
+    if (Platform.isAndroid) {
+      _listAndroid = list;
+    } else if (Platform.isMacOS) {
+      _listMacos = list;
+    }
+  }
+}
+
 class SettingConfig {
   String languageTag = "";
 
@@ -165,16 +230,15 @@ class SettingConfig {
   SettingConfigItemUI ui = SettingConfigItemUI();
   SettingConfigItemUIScreen uiScreen = SettingConfigItemUIScreen();
   SettingConfigItemProxy proxy = SettingConfigItemProxy();
-
+  SettingConfigItemPerapp perapp = SettingConfigItemPerapp();
   SettingConfigItemWebDev webdav = SettingConfigItemWebDev();
-
   bool alwayOn = false;
-
   String autoUpdateChannel = "stable"; //stable, beta
   bool coreSettingOverwrite = true;
 
   Map<String, dynamic> toJson() => {
         'language_tag': languageTag,
+        'perapp': perapp,
         'ui': ui,
         'ui_screen': uiScreen,
         'proxy': proxy,
@@ -189,15 +253,12 @@ class SettingConfig {
     }
 
     languageTag = map["language_tag"] ?? "";
-
+    perapp = SettingConfigItemPerapp.fromJsonStatic(map["perapp"]);
     ui = SettingConfigItemUI.fromJsonStatic(map["ui"]);
     uiScreen =
         SettingConfigItemUIScreen.fromJsonStatic(map["ui_screen"] ?? map);
-
     proxy = SettingConfigItemProxy.fromJsonStatic(map["proxy"]);
-
     alwayOn = map["alway_on"] ?? false;
-
     autoUpdateChannel = map["auto_update_channel"] ?? "stable";
     if (autoUpdateChannel.isEmpty) {
       autoUpdateChannel = "stable";

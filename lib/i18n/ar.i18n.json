@@ -206,9 +206,9 @@
         "stack": "مكدس الشبكة",
         "dnsHijack": "اختطاف DNS",
         "strictRoute": "التوجيه الصارم",
-        "appendSystemProxy": "الارتباط بوكيل النظام",
-        "allowBypassSystemProxy": "السماح بتجاوز وكيل النظام",
-        "bypassDomain": "أسماء النطاقات المسموح لها بتجاوز وكيل النظام"
+        "allowBypass": "السماح للتطبيقات بتجاوز VPN",
+        "appendHttpProxy": "إلحاق وكيل HTTP إلى VPN",
+        "bypassHttpProxyDomain": "المجالات المسموح لها بتجاوز وكيل HTTP"
     },
     "dns": {
         "fakeIp": "fake-ip",

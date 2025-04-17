@@ -206,9 +206,9 @@
         "stack": "Network stack",
         "dnsHijack": "DNS Hijack",
         "strictRoute": "Strict Route",
-        "appendSystemProxy": "Append to System Proxy",
-        "allowBypassSystemProxy": "Allow Bypass System Proxy",
-        "bypassDomain": "Domains that are allowed to bypass the system proxy"
+        "allowBypass": "Allow Apps to Bypass VPN",
+        "appendHttpProxy": "Append HTTP Proxy to VPN",
+        "bypassHttpProxyDomain": "Domains allowed to bypass HTTP proxy"
     },
     "dns": {
         "fakeIp": "fake-ip",
