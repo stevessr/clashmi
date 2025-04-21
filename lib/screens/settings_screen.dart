@@ -60,15 +60,17 @@ Future<void> showAppSettings(BuildContext context) async {
                 Provider.of<Themes>(context, listen: false)
                     .setTheme(selected, true);
               })),
-      GroupItemOptions(
-          switchOptions: GroupItemSwitchOptions(
-              name: tcontext.meta.tvMode,
-              switchValue: setting.ui.tvMode,
-              onSwitch: (bool value) async {
-                setting.ui.tvMode = value;
-                TextFieldEx.popupEdit = setting.ui.tvMode;
-                SettingManager.saveConfig();
-              })),
+      Platform.isAndroid
+          ? GroupItemOptions(
+              switchOptions: GroupItemSwitchOptions(
+                  name: tcontext.meta.tvMode,
+                  switchValue: setting.ui.tvMode,
+                  onSwitch: (bool value) async {
+                    setting.ui.tvMode = value;
+                    TextFieldEx.popupEdit = setting.ui.tvMode;
+                    SettingManager.saveConfig();
+                  }))
+          : GroupItemOptions(),
       AutoUpdateManager.isSupport()
           ? GroupItemOptions(
               stringPickerOptions: GroupItemStringPickerOptions(
