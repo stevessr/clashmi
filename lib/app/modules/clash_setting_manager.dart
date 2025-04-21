@@ -58,7 +58,7 @@ class ClashSettingManager {
         "8.8.4.4",
         "1.0.0.1",
       ],
-      DirectNameServer: ["system://"],
+      /*DirectNameServer: ["system://"],
       ProxyServerNameserver: [
         "tls://8.8.4.4",
         "tls://1.1.1.1",
@@ -72,7 +72,7 @@ class ClashSettingManager {
         "https://1.12.12.12/dns-query",
         "https://120.53.53.53/dns-query"
       ],
-      FallbackFilter: RawFallbackFilter.by(GeoIP: false),
+      FallbackFilter: RawFallbackFilter.by(GeoIP: false),*/
       EnhancedMode: ClashDnsEnhancedMode.fakeIp.name,
       FakeIPRange: "$_gateWay.1/16",
       FakeIPFilterMode: ClashFakeIPFilterMode.blacklist.name,

@@ -47,10 +47,12 @@ class SegmentedElevatedButton extends StatelessWidget {
             ButtonStyle(
               backgroundColor: WidgetStateProperty.resolveWith(
                 (Set<WidgetState> states) {
+                  if (states.contains(WidgetState.focused)) {
+                    return Colors.blue;
+                  }
                   if (states.contains(WidgetState.selected)) {
                     return Colors.white;
                   }
-
                   return Colors.white.withOpacity(0.0);
                 },
               ),
