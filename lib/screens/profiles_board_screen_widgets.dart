@@ -174,6 +174,7 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
           selected: isCurrent,
           onTap: () {
             ProfileManager.setCurrent(setting.id);
+            ProfileManager.save();
             Navigator.of(context).pop();
           },
           onTapMore: () {

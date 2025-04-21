@@ -16,6 +16,7 @@ import 'package:clashmi/app/utils/path_utils.dart';
 
 class ClashSettingManager {
   static const _gateWay = "172.19.0";
+  static const _gateWay6 = "fdfe:dcbe:9876::1";
   static RawConfig _setting = defaultConfig();
 
   static Future<void> init() async {
@@ -33,15 +34,19 @@ class ClashSettingManager {
         Stack: "gvisor",
         MTU: 9000,
         Inet4Address: ["$_gateWay.1/30"],
+        Inet6Address: ["$_gateWay6/126"],
         DNSHijack: ["$_gateWay.2:53"]);
   }
 
   static RawDNS defaultDNS() {
     return RawDNS.by(
       Enable: true,
+      PreferH3: true,
       IPv6: false,
+      IPv6Timeout: 300,
       UseHosts: true,
       UseSystemHosts: true,
+      RespectRules: false,
       NameServer: [
         "223.5.5.5",
         "119.29.29.29",
@@ -56,31 +61,17 @@ class ClashSettingManager {
         "quic://dns.adguard.com:784",
         "system",
       ],
-      DefaultNameserver: [
-        "223.5.5.5",
-        "119.29.29.29",
-        "8.8.8.8",
-        "8.8.4.4",
-        "1.0.0.1",
-      ],
-      /*DirectNameServer: ["system://"],
-      ProxyServerNameserver: [
-        "tls://8.8.4.4",
-        "tls://1.1.1.1",
-        "tls://223.5.5.5:853",
-        "https://dns.alidns.com/dns-query#h3=true",
-      ],
       Fallback: [
-        "tls://223.5.5.5:853",
+        /*"tls://223.5.5.5:853",
         "https://dns.alidns.com/dns-query#h3=true",
         "https://cloudflare-dns.com/dns-query",
         "https://1.12.12.12/dns-query",
-        "https://120.53.53.53/dns-query"
+        "https://120.53.53.53/dns-query"*/
       ],
-      FallbackFilter: RawFallbackFilter.by(GeoIP: false),*/
+      FallbackFilter: RawFallbackFilter.by(GeoIP: false),
+      Listen: null,
       EnhancedMode: ClashDnsEnhancedMode.fakeIp.name,
       FakeIPRange: "$_gateWay.1/16",
-      FakeIPFilterMode: ClashFakeIPFilterMode.blacklist.name,
       FakeIPFilter: [
         "*.lan",
         "*.local",
@@ -125,6 +116,25 @@ class ClashSettingManager {
         "*.mcdn.bilivideo.cn",
         "WORKGROUP",
       ],
+      FakeIPFilterMode: ClashFakeIPFilterMode.blacklist.name,
+      DefaultNameserver: [
+        "223.5.5.5",
+        "119.29.29.29",
+        "8.8.8.8",
+        "8.8.4.4",
+        "1.0.0.1",
+        "system",
+      ],
+      CacheAlgorithm: ClashDnsCacheAlgorithm.arc.name,
+      NameServerPolicy: {},
+      ProxyServerNameserver: [
+        /*"tls://8.8.4.4",
+        "tls://1.1.1.1",
+        "tls://223.5.5.5:853",
+        "https://dns.alidns.com/dns-query#h3=true",*/
+      ],
+      DirectNameServer: [],
+      DirectNameServerFollowPolicy: false,
     );
   }
 
@@ -318,6 +328,8 @@ class ClashSettingManager {
     _setting.GeodataMode = true;
     _setting.GeodataLoader = "memconservative";
     _setting.UnifiedDelay = true;
+    _setting.ExternalUI = "";
+    _setting.ExternalUIName = "";
     _setting.ExternalUIURL = "";
     _setting.ExternalControllerCors = null;
     _setting.Tun?.Device = AppUtils.getName();

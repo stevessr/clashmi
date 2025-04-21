@@ -76,6 +76,21 @@ enum ClashDnsEnhancedMode {
   }
 }
 
+enum ClashDnsCacheAlgorithm {
+  lru(name: "lru"),
+  arc(name: "arc");
+
+  const ClashDnsCacheAlgorithm({required this.name});
+  final String name;
+
+  static List<String> toList() {
+    return [
+      ClashDnsCacheAlgorithm.lru.name,
+      ClashDnsCacheAlgorithm.arc.name,
+    ];
+  }
+}
+
 enum ClashFakeIPFilterMode {
   blacklist(name: "blacklist"),
   whitelist(name: "whitelist");

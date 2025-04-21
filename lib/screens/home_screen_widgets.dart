@@ -125,7 +125,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
                               if (value) {
                                 var err = await VPNService.start(
                                     currentProfile.id,
-                                    const Duration(seconds: 20));
+                                    const Duration(seconds: 60));
                                 if (!context.mounted) {
                                   return;
                                 }
@@ -382,7 +382,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
       return;
     }
 
-    final err = await VPNService.restart(id, const Duration(seconds: 20));
+    final err = await VPNService.restart(id, const Duration(seconds: 60));
     if (err != null) {
       if (!mounted) {
         return;
