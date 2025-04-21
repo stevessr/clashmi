@@ -166,6 +166,8 @@ class ClashSettingManager {
       MixedPort: 7890,
       ExternalController: "127.0.0.1:9090",
       GlobalClientFingerprint: ClashGlobalClientFingerprint.chrome.name,
+      DisableKeepAlive: false,
+      KeepAliveInterval: 15,
       DNS: defaultDNS(),
       NTP: defaultNTP(),
       Tun: defaultTun(),
