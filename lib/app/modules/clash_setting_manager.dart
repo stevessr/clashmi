@@ -113,7 +113,6 @@ class ClashSettingManager {
     return RawExtension.by(
         Tun: RawExtensionTun.by(
           HttpProxyEnable: null,
-          HttpProxyServer: "127.0.0.1",
         ),
         PprofAddr: "127.0.0.1:4578",
         DelayTestUrl: "https://www.gstatic.com",
@@ -154,10 +153,9 @@ class ClashSettingManager {
       Sniffer: RawSniffer.by(Enable: null),
       TLS: RawTLS.by(),
       Extension: RawExtension.by(
-          Tun: RawExtensionTun.by(HttpProxyEnable: null),
-          PprofAddr: _setting.Extension?.PprofAddr,
-          DelayTestUrl: _setting.Extension?.DelayTestUrl,
-          DelayTestTimeout: _setting.Extension?.DelayTestTimeout),
+        Tun: RawExtensionTun.by(HttpProxyEnable: null),
+        PprofAddr: _setting.Extension?.PprofAddr,
+      ),
     );
   }
 
@@ -194,7 +192,6 @@ class ClashSettingManager {
   }
 
   static Future<void> saveSetting() async {
-    _setting.Extension?.Tun.HttpProxyServerPort = _setting.MixedPort;
     if (Platform.isAndroid) {
       final perapp = SettingManager.getConfig().perapp;
       if (perapp.enable) {
@@ -278,6 +275,7 @@ class ClashSettingManager {
     _setting.ExternalUIURL = "";
     _setting.ExternalControllerCors = null;
     _setting.Tun?.Device = AppUtils.getName();
+    _setting.Tun?.AutoRedirect = Platform.isLinux;
     _setting.Tun?.AutoRoute = !Platform.isAndroid;
     _setting.Tun?.AutoDetectInterface = !Platform.isAndroid;
     _setting.Profile = RawProfile.by(StoreSelected: true);

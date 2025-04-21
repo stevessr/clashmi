@@ -392,6 +392,9 @@ Future<void> showClashSettingsTUN(BuildContext context) async {
                 switchValue: extensions.Tun.HttpProxyEnable,
                 onSwitch: (bool value) async {
                   extensions.Tun.HttpProxyEnable = value;
+                  extensions.Tun.HttpProxyServer = value ? "127.0.0.1" : null;
+                  extensions.Tun.HttpProxyServerPort =
+                      value ? setting.MixedPort : null;
                 })),
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
