@@ -108,6 +108,7 @@
         "allowLanAuthentication": "تفويض الوصول إلى جهاز LAN",
         "mixedPort": "منفذ الوكيل الهجين",
         "logLevel": "مستوى السجل",
+        "tcpkeepAliveInterval": "فترة الحفاظ على اتصال TCP",
         "delayTestUrl": "عنوان URL لاختبار زمن الوصول",
         "delayTestTimeout": "تأخير مهلة الاختبار (مللي ثانية)",
         "tun": "TUN",

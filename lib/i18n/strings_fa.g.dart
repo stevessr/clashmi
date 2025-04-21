@@ -215,6 +215,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get allowLanAuthentication => 'مجوز دسترسی دستگاه LAN';
 	@override String get mixedPort => 'پورت پروکسی هیبریدی';
 	@override String get logLevel => 'سطح ورود به سیستم';
+	@override String get tcpkeepAliveInterval => 'فاصله حفظ زنده TCP';
 	@override String get delayTestUrl => 'URL تست تأخیر';
 	@override String get delayTestTimeout => 'مهلت زمانی تست تاخیری (میلی‌ثانیه)';
 	@override String get tun => 'TUN';
@@ -494,6 +495,7 @@ extension on TranslationsFa {
 			case 'meta.allowLanAuthentication': return 'مجوز دسترسی دستگاه LAN';
 			case 'meta.mixedPort': return 'پورت پروکسی هیبریدی';
 			case 'meta.logLevel': return 'سطح ورود به سیستم';
+			case 'meta.tcpkeepAliveInterval': return 'فاصله حفظ زنده TCP';
 			case 'meta.delayTestUrl': return 'URL تست تأخیر';
 			case 'meta.delayTestTimeout': return 'مهلت زمانی تست تاخیری (میلی‌ثانیه)';
 			case 'meta.tun': return 'TUN';

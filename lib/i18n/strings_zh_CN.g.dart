@@ -215,6 +215,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get allowLanAuthentication => '局域网设备接入授权';
 	@override String get mixedPort => '混合代理端口';
 	@override String get logLevel => '日志等级';
+	@override String get tcpkeepAliveInterval => 'TCP保活时间间隔';
 	@override String get delayTestUrl => '延迟测试URL';
 	@override String get delayTestTimeout => '延迟测试超时(ms)';
 	@override String get tun => 'TUN';
@@ -494,6 +495,7 @@ extension on TranslationsZhCn {
 			case 'meta.allowLanAuthentication': return '局域网设备接入授权';
 			case 'meta.mixedPort': return '混合代理端口';
 			case 'meta.logLevel': return '日志等级';
+			case 'meta.tcpkeepAliveInterval': return 'TCP保活时间间隔';
 			case 'meta.delayTestUrl': return '延迟测试URL';
 			case 'meta.delayTestTimeout': return '延迟测试超时(ms)';
 			case 'meta.tun': return 'TUN';

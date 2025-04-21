@@ -49,17 +49,16 @@ class ClashSettingManager {
         "https://dns.alidns.com/dns-query#h3=true",
         "https://mozilla.cloudflare-dns.com/dns-query#DNS&h3=true",
         "quic://dns.adguard.com:784",
+        "system",
       ],
       DefaultNameserver: [
-        "114.114.114.114",
-        "8.8.8.8",
         "223.5.5.5",
         "119.29.29.29",
+        "8.8.8.8",
+        "8.8.4.4",
+        "1.0.0.1",
       ],
-      NameServerPolicy: {
-        "www.baidu.com": "114.114.114.114",
-        "+.internal.crop.com": "10.0.0.1",
-      },
+      DirectNameServer: ["system://"],
       ProxyServerNameserver: [
         "tls://8.8.4.4",
         "tls://1.1.1.1",
@@ -79,7 +78,47 @@ class ClashSettingManager {
       FakeIPFilterMode: ClashFakeIPFilterMode.blacklist.name,
       FakeIPFilter: [
         "*.lan",
+        "*.local",
+        "time.*.com",
+        "time.*.gov",
+        "time.*.edu.cn",
+        "time.*.apple.com",
+        "time-ios.apple.com",
+        "time1.*.com",
+        "time2.*.com",
+        "time3.*.com",
+        "time4.*.com",
+        "time5.*.com",
+        "time6.*.com",
+        "time7.*.com",
+        "ntp.*.com",
+        "ntp1.*.com",
+        "ntp2.*.com",
+        "ntp3.*.com",
+        "ntp4.*.com",
+        "ntp5.*.com",
+        "ntp6.*.com",
+        "ntp7.*.com",
+        "*.time.edu.cn",
+        "*.ntp.org.cn",
+        "*.pool.ntp.org",
+        "+.services.googleapis.cn",
+        "+.push.apple.com",
+        "time1.cloud.tencent.com",
         "localhost.ptlogin2.qq.com",
+        "+.stun.*.*",
+        "+.stun.*.*.*",
+        "+.stun.*.*.*.*",
+        "+.stun.*.*.*.*.*",
+        "lens.l.google.com",
+        "*.n.n.srv.nintendo.net",
+        "+.stun.playstation.net",
+        "xbox.*.*.microsoft.com",
+        "*.*.xboxlive.com",
+        "*.msftncsi.com",
+        "*.msftconnecttest.com",
+        "*.mcdn.bilivideo.cn",
+        "WORKGROUP",
       ],
     );
   }
@@ -270,7 +309,7 @@ class ClashSettingManager {
   static Future<void> _initFixed() async {
     _setting.Secret = await ClashHttpApi.getSecret();
     _setting.GeodataMode = true;
-    _setting.GeodataLoader = null;
+    _setting.GeodataLoader = "memconservative";
     _setting.UnifiedDelay = true;
     _setting.ExternalUIURL = "";
     _setting.ExternalControllerCors = null;
@@ -278,7 +317,7 @@ class ClashSettingManager {
     _setting.Tun?.AutoRedirect = Platform.isLinux;
     _setting.Tun?.AutoRoute = !Platform.isAndroid;
     _setting.Tun?.AutoDetectInterface = !Platform.isAndroid;
-    _setting.Profile = RawProfile.by(StoreSelected: true);
+    _setting.Profile = RawProfile.by(StoreSelected: true, StoreFakeIP: true);
     _setting.FindProcessMode = Platform.isIOS
         ? ClashFindProcessMode.off.name
         : ClashFindProcessMode.strict.name;
@@ -309,6 +348,11 @@ class ClashSettingManager {
 
   static RawConfig getConfig() {
     return _setting;
+  }
+
+  static void reset() {
+    _setting = defaultConfig();
+    _initFixed();
   }
 
   static int getControlPort() {

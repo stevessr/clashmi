@@ -215,6 +215,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get allowLanAuthentication => 'Авторизация доступа к устройству локальной сети';
 	@override String get mixedPort => 'Гибридный прокси-порт';
 	@override String get logLevel => 'Уровень журнала';
+	@override String get tcpkeepAliveInterval => 'Интервал проверки активности TCP';
 	@override String get delayTestUrl => 'URL-адрес теста задержки';
 	@override String get delayTestTimeout => 'Время ожидания теста задержки (мс)';
 	@override String get tun => 'TUN';
@@ -494,6 +495,7 @@ extension on TranslationsRu {
 			case 'meta.allowLanAuthentication': return 'Авторизация доступа к устройству локальной сети';
 			case 'meta.mixedPort': return 'Гибридный прокси-порт';
 			case 'meta.logLevel': return 'Уровень журнала';
+			case 'meta.tcpkeepAliveInterval': return 'Интервал проверки активности TCP';
 			case 'meta.delayTestUrl': return 'URL-адрес теста задержки';
 			case 'meta.delayTestTimeout': return 'Время ожидания теста задержки (мс)';
 			case 'meta.tun': return 'TUN';

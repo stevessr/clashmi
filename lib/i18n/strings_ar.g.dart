@@ -215,6 +215,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get allowLanAuthentication => 'تفويض الوصول إلى جهاز LAN';
 	@override String get mixedPort => 'منفذ الوكيل الهجين';
 	@override String get logLevel => 'مستوى السجل';
+	@override String get tcpkeepAliveInterval => 'فترة الحفاظ على اتصال TCP';
 	@override String get delayTestUrl => 'عنوان URL لاختبار زمن الوصول';
 	@override String get delayTestTimeout => 'تأخير مهلة الاختبار (مللي ثانية)';
 	@override String get tun => 'TUN';
@@ -494,6 +495,7 @@ extension on TranslationsAr {
 			case 'meta.allowLanAuthentication': return 'تفويض الوصول إلى جهاز LAN';
 			case 'meta.mixedPort': return 'منفذ الوكيل الهجين';
 			case 'meta.logLevel': return 'مستوى السجل';
+			case 'meta.tcpkeepAliveInterval': return 'فترة الحفاظ على اتصال TCP';
 			case 'meta.delayTestUrl': return 'عنوان URL لاختبار زمن الوصول';
 			case 'meta.delayTestTimeout': return 'تأخير مهلة الاختبار (مللي ثانية)';
 			case 'meta.tun': return 'TUN';

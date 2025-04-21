@@ -202,6 +202,7 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
 
   void showMore(ProfileSetting setting) {
     final tcontext = Translations.of(context);
+    bool remote = setting.url != null && setting.url!.isNotEmpty;
     var widgets = [
       ListTile(
         title: Text(tcontext.meta.view),
@@ -217,18 +218,45 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
               context,
               MaterialPageRoute(
                   settings: FileViewScreen.routSettings(),
-                  builder: (context) =>
-                      FileViewScreen(title: setting.id, content: content)));
+                  builder: (context) => FileViewScreen(
+                        title: setting.getShowName(),
+                        content: content,
+                      )));
         },
       ),
-      ListTile(
-        title: Text(tcontext.meta.update),
-        minLeadingWidth: 40,
-        onTap: () async {
-          Navigator.of(context).pop();
-          ProfileManager.updateProfile(setting.id);
-        },
-      ),
+      remote
+          ? ListTile(
+              title: Text(tcontext.meta.update),
+              minLeadingWidth: 40,
+              onTap: () async {
+                Navigator.of(context).pop();
+                ProfileManager.updateProfile(setting.id);
+              },
+            )
+          : ListTile(
+              title: Text(tcontext.meta.edit),
+              minLeadingWidth: 40,
+              onTap: () async {
+                Navigator.of(context).pop();
+                final path = await ProfileManager.getProfilePath(setting.id);
+                final content = await File(path).readAsString();
+                if (!mounted) {
+                  return;
+                }
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        settings: FileViewScreen.routSettings(),
+                        builder: (context) => FileViewScreen(
+                              title: setting.getShowName(),
+                              content: content,
+                              onSave:
+                                  (BuildContext context, String content) async {
+                                await File(path).writeAsString(content);
+                              },
+                            )));
+              },
+            ),
       setting.url != null && setting.url!.isNotEmpty
           ? ListTile(
               title: Text(tcontext.meta.copyUrl),

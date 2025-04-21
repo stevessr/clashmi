@@ -218,6 +218,7 @@ class TranslationsMetaEn {
 	String get allowLanAuthentication => 'LAN device access authorization';
 	String get mixedPort => 'Mixed Proxy Port';
 	String get logLevel => 'Log Level';
+	String get tcpkeepAliveInterval => 'TCP Keep-alive Interval';
 	String get delayTestUrl => 'Delay Test URL';
 	String get delayTestTimeout => 'Delay Test Timeout(ms)';
 	String get tun => 'TUN';
@@ -497,6 +498,7 @@ extension on Translations {
 			case 'meta.allowLanAuthentication': return 'LAN device access authorization';
 			case 'meta.mixedPort': return 'Mixed Proxy Port';
 			case 'meta.logLevel': return 'Log Level';
+			case 'meta.tcpkeepAliveInterval': return 'TCP Keep-alive Interval';
 			case 'meta.delayTestUrl': return 'Delay Test URL';
 			case 'meta.delayTestTimeout': return 'Delay Test Timeout(ms)';
 			case 'meta.tun': return 'TUN';

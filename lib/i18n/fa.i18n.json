@@ -108,6 +108,7 @@
         "allowLanAuthentication": "مجوز دسترسی دستگاه LAN",
         "mixedPort": "پورت پروکسی هیبریدی",
         "logLevel": "سطح ورود به سیستم",
+        "tcpkeepAliveInterval": "فاصله حفظ زنده TCP",
         "delayTestUrl": "URL تست تأخیر",
         "delayTestTimeout": "مهلت زمانی تست تاخیری (میلی‌ثانیه)",
         "tun": "TUN",

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/theme_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,11 +18,13 @@ class FileViewScreen extends StatefulWidget {
 
   final String title;
   final String content;
+  final Function(BuildContext context, String content)? onSave;
 
   const FileViewScreen({
     super.key,
     required this.title,
     required this.content,
+    this.onSave,
   });
 
   @override
@@ -34,7 +39,6 @@ class _FileViewScreenState extends State<FileViewScreen> {
   void initState() {
     super.initState();
     _controller = CodeLineEditingController.fromText(widget.content);
-
     _focusNode.onKeyEvent = ((_, event) {
       final keys = HardwareKeyboard.instance.logicalKeysPressed;
       final key = event.logicalKey;
@@ -68,6 +72,7 @@ class _FileViewScreenState extends State<FileViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final tcontext = Translations.of(context);
     Size windowSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: PreferredSize(
@@ -105,7 +110,25 @@ class _FileViewScreenState extends State<FileViewScreen> {
                           fontSize: ThemeConfig.kFontSizeTitle),
                     ),
                   ),
-                  SizedBox(width: 50)
+                  widget.onSave != null
+                      ? InkWell(
+                          onTap: () async {
+                            widget.onSave!(context, _controller.text);
+                          },
+                          child: Tooltip(
+                              message: tcontext.meta.save,
+                              child: const SizedBox(
+                                width: 50,
+                                height: 30,
+                                child: Icon(
+                                  Icons.done,
+                                  size: 26,
+                                ),
+                              )),
+                        )
+                      : SizedBox(
+                          width: 50,
+                        ),
                 ],
               ),
               const SizedBox(
@@ -115,8 +138,8 @@ class _FileViewScreenState extends State<FileViewScreen> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
                   child: CodeEditor(
-                    readOnly: true,
-                    showCursorWhenReadOnly: true,
+                    readOnly: widget.onSave == null,
+                    showCursorWhenReadOnly: widget.onSave == null,
                     focusNode: _focusNode,
                     scrollbarBuilder: (context, child, details) {
                       return Scrollbar(

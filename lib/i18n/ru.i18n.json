@@ -108,6 +108,7 @@
         "allowLanAuthentication": "Авторизация доступа к устройству локальной сети",
         "mixedPort": "Гибридный прокси-порт",
         "logLevel": "Уровень журнала",
+        "tcpkeepAliveInterval": "Интервал проверки активности TCP",
         "delayTestUrl": "URL-адрес теста задержки",
         "delayTestTimeout": "Время ожидания теста задержки (мс)",
         "tun": "TUN",

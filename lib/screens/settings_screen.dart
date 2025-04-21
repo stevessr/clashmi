@@ -106,7 +106,7 @@ Future<void> showClashSettings(BuildContext context) async {
     var extensions = setting.Extension!;
     final logLevels = ClashLogLevel.toList();
     final globalFingerprints = ClashGlobalClientFingerprint.toList();
-    List<GroupItemOptions> options00 = [
+    List<GroupItemOptions> options = [
       GroupItemOptions(
           textOptions: GroupItemTextOptions(
         name: "",
@@ -115,7 +115,17 @@ Future<void> showClashSettings(BuildContext context) async {
         textWidthPercent: 1,
       )),
     ];
-    List<GroupItemOptions> options0 = [
+    List<GroupItemOptions> options1 = [
+      GroupItemOptions(
+          pushOptions: GroupItemPushOptions(
+              name: tcontext.meta.reset,
+              onPush: () async {
+                appSetting.coreSettingOverwrite = true;
+                ClashSettingManager.reset();
+                SettingManager.saveConfig();
+              })),
+    ];
+    List<GroupItemOptions> options2 = [
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
               name: tcontext.meta.coreSettingOverwrite,
@@ -168,7 +178,7 @@ Future<void> showClashSettings(BuildContext context) async {
                   }))
           : GroupItemOptions(),
     ];
-    List<GroupItemOptions> options = [
+    List<GroupItemOptions> options3 = [
       GroupItemOptions(
           stringPickerOptions: GroupItemStringPickerOptions(
               name: tcontext.meta.logLevel,
@@ -180,7 +190,7 @@ Future<void> showClashSettings(BuildContext context) async {
                 setting.LogLevel = selected;
               })),
     ];
-    List<GroupItemOptions> options1 = [
+    List<GroupItemOptions> options4 = [
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
               name: "IPv6",
@@ -208,7 +218,7 @@ Future<void> showClashSettings(BuildContext context) async {
                 setting.GlobalClientFingerprint = selected;
               })),
     ];
-    List<GroupItemOptions> options2 = [
+    List<GroupItemOptions> options5 = [
       GroupItemOptions(
           textFormFieldOptions: GroupItemTextFieldOptions(
               name: tcontext.meta.mixedPort,
@@ -236,7 +246,27 @@ Future<void> showClashSettings(BuildContext context) async {
                 setting.Authentication = value.isEmpty ? null : [value];
               })),
     ];
-    List<GroupItemOptions> options3 = [
+    List<GroupItemOptions> options6 = [
+      GroupItemOptions(
+          timerIntervalPickerOptions: GroupItemTimerIntervalPickerOptions(
+              name: tcontext.meta.tcpkeepAliveInterval,
+              duration: setting.DisableKeepAlive == true
+                  ? null
+                  : Duration(seconds: setting.KeepAliveInterval ?? 15),
+              showDays: false,
+              showHours: false,
+              showSeconds: true,
+              showMinutes: true,
+              showDisable: true,
+              onPicker: (bool canceled, Duration? duration) async {
+                if (canceled) {
+                  return;
+                }
+                setting.DisableKeepAlive = duration == null;
+                setting.KeepAliveInterval = duration?.inSeconds;
+              })),
+    ];
+    List<GroupItemOptions> options7 = [
       GroupItemOptions(
           textFormFieldOptions: GroupItemTextFieldOptions(
               name: tcontext.meta.delayTestUrl,
@@ -254,7 +284,7 @@ Future<void> showClashSettings(BuildContext context) async {
                 extensions.DelayTestTimeout = int.tryParse(value);
               })),
     ];
-    List<GroupItemOptions> options4 = [
+    List<GroupItemOptions> options8 = [
       GroupItemOptions(
           pushOptions: GroupItemPushOptions(
               name: tcontext.meta.tun,
@@ -294,18 +324,23 @@ Future<void> showClashSettings(BuildContext context) async {
     ];
     List<GroupItem> groups = [];
     if (started) {
-      groups.add(GroupItem(options: options00));
+      groups.add(GroupItem(options: options));
     }
     if (!appSetting.coreSettingOverwrite) {
-      groups.add(GroupItem(options: options0));
+      groups.addAll([
+        GroupItem(options: options1),
+        GroupItem(options: options2),
+      ]);
     } else {
       groups.addAll([
-        GroupItem(options: options0),
-        GroupItem(options: options),
         GroupItem(options: options1),
         GroupItem(options: options2),
         GroupItem(options: options3),
         GroupItem(options: options4),
+        GroupItem(options: options5),
+        GroupItem(options: options6),
+        GroupItem(options: options7),
+        GroupItem(options: options8),
       ]);
     }
 
@@ -784,16 +819,17 @@ Future<void> showClashSettingsGEO(BuildContext context) async {
               name: tcontext.meta.updateInterval,
               duration:
                   Duration(seconds: setting.GeoUpdateInterval ?? 7 * 24 * 3600),
-              showSeconds: false,
               showMinutes: false,
+              showSeconds: false,
+              showDisable: false,
               onPicker: (bool canceled, Duration? duration) async {
                 if (canceled) {
                   return;
                 }
-                if (duration != null) {
+                if (duration == null) {
                   return;
                 }
-                setting.GeoUpdateInterval = duration!.inSeconds;
+                setting.GeoUpdateInterval = duration.inSeconds;
               })),
       GroupItemOptions(
           textFormFieldOptions: GroupItemTextFieldOptions(
