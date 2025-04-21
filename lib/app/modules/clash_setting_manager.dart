@@ -43,6 +43,11 @@ class ClashSettingManager {
       UseHosts: true,
       UseSystemHosts: true,
       NameServer: [
+        "223.5.5.5",
+        "119.29.29.29",
+        "8.8.8.8",
+        "8.8.4.4",
+        "1.0.0.1",
         "tls://8.8.4.4",
         "tls://1.1.1.1",
         "tls://223.5.5.5:853",
