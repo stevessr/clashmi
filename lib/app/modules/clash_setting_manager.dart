@@ -198,6 +198,7 @@ class ClashSettingManager {
   static Future<RawConfig> defaultConfigNoOverwrite() async {
     return RawConfig.by(
       Mode: _setting.Mode,
+      LogLevel: _setting.LogLevel,
       ExternalController: _setting.ExternalController,
       Secret: await ClashHttpApi.getSecret(),
       DNS: RawDNS.by(

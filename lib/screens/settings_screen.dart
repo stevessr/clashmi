@@ -164,6 +164,16 @@ Future<void> showClashSettings(BuildContext context) async {
                       ClipboardData(text: setting.Secret ?? ""));
                 } catch (e) {}
               })),
+      GroupItemOptions(
+          stringPickerOptions: GroupItemStringPickerOptions(
+              name: tcontext.meta.logLevel,
+              selected: logLevels.contains(setting.LogLevel)
+                  ? setting.LogLevel
+                  : logLevels.last,
+              strings: logLevels,
+              onPicker: (String? selected) async {
+                setting.LogLevel = selected;
+              })),
       !inProduction
           ? GroupItemOptions(
               textFormFieldOptions: GroupItemTextFieldOptions(
@@ -189,19 +199,8 @@ Future<void> showClashSettings(BuildContext context) async {
                   }))
           : GroupItemOptions(),
     ];
+
     List<GroupItemOptions> options3 = [
-      GroupItemOptions(
-          stringPickerOptions: GroupItemStringPickerOptions(
-              name: tcontext.meta.logLevel,
-              selected: logLevels.contains(setting.LogLevel)
-                  ? setting.LogLevel
-                  : logLevels.last,
-              strings: logLevels,
-              onPicker: (String? selected) async {
-                setting.LogLevel = selected;
-              })),
-    ];
-    List<GroupItemOptions> options4 = [
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
               name: "IPv6",
@@ -229,7 +228,7 @@ Future<void> showClashSettings(BuildContext context) async {
                 setting.GlobalClientFingerprint = selected;
               })),
     ];
-    List<GroupItemOptions> options5 = [
+    List<GroupItemOptions> options4 = [
       GroupItemOptions(
           textFormFieldOptions: GroupItemTextFieldOptions(
               name: tcontext.meta.mixedPort,
@@ -257,7 +256,7 @@ Future<void> showClashSettings(BuildContext context) async {
                 setting.Authentication = value.isEmpty ? null : [value];
               })),
     ];
-    List<GroupItemOptions> options6 = [
+    List<GroupItemOptions> options5 = [
       GroupItemOptions(
           timerIntervalPickerOptions: GroupItemTimerIntervalPickerOptions(
               name: tcontext.meta.tcpkeepAliveInterval,
@@ -277,7 +276,7 @@ Future<void> showClashSettings(BuildContext context) async {
                 setting.KeepAliveInterval = duration?.inSeconds;
               })),
     ];
-    List<GroupItemOptions> options7 = [
+    List<GroupItemOptions> options6 = [
       GroupItemOptions(
           textFormFieldOptions: GroupItemTextFieldOptions(
               name: tcontext.meta.delayTestUrl,
@@ -295,7 +294,7 @@ Future<void> showClashSettings(BuildContext context) async {
                 extensions.DelayTestTimeout = int.tryParse(value);
               })),
     ];
-    List<GroupItemOptions> options8 = [
+    List<GroupItemOptions> options7 = [
       GroupItemOptions(
           pushOptions: GroupItemPushOptions(
               name: tcontext.meta.tun,
@@ -351,7 +350,6 @@ Future<void> showClashSettings(BuildContext context) async {
         GroupItem(options: options5),
         GroupItem(options: options6),
         GroupItem(options: options7),
-        GroupItem(options: options8),
       ]);
     }
 
