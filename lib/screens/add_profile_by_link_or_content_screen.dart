@@ -9,6 +9,7 @@ import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/theme_config.dart';
 import 'package:clashmi/screens/widgets/framework.dart';
+import 'package:clashmi/screens/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 
 class AddProfileByLinkOrContentScreen extends LasyRenderingStatefulWidget {
@@ -169,7 +170,7 @@ class _AddProfileByLinkOrContentScreenState
                                       padding: const EdgeInsets.fromLTRB(
                                           18, 10, 18, 10),
                                       child: SingleChildScrollView(
-                                        child: TextField(
+                                        child: TextFieldEx(
                                           textInputAction: TextInputAction.next,
                                           maxLines:
                                               PlatformUtils.isPC() ? 12 : 4,
@@ -187,7 +188,7 @@ class _AddProfileByLinkOrContentScreenState
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                           18, 10, 18, 10),
-                                      child: TextField(
+                                      child: TextFieldEx(
                                         textInputAction: TextInputAction.done,
                                         controller: _textControllerRemark,
                                         cursorColor: Colors.black,

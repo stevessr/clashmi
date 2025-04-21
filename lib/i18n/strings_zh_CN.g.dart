@@ -254,6 +254,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get board => '面板';
 	@override String get proxy => '代理';
 	@override String get theme => '主题';
+	@override String get tvMode => 'TV模式';
 	@override String get autoUpdate => '自动更新';
 	@override String get updateChannel => '自动更新通道';
 	@override String get devOptions => '开发者选项';
@@ -534,6 +535,7 @@ extension on TranslationsZhCn {
 			case 'meta.board': return '面板';
 			case 'meta.proxy': return '代理';
 			case 'meta.theme': return '主题';
+			case 'meta.tvMode': return 'TV模式';
 			case 'meta.autoUpdate': return '自动更新';
 			case 'meta.updateChannel': return '自动更新通道';
 			case 'meta.devOptions': return '开发者选项';

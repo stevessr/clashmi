@@ -254,6 +254,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get board => 'لوحة';
 	@override String get proxy => 'التمثيل';
 	@override String get theme => 'سمة';
+	@override String get tvMode => 'وضع التلفزيون';
 	@override String get autoUpdate => 'التحديثات التلقائية';
 	@override String get updateChannel => 'تحديث القنوات تلقائيا';
 	@override String get devOptions => 'خيارات للمطور';
@@ -534,6 +535,7 @@ extension on TranslationsAr {
 			case 'meta.board': return 'لوحة';
 			case 'meta.proxy': return 'التمثيل';
 			case 'meta.theme': return 'سمة';
+			case 'meta.tvMode': return 'وضع التلفزيون';
 			case 'meta.autoUpdate': return 'التحديثات التلقائية';
 			case 'meta.updateChannel': return 'تحديث القنوات تلقائيا';
 			case 'meta.devOptions': return 'خيارات للمطور';

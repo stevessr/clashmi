@@ -18,8 +18,8 @@ import 'package:clashmi/screens/perapp_android_screen.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/themes.dart';
 import 'package:clashmi/screens/webview_helper.dart';
+import 'package:clashmi/screens/widgets/text_field.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
@@ -59,6 +59,15 @@ Future<void> showAppSettings(BuildContext context) async {
 
                 Provider.of<Themes>(context, listen: false)
                     .setTheme(selected, true);
+              })),
+      GroupItemOptions(
+          switchOptions: GroupItemSwitchOptions(
+              name: tcontext.meta.tvMode,
+              switchValue: setting.ui.tvMode,
+              onSwitch: (bool value) async {
+                setting.ui.tvMode = value;
+                TextFieldEx.popupEdit = setting.ui.tvMode;
+                SettingManager.saveConfig();
               })),
       AutoUpdateManager.isSupport()
           ? GroupItemOptions(

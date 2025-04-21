@@ -257,6 +257,7 @@ class TranslationsMetaEn {
 	String get board => 'Board';
 	String get proxy => 'Proxy';
 	String get theme => 'Theme';
+	String get tvMode => 'TV Mode';
 	String get autoUpdate => 'Auto Update';
 	String get updateChannel => 'Auto Update Channel';
 	String get devOptions => 'Developer Options';
@@ -537,6 +538,7 @@ extension on Translations {
 			case 'meta.board': return 'Board';
 			case 'meta.proxy': return 'Proxy';
 			case 'meta.theme': return 'Theme';
+			case 'meta.tvMode': return 'TV Mode';
 			case 'meta.autoUpdate': return 'Auto Update';
 			case 'meta.updateChannel': return 'Auto Update Channel';
 			case 'meta.devOptions': return 'Developer Options';

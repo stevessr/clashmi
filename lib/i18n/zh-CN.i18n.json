@@ -147,6 +147,7 @@
         "board": "面板",
         "proxy": "代理",
         "theme": "主题",
+        "tvMode": "TV模式",
         "autoUpdate": "自动更新",
         "updateChannel": "自动更新通道",
         "devOptions": "开发者选项",

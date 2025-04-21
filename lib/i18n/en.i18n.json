@@ -147,6 +147,7 @@
         "board": "Board",
         "proxy": "Proxy",
         "theme": "Theme",
+        "tvMode": "TV Mode",
         "autoUpdate": "Auto Update",
         "updateChannel": "Auto Update Channel",
         "devOptions": "Developer Options",

@@ -41,6 +41,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   static final String _kNoSpeed = "↑ 0 B/s   ↓ 0 B/s";
   static final String _kNoConnection = "↑ 0 B   ↓ 0 B";
   //static final String _kNoMemory = "0 B   0 B";
+  final FocusNode _focusNodeConnect = FocusNode();
   bool _working = false;
   FlutterVpnServiceState _state = FlutterVpnServiceState.disconnected;
   Timer? _timerStateChecker;
@@ -66,6 +67,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
 
   @override
   void dispose() {
+    _focusNodeConnect.dispose();
     super.dispose();
   }
 
@@ -106,6 +108,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
                     fit: BoxFit.fill,
                     child: Switch.adaptive(
                       value: _state == FlutterVpnServiceState.connected,
+                      focusNode: _focusNodeConnect,
                       onChanged: currentProfile == null
                           ? null
                           : (bool value) async {

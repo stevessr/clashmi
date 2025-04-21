@@ -255,70 +255,65 @@ class _HomeScreenState extends LasyRenderingState<HomeScreen>
     var themes = Provider.of<Themes>(context, listen: false);
     Color? color = themes.getThemeHomeColor(context);
 
-    return Focus(
-        includeSemantics: true,
-        child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size.zero,
-            child: AppBar(
-              backgroundColor: color,
-              systemOverlayStyle: SystemUiOverlayStyle(
-                systemNavigationBarIconBrightness:
-                    themes.getStatusBarIconBrightness(context),
-                systemNavigationBarColor: color,
-                systemNavigationBarDividerColor: Colors.transparent,
-                statusBarColor: color,
-                statusBarBrightness: themes.getStatusBarBrightness(context),
-                statusBarIconBrightness:
-                    themes.getStatusBarIconBrightness(context),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.zero,
+        child: AppBar(
+          backgroundColor: color,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            systemNavigationBarIconBrightness:
+                themes.getStatusBarIconBrightness(context),
+            systemNavigationBarColor: color,
+            systemNavigationBarDividerColor: Colors.transparent,
+            statusBarColor: color,
+            statusBarBrightness: themes.getStatusBarBrightness(context),
+            statusBarIconBrightness: themes.getStatusBarIconBrightness(context),
+          ),
+        ),
+      ),
+      backgroundColor: color,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    Text(
+                      AppUtils.getName(),
+                      style: const TextStyle(
+                          fontWeight: ThemeConfig.kFontWeightTitle,
+                          fontSize: ThemeConfig.kFontSizeTitle),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ]),
+                ],
               ),
             ),
-          ),
-          backgroundColor: color,
-          body: SafeArea(
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              AppUtils.getName(),
-                              style: const TextStyle(
-                                  fontWeight: ThemeConfig.kFontWeightTitle,
-                                  fontSize: ThemeConfig.kFontSizeTitle),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                          ]),
+                      HomeScreenWidgetPart1(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      HomeScreenWidgetPart2(),
                     ],
                   ),
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          HomeScreenWidgetPart1(),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          HomeScreenWidgetPart2(),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ));
+          ],
+        ),
+      ),
+    );
   }
 }

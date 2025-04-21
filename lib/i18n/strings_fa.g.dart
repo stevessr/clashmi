@@ -254,6 +254,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get board => 'پانل';
 	@override String get proxy => 'بازیگری';
 	@override String get theme => 'موضوع';
+	@override String get tvMode => 'حالت تلویزیون';
 	@override String get autoUpdate => 'به روز رسانی خودکار';
 	@override String get updateChannel => 'کانال به‌روزرسانی خودکار';
 	@override String get devOptions => 'تنظیمات توسعه‌دهندگان';
@@ -534,6 +535,7 @@ extension on TranslationsFa {
 			case 'meta.board': return 'پانل';
 			case 'meta.proxy': return 'بازیگری';
 			case 'meta.theme': return 'موضوع';
+			case 'meta.tvMode': return 'حالت تلویزیون';
 			case 'meta.autoUpdate': return 'به روز رسانی خودکار';
 			case 'meta.updateChannel': return 'کانال به‌روزرسانی خودکار';
 			case 'meta.devOptions': return 'تنظیمات توسعه‌دهندگان';

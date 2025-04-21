@@ -9,6 +9,7 @@ import 'package:clashmi/app/utils/log.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/theme_define.dart';
+import 'package:clashmi/screens/widgets/text_field.dart';
 import 'package:country/country.dart' as country;
 
 class SettingConfigItemUI {
@@ -16,12 +17,14 @@ class SettingConfigItemUI {
   bool autoOrientation = false;
   bool disableFontScaler = false;
   bool hideAfterLaunch = false;
+  bool tvMode = false;
 
   Map<String, dynamic> toJson() => {
         'theme': theme,
         'auto_orientation': autoOrientation,
         'disable_font_scaler': disableFontScaler,
         'hide_after_launch': hideAfterLaunch,
+        'tv_mode': tvMode
       };
   void fromJson(Map<String, dynamic>? map) {
     if (map == null) {
@@ -31,7 +34,8 @@ class SettingConfigItemUI {
     autoOrientation = map["auto_orientation"] ?? false;
     disableFontScaler = map["disable_font_scaler"] ?? false;
     hideAfterLaunch = map["hide_after_launch"] ?? false;
-
+    tvMode = map["tv_mode"] ?? false;
+    TextFieldEx.popupEdit = tvMode;
     switch (theme) {
       case "dark":
         theme = ThemeDefine.kThemeDark;

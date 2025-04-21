@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/theme_config.dart';
 import 'package:flutter/material.dart';

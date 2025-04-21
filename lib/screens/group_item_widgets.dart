@@ -5,6 +5,7 @@ import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/group_item_options.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/widgets/sheet.dart';
+import 'package:clashmi/screens/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 
 class GroupItemText extends StatelessWidget {
@@ -102,7 +103,7 @@ class GroupItemTextField extends StatelessWidget {
           flex: ((options.textWidthPercent) * 10).toInt(),
           child: Align(
             alignment: AlignmentDirectional.centerEnd,
-            child: TextField(
+            child: TextFieldEx(
               style: options.textStyle,
               controller: controller,
               textInputAction: options.textInputAction,
@@ -112,7 +113,6 @@ class GroupItemTextField extends StatelessWidget {
                 hintText: options.hint,
                 errorText: options.errorText,
                 border: InputBorder.none,
-                focusedBorder: InputBorder.none,
               ),
               textAlign: TextAlign.right,
               keyboardType: options.keyboardType,
@@ -124,6 +124,7 @@ class GroupItemTextField extends StatelessWidget {
               onChanged: options.onChanged,
               enabled: options.enabled,
               onSubmitted: options.onSubmitted,
+              title: options.name,
             ),
           ),
         ),

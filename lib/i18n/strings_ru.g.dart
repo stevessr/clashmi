@@ -254,6 +254,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get board => 'панель';
 	@override String get proxy => 'действующий';
 	@override String get theme => 'тема';
+	@override String get tvMode => 'Режим ТВ';
 	@override String get autoUpdate => 'Автоматические обновления';
 	@override String get updateChannel => 'Канал автоматического обновления';
 	@override String get devOptions => 'Параметры разработчика';
@@ -534,6 +535,7 @@ extension on TranslationsRu {
 			case 'meta.board': return 'панель';
 			case 'meta.proxy': return 'действующий';
 			case 'meta.theme': return 'тема';
+			case 'meta.tvMode': return 'Режим ТВ';
 			case 'meta.autoUpdate': return 'Автоматические обновления';
 			case 'meta.updateChannel': return 'Канал автоматического обновления';
 			case 'meta.devOptions': return 'Параметры разработчика';

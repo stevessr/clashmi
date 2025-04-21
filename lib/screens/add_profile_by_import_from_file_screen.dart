@@ -7,6 +7,7 @@ import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/theme_config.dart';
 import 'package:clashmi/screens/widgets/framework.dart';
+import 'package:clashmi/screens/widgets/text_field.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
@@ -168,7 +169,7 @@ class _AddProfileByImportFromFileScreenState
                           ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(18, 20, 18, 20),
-                            child: TextField(
+                            child: TextFieldEx(
                               controller: _textControllerRemark,
                               textInputAction: TextInputAction.done,
                               cursorColor: Colors.black,

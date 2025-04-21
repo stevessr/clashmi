@@ -2,6 +2,7 @@
 
 import 'package:android_package_manager/android_package_manager.dart';
 import 'package:app_settings/app_settings.dart';
+import 'package:clashmi/screens/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
@@ -309,14 +310,13 @@ class _PerAppAndroidScreenState
                   color: Colors.white,
                   borderRadius: ThemeDefine.kBorderRadius,
                 ),
-                child: TextField(
+                child: TextFieldEx(
                   controller: _searchController,
                   textInputAction: TextInputAction.done,
                   onChanged: _loadSearch,
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
                     icon: Icon(
                       Icons.search_outlined,
                       color: Colors.grey.shade400,
