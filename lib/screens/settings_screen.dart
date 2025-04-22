@@ -74,10 +74,10 @@ Future<void> showAppSettings(BuildContext context) async {
       GroupItemOptions(
           textFormFieldOptions: GroupItemTextFieldOptions(
               name: tcontext.meta.userAgent,
-              text: setting.userAgent,
+              text: setting.userAgent(),
               textWidthPercent: 0.5,
               onChanged: (String value) {
-                setting.userAgent = value;
+                setting.setUserAgent(value);
               })),
       AutoUpdateManager.isSupport()
           ? GroupItemOptions(

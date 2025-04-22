@@ -325,7 +325,7 @@ class ProfileManager {
     }
     final id = "${url.hashCode}.yaml";
     final savePath = path.join(await PathUtils.profilesDir(), id);
-    final userAgent = SettingManager.getConfig().userAgent;
+    final userAgent = SettingManager.getConfig().userAgent();
     final result =
         await DownloadUtils.downloadWithPort(uri, savePath, userAgent, null);
     if (result.error != null) {
@@ -388,7 +388,7 @@ class ProfileManager {
     for (var event in onEventUpdate) {
       event(id, false);
     }
-    final userAgent = SettingManager.getConfig().userAgent;
+    final userAgent = SettingManager.getConfig().userAgent();
     final savePath = path.join(await PathUtils.profilesDir(), id);
     final result =
         await DownloadUtils.downloadWithPort(uri, savePath, userAgent, null);

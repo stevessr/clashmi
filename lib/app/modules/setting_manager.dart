@@ -164,7 +164,7 @@ class SettingConfig {
   bool alwayOn = false;
   String autoUpdateChannel = "stable"; //stable, beta
   bool autoSetSystemProxy = getAutoSetSystemProxyDefault();
-  String userAgent = "ClashMeta/1.19.5";
+  String _userAgent = "";
 
   Map<String, dynamic> toJson() => {
         'language_tag': languageTag,
@@ -174,7 +174,7 @@ class SettingConfig {
         'alway_on': alwayOn,
         'auto_update_channel': autoUpdateChannel,
         'auto_set_system_proxy': autoSetSystemProxy,
-        'user_agent': userAgent,
+        'user_agent': _userAgent,
       };
   void fromJson(Map<String, dynamic>? map) {
     if (map == null) {
@@ -192,7 +192,18 @@ class SettingConfig {
     }
     autoSetSystemProxy =
         map["auto_set_system_proxy"] ?? getAutoSetSystemProxyDefault();
-    userAgent = map["user_agent"] ?? "ClashMeta/1.19.5";
+    _userAgent = map["user_agent"] ?? "";
+  }
+
+  String userAgent() {
+    if (_userAgent.isEmpty) {
+      return "ClashMeta/1.19.5";
+    }
+    return _userAgent;
+  }
+
+  void setUserAgent(String ua) {
+    _userAgent = ua;
   }
 
   static SettingConfig fromJsonStatic(Map<String, dynamic>? map) {
