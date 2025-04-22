@@ -62,39 +62,6 @@ class SettingConfigItemUI {
   }
 }
 
-class SettingConfigItemUIScreen {
-  Map<String, dynamic> toJson() => {};
-  void fromJson(Map<String, dynamic>? map) {
-    if (map == null) {
-      return;
-    }
-  }
-
-  static SettingConfigItemUIScreen fromJsonStatic(Map<String, dynamic>? map) {
-    SettingConfigItemUIScreen config = SettingConfigItemUIScreen();
-    config.fromJson(map);
-    return config;
-  }
-}
-
-class SettingConfigItemDev {
-  static int pprofPortDefault = 3066;
-  bool devMode = false;
-
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> ret = {};
-    return ret;
-  }
-
-  void fromJson(Map<String, dynamic>? map) {}
-
-  static SettingConfigItemDev fromJsonStatic(Map<String, dynamic>? map) {
-    SettingConfigItemDev config = SettingConfigItemDev();
-    config.fromJson(map);
-    return config;
-  }
-}
-
 class SettingConfigItemWebDev {
   String url = "";
   String user = "";
@@ -122,44 +89,6 @@ class SettingConfigItemWebDev {
     SettingConfigItemWebDev config = SettingConfigItemWebDev();
     config.fromJson(map);
     return config;
-  }
-}
-
-class SettingConfigItemProxy {
-  static const String hostDefault = '127.0.0.1';
-  static const String hostDefault2 = 'localhost';
-  static const String hostNetwork = '0.0.0.0';
-
-  static int controlPortDefault = 9090;
-  String host = hostDefault;
-  bool autoSetSystemProxy = getAutoSetSystemProxyDefault();
-
-  Map<String, dynamic> toJson() => {
-        'host': host,
-        'auto_set_system_proxy': autoSetSystemProxy,
-      };
-  void fromJson(Map<String, dynamic>? map) {
-    if (map == null) {
-      return;
-    }
-
-    host = map["host"] ?? hostDefault;
-
-    autoSetSystemProxy =
-        map["auto_set_system_proxy"] ?? getAutoSetSystemProxyDefault();
-  }
-
-  static SettingConfigItemProxy fromJsonStatic(Map<String, dynamic>? map) {
-    SettingConfigItemProxy config = SettingConfigItemProxy();
-    config.fromJson(map);
-    return config;
-  }
-
-  static bool getAutoSetSystemProxyDefault() {
-    if (Platform.isWindows) {
-      return false;
-    }
-    return false;
   }
 }
 
@@ -229,25 +158,23 @@ class SettingConfigItemPerapp {
 
 class SettingConfig {
   String languageTag = "";
-
-  SettingConfigItemDev dev = SettingConfigItemDev();
   SettingConfigItemUI ui = SettingConfigItemUI();
-  SettingConfigItemUIScreen uiScreen = SettingConfigItemUIScreen();
-  SettingConfigItemProxy proxy = SettingConfigItemProxy();
   SettingConfigItemPerapp perapp = SettingConfigItemPerapp();
   SettingConfigItemWebDev webdav = SettingConfigItemWebDev();
   bool alwayOn = false;
   String autoUpdateChannel = "stable"; //stable, beta
+  bool autoSetSystemProxy = getAutoSetSystemProxyDefault();
+  String userAgent = "ClashMeta";
 
   Map<String, dynamic> toJson() => {
         'language_tag': languageTag,
         'perapp': perapp,
         'ui': ui,
-        'ui_screen': uiScreen,
-        'proxy': proxy,
         'webdav': webdav,
         'alway_on': alwayOn,
         'auto_update_channel': autoUpdateChannel,
+        'auto_set_system_proxy': autoSetSystemProxy,
+        'user_agent': userAgent,
       };
   void fromJson(Map<String, dynamic>? map) {
     if (map == null) {
@@ -257,14 +184,15 @@ class SettingConfig {
     languageTag = map["language_tag"] ?? "";
     perapp = SettingConfigItemPerapp.fromJsonStatic(map["perapp"]);
     ui = SettingConfigItemUI.fromJsonStatic(map["ui"]);
-    uiScreen =
-        SettingConfigItemUIScreen.fromJsonStatic(map["ui_screen"] ?? map);
-    proxy = SettingConfigItemProxy.fromJsonStatic(map["proxy"]);
+
     alwayOn = map["alway_on"] ?? false;
     autoUpdateChannel = map["auto_update_channel"] ?? "stable";
     if (autoUpdateChannel.isEmpty) {
       autoUpdateChannel = "stable";
     }
+    autoSetSystemProxy =
+        map["auto_set_system_proxy"] ?? getAutoSetSystemProxyDefault();
+    userAgent = map["user_agent"] ?? "ClashMeta";
   }
 
   static SettingConfig fromJsonStatic(Map<String, dynamic>? map) {
@@ -287,6 +215,13 @@ class SettingConfig {
 
   static String languageTagForCountry() {
     return LocaleSettings.currentLocale.languageTag.replaceAll("-", "_");
+  }
+
+  static bool getAutoSetSystemProxyDefault() {
+    if (Platform.isWindows) {
+      return false;
+    }
+    return false;
   }
 }
 

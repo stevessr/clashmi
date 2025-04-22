@@ -58,7 +58,6 @@ Future<void> showAppSettings(BuildContext context) async {
                   return;
                 }
                 setting.ui.theme = selected;
-
                 Provider.of<Themes>(context, listen: false)
                     .setTheme(selected, true);
               })),
@@ -70,9 +69,16 @@ Future<void> showAppSettings(BuildContext context) async {
                   onSwitch: (bool value) async {
                     setting.ui.tvMode = value;
                     TextFieldEx.popupEdit = setting.ui.tvMode;
-                    SettingManager.saveConfig();
                   }))
           : GroupItemOptions(),
+      GroupItemOptions(
+          textFormFieldOptions: GroupItemTextFieldOptions(
+              name: tcontext.meta.userAgent,
+              text: setting.userAgent,
+              textWidthPercent: 0.5,
+              onChanged: (String value) {
+                setting.userAgent = value;
+              })),
       AutoUpdateManager.isSupport()
           ? GroupItemOptions(
               stringPickerOptions: GroupItemStringPickerOptions(
@@ -85,7 +91,6 @@ Future<void> showAppSettings(BuildContext context) async {
                       return;
                     }
                     setting.autoUpdateChannel = selected;
-
                     AutoUpdateManager.updateChannelChanged();
                   }))
           : GroupItemOptions(),
@@ -135,7 +140,6 @@ Future<void> showClashSettings(BuildContext context) async {
               onPush: () async {
                 setting.OverWrite = true;
                 ClashSettingManager.reset();
-                SettingManager.saveConfig();
               })),
     ];
     List<GroupItemOptions> options2 = [
@@ -145,7 +149,6 @@ Future<void> showClashSettings(BuildContext context) async {
               switchValue: setting.OverWrite,
               onSwitch: (bool value) async {
                 setting.OverWrite = value;
-                SettingManager.saveConfig();
               })),
       GroupItemOptions(
           textFormFieldOptions: GroupItemTextFieldOptions(

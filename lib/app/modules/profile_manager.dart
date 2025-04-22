@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/app/utils/date_time_utils.dart';
 import 'package:clashmi/app/utils/file_utils.dart';
 import 'package:clashmi/app/utils/http_utils.dart';
@@ -160,7 +161,6 @@ class ProfileConfig {
 class ProfileManager {
   static const String yamlExtension = "yaml";
   static const String urlComment = "#url:";
-  static const String userAgent = "ClashMeta";
   static final ProfileConfig _profileConfig = ProfileConfig();
 
   static final List<void Function(String)> onEventCurrentChanged = [];
@@ -325,7 +325,7 @@ class ProfileManager {
     }
     final id = "${url.hashCode}.yaml";
     final savePath = path.join(await PathUtils.profilesDir(), id);
-
+    final userAgent = SettingManager.getConfig().userAgent;
     final result =
         await DownloadUtils.downloadWithPort(uri, savePath, userAgent, null);
     if (result.error != null) {
@@ -388,7 +388,7 @@ class ProfileManager {
     for (var event in onEventUpdate) {
       event(id, false);
     }
-
+    final userAgent = SettingManager.getConfig().userAgent;
     final savePath = path.join(await PathUtils.profilesDir(), id);
     final result =
         await DownloadUtils.downloadWithPort(uri, savePath, userAgent, null);

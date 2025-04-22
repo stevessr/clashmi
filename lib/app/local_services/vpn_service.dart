@@ -223,18 +223,16 @@ class VPNService {
     var setting = SettingManager.getConfig();
 
     if (Platform.isWindows) {
-      if (setting.proxy.host == SettingConfigItemProxy.hostNetwork) {
-        final controlPort = ClashSettingManager.getControlPort();
-        final mixedPort = ClashSettingManager.getMixedPort();
-        var ports = [
-          controlPort,
-        ];
-        if (mixedPort != null) {
-          ports.add(mixedPort);
-        }
-
-        FlutterVpnService.firewallAddPorts(ports, PathUtils.serviceExeName());
+      final controlPort = ClashSettingManager.getControlPort();
+      final mixedPort = ClashSettingManager.getMixedPort();
+      var ports = [
+        controlPort,
+      ];
+      if (mixedPort != null) {
+        ports.add(mixedPort);
       }
+
+      FlutterVpnService.firewallAddPorts(ports, PathUtils.serviceExeName());
     }
     if (Platform.isIOS || Platform.isMacOS) {
       await FlutterVpnService.setAlwaysOn(false);
@@ -275,17 +273,15 @@ class VPNService {
     }
     var setting = SettingManager.getConfig();
     if (Platform.isWindows) {
-      if (setting.proxy.host == SettingConfigItemProxy.hostNetwork) {
-        final controlPort = ClashSettingManager.getControlPort();
-        final mixedPort = ClashSettingManager.getMixedPort();
-        var ports = [
-          controlPort,
-        ];
-        if (mixedPort != null) {
-          ports.add(mixedPort);
-        }
-        FlutterVpnService.firewallAddPorts(ports, PathUtils.serviceExeName());
+      final controlPort = ClashSettingManager.getControlPort();
+      final mixedPort = ClashSettingManager.getMixedPort();
+      var ports = [
+        controlPort,
+      ];
+      if (mixedPort != null) {
+        ports.add(mixedPort);
       }
+      FlutterVpnService.firewallAddPorts(ports, PathUtils.serviceExeName());
     }
     VpnServiceWaitResult result = await FlutterVpnService.start(timeout);
     if (result.type == VpnServiceWaitType.timeout) {
@@ -310,8 +306,7 @@ class VPNService {
       }
     }
 
-    var proxy = SettingManager.getConfig().proxy;
-    if (proxy.autoSetSystemProxy) {
+    if (SettingManager.getConfig().autoSetSystemProxy) {
       await setSystemProxy(true);
     }
 
