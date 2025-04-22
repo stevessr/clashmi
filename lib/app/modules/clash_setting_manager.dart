@@ -258,7 +258,7 @@ class ClashSettingManager {
 
   static void updateTunPackage() {
     final perapp = SettingManager.getConfig().perapp;
-    if (Platform.isAndroid && perapp.enable) {
+    if (Platform.isAndroid && perapp.enable && perapp.list.isNotEmpty) {
       if (perapp.isInclude) {
         _setting.Tun?.IncludePackage = [AppUtils.getId()];
         _setting.Tun?.IncludePackage!.addAll(perapp.list);
