@@ -46,6 +46,7 @@ Map<String, dynamic> _$RawExtensionToJson(RawExtension instance) =>
     };
 
 RawTunnel _$RawTunnelFromJson(Map<String, dynamic> json) => RawTunnel(
+      json['overwrite'] as bool?,
       (json['network'] as List<dynamic>?)?.map((e) => e as String).toList(),
       json['address'] as String?,
       json['target'] as String?,
@@ -53,6 +54,7 @@ RawTunnel _$RawTunnelFromJson(Map<String, dynamic> json) => RawTunnel(
     );
 
 Map<String, dynamic> _$RawTunnelToJson(RawTunnel instance) => <String, dynamic>{
+      'overwrite': instance.OverWrite,
       'network': instance.Network,
       'address': instance.Address,
       'target': instance.Target,
@@ -60,6 +62,7 @@ Map<String, dynamic> _$RawTunnelToJson(RawTunnel instance) => <String, dynamic>{
     };
 
 RawCors _$RawCorsFromJson(Map<String, dynamic> json) => RawCors(
+      json['overwrite'] as bool?,
       (json['allow-origins'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -67,11 +70,13 @@ RawCors _$RawCorsFromJson(Map<String, dynamic> json) => RawCors(
     );
 
 Map<String, dynamic> _$RawCorsToJson(RawCors instance) => <String, dynamic>{
+      'overwrite': instance.OverWrite,
       'allow-origins': instance.AllowOrigins,
       'allow-private-network': instance.AllowPrivateNetwork,
     };
 
 RawDNS _$RawDNSFromJson(Map<String, dynamic> json) => RawDNS(
+      json['overwrite'] as bool?,
       json['enable'] as bool?,
       json['prefer-h3'] as bool?,
       json['ipv6'] as bool?,
@@ -107,6 +112,7 @@ RawDNS _$RawDNSFromJson(Map<String, dynamic> json) => RawDNS(
     );
 
 Map<String, dynamic> _$RawDNSToJson(RawDNS instance) => <String, dynamic>{
+      'overwrite': instance.OverWrite,
       'enable': instance.Enable,
       'prefer-h3': instance.PreferH3,
       'ipv6': instance.IPv6,
@@ -152,17 +158,20 @@ Map<String, dynamic> _$RawFallbackFilterToJson(RawFallbackFilter instance) =>
 
 RawClashForAndroid _$RawClashForAndroidFromJson(Map<String, dynamic> json) =>
     RawClashForAndroid(
+      json['overwrite'] as bool?,
       json['append-system-dns'] as bool?,
       json['ui-subtitle-pattern'] as String?,
     );
 
 Map<String, dynamic> _$RawClashForAndroidToJson(RawClashForAndroid instance) =>
     <String, dynamic>{
+      'overwrite': instance.OverWrite,
       'append-system-dns': instance.AppendSystemDNS,
       'ui-subtitle-pattern': instance.UiSubtitlePattern,
     };
 
 RawNTP _$RawNTPFromJson(Map<String, dynamic> json) => RawNTP(
+      json['overwrite'] as bool?,
       json['enable'] as bool?,
       json['server'] as String?,
       (json['port'] as num?)?.toInt(),
@@ -172,6 +181,7 @@ RawNTP _$RawNTPFromJson(Map<String, dynamic> json) => RawNTP(
     );
 
 Map<String, dynamic> _$RawNTPToJson(RawNTP instance) => <String, dynamic>{
+      'overwrite': instance.OverWrite,
       'enable': instance.Enable,
       'server': instance.Server,
       'port': instance.Port,
@@ -181,6 +191,7 @@ Map<String, dynamic> _$RawNTPToJson(RawNTP instance) => <String, dynamic>{
     };
 
 RawTun _$RawTunFromJson(Map<String, dynamic> json) => RawTun(
+      json['overwrite'] as bool?,
       json['enable'] as bool?,
       json['device'] as String?,
       json['stack'] as String?,
@@ -259,6 +270,7 @@ RawTun _$RawTunFromJson(Map<String, dynamic> json) => RawTun(
     );
 
 Map<String, dynamic> _$RawTunToJson(RawTun instance) => <String, dynamic>{
+      'overwrite': instance.OverWrite,
       'enable': instance.Enable,
       'device': instance.Device,
       'stack': instance.Stack,
@@ -300,6 +312,7 @@ Map<String, dynamic> _$RawTunToJson(RawTun instance) => <String, dynamic>{
 
 RawTuicServer _$RawTuicServerFromJson(Map<String, dynamic> json) =>
     RawTuicServer(
+      json['overwrite'] as bool?,
       json['enable'] as bool?,
       json['listen'] as String?,
       (json['token'] as List<dynamic>?)?.map((e) => e as String).toList(),
@@ -318,6 +331,7 @@ RawTuicServer _$RawTuicServerFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$RawTuicServerToJson(RawTuicServer instance) =>
     <String, dynamic>{
+      'overwrite': instance.OverWrite,
       'enable': instance.Enable,
       'listen': instance.Listen,
       'token': instance.Token,
@@ -333,6 +347,7 @@ Map<String, dynamic> _$RawTuicServerToJson(RawTuicServer instance) =>
     };
 
 RawIPTables _$RawIPTablesFromJson(Map<String, dynamic> json) => RawIPTables(
+      json['overwrite'] as bool?,
       json['enable'] as bool?,
       json['inbound-interface'] as String?,
       (json['bypass'] as List<dynamic>?)?.map((e) => e as String).toList(),
@@ -341,6 +356,7 @@ RawIPTables _$RawIPTablesFromJson(Map<String, dynamic> json) => RawIPTables(
 
 Map<String, dynamic> _$RawIPTablesToJson(RawIPTables instance) =>
     <String, dynamic>{
+      'overwrite': instance.OverWrite,
       'enable': instance.Enable,
       'inbound-interface': instance.InboundInterface,
       'bypass': instance.Bypass,
@@ -349,6 +365,7 @@ Map<String, dynamic> _$RawIPTablesToJson(RawIPTables instance) =>
 
 RawExperimental _$RawExperimentalFromJson(Map<String, dynamic> json) =>
     RawExperimental(
+      json['overwrite'] as bool?,
       (json['fingerprints'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -359,6 +376,7 @@ RawExperimental _$RawExperimentalFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$RawExperimentalToJson(RawExperimental instance) =>
     <String, dynamic>{
+      'overwrite': instance.OverWrite,
       'fingerprints': instance.Fingerprints,
       'quic-go-disable-gso': instance.QUICGoDisableGSO,
       'quic-go-disable-ecn': instance.QUICGoDisableECN,
@@ -377,6 +395,7 @@ Map<String, dynamic> _$RawProfileToJson(RawProfile instance) =>
     };
 
 RawGeoXUrl _$RawGeoXUrlFromJson(Map<String, dynamic> json) => RawGeoXUrl(
+      json['overwrite'] as bool?,
       json['geoip'] as String?,
       json['mmdb'] as String?,
       json['asn'] as String?,
@@ -385,6 +404,7 @@ RawGeoXUrl _$RawGeoXUrlFromJson(Map<String, dynamic> json) => RawGeoXUrl(
 
 Map<String, dynamic> _$RawGeoXUrlToJson(RawGeoXUrl instance) =>
     <String, dynamic>{
+      'overwrite': instance.OverWrite,
       'geoip': instance.GeoIp,
       'mmdb': instance.Mmdb,
       'asn': instance.ASN,
@@ -392,6 +412,7 @@ Map<String, dynamic> _$RawGeoXUrlToJson(RawGeoXUrl instance) =>
     };
 
 RawSniffer _$RawSnifferFromJson(Map<String, dynamic> json) => RawSniffer(
+      json['overwrite'] as bool?,
       json['enable'] as bool?,
       json['override-destination'] as bool?,
       (json['sniffing'] as List<dynamic>?)?.map((e) => e as String).toList(),
@@ -418,6 +439,7 @@ RawSniffer _$RawSnifferFromJson(Map<String, dynamic> json) => RawSniffer(
 
 Map<String, dynamic> _$RawSnifferToJson(RawSniffer instance) =>
     <String, dynamic>{
+      'overwrite': instance.OverWrite,
       'enable': instance.Enable,
       'override-destination': instance.OverrideDest,
       'sniffing': instance.Sniffing,
@@ -444,6 +466,7 @@ Map<String, dynamic> _$RawSniffingConfigToJson(RawSniffingConfig instance) =>
     };
 
 RawTLS _$RawTLSFromJson(Map<String, dynamic> json) => RawTLS(
+      json['overwrite'] as bool?,
       json['certificate'] as String?,
       json['private-key'] as String?,
       (json['custom-certifactes'] as List<dynamic>?)
@@ -452,12 +475,14 @@ RawTLS _$RawTLSFromJson(Map<String, dynamic> json) => RawTLS(
     );
 
 Map<String, dynamic> _$RawTLSToJson(RawTLS instance) => <String, dynamic>{
+      'overwrite': instance.OverWrite,
       'certificate': instance.Certificate,
       'private-key': instance.PrivateKey,
       'custom-certifactes': instance.CustomTrustCert,
     };
 
 RawConfig _$RawConfigFromJson(Map<String, dynamic> json) => RawConfig(
+      json['overwrite'] as bool?,
       (json['port'] as num?)?.toInt(),
       (json['socks-port'] as num?)?.toInt(),
       (json['redir-port'] as num?)?.toInt(),
@@ -559,6 +584,7 @@ RawConfig _$RawConfigFromJson(Map<String, dynamic> json) => RawConfig(
     );
 
 Map<String, dynamic> _$RawConfigToJson(RawConfig instance) => <String, dynamic>{
+      'overwrite': instance.OverWrite,
       'port': instance.Port,
       'socks-port': instance.SocksPort,
       'redir-port': instance.RedirPort,

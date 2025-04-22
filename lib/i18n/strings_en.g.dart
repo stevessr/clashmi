@@ -209,7 +209,7 @@ class TranslationsMetaEn {
 	String get openUrl => 'Open Link';
 	String get shareUrl => 'Share Link';
 	String get coreSettingTips => 'Note: After modifying the configuration, you need to reconnect to take effect';
-	String get coreSettingOverwrite => 'Overwrite';
+	String get overwrite => 'Overwrite';
 	String get externalController => 'External Controller';
 	String get secret => 'Secret';
 	String get tcpConcurrent => 'TCP Concurrent Handshake';
@@ -490,7 +490,7 @@ extension on Translations {
 			case 'meta.openUrl': return 'Open Link';
 			case 'meta.shareUrl': return 'Share Link';
 			case 'meta.coreSettingTips': return 'Note: After modifying the configuration, you need to reconnect to take effect';
-			case 'meta.coreSettingOverwrite': return 'Overwrite';
+			case 'meta.overwrite': return 'Overwrite';
 			case 'meta.externalController': return 'External Controller';
 			case 'meta.secret': return 'Secret';
 			case 'meta.tcpConcurrent': return 'TCP Concurrent Handshake';

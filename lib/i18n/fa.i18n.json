@@ -99,7 +99,7 @@
         "openUrl": "بازکردن لینک",
         "shareUrl": "اشتراک لینک",
         "coreSettingTips": "توجه: پس از تغییر پیکربندی، باید دوباره وصل شوید تا اعمال شود",
-        "coreSettingOverwrite": "لغو",
+        "overwrite": "لغو",
         "externalController": "کنترل خارجی",
         "secret": "Secret",
         "tcpConcurrent": "دست دادن همزمان TCP",

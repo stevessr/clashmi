@@ -206,7 +206,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get openUrl => '打开链接';
 	@override String get shareUrl => '分享链接';
 	@override String get coreSettingTips => '注意:修改配置后,需要重新连接才会生效';
-	@override String get coreSettingOverwrite => '覆写';
+	@override String get overwrite => '覆写';
 	@override String get externalController => '外部控制';
 	@override String get secret => 'Secret';
 	@override String get tcpConcurrent => 'TCP并发握手';
@@ -487,7 +487,7 @@ extension on TranslationsZhCn {
 			case 'meta.openUrl': return '打开链接';
 			case 'meta.shareUrl': return '分享链接';
 			case 'meta.coreSettingTips': return '注意:修改配置后,需要重新连接才会生效';
-			case 'meta.coreSettingOverwrite': return '覆写';
+			case 'meta.overwrite': return '覆写';
 			case 'meta.externalController': return '外部控制';
 			case 'meta.secret': return 'Secret';
 			case 'meta.tcpConcurrent': return 'TCP并发握手';

@@ -99,7 +99,7 @@
         "openUrl": "Open Link",
         "shareUrl": "شارك الرابط",
         "coreSettingTips": "ملاحظة: بعد تعديل التكوين، تحتاج إلى إعادة الاتصال حتى يسري مفعوله",
-        "coreSettingOverwrite": "تجاوز",
+        "overwrite": "تجاوز",
         "externalController": "الرقابة الخارجية",
         "secret": "Secret",
         "tcpConcurrent": "مصافحة TCP المتزامنة",

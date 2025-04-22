@@ -8,7 +8,9 @@ import 'package:clashmi/app/local_services/vpn_service.dart';
 import 'package:clashmi/app/modules/auto_update_manager.dart';
 import 'package:clashmi/app/modules/clash_setting_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
+import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
+import 'package:clashmi/screens/file_view_screen.dart';
 import 'package:clashmi/screens/group_item_creator.dart';
 import 'package:clashmi/screens/group_item_options.dart';
 import 'package:clashmi/screens/group_screen.dart';
@@ -111,7 +113,7 @@ Future<void> showClashSettings(BuildContext context) async {
   Future<List<GroupItem>> getOptions(BuildContext context) async {
     const inProduction = bool.fromEnvironment("dart.vm.product");
     final started = await VPNService.getStarted();
-    var appSetting = SettingManager.getConfig();
+
     var setting = ClashSettingManager.getConfig();
     var dns = setting.DNS!;
     var extensions = setting.Extension!;
@@ -131,7 +133,7 @@ Future<void> showClashSettings(BuildContext context) async {
           pushOptions: GroupItemPushOptions(
               name: tcontext.meta.reset,
               onPush: () async {
-                appSetting.coreSettingOverwrite = true;
+                setting.OverWrite = true;
                 ClashSettingManager.reset();
                 SettingManager.saveConfig();
               })),
@@ -139,10 +141,10 @@ Future<void> showClashSettings(BuildContext context) async {
     List<GroupItemOptions> options2 = [
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
-              name: tcontext.meta.coreSettingOverwrite,
-              switchValue: appSetting.coreSettingOverwrite,
+              name: tcontext.meta.overwrite,
+              switchValue: setting.OverWrite,
               onSwitch: (bool value) async {
-                appSetting.coreSettingOverwrite = value;
+                setting.OverWrite = value;
                 SettingManager.saveConfig();
               })),
       GroupItemOptions(
@@ -336,7 +338,8 @@ Future<void> showClashSettings(BuildContext context) async {
     if (started) {
       groups.add(GroupItem(options: options));
     }
-    if (!appSetting.coreSettingOverwrite) {
+
+    if (setting.OverWrite != true) {
       groups.addAll([
         GroupItem(options: options1),
         GroupItem(options: options2),
@@ -363,6 +366,26 @@ Future<void> showClashSettings(BuildContext context) async {
           builder: (context) => GroupScreen(
                 title: tcontext.meta.settingCore,
                 getOptions: getOptions,
+                onDone: (context) async {
+                  var setting = ClashSettingManager.getConfig();
+                  final content = await ClashSettingManager.getPatchContent(
+                      setting.OverWrite == true);
+
+                  if (!context.mounted) {
+                    return false;
+                  }
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          settings: FileViewScreen.routSettings(),
+                          builder: (context) => FileViewScreen(
+                                title: PathUtils.serviceCorePatchFileName(),
+                                content: content,
+                              )));
+
+                  return false;
+                },
+                onDoneIcon: Icons.file_present,
               )));
   ClashSettingManager.saveSetting();
 }
@@ -375,6 +398,13 @@ Future<void> showClashSettingsTUN(BuildContext context) async {
     var extensions = setting.Extension!;
     final tunStacks = ClashTunStack.toList();
     List<GroupItemOptions> options = [
+      GroupItemOptions(
+          switchOptions: GroupItemSwitchOptions(
+              name: tcontext.meta.overwrite,
+              switchValue: tun.OverWrite,
+              onSwitch: (bool value) async {
+                tun.OverWrite = value;
+              })),
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
               name: tcontext.meta.enable,
@@ -482,6 +512,13 @@ Future<void> showClashSettingsDNS(BuildContext context) async {
     final enhancedModes = ClashDnsEnhancedMode.toList();
     final fakeIPFilterModes = ClashFakeIPFilterMode.toList();
     List<GroupItemOptions> options = [
+      GroupItemOptions(
+          switchOptions: GroupItemSwitchOptions(
+              name: tcontext.meta.overwrite,
+              switchValue: dns.OverWrite,
+              onSwitch: (bool value) async {
+                dns.OverWrite = value;
+              })),
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
               name: tcontext.meta.enable,
@@ -680,6 +717,13 @@ Future<void> showClashSettingsNTP(BuildContext context) async {
     List<GroupItemOptions> options = [
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
+              name: tcontext.meta.overwrite,
+              switchValue: ntp.OverWrite,
+              onSwitch: (bool value) async {
+                ntp.OverWrite = value;
+              })),
+      GroupItemOptions(
+          switchOptions: GroupItemSwitchOptions(
               name: tcontext.meta.enable,
               switchValue: ntp.Enable,
               onSwitch: (bool value) async {
@@ -726,6 +770,13 @@ Future<void> showClashSettingsTLS(BuildContext context) async {
     var setting = ClashSettingManager.getConfig();
     var tls = setting.TLS!;
     List<GroupItemOptions> options = [
+      GroupItemOptions(
+          switchOptions: GroupItemSwitchOptions(
+              name: tcontext.meta.overwrite,
+              switchValue: tls.OverWrite,
+              onSwitch: (bool value) async {
+                tls.OverWrite = value;
+              })),
       GroupItemOptions(
           textFormFieldOptions: GroupItemTextFieldOptions(
               name: tcontext.tls.certificate,
@@ -781,6 +832,13 @@ Future<void> showClashSettingsSniffer(BuildContext context) async {
     List<GroupItemOptions> options = [
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
+              name: tcontext.meta.overwrite,
+              switchValue: sniffer.OverWrite,
+              onSwitch: (bool value) async {
+                sniffer.OverWrite = value;
+              })),
+      GroupItemOptions(
+          switchOptions: GroupItemSwitchOptions(
               name: tcontext.meta.enable,
               switchValue: sniffer.Enable,
               onSwitch: (bool value) async {
@@ -816,6 +874,13 @@ Future<void> showClashSettingsGEO(BuildContext context) async {
     var setting = ClashSettingManager.getConfig();
     var geo = setting.GeoXUrl!;
     List<GroupItemOptions> options = [
+      GroupItemOptions(
+          switchOptions: GroupItemSwitchOptions(
+              name: tcontext.meta.overwrite,
+              switchValue: geo.OverWrite,
+              onSwitch: (bool value) async {
+                geo.OverWrite = value;
+              })),
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
               name: tcontext.meta.autoUpdate,

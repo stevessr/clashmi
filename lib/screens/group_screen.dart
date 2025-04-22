@@ -22,6 +22,7 @@ class GroupScreen extends LasyRenderingStatefulWidget {
   final bool hasReturn;
   final Future<bool> Function(BuildContext context)? onDone;
   final String? tipsIfNoOnDone;
+  final IconData? onDoneIcon;
   final Future<void> Function(BuildContext context)? onFirstLayout;
   const GroupScreen(
       {super.key,
@@ -30,6 +31,7 @@ class GroupScreen extends LasyRenderingStatefulWidget {
       this.hasReturn = true,
       this.onDone,
       this.tipsIfNoOnDone,
+      this.onDoneIcon,
       this.onFirstLayout});
 
   @override
@@ -121,11 +123,11 @@ class GroupScreenState extends LasyRenderingState<GroupScreen>
                                 Navigator.pop(context, true);
                               }
                             },
-                            child: const SizedBox(
+                            child: SizedBox(
                               width: 50,
                               height: 30,
                               child: Icon(
-                                Icons.done_outlined,
+                                widget.onDoneIcon ?? Icons.done_outlined,
                                 size: 26,
                               ),
                             ),

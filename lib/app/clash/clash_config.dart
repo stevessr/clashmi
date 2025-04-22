@@ -4,16 +4,31 @@ import 'package:json_annotation/json_annotation.dart';
 part 'clash_config.g.dart';
 
 class MapHelper {
-  static Map<String, dynamic> removeNullOrEmpty(Map<String, dynamic> object) {
+  static Map<String, dynamic> removeNullOrEmpty(Map<String, dynamic> object,
+      bool removeOverWriteField, bool removeNotOverWrite) {
     Set<String> toRemove = {};
     object.forEach((key, value) {
       if (value == null) {
         toRemove.add(key);
       }
-      if (value is Map) {
-        if (value["enable"] == false) {
+      if (key == "overwrite") {
+        if (removeOverWriteField) {
           toRemove.add(key);
         }
+        if (removeNotOverWrite) {
+          if (value != true) {
+            toRemove.add(key);
+          }
+        }
+      }
+
+      if (value is Map<String, dynamic>) {
+        if (value["overwrite"] == false && removeNotOverWrite) {
+          value = {};
+        } else {
+          removeNullOrEmpty(value, removeOverWriteField, removeNotOverWrite);
+        }
+
         if (value.isEmpty) {
           toRemove.add(key);
         }
@@ -214,8 +229,7 @@ class RawExtensionTun {
       this.AllowBypass);
   factory RawExtensionTun.fromJson(Map<String, dynamic> json) =>
       _$RawExtensionTunFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawExtensionTunToJson(this));
+  Map<String, dynamic> toJson() => _$RawExtensionTunToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -238,14 +252,15 @@ class RawExtension {
       this.Tun, this.PprofAddr, this.DelayTestUrl, this.DelayTestTimeout);
   factory RawExtension.fromJson(Map<String, dynamic> json) =>
       _$RawExtensionFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawExtensionToJson(this));
+  Map<String, dynamic> toJson() => _$RawExtensionToJson(this);
 }
 
 ///
 
 @JsonSerializable(explicitToJson: true)
 class RawTunnel {
+  @JsonKey(name: 'overwrite')
+  bool? OverWrite;
   @JsonKey(name: 'network')
   List<String>? Network;
   @JsonKey(name: 'address')
@@ -255,31 +270,35 @@ class RawTunnel {
   @JsonKey(name: 'proxy')
   String? Proxy;
 
-  RawTunnel.by({this.Network, this.Address, this.Target, this.Proxy});
-  RawTunnel(this.Network, this.Address, this.Target, this.Proxy);
+  RawTunnel.by(
+      {this.OverWrite, this.Network, this.Address, this.Target, this.Proxy});
+  RawTunnel(
+      this.OverWrite, this.Network, this.Address, this.Target, this.Proxy);
   factory RawTunnel.fromJson(Map<String, dynamic> json) =>
       _$RawTunnelFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawTunnelToJson(this));
+  Map<String, dynamic> toJson() => _$RawTunnelToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
 class RawCors {
+  @JsonKey(name: 'overwrite')
+  bool? OverWrite;
   @JsonKey(name: 'allow-origins')
   List<String>? AllowOrigins;
   @JsonKey(name: 'allow-private-network')
   bool? AllowPrivateNetwork;
 
-  RawCors.by({this.AllowOrigins, this.AllowPrivateNetwork});
-  RawCors(this.AllowOrigins, this.AllowPrivateNetwork);
+  RawCors.by({this.OverWrite, this.AllowOrigins, this.AllowPrivateNetwork});
+  RawCors(this.OverWrite, this.AllowOrigins, this.AllowPrivateNetwork);
   factory RawCors.fromJson(Map<String, dynamic> json) =>
       _$RawCorsFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawCorsToJson(this));
+  Map<String, dynamic> toJson() => _$RawCorsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
 class RawDNS {
+  @JsonKey(name: 'overwrite')
+  bool? OverWrite;
   @JsonKey(name: 'enable')
   bool? Enable;
   @JsonKey(name: 'prefer-h3')
@@ -324,7 +343,8 @@ class RawDNS {
   bool? DirectNameServerFollowPolicy;
 
   RawDNS.by(
-      {this.Enable,
+      {this.OverWrite,
+      this.Enable,
       this.PreferH3,
       this.IPv6,
       this.IPv6Timeout,
@@ -346,6 +366,7 @@ class RawDNS {
       this.DirectNameServer,
       this.DirectNameServerFollowPolicy});
   RawDNS(
+      this.OverWrite,
       this.Enable,
       this.PreferH3,
       this.IPv6,
@@ -368,8 +389,7 @@ class RawDNS {
       this.DirectNameServer,
       this.DirectNameServerFollowPolicy);
   factory RawDNS.fromJson(Map<String, dynamic> json) => _$RawDNSFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawDNSToJson(this));
+  Map<String, dynamic> toJson() => _$RawDNSToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -391,27 +411,31 @@ class RawFallbackFilter {
       this.GeoIP, this.GeoIPCode, this.IPCIDR, this.Domain, this.GeoSite);
   factory RawFallbackFilter.fromJson(Map<String, dynamic> json) =>
       _$RawFallbackFilterFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawFallbackFilterToJson(this));
+  Map<String, dynamic> toJson() => _$RawFallbackFilterToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
 class RawClashForAndroid {
+  @JsonKey(name: 'overwrite')
+  bool? OverWrite;
   @JsonKey(name: 'append-system-dns')
   bool? AppendSystemDNS;
   @JsonKey(name: 'ui-subtitle-pattern')
   String? UiSubtitlePattern;
 
-  RawClashForAndroid.by({this.AppendSystemDNS, this.UiSubtitlePattern});
-  RawClashForAndroid(this.AppendSystemDNS, this.UiSubtitlePattern);
+  RawClashForAndroid.by(
+      {this.OverWrite, this.AppendSystemDNS, this.UiSubtitlePattern});
+  RawClashForAndroid(
+      this.OverWrite, this.AppendSystemDNS, this.UiSubtitlePattern);
   factory RawClashForAndroid.fromJson(Map<String, dynamic> json) =>
       _$RawClashForAndroidFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawClashForAndroidToJson(this));
+  Map<String, dynamic> toJson() => _$RawClashForAndroidToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
 class RawNTP {
+  @JsonKey(name: 'overwrite')
+  bool? OverWrite;
   @JsonKey(name: 'enable')
   bool? Enable;
   @JsonKey(name: 'server')
@@ -426,21 +450,23 @@ class RawNTP {
   bool? WriteToSystem;
 
   RawNTP.by(
-      {this.Enable,
+      {this.OverWrite,
+      this.Enable,
       this.Server,
       this.Port,
       this.Interval,
       this.DialerProxy,
       this.WriteToSystem});
-  RawNTP(this.Enable, this.Server, this.Port, this.Interval, this.DialerProxy,
-      this.WriteToSystem);
+  RawNTP(this.OverWrite, this.Enable, this.Server, this.Port, this.Interval,
+      this.DialerProxy, this.WriteToSystem);
   factory RawNTP.fromJson(Map<String, dynamic> json) => _$RawNTPFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawNTPToJson(this));
+  Map<String, dynamic> toJson() => _$RawNTPToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
 class RawTun {
+  @JsonKey(name: 'overwrite')
+  bool? OverWrite;
   @JsonKey(name: 'enable')
   bool? Enable;
   @JsonKey(name: 'device')
@@ -516,7 +542,8 @@ class RawTun {
   @JsonKey(name: 'inet6-route-exclude-address')
   List<String>? Inet6RouteExcludeAddress;
   RawTun.by(
-      {this.Enable,
+      {this.OverWrite,
+      this.Enable,
       this.Device,
       this.Stack,
       this.DNSHijack,
@@ -554,6 +581,7 @@ class RawTun {
       this.Inet4RouteExcludeAddress,
       this.Inet6RouteExcludeAddress});
   RawTun(
+      this.OverWrite,
       this.Enable,
       this.Device,
       this.Stack,
@@ -592,12 +620,13 @@ class RawTun {
       this.Inet4RouteExcludeAddress,
       this.Inet6RouteExcludeAddress);
   factory RawTun.fromJson(Map<String, dynamic> json) => _$RawTunFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawTunToJson(this));
+  Map<String, dynamic> toJson() => _$RawTunToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
 class RawTuicServer {
+  @JsonKey(name: 'overwrite')
+  bool? OverWrite;
   @JsonKey(name: 'enable')
   bool? Enable;
   @JsonKey(name: 'listen')
@@ -624,7 +653,8 @@ class RawTuicServer {
   int? CWND;
 
   RawTuicServer.by(
-      {this.Enable,
+      {this.OverWrite,
+      this.Enable,
       this.Listen,
       this.Token,
       this.Users,
@@ -637,6 +667,7 @@ class RawTuicServer {
       this.MaxUdpRelayPacketSize,
       this.CWND});
   RawTuicServer(
+      this.OverWrite,
       this.Enable,
       this.Listen,
       this.Token,
@@ -651,12 +682,13 @@ class RawTuicServer {
       this.CWND);
   factory RawTuicServer.fromJson(Map<String, dynamic> json) =>
       _$RawTuicServerFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawTuicServerToJson(this));
+  Map<String, dynamic> toJson() => _$RawTuicServerToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
 class RawIPTables {
+  @JsonKey(name: 'overwrite')
+  bool? OverWrite;
   @JsonKey(name: 'enable')
   bool? Enable;
   @JsonKey(name: 'inbound-interface')
@@ -667,17 +699,22 @@ class RawIPTables {
   bool? DnsRedirect;
 
   RawIPTables.by(
-      {this.Enable, this.InboundInterface, this.Bypass, this.DnsRedirect});
-  RawIPTables(
-      this.Enable, this.InboundInterface, this.Bypass, this.DnsRedirect);
+      {this.OverWrite,
+      this.Enable,
+      this.InboundInterface,
+      this.Bypass,
+      this.DnsRedirect});
+  RawIPTables(this.OverWrite, this.Enable, this.InboundInterface, this.Bypass,
+      this.DnsRedirect);
   factory RawIPTables.fromJson(Map<String, dynamic> json) =>
       _$RawIPTablesFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawIPTablesToJson(this));
+  Map<String, dynamic> toJson() => _$RawIPTablesToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
 class RawExperimental {
+  @JsonKey(name: 'overwrite')
+  bool? OverWrite;
   @JsonKey(name: 'fingerprints')
   List<String>? Fingerprints;
   @JsonKey(name: 'quic-go-disable-gso')
@@ -688,16 +725,16 @@ class RawExperimental {
   bool? IP4PEnable;
 
   RawExperimental.by(
-      {this.Fingerprints,
+      {this.OverWrite,
+      this.Fingerprints,
       this.QUICGoDisableGSO,
       this.QUICGoDisableECN,
       this.IP4PEnable});
-  RawExperimental(this.Fingerprints, this.QUICGoDisableGSO,
+  RawExperimental(this.OverWrite, this.Fingerprints, this.QUICGoDisableGSO,
       this.QUICGoDisableECN, this.IP4PEnable);
   factory RawExperimental.fromJson(Map<String, dynamic> json) =>
       _$RawExperimentalFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawExperimentalToJson(this));
+  Map<String, dynamic> toJson() => _$RawExperimentalToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -711,12 +748,13 @@ class RawProfile {
   RawProfile(this.StoreSelected, this.StoreFakeIP);
   factory RawProfile.fromJson(Map<String, dynamic> json) =>
       _$RawProfileFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawProfileToJson(this));
+  Map<String, dynamic> toJson() => _$RawProfileToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
 class RawGeoXUrl {
+  @JsonKey(name: 'overwrite')
+  bool? OverWrite;
   @JsonKey(name: 'geoip')
   String? GeoIp;
   @JsonKey(name: 'mmdb')
@@ -726,16 +764,18 @@ class RawGeoXUrl {
   @JsonKey(name: 'geosite')
   String? GeoSite;
 
-  RawGeoXUrl.by({this.GeoIp, this.Mmdb, this.ASN, this.GeoSite});
-  RawGeoXUrl(this.GeoIp, this.Mmdb, this.ASN, this.GeoSite);
+  RawGeoXUrl.by(
+      {this.OverWrite, this.GeoIp, this.Mmdb, this.ASN, this.GeoSite});
+  RawGeoXUrl(this.OverWrite, this.GeoIp, this.Mmdb, this.ASN, this.GeoSite);
   factory RawGeoXUrl.fromJson(Map<String, dynamic> json) =>
       _$RawGeoXUrlFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawGeoXUrlToJson(this));
+  Map<String, dynamic> toJson() => _$RawGeoXUrlToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
 class RawSniffer {
+  @JsonKey(name: 'overwrite')
+  bool? OverWrite;
   @JsonKey(name: 'enable')
   bool? Enable;
   @JsonKey(name: 'override-destination')
@@ -760,7 +800,8 @@ class RawSniffer {
   Map<String, RawSniffingConfig>? Sniff;
 
   RawSniffer.by(
-      {this.Enable,
+      {this.OverWrite,
+      this.Enable,
       this.OverrideDest,
       this.Sniffing,
       this.ForceDomain,
@@ -772,6 +813,7 @@ class RawSniffer {
       this.ParsePureIp,
       this.Sniff});
   RawSniffer(
+      this.OverWrite,
       this.Enable,
       this.OverrideDest,
       this.Sniffing,
@@ -785,8 +827,7 @@ class RawSniffer {
       this.Sniff);
   factory RawSniffer.fromJson(Map<String, dynamic> json) =>
       _$RawSnifferFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawSnifferToJson(this));
+  Map<String, dynamic> toJson() => _$RawSnifferToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -800,12 +841,13 @@ class RawSniffingConfig {
   RawSniffingConfig(this.Ports, this.OverrideDest);
   factory RawSniffingConfig.fromJson(Map<String, dynamic> json) =>
       _$RawSniffingConfigFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawSniffingConfigToJson(this));
+  Map<String, dynamic> toJson() => _$RawSniffingConfigToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
 class RawTLS {
+  @JsonKey(name: 'overwrite')
+  bool? OverWrite;
   @JsonKey(name: 'certificate')
   String? Certificate;
   @JsonKey(name: 'private-key')
@@ -813,15 +855,21 @@ class RawTLS {
   @JsonKey(name: 'custom-certifactes')
   List<String>? CustomTrustCert;
 
-  RawTLS.by({this.Certificate, this.PrivateKey, this.CustomTrustCert});
-  RawTLS(this.Certificate, this.PrivateKey, this.CustomTrustCert);
+  RawTLS.by(
+      {this.OverWrite,
+      this.Certificate,
+      this.PrivateKey,
+      this.CustomTrustCert});
+  RawTLS(
+      this.OverWrite, this.Certificate, this.PrivateKey, this.CustomTrustCert);
   factory RawTLS.fromJson(Map<String, dynamic> json) => _$RawTLSFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawTLSToJson(this));
+  Map<String, dynamic> toJson() => _$RawTLSToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
 class RawConfig {
+  @JsonKey(name: 'overwrite')
+  bool? OverWrite;
   @JsonKey(name: 'port')
   int? Port;
   @JsonKey(name: 'socks-port')
@@ -949,7 +997,8 @@ class RawConfig {
   RawExtension? Extension;
 
   RawConfig.by(
-      {this.Port,
+      {this.OverWrite,
+      this.Port,
       this.SocksPort,
       this.RedirPort,
       this.TProxyPort,
@@ -1009,6 +1058,7 @@ class RawConfig {
       this.ClashForAndroid,
       required this.Extension});
   RawConfig(
+      this.OverWrite,
       this.Port,
       this.SocksPort,
       this.RedirPort,
@@ -1070,6 +1120,5 @@ class RawConfig {
       this.Extension);
   factory RawConfig.fromJson(Map<String, dynamic> json) =>
       _$RawConfigFromJson(json);
-  Map<String, dynamic> toJson() =>
-      MapHelper.removeNullOrEmpty(_$RawConfigToJson(this));
+  Map<String, dynamic> toJson() => _$RawConfigToJson(this);
 }

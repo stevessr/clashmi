@@ -206,7 +206,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get openUrl => 'Открыть ссылку';
 	@override String get shareUrl => 'Поделиться ссылкой';
 	@override String get coreSettingTips => 'Примечание: После изменения конфигурации необходимо повторно подключиться, чтобы изменения вступили в силу.';
-	@override String get coreSettingOverwrite => 'Переопределить';
+	@override String get overwrite => 'Переопределить';
 	@override String get externalController => 'Внешний контроль';
 	@override String get secret => 'Secret';
 	@override String get tcpConcurrent => 'Параллельное TCP-подтверждение';
@@ -487,7 +487,7 @@ extension on TranslationsRu {
 			case 'meta.openUrl': return 'Открыть ссылку';
 			case 'meta.shareUrl': return 'Поделиться ссылкой';
 			case 'meta.coreSettingTips': return 'Примечание: После изменения конфигурации необходимо повторно подключиться, чтобы изменения вступили в силу.';
-			case 'meta.coreSettingOverwrite': return 'Переопределить';
+			case 'meta.overwrite': return 'Переопределить';
 			case 'meta.externalController': return 'Внешний контроль';
 			case 'meta.secret': return 'Secret';
 			case 'meta.tcpConcurrent': return 'Параллельное TCP-подтверждение';

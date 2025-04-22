@@ -206,7 +206,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get openUrl => 'بازکردن لینک';
 	@override String get shareUrl => 'اشتراک لینک';
 	@override String get coreSettingTips => 'توجه: پس از تغییر پیکربندی، باید دوباره وصل شوید تا اعمال شود';
-	@override String get coreSettingOverwrite => 'لغو';
+	@override String get overwrite => 'لغو';
 	@override String get externalController => 'کنترل خارجی';
 	@override String get secret => 'Secret';
 	@override String get tcpConcurrent => 'دست دادن همزمان TCP';
@@ -487,7 +487,7 @@ extension on TranslationsFa {
 			case 'meta.openUrl': return 'بازکردن لینک';
 			case 'meta.shareUrl': return 'اشتراک لینک';
 			case 'meta.coreSettingTips': return 'توجه: پس از تغییر پیکربندی، باید دوباره وصل شوید تا اعمال شود';
-			case 'meta.coreSettingOverwrite': return 'لغو';
+			case 'meta.overwrite': return 'لغو';
 			case 'meta.externalController': return 'کنترل خارجی';
 			case 'meta.secret': return 'Secret';
 			case 'meta.tcpConcurrent': return 'دست دادن همزمان TCP';

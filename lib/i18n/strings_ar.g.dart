@@ -206,7 +206,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get openUrl => 'Open Link';
 	@override String get shareUrl => 'شارك الرابط';
 	@override String get coreSettingTips => 'ملاحظة: بعد تعديل التكوين، تحتاج إلى إعادة الاتصال حتى يسري مفعوله';
-	@override String get coreSettingOverwrite => 'تجاوز';
+	@override String get overwrite => 'تجاوز';
 	@override String get externalController => 'الرقابة الخارجية';
 	@override String get secret => 'Secret';
 	@override String get tcpConcurrent => 'مصافحة TCP المتزامنة';
@@ -487,7 +487,7 @@ extension on TranslationsAr {
 			case 'meta.openUrl': return 'Open Link';
 			case 'meta.shareUrl': return 'شارك الرابط';
 			case 'meta.coreSettingTips': return 'ملاحظة: بعد تعديل التكوين، تحتاج إلى إعادة الاتصال حتى يسري مفعوله';
-			case 'meta.coreSettingOverwrite': return 'تجاوز';
+			case 'meta.overwrite': return 'تجاوز';
 			case 'meta.externalController': return 'الرقابة الخارجية';
 			case 'meta.secret': return 'Secret';
 			case 'meta.tcpConcurrent': return 'مصافحة TCP المتزامنة';

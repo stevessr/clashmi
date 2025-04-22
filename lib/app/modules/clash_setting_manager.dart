@@ -29,6 +29,7 @@ class ClashSettingManager {
 
   static RawTun defaultTun() {
     return RawTun.by(
+        OverWrite: true,
         Enable:
             true, //Platform.isAndroid || Platform.isIOS || Platform.isMacOS,
         Stack: "gvisor",
@@ -40,6 +41,7 @@ class ClashSettingManager {
 
   static RawDNS defaultDNS() {
     return RawDNS.by(
+      OverWrite: true,
       Enable: true,
       PreferH3: true,
       IPv6: false,
@@ -139,11 +141,12 @@ class ClashSettingManager {
   }
 
   static RawNTP defaultNTP() {
-    return RawNTP.by(Enable: null);
+    return RawNTP.by(OverWrite: false, Enable: false);
   }
 
   static RawGeoXUrl defaultGeoXUrl() {
     return RawGeoXUrl.by(
+        OverWrite: true,
         GeoIp:
             "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat",
         Mmdb:
@@ -155,26 +158,30 @@ class ClashSettingManager {
   }
 
   static RawSniffer defaultSniffer() {
-    return RawSniffer.by(Enable: null);
+    return RawSniffer.by(OverWrite: false, Enable: false);
   }
 
   static RawTLS defaultTLS() {
     return RawTLS.by(
-        Certificate: null, PrivateKey: null, CustomTrustCert: null);
+        OverWrite: false,
+        Certificate: null,
+        PrivateKey: null,
+        CustomTrustCert: null);
   }
 
   static RawExtension defaultExtension() {
     return RawExtension.by(
         Tun: RawExtensionTun.by(
-          HttpProxyEnable: null,
+          HttpProxyEnable: false,
         ),
-        PprofAddr: "127.0.0.1:4578",
+        PprofAddr: null,
         DelayTestUrl: "https://www.gstatic.com",
         DelayTestTimeout: 5000);
   }
 
   static RawConfig defaultConfig() {
     return RawConfig.by(
+      OverWrite: true,
       IPv6: false,
       LogLevel: ClashLogLevel.error.name,
       Mode: ClashConfigsMode.rule.name,
@@ -195,20 +202,21 @@ class ClashSettingManager {
     );
   }
 
-  static Future<RawConfig> defaultConfigNoOverwrite() async {
+  static RawConfig defaultConfigNoOverwrite() {
     return RawConfig.by(
       Mode: _setting.Mode,
       LogLevel: _setting.LogLevel,
       ExternalController: _setting.ExternalController,
-      Secret: await ClashHttpApi.getSecret(),
+      Secret: _setting.Secret,
       DNS: RawDNS.by(
-        Enable: null,
+        OverWrite: false,
+        Enable: false,
       ),
-      NTP: RawNTP.by(Enable: null),
-      Tun: RawTun.by(Enable: null),
+      NTP: RawNTP.by(OverWrite: false, Enable: false),
+      Tun: RawTun.by(OverWrite: false, Enable: false),
       GeoXUrl: RawGeoXUrl.by(),
-      Sniffer: RawSniffer.by(Enable: null),
-      TLS: RawTLS.by(),
+      Sniffer: RawSniffer.by(OverWrite: false, Enable: false),
+      TLS: RawTLS.by(OverWrite: false),
       Extension: RawExtension.by(
         Tun: RawExtensionTun.by(HttpProxyEnable: null),
         PprofAddr: _setting.Extension?.PprofAddr,
@@ -271,17 +279,33 @@ class ClashSettingManager {
 
     String filePath = await PathUtils.serviceCoreSettingFilePath();
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    String content = encoder.convert(_setting);
+    final map = _setting.toJson();
+    MapHelper.removeNullOrEmpty(map, false, false);
+    String content = encoder.convert(map);
     try {
       await File(filePath).writeAsString(content, flush: true);
     } catch (err, stacktrace) {}
   }
 
-  static Future<void> saveSettingNoOverwrite() async {
-    final setting = await defaultConfigNoOverwrite();
-    String filePath = await PathUtils.serviceCoreSettingNoOverwriteFilePath();
+  static Future<String> getPatchContent(bool overwrite) async {
+    late String content;
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    String content = encoder.convert(setting);
+    if (overwrite) {
+      final map = _setting.toJson();
+      MapHelper.removeNullOrEmpty(map, true, true);
+      content = encoder.convert(map);
+    } else {
+      final setting = defaultConfigNoOverwrite();
+      final map = setting.toJson();
+      MapHelper.removeNullOrEmpty(map, true, true);
+      content = encoder.convert(map);
+    }
+    return content;
+  }
+
+  static Future<void> saveCorePatch(bool overwrite) async {
+    final content = await getPatchContent(overwrite);
+    String filePath = await PathUtils.serviceCorePatchPath();
     try {
       await File(filePath).writeAsString(content, flush: true);
     } catch (err, stacktrace) {}
@@ -347,7 +371,7 @@ class ClashSettingManager {
       ClashConfigsMode mode) async {
     _setting.Mode = mode.name;
     await saveSetting();
-    await saveSettingNoOverwrite();
+
     bool run = await VPNService.getStarted();
     if (!run) {
       return null;

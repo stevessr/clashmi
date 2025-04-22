@@ -238,7 +238,6 @@ class SettingConfig {
   SettingConfigItemWebDev webdav = SettingConfigItemWebDev();
   bool alwayOn = false;
   String autoUpdateChannel = "stable"; //stable, beta
-  bool coreSettingOverwrite = true;
 
   Map<String, dynamic> toJson() => {
         'language_tag': languageTag,
@@ -249,7 +248,6 @@ class SettingConfig {
         'webdav': webdav,
         'alway_on': alwayOn,
         'auto_update_channel': autoUpdateChannel,
-        'core_setting_overwrite': coreSettingOverwrite,
       };
   void fromJson(Map<String, dynamic>? map) {
     if (map == null) {
@@ -267,7 +265,6 @@ class SettingConfig {
     if (autoUpdateChannel.isEmpty) {
       autoUpdateChannel = "stable";
     }
-    coreSettingOverwrite = map["core_setting_overwrite"] ?? true;
   }
 
   static SettingConfig fromJsonStatic(Map<String, dynamic>? map) {

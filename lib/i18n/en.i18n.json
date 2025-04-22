@@ -99,7 +99,7 @@
         "openUrl": "Open Link",
         "shareUrl": "Share Link",
         "coreSettingTips": "Note: After modifying the configuration, you need to reconnect to take effect",
-        "coreSettingOverwrite": "Overwrite",
+        "overwrite": "Overwrite",
         "externalController": "External Controller",
         "secret": "Secret",
         "tcpConcurrent": "TCP Concurrent Handshake",

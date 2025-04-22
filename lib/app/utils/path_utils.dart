@@ -252,13 +252,13 @@ class PathUtils {
     return path.join(filePath, serviceCoreSettingFileName());
   }
 
-  static String serviceCoreSettingNoOverwriteFileName() {
-    return "service_core_setting_no_overwrite.json";
+  static String serviceCorePatchFileName() {
+    return "service_core_patch.json";
   }
 
-  static Future<String> serviceCoreSettingNoOverwriteFilePath() async {
+  static Future<String> serviceCorePatchPath() async {
     String filePath = await profileDir();
-    return path.join(filePath, serviceCoreSettingNoOverwriteFileName());
+    return path.join(filePath, serviceCorePatchFileName());
   }
 
   static String profilesFileName() {

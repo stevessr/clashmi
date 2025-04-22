@@ -114,13 +114,14 @@ class VPNService {
   }
 
   static Future<bool> _prepareConfig(String profileName) async {
+    final setting = ClashSettingManager.getConfig();
     final controlPort = ClashSettingManager.getControlPort();
-    final mixedPort = ClashSettingManager.getMixedPort();
+
     var excludePorts = [
       controlPort,
     ];
-    if (mixedPort != null) {
-      excludePorts.add(mixedPort);
+    if (setting.MixedPort != null) {
+      excludePorts.add(setting.MixedPort!);
     }
 
     String name = AppUtils.getName();
@@ -134,9 +135,7 @@ class VPNService {
     config.work_dir = PathUtils.appAssetsDir();
     config.cache_dir = await PathUtils.cacheDir();
     config.core_path = path.join(await PathUtils.profilesDir(), profileName);
-    config.patch_core_path = SettingManager.getConfig().coreSettingOverwrite
-        ? await PathUtils.serviceCoreSettingFilePath()
-        : await PathUtils.serviceCoreSettingNoOverwriteFilePath();
+    config.patch_core_path = await PathUtils.serviceCorePatchPath();
     config.log_path = await PathUtils.serviceLogFilePath();
     config.err_path = await PathUtils.serviceStdErrorFilePath();
     config.id = await Did.getDid();
@@ -156,8 +155,7 @@ class VPNService {
       excludePorts: excludePorts,
     );
 
-    await ClashSettingManager.saveSetting();
-    await ClashSettingManager.saveSettingNoOverwrite();
+    await ClashSettingManager.saveCorePatch(setting.OverWrite == true);
 
     File confFile = File(configFilePath);
     bool reinstall = false;
