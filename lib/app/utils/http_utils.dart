@@ -17,36 +17,10 @@ typedef DecodeCallback = String Function(String);
 
 abstract final class HttpUtils {
   static const String _proxy = "PROXY 127.0.0.1:8888";
-  static List<String> getUserAgents() {
-    List<String> list = ["ClashMeta"];
 
-    return list;
-  }
-
-  static String getUserAgentsString() {
-    // test https://sub.biabama.xyz/tXIgVSV83AQd/34ceb17d-0d99-4bbd-a7a4-933736de9314/#subyou%20nafas HiddifyNext
-    //test https://dy.smjc.top/api/v1/client/subscribe?token=688249cc353504b0db5c185416bc0eaf   NekoBox/Android/1.3.1 (Prefer ClashMeta Format)  这个必须放最前面,否则无效
-    return getUserAgents().join(";");
-  }
-
-  static String getUserAgentsStringShort(String ua) {
-    List<String> list = ua.split(";");
-    for (int i = 0; i < list.length; ++i) {
-      int pos = list[i].indexOf("/");
-      if (pos > 0) {
-        list[i] = "${list[i].substring(0, pos)}/...";
-      }
-    }
-    return list.join(";");
-  }
-
-  static Future<String> getUserAgent({String? compatible}) async {
+  static Future<String> getUserAgent() async {
     String version = AppUtils.getBuildinVersion();
-    String compa = compatible == null || compatible.isEmpty
-        ? getUserAgentsString()
-        : compatible;
-
-    return "Clash Mi/$version platform/${Platform.operatingSystem} $compa";
+    return "ClashMi/$version platform/${Platform.operatingSystem} ClashMeta/1.19.4";
   }
 
   static Future<ReturnResult<Tuple2<int, HttpHeaders>>> httpHeadRequest(
