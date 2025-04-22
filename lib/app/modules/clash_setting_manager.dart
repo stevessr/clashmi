@@ -256,27 +256,25 @@ class ClashSettingManager {
     }
   }
 
-  static Future<void> saveSetting() async {
-    if (Platform.isAndroid) {
-      final perapp = SettingManager.getConfig().perapp;
-      if (perapp.enable) {
-        if (perapp.isInclude) {
-          _setting.Tun?.IncludePackage = [AppUtils.getId()];
-          _setting.Tun?.IncludePackage!.addAll(perapp.list);
-          _setting.Tun?.ExcludePackage = [];
-        } else {
-          _setting.Tun?.IncludePackage = [];
-          _setting.Tun?.ExcludePackage = perapp.list;
-        }
+  static void updateTunPackage() {
+    final perapp = SettingManager.getConfig().perapp;
+    if (Platform.isAndroid && perapp.enable) {
+      if (perapp.isInclude) {
+        _setting.Tun?.IncludePackage = [AppUtils.getId()];
+        _setting.Tun?.IncludePackage!.addAll(perapp.list);
+        _setting.Tun?.ExcludePackage = [];
       } else {
-        _setting.Tun?.IncludePackage = null;
-        _setting.Tun?.ExcludePackage = null;
+        _setting.Tun?.IncludePackage = [];
+        _setting.Tun?.ExcludePackage = perapp.list;
       }
     } else {
       _setting.Tun?.IncludePackage = null;
       _setting.Tun?.ExcludePackage = null;
     }
+  }
 
+  static Future<void> saveSetting() async {
+    updateTunPackage();
     String filePath = await PathUtils.serviceCoreSettingFilePath();
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     final map = _setting.toJson();
@@ -291,6 +289,7 @@ class ClashSettingManager {
     late String content;
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     if (overwrite) {
+      updateTunPackage();
       final map = _setting.toJson();
       MapHelper.removeNullOrEmpty(map, true, true);
       content = encoder.convert(map);
