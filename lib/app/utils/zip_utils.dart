@@ -44,9 +44,12 @@ class ZipUtils {
       var encoder = ZipFileEncoder();
       encoder.create(zipPath);
       for (var filePath in filePaths) {
-        var file = io.File(filePath);
+        final file = io.File(filePath);
+        final dir = io.Directory(filePath);
         if (await file.exists()) {
           await encoder.addFile(file);
+        } else if (await dir.exists() && (await dir.list().length > 0)) {
+          await encoder.addDirectory(dir);
         }
       }
       encoder.close();

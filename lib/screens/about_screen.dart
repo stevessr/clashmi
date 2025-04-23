@@ -168,23 +168,23 @@ class AboutScreenState extends LasyRenderingState<AboutScreen> {
       ];
       groupOptions.add(GroupItem(options: options1));
     }
-
-    List<GroupItemOptions> options2 = [
-      GroupItemOptions(
-          pushOptions: GroupItemPushOptions(
-              name: tcontext.meta.devOptions,
-              onPush: () async {
-                onTapDevOptions();
-              }))
-    ];
-    groupOptions.add(GroupItem(options: options2));
+    if (PlatformUtils.isPC()) {
+      List<GroupItemOptions> options2 = [
+        GroupItemOptions(
+            pushOptions: GroupItemPushOptions(
+                name: tcontext.meta.devOptions,
+                onPush: () async {
+                  onTapDevOptions();
+                }))
+      ];
+      groupOptions.add(GroupItem(options: options2));
+    }
 
     return groupOptions;
   }
 
   void onTapDevOptions() async {
     final tcontext = Translations.of(context);
-
     Future<List<GroupItem>> getOptions(BuildContext context) async {
       List<GroupItemOptions> options = [
         PlatformUtils.isPC()

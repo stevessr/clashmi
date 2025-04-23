@@ -27,6 +27,10 @@ class ClashSettingManager {
     await initGeo();
   }
 
+  static Future<void> reload() async {
+    await loadSetting();
+  }
+
   static RawTun defaultTun() {
     return RawTun.by(
         OverWrite: true,

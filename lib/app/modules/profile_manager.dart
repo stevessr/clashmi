@@ -184,6 +184,11 @@ class ProfileManager {
   }
 
   static Future<void> uninit() async {}
+  static Future<void> reload() async {
+    _profileConfig._currentId = "";
+    _profileConfig.profiles = [];
+    await load();
+  }
 
   static Future<void> save() async {
     String filePath = await PathUtils.profilesConfigFilePath();

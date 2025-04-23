@@ -239,6 +239,8 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get qrcodeScanResultEmpty => '扫描结果为空';
 	@override String get screenshot => '截图';
 	@override String get backupAndSync => '备份与同步';
+	@override String get importSuccess => '导入成功';
+	@override String get rewriteConfirm => '该文件将覆盖本地已有配置,是否继续?';
 	@override String get importAndExport => '导入/导出';
 	@override String get import => '导入';
 	@override String get export => '导出';
@@ -251,6 +253,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get coreLog => '核心日志';
 	@override String get core => '核心';
 	@override String get help => '帮助';
+	@override String get tutorial => '使用教程';
 	@override String get board => '面板';
 	@override String get proxy => '代理';
 	@override String get theme => '主题';
@@ -520,6 +523,8 @@ extension on TranslationsZhCn {
 			case 'meta.qrcodeScanResultEmpty': return '扫描结果为空';
 			case 'meta.screenshot': return '截图';
 			case 'meta.backupAndSync': return '备份与同步';
+			case 'meta.importSuccess': return '导入成功';
+			case 'meta.rewriteConfirm': return '该文件将覆盖本地已有配置,是否继续?';
 			case 'meta.importAndExport': return '导入/导出';
 			case 'meta.import': return '导入';
 			case 'meta.export': return '导出';
@@ -532,6 +537,7 @@ extension on TranslationsZhCn {
 			case 'meta.coreLog': return '核心日志';
 			case 'meta.core': return '核心';
 			case 'meta.help': return '帮助';
+			case 'meta.tutorial': return '使用教程';
 			case 'meta.board': return '面板';
 			case 'meta.proxy': return '代理';
 			case 'meta.theme': return '主题';

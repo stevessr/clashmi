@@ -89,14 +89,15 @@ class RemoteConfig {
   static const String kDefaultOutpost = "https://outpost.$kDefaultHost/put";
 
   static const String kDefaultGetTranffic =
-      "https://1.x31415926.top/?ref=clashmi";
+      "https://$kDefaultHost/page/sponsor#list";
 
-  static const String kDefaultTutorial = "https://$kDefaultHost/quickstart/";
-  static const String kDefaultFaq = "https://$kDefaultHost/faq/";
+  static const String kDefaultTutorial = "https://$kDefaultHost/guide/";
+  static const String kDefaultFaq = "https://$kDefaultHost/guide/faq/";
 
   static const String kDefaultDownload = "https://$kDefaultHost/download/";
   static const String kDefaultTelegram = "https://t.me/ClashMiApp";
   static const String kDefaultFollow = "https://github.com/KaringX/clashmi";
+  static const String kDefaultDonate = "http://$kDefaultHost/donate";
 
   String latestCheck = "";
 
@@ -109,15 +110,12 @@ class RemoteConfig {
   String outpost = kDefaultOutpost;
 
   String getTranffic = kDefaultGetTranffic;
-
   String tutorial = kDefaultTutorial;
   String faq = kDefaultFaq;
-
   String download = kDefaultDownload;
   String telegram = kDefaultTelegram;
   String follow = kDefaultFollow;
-
-  String donateUrl = "";
+  String donateUrl = kDefaultDonate;
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> ret = {
@@ -125,18 +123,15 @@ class RemoteConfig {
       "get_profile": getProfile,
       "channel": channels,
     };
-
     if (getTranffic != kDefaultGetTranffic) {
       ret["get_tranffic"] = getTranffic;
     }
-
     if (tutorial != kDefaultTutorial) {
       ret["tutorial"] = tutorial;
     }
     if (faq != kDefaultFaq) {
       ret["faq"] = faq;
     }
-
     if (download != kDefaultDownload) {
       ret["download"] = download;
     }
@@ -146,8 +141,7 @@ class RemoteConfig {
     if (follow != kDefaultFollow) {
       ret["follow"] = follow;
     }
-
-    if (donateUrl.isNotEmpty) {
+    if (donateUrl != kDefaultDonate) {
       ret["donate_url"] = donateUrl;
     }
 

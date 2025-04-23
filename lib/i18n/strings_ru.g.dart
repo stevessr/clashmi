@@ -239,6 +239,8 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get qrcodeScanResultEmpty => 'Пустой результат сканирования.';
 	@override String get screenshot => 'Скриншот';
 	@override String get backupAndSync => 'Резервное копирование и синхронизация';
+	@override String get importSuccess => 'Импорт выполнен успешно';
+	@override String get rewriteConfirm => 'Этот файл перезапишет существующую локальную конфигурацию. Продолжить?';
 	@override String get importAndExport => 'Импорт и экспорт';
 	@override String get import => 'Импорт';
 	@override String get export => 'Экспорт';
@@ -251,6 +253,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get coreLog => 'Журнал керна';
 	@override String get core => 'основной';
 	@override String get help => 'помощь';
+	@override String get tutorial => 'Руководство';
 	@override String get board => 'панель';
 	@override String get proxy => 'действующий';
 	@override String get theme => 'тема';
@@ -520,6 +523,8 @@ extension on TranslationsRu {
 			case 'meta.qrcodeScanResultEmpty': return 'Пустой результат сканирования.';
 			case 'meta.screenshot': return 'Скриншот';
 			case 'meta.backupAndSync': return 'Резервное копирование и синхронизация';
+			case 'meta.importSuccess': return 'Импорт выполнен успешно';
+			case 'meta.rewriteConfirm': return 'Этот файл перезапишет существующую локальную конфигурацию. Продолжить?';
 			case 'meta.importAndExport': return 'Импорт и экспорт';
 			case 'meta.import': return 'Импорт';
 			case 'meta.export': return 'Экспорт';
@@ -532,6 +537,7 @@ extension on TranslationsRu {
 			case 'meta.coreLog': return 'Журнал керна';
 			case 'meta.core': return 'основной';
 			case 'meta.help': return 'помощь';
+			case 'meta.tutorial': return 'Руководство';
 			case 'meta.board': return 'панель';
 			case 'meta.proxy': return 'действующий';
 			case 'meta.theme': return 'тема';

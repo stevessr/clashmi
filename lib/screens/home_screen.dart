@@ -8,6 +8,7 @@ import 'package:clashmi/app/local_services/vpn_service.dart';
 import 'package:clashmi/app/modules/auto_update_manager.dart';
 import 'package:clashmi/app/modules/biz.dart';
 import 'package:clashmi/app/modules/clash_setting_manager.dart';
+import 'package:clashmi/app/modules/remote_config_manager.dart';
 import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/app_lifecycle_state_notify.dart';
 import 'package:clashmi/app/utils/app_utils.dart';
@@ -25,6 +26,7 @@ import 'package:clashmi/screens/theme_config.dart';
 import 'package:clashmi/screens/themes.dart';
 import 'package:clashmi/screens/user_agreement_screen.dart';
 import 'package:clashmi/screens/version_update_screen.dart';
+import 'package:clashmi/screens/webview_helper.dart';
 import 'package:clashmi/screens/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -183,7 +185,12 @@ class _HomeScreenState extends LasyRenderingState<HomeScreen>
     AutoUpdateManager.onEventCheck.add(() {
       setState(() {});
     });
-
+    DialogUtils.faqCallback = (String text) async {
+      final tcontext = Translations.of(context);
+      var remoteConfig = RemoteConfigManager.getConfig();
+      await WebviewHelper.loadUrl(context, remoteConfig.faq, "faqCallback",
+          title: tcontext.meta.faq);
+    };
     VPNService.onEventStateChanged.add(_onStateChanged);
 
     AppLifecycleStateNofity.onStateResumed(hashCode, _onStateResumed);

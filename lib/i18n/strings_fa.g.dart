@@ -239,6 +239,8 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get qrcodeScanResultEmpty => 'نتیجه اسکن خالی است';
 	@override String get screenshot => 'اسکرین‌شات';
 	@override String get backupAndSync => 'پشتیبان‌گیری و همگام‌سازی';
+	@override String get importSuccess => 'افزودن موفق بود';
+	@override String get rewriteConfirm => 'این فایل کانفیگ‌های محلی موجود را بازنویسی می‌کند. آیا می‌خواهید ادامه بدین؟';
 	@override String get importAndExport => 'وارد‌کردن و خروجی‌گرفتن';
 	@override String get import => 'وارد‌کردن';
 	@override String get export => 'خروجی‌گرفتن';
@@ -251,6 +253,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get coreLog => 'گزارش هسته';
 	@override String get core => 'هسته';
 	@override String get help => 'کمک کند';
+	@override String get tutorial => 'آموزش';
 	@override String get board => 'پانل';
 	@override String get proxy => 'بازیگری';
 	@override String get theme => 'موضوع';
@@ -520,6 +523,8 @@ extension on TranslationsFa {
 			case 'meta.qrcodeScanResultEmpty': return 'نتیجه اسکن خالی است';
 			case 'meta.screenshot': return 'اسکرین‌شات';
 			case 'meta.backupAndSync': return 'پشتیبان‌گیری و همگام‌سازی';
+			case 'meta.importSuccess': return 'افزودن موفق بود';
+			case 'meta.rewriteConfirm': return 'این فایل کانفیگ‌های محلی موجود را بازنویسی می‌کند. آیا می‌خواهید ادامه بدین؟';
 			case 'meta.importAndExport': return 'وارد‌کردن و خروجی‌گرفتن';
 			case 'meta.import': return 'وارد‌کردن';
 			case 'meta.export': return 'خروجی‌گرفتن';
@@ -532,6 +537,7 @@ extension on TranslationsFa {
 			case 'meta.coreLog': return 'گزارش هسته';
 			case 'meta.core': return 'هسته';
 			case 'meta.help': return 'کمک کند';
+			case 'meta.tutorial': return 'آموزش';
 			case 'meta.board': return 'پانل';
 			case 'meta.proxy': return 'بازیگری';
 			case 'meta.theme': return 'موضوع';

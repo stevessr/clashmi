@@ -47,7 +47,7 @@ class PathUtils {
   }
 
   static String profileDirForPortableMode() {
-    return path.join(exeDir(), "profiles");
+    return path.join(exeDir(), "portable");
   }
 
   static Future<String> profileDirNonPortable() async {
@@ -89,9 +89,13 @@ class PathUtils {
 
   static Future<String> profilesDir() async {
     String dir = await profileDir();
-    String cdir = path.join(dir, "profiles");
+    String cdir = path.join(dir, profilesName());
     await FileUtils.createDir(cdir);
     return cdir;
+  }
+
+  static String profilesName() {
+    return "profiles";
   }
 
   static Future<String> backupDir() async {

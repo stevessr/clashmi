@@ -248,6 +248,10 @@ class SettingManager {
   }
 
   static Future<void> uninit() async {}
+  static Future<void> reload() async {
+    await loadConfig();
+  }
+
   static Future<bool> parseConfig() async {
     bool save = false;
 

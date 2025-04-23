@@ -239,6 +239,8 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get qrcodeScanResultEmpty => 'نتيجة الفحص فارغة';
 	@override String get screenshot => 'لقطة شاشة';
 	@override String get backupAndSync => 'النسخ الاحتياطي والمزامنة';
+	@override String get importSuccess => 'استيراد نجاح ';
+	@override String get rewriteConfirm => 'سيقوم هذا الملف بكتابة التكوين المحلي الحالي.هل تريد الاستمرار؟';
 	@override String get importAndExport => 'استيراد وتصدير';
 	@override String get import => 'يستورد';
 	@override String get export => 'يصدّر';
@@ -251,6 +253,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get coreLog => 'سجل النواة';
 	@override String get core => 'جوهر';
 	@override String get help => 'يساعد';
+	@override String get tutorial => 'درس تعليمي';
 	@override String get board => 'لوحة';
 	@override String get proxy => 'التمثيل';
 	@override String get theme => 'سمة';
@@ -520,6 +523,8 @@ extension on TranslationsAr {
 			case 'meta.qrcodeScanResultEmpty': return 'نتيجة الفحص فارغة';
 			case 'meta.screenshot': return 'لقطة شاشة';
 			case 'meta.backupAndSync': return 'النسخ الاحتياطي والمزامنة';
+			case 'meta.importSuccess': return 'استيراد نجاح ';
+			case 'meta.rewriteConfirm': return 'سيقوم هذا الملف بكتابة التكوين المحلي الحالي.هل تريد الاستمرار؟';
 			case 'meta.importAndExport': return 'استيراد وتصدير';
 			case 'meta.import': return 'يستورد';
 			case 'meta.export': return 'يصدّر';
@@ -532,6 +537,7 @@ extension on TranslationsAr {
 			case 'meta.coreLog': return 'سجل النواة';
 			case 'meta.core': return 'جوهر';
 			case 'meta.help': return 'يساعد';
+			case 'meta.tutorial': return 'درس تعليمي';
 			case 'meta.board': return 'لوحة';
 			case 'meta.proxy': return 'التمثيل';
 			case 'meta.theme': return 'سمة';

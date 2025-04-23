@@ -242,6 +242,8 @@ class TranslationsMetaEn {
 	String get qrcodeScanResultEmpty => 'Scan Result is empty';
 	String get screenshot => 'Screenshot';
 	String get backupAndSync => 'Backup and Sync';
+	String get importSuccess => 'Import Success';
+	String get rewriteConfirm => 'This file will overwrite the existing local configuration. Do you want to continue?';
 	String get importAndExport => 'Import and Export';
 	String get import => 'Import';
 	String get export => 'Export';
@@ -254,6 +256,7 @@ class TranslationsMetaEn {
 	String get coreLog => 'Core Log';
 	String get core => 'Core';
 	String get help => 'Help';
+	String get tutorial => 'Tutorial';
 	String get board => 'Board';
 	String get proxy => 'Proxy';
 	String get theme => 'Theme';
@@ -523,6 +526,8 @@ extension on Translations {
 			case 'meta.qrcodeScanResultEmpty': return 'Scan Result is empty';
 			case 'meta.screenshot': return 'Screenshot';
 			case 'meta.backupAndSync': return 'Backup and Sync';
+			case 'meta.importSuccess': return 'Import Success';
+			case 'meta.rewriteConfirm': return 'This file will overwrite the existing local configuration. Do you want to continue?';
 			case 'meta.importAndExport': return 'Import and Export';
 			case 'meta.import': return 'Import';
 			case 'meta.export': return 'Export';
@@ -535,6 +540,7 @@ extension on Translations {
 			case 'meta.coreLog': return 'Core Log';
 			case 'meta.core': return 'Core';
 			case 'meta.help': return 'Help';
+			case 'meta.tutorial': return 'Tutorial';
 			case 'meta.board': return 'Board';
 			case 'meta.proxy': return 'Proxy';
 			case 'meta.theme': return 'Theme';

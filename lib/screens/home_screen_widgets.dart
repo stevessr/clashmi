@@ -6,7 +6,6 @@ import 'package:clashmi/app/clash/clash_http_api.dart';
 import 'package:clashmi/app/local_services/vpn_service.dart';
 import 'package:clashmi/app/modules/clash_setting_manager.dart';
 import 'package:clashmi/app/modules/profile_manager.dart';
-import 'package:clashmi/app/modules/remote_config_manager.dart';
 import 'package:clashmi/app/modules/zashboard.dart';
 import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/app_lifecycle_state_notify.dart';
@@ -18,11 +17,10 @@ import 'package:clashmi/app/utils/websocket.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/about_screen.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
-
+import 'package:clashmi/screens/group_helper.dart';
 import 'package:clashmi/screens/profiles_board_screen.dart';
 import 'package:clashmi/screens/proxy_board_screen.dart';
 import 'package:clashmi/screens/richtext_viewer.screen.dart';
-import 'package:clashmi/screens/settings_screen.dart';
 import 'package:clashmi/screens/theme_config.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/webview_helper.dart';
@@ -556,7 +554,7 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
         ),
         minVerticalPadding: 22,
         onTap: () async {
-          await showAppSettings(context);
+          await GroupHelper.showAppSettings(context);
         },
       ),
       ListTile(
@@ -572,7 +570,7 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
         ),
         minVerticalPadding: 22,
         onTap: () async {
-          await showClashSettings(context);
+          await GroupHelper.showClashSettings(context);
         },
       ),
       ListTile(
@@ -609,6 +607,22 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
         },
       ),
       ListTile(
+        title: Text(tcontext.meta.backupAndSync),
+        leading: Icon(
+          Icons.backup,
+          size: 20,
+        ),
+        minLeadingWidth: 40,
+        trailing: Icon(
+          Icons.keyboard_arrow_right,
+          size: 20,
+        ),
+        minVerticalPadding: 22,
+        onTap: () async {
+          GroupHelper.showBackupAndSync(context);
+        },
+      ),
+      ListTile(
         title: Text(tcontext.meta.help),
         leading: Icon(
           Icons.help,
@@ -621,9 +635,7 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
         ),
         minVerticalPadding: 22,
         onTap: () async {
-          var remoteConfig = RemoteConfigManager.getConfig();
-          await WebviewHelper.loadUrl(
-              context, remoteConfig.telegram, tcontext.meta.help);
+          await GroupHelper.showHelp(context);
         },
       ),
       ListTile(
