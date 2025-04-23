@@ -186,13 +186,26 @@ class ProfileManager {
   static Future<void> uninit() async {}
   static Future<void> reload() async {
     final dir = await PathUtils.profilesDir();
+    List<String> ids = [];
+    List<String> idsToDelete = [];
     for (var profile in _profileConfig.profiles) {
-      final filePath = path.join(dir, profile.id);
-      await FileUtils.deletePath(filePath);
+      ids.add(profile.id);
     }
     _profileConfig._currentId = "";
     _profileConfig.profiles = [];
     await load();
+    for (var id in ids) {
+      int index = _profileConfig.profiles.indexWhere((value) {
+        return value.id == _profileConfig._currentId;
+      });
+      if (index < 0) {
+        idsToDelete.add(id);
+      }
+    }
+    for (var id in idsToDelete) {
+      final filePath = path.join(dir, id);
+      await FileUtils.deletePath(filePath);
+    }
   }
 
   static Future<void> save() async {
