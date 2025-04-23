@@ -185,6 +185,11 @@ class ProfileManager {
 
   static Future<void> uninit() async {}
   static Future<void> reload() async {
+    final dir = await PathUtils.profilesDir();
+    for (var profile in _profileConfig.profiles) {
+      final filePath = path.join(dir, profile.id);
+      await FileUtils.deletePath(filePath);
+    }
     _profileConfig._currentId = "";
     _profileConfig.profiles = [];
     await load();
