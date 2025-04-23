@@ -258,6 +258,7 @@ class TranslationsMetaEn {
 	String get help => 'Help';
 	String get tutorial => 'Tutorial';
 	String get board => 'Board';
+	String get boardPort => 'Board Port';
 	String get proxy => 'Proxy';
 	String get theme => 'Theme';
 	String get tvMode => 'TV Mode';
@@ -542,6 +543,7 @@ extension on Translations {
 			case 'meta.help': return 'Help';
 			case 'meta.tutorial': return 'Tutorial';
 			case 'meta.board': return 'Board';
+			case 'meta.boardPort': return 'Board Port';
 			case 'meta.proxy': return 'Proxy';
 			case 'meta.theme': return 'Theme';
 			case 'meta.tvMode': return 'TV Mode';

@@ -255,6 +255,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get help => 'помощь';
 	@override String get tutorial => 'Руководство';
 	@override String get board => 'панель';
+	@override String get boardPort => 'Порты панели';
 	@override String get proxy => 'действующий';
 	@override String get theme => 'тема';
 	@override String get tvMode => 'Режим ТВ';
@@ -539,6 +540,7 @@ extension on TranslationsRu {
 			case 'meta.help': return 'помощь';
 			case 'meta.tutorial': return 'Руководство';
 			case 'meta.board': return 'панель';
+			case 'meta.boardPort': return 'Порты панели';
 			case 'meta.proxy': return 'действующий';
 			case 'meta.theme': return 'тема';
 			case 'meta.tvMode': return 'Режим ТВ';

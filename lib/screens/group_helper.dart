@@ -335,6 +335,15 @@ class GroupHelper {
                       AutoUpdateManager.updateChannelChanged();
                     }))
             : GroupItemOptions(),
+        GroupItemOptions(
+            textFormFieldOptions: GroupItemTextFieldOptions(
+                name: tcontext.meta.boardPort,
+                text: setting.boardPort.toString(),
+                textWidthPercent: 0.5,
+                onChanged: (String value) {
+                  setting.boardPort =
+                      int.tryParse(value) ?? SettingConfig.kDefaultBoardPort;
+                })),
       ];
 
       return [

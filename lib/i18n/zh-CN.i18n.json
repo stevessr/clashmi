@@ -148,6 +148,7 @@
         "help": "帮助",
         "tutorial": "使用教程",
         "board": "面板",
+        "boardPort": "面板端口",
         "proxy": "代理",
         "theme": "主题",
         "tvMode": "TV模式",

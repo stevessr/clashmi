@@ -255,6 +255,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get help => 'کمک کند';
 	@override String get tutorial => 'آموزش';
 	@override String get board => 'پانل';
+	@override String get boardPort => 'پورت های پنل';
 	@override String get proxy => 'بازیگری';
 	@override String get theme => 'موضوع';
 	@override String get tvMode => 'حالت تلویزیون';
@@ -539,6 +540,7 @@ extension on TranslationsFa {
 			case 'meta.help': return 'کمک کند';
 			case 'meta.tutorial': return 'آموزش';
 			case 'meta.board': return 'پانل';
+			case 'meta.boardPort': return 'پورت های پنل';
 			case 'meta.proxy': return 'بازیگری';
 			case 'meta.theme': return 'موضوع';
 			case 'meta.tvMode': return 'حالت تلویزیون';

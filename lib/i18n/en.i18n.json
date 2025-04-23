@@ -148,6 +148,7 @@
         "help": "Help",
         "tutorial": "Tutorial",
         "board": "Board",
+        "boardPort": "Board Port",
         "proxy": "Proxy",
         "theme": "Theme",
         "tvMode": "TV Mode",

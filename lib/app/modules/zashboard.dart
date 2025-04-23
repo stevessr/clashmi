@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:clashmi/app/clash/clash_http_api.dart';
 import 'package:clashmi/app/modules/clash_setting_manager.dart';
+import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/network_utils.dart';
 import 'package:flutter/services.dart';
@@ -29,10 +30,18 @@ class Zashboard {
         ports.add(mixedPort);
       }
 
-      _port = await NetworkUtils.getAvaliablePort(ports);
-      if (_port == 0) {
-        return ReturnResultError("Zashboard.getAvaliablePort failed");
+      try {
+        ServerSocket serverSocket = await ServerSocket.bind(
+            InternetAddress.loopbackIPv4, SettingManager.getConfig().boardPort);
+        _port = serverSocket.port;
+        await serverSocket.close();
+      } catch (err) {
+        _port = await NetworkUtils.getAvaliablePort(ports);
+        if (_port == 0) {
+          return ReturnResultError("Zashboard.getAvaliablePort failed");
+        }
       }
+
       try {
         _server = await HttpServer.bind("127.0.0.1", _port);
       } catch (err, stacktrace) {

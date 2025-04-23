@@ -157,6 +157,7 @@ class SettingConfigItemPerapp {
 }
 
 class SettingConfig {
+  static const int kDefaultBoardPort = 7066;
   String languageTag = "";
   SettingConfigItemUI ui = SettingConfigItemUI();
   SettingConfigItemPerapp perapp = SettingConfigItemPerapp();
@@ -165,6 +166,7 @@ class SettingConfig {
   String autoUpdateChannel = "stable"; //stable, beta
   bool autoSetSystemProxy = getAutoSetSystemProxyDefault();
   String _userAgent = "";
+  int boardPort = kDefaultBoardPort;
 
   Map<String, dynamic> toJson() => {
         'language_tag': languageTag,
@@ -175,6 +177,7 @@ class SettingConfig {
         'auto_update_channel': autoUpdateChannel,
         'auto_set_system_proxy': autoSetSystemProxy,
         'user_agent': _userAgent,
+        'board_port': boardPort,
       };
   void fromJson(Map<String, dynamic>? map) {
     if (map == null) {
@@ -193,6 +196,7 @@ class SettingConfig {
     autoSetSystemProxy =
         map["auto_set_system_proxy"] ?? getAutoSetSystemProxyDefault();
     _userAgent = map["user_agent"] ?? "";
+    boardPort = map["board_port"] ?? kDefaultBoardPort;
   }
 
   String userAgent() {
