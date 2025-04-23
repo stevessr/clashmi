@@ -15,7 +15,10 @@ class BackupAndSyncUtils {
   static String getZipFileName() {
     final appName = AppUtils.getName();
     final appVersion = AppUtils.getBuildinVersion();
-    return '${appName}_${appVersion}_${DateTime.now().formatLikeFileNameTimestamp}.backup.${getZipExtension()}';
+    var name =
+        '${appName}_${appVersion}_${DateTime.now().formatLikeFileNameTimestamp}.backup.${getZipExtension()}';
+    name = name.replaceAll(' ', '');
+    return name;
   }
 
   static Future<String> getZipFilePath() async {
