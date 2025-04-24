@@ -429,6 +429,16 @@ class GroupHelper {
                 onPicker: (String? selected) async {
                   setting.LogLevel = selected;
                 })),
+        GroupItemOptions(
+            pushOptions: GroupItemPushOptions(
+                name: tcontext.PerAppAndroidScreen.title,
+                onPush: () async {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          settings: PerAppAndroidScreen.routSettings(),
+                          builder: (context) => const PerAppAndroidScreen()));
+                })),
         !inProduction
             ? GroupItemOptions(
                 textFormFieldOptions: GroupItemTextFieldOptions(
@@ -697,20 +707,10 @@ class GroupHelper {
           GroupItemOptions(
               switchOptions: GroupItemSwitchOptions(
                   name: tcontext.tun.allowBypass,
-                  switchValue: extensions.Tun.AllowBypass,
+                  switchValue: extensions.Tun.httpProxy.AllowBypass,
                   onSwitch: (bool value) async {
-                    extensions.Tun.AllowBypass = value;
+                    extensions.Tun.httpProxy.AllowBypass = value;
                   })),
-          GroupItemOptions(
-              pushOptions: GroupItemPushOptions(
-                  name: tcontext.PerAppAndroidScreen.title,
-                  onPush: () async {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            settings: PerAppAndroidScreen.routSettings(),
-                            builder: (context) => const PerAppAndroidScreen()));
-                  }))
         ]);
       }
       if (Platform.isAndroid || Platform.isIOS) {
@@ -718,18 +718,19 @@ class GroupHelper {
           GroupItemOptions(
               switchOptions: GroupItemSwitchOptions(
                   name: tcontext.tun.appendHttpProxy,
-                  switchValue: extensions.Tun.HttpProxyEnable,
+                  switchValue: extensions.Tun.httpProxy.Enable,
                   onSwitch: (bool value) async {
-                    extensions.Tun.HttpProxyEnable = value;
-                    extensions.Tun.HttpProxyServer = value ? "127.0.0.1" : null;
-                    extensions.Tun.HttpProxyServerPort =
+                    extensions.Tun.httpProxy.Enable = value;
+                    extensions.Tun.httpProxy.Server =
+                        value ? "127.0.0.1" : null;
+                    extensions.Tun.httpProxy.ServerPort =
                         value ? setting.MixedPort : null;
                   })),
           GroupItemOptions(
               pushOptions: GroupItemPushOptions(
                   name: tcontext.tun.bypassHttpProxyDomain,
                   onPush: () async {
-                    extensions.Tun.HttpProxyBypassDomain ??= [];
+                    extensions.Tun.httpProxy.BypassDomain ??= [];
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -737,7 +738,7 @@ class GroupHelper {
                                 "HttpProxyBypassDomain"),
                             builder: (context) => ListAddScreen(
                                   title: tcontext.tun.bypassHttpProxyDomain,
-                                  data: extensions.Tun.HttpProxyBypassDomain!,
+                                  data: extensions.Tun.httpProxy.BypassDomain!,
                                 )));
                   }))
         ]);

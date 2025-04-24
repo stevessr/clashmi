@@ -6,28 +6,59 @@ part of 'clash_config.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-RawExtensionTun _$RawExtensionTunFromJson(Map<String, dynamic> json) =>
-    RawExtensionTun(
-      json['http_proxy_enable'] as bool?,
-      json['http_proxy_server'] as String?,
-      (json['http_proxy_server_port'] as num?)?.toInt(),
-      (json['http_proxy_bypass_domain'] as List<dynamic>?)
+RawExtensionTunHttpProxy _$RawExtensionTunHttpProxyFromJson(
+        Map<String, dynamic> json) =>
+    RawExtensionTunHttpProxy(
+      json['enable'] as bool?,
+      json['server'] as String?,
+      (json['server_port'] as num?)?.toInt(),
+      (json['bypass_domain'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      (json['http_proxy_match_domain'] as List<dynamic>?)
+      (json['match_domain'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
       json['allow_bypass'] as bool?,
     );
 
+Map<String, dynamic> _$RawExtensionTunHttpProxyToJson(
+        RawExtensionTunHttpProxy instance) =>
+    <String, dynamic>{
+      'enable': instance.Enable,
+      'server': instance.Server,
+      'server_port': instance.ServerPort,
+      'bypass_domain': instance.BypassDomain,
+      'match_domain': instance.MatchDomain,
+      'allow_bypass': instance.AllowBypass,
+    };
+
+RawExtensionTunPerApp _$RawExtensionTunPerAppFromJson(
+        Map<String, dynamic> json) =>
+    RawExtensionTunPerApp(
+      json['enable'] as bool?,
+      json['white_list'] as bool?,
+      (json['package_ids'] as List<dynamic>?)?.map((e) => e as String).toList(),
+    );
+
+Map<String, dynamic> _$RawExtensionTunPerAppToJson(
+        RawExtensionTunPerApp instance) =>
+    <String, dynamic>{
+      'enable': instance.Enable,
+      'white_list': instance.WhiteList,
+      'package_ids': instance.PackageIds,
+    };
+
+RawExtensionTun _$RawExtensionTunFromJson(Map<String, dynamic> json) =>
+    RawExtensionTun(
+      RawExtensionTunHttpProxy.fromJson(
+          json['http_proxy'] as Map<String, dynamic>),
+      RawExtensionTunPerApp.fromJson(json['per_app'] as Map<String, dynamic>),
+    );
+
 Map<String, dynamic> _$RawExtensionTunToJson(RawExtensionTun instance) =>
     <String, dynamic>{
-      'http_proxy_enable': instance.HttpProxyEnable,
-      'http_proxy_server': instance.HttpProxyServer,
-      'http_proxy_server_port': instance.HttpProxyServerPort,
-      'http_proxy_bypass_domain': instance.HttpProxyBypassDomain,
-      'http_proxy_match_domain': instance.HttpProxyMatchDomain,
-      'allow_bypass': instance.AllowBypass,
+      'http_proxy': instance.httpProxy.toJson(),
+      'per_app': instance.perApp.toJson(),
     };
 
 RawExtension _$RawExtensionFromJson(Map<String, dynamic> json) => RawExtension(

@@ -3,16 +3,17 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:clashmi/app/clash/clash_config.dart';
+import 'package:clashmi/app/clash/clash_http_api.dart';
 import 'package:clashmi/app/local_services/vpn_service.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/app/runtime/return_result.dart';
+import 'package:clashmi/app/utils/app_utils.dart';
 import 'package:clashmi/app/utils/log.dart';
+import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as path;
-import 'package:clashmi/app/clash/clash_config.dart';
-import 'package:clashmi/app/clash/clash_http_api.dart';
-import 'package:clashmi/app/utils/app_utils.dart';
-import 'package:clashmi/app/utils/path_utils.dart';
 
 class ClashSettingManager {
   static const _gateWay = "172.19.0";
@@ -176,7 +177,8 @@ class ClashSettingManager {
   static RawExtension defaultExtension() {
     return RawExtension.by(
         Tun: RawExtensionTun.by(
-          HttpProxyEnable: false,
+          httpProxy: RawExtensionTunHttpProxy.by(Enable: false),
+          perApp: RawExtensionTunPerApp.by(Enable: false),
         ),
         PprofAddr: null,
         DelayTestUrl: "https://www.gstatic.com",
@@ -222,7 +224,11 @@ class ClashSettingManager {
       Sniffer: RawSniffer.by(OverWrite: false, Enable: false),
       TLS: RawTLS.by(OverWrite: false),
       Extension: RawExtension.by(
-        Tun: RawExtensionTun.by(HttpProxyEnable: null),
+        Tun: RawExtensionTun.by(
+          httpProxy: RawExtensionTunHttpProxy.by(Enable: false),
+          perApp: _setting.Extension?.Tun.perApp ??
+              RawExtensionTunPerApp.by(Enable: false),
+        ),
         PprofAddr: _setting.Extension?.PprofAddr,
       ),
     );
@@ -260,25 +266,7 @@ class ClashSettingManager {
     }
   }
 
-  static void updateTunPackage() {
-    final perapp = SettingManager.getConfig().perapp;
-    if (Platform.isAndroid && perapp.enable && perapp.list.isNotEmpty) {
-      if (perapp.isInclude) {
-        _setting.Tun?.IncludePackage = [AppUtils.getId()];
-        _setting.Tun?.IncludePackage!.addAll(perapp.list);
-        _setting.Tun?.ExcludePackage = [];
-      } else {
-        _setting.Tun?.IncludePackage = [];
-        _setting.Tun?.ExcludePackage = perapp.list;
-      }
-    } else {
-      _setting.Tun?.IncludePackage = null;
-      _setting.Tun?.ExcludePackage = null;
-    }
-  }
-
   static Future<void> saveSetting() async {
-    updateTunPackage();
     String filePath = await PathUtils.serviceCoreSettingFilePath();
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     final map = _setting.toJson();
@@ -293,7 +281,6 @@ class ClashSettingManager {
     late String content;
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     if (overwrite) {
-      updateTunPackage();
       final map = _setting.toJson();
       MapHelper.removeNullOrEmpty(map, true, true);
       content = encoder.convert(map);
@@ -349,6 +336,13 @@ class ClashSettingManager {
     _setting.Sniffer ??= defaultSniffer();
     _setting.TLS ??= defaultTLS();
     _setting.Extension ??= defaultExtension();
+    if (_setting.Extension!.Tun.perApp.PackageIds == null ||
+        _setting.Extension!.Tun.perApp.PackageIds!.isEmpty) {
+      final appsetting = SettingManager.getConfig();
+      _setting.Extension!.Tun.perApp.Enable = appsetting.perapp.enable;
+      _setting.Extension!.Tun.perApp.WhiteList = appsetting.perapp.isInclude;
+      _setting.Extension!.Tun.perApp.PackageIds = appsetting.perapp.list;
+    }
   }
 
   static Future<void> _initFixed() async {

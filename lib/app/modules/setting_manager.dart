@@ -18,13 +18,16 @@ class SettingConfigItemUI {
   bool disableFontScaler = false;
   bool hideAfterLaunch = false;
   bool tvMode = false;
-
+  bool perAppHideSystemApp = true;
+  bool perAppHideAppIcon = false;
   Map<String, dynamic> toJson() => {
         'theme': theme,
         'auto_orientation': autoOrientation,
         'disable_font_scaler': disableFontScaler,
         'hide_after_launch': hideAfterLaunch,
-        'tv_mode': tvMode
+        'tv_mode': tvMode,
+        'perapp_hide_system_app': perAppHideSystemApp,
+        'perapp_hide_app_icon': perAppHideAppIcon,
       };
   void fromJson(Map<String, dynamic>? map) {
     if (map == null) {
@@ -34,6 +37,8 @@ class SettingConfigItemUI {
     autoOrientation = map["auto_orientation"] ?? false;
     disableFontScaler = map["disable_font_scaler"] ?? false;
     hideAfterLaunch = map["hide_after_launch"] ?? false;
+    perAppHideSystemApp = map["perapp_hide_system_app"] ?? true;
+    perAppHideAppIcon = map["perapp_hide_app_icon"] ?? false;
     tvMode = map["tv_mode"] ?? false;
     TextFieldEx.popupEdit = tvMode;
     switch (theme) {
@@ -96,18 +101,12 @@ class SettingConfigItemPerapp {
   bool enable = true;
   bool isInclude = true; //android
   List<String> _listAndroid = [];
-  List<String> _listMacos = [];
-  bool hideSystemApp = true;
-  bool hideAppIcon = false;
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> ret = {
       'enable': enable,
       'is_include': isInclude,
       'list_android': _listAndroid,
-      'list_macos': _listMacos,
-      'hide_system_app': hideSystemApp,
-      'hide_app_icon': hideAppIcon,
     };
     return ret;
   }
@@ -121,15 +120,11 @@ class SettingConfigItemPerapp {
     isInclude = map["is_include"] ?? map["perapp_is_include"] ?? true;
     _listAndroid =
         ConvertUtils.getListStringFromDynamic(map["list_android"], true, [])!;
-    _listMacos =
-        ConvertUtils.getListStringFromDynamic(map["list_macos"], true, [])!;
+
     if (_listAndroid.isEmpty) {
       _listAndroid = ConvertUtils.getListStringFromDynamic(
           map["list"] ?? map["perapp"], true, [])!;
     }
-
-    hideSystemApp = map["hide_system_app"] ?? true;
-    hideAppIcon = map["hide_app_icon"] ?? false;
   }
 
   static SettingConfigItemPerapp fromJsonStatic(Map<String, dynamic>? map) {
@@ -141,8 +136,6 @@ class SettingConfigItemPerapp {
   List<String> get list {
     if (Platform.isAndroid) {
       return _listAndroid;
-    } else if (Platform.isMacOS) {
-      return _listMacos;
     }
     return [];
   }
@@ -150,8 +143,6 @@ class SettingConfigItemPerapp {
   set list(List<String> list) {
     if (Platform.isAndroid) {
       _listAndroid = list;
-    } else if (Platform.isMacOS) {
-      _listMacos = list;
     }
   }
 }

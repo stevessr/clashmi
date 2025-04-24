@@ -2,6 +2,7 @@
 
 import 'package:android_package_manager/android_package_manager.dart';
 import 'package:app_settings/app_settings.dart';
+import 'package:clashmi/app/modules/clash_setting_manager.dart';
 import 'package:clashmi/screens/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -121,13 +122,14 @@ class _PerAppAndroidScreenState
       List<PackageInfoEx> notAdded = [];
       Set<String> exists = {};
       Set<String> existsSystem = {};
-      var perapp = SettingManager.getConfig().perapp;
+      final settings = SettingManager.getConfig();
+      var perapp = ClashSettingManager.getConfig().Extension!.Tun.perApp;
       for (var app in value) {
         if (app.packageName == null || app.packageName == AppUtils.getId()) {
           continue;
         }
 
-        if (perapp.hideSystemApp) {
+        if (settings.ui.perAppHideSystemApp) {
           if ((app.applicationInfo != null) &&
               (app.applicationInfo!.flags & FLAG_SYSTEM != 0)) {
             existsSystem.add(app.packageName!);
@@ -142,22 +144,26 @@ class _PerAppAndroidScreenState
         if (!mounted) {
           return;
         }
-        if (perapp.list.contains(info.info.packageName!)) {
+        if (perapp.PackageIds != null &&
+            perapp.PackageIds!.contains(info.info.packageName!)) {
           added.add(info);
         } else {
           notAdded.add(info);
         }
       }
-      for (var papp in perapp.list) {
-        if (!exists.contains(papp) && !existsSystem.contains(papp)) {
-          PackageInfoEx info = PackageInfoEx();
-          info.info = PackageInfoImpl(papp);
-          info.name = _removed;
-          info.icon = null;
+      if (perapp.PackageIds != null) {
+        for (var papp in perapp.PackageIds!) {
+          if (!exists.contains(papp) && !existsSystem.contains(papp)) {
+            PackageInfoEx info = PackageInfoEx();
+            info.info = PackageInfoImpl(papp);
+            info.name = _removed;
+            info.icon = null;
 
-          notExists.add(info);
+            notExists.add(info);
+          }
         }
       }
+
       notExists.sort(sort);
       added.sort(sort);
       notAdded.sort(sort);
@@ -172,7 +178,7 @@ class _PerAppAndroidScreenState
   }
 
   Future<Image?> getInstalledPackageIcon(String packageName) async {
-    if (SettingManager.getConfig().perapp.hideAppIcon) {
+    if (SettingManager.getConfig().ui.perAppHideAppIcon) {
       return null;
     }
     for (var app in _applicationInfoList) {
@@ -210,7 +216,7 @@ class _PerAppAndroidScreenState
   }
 
   Future<Image?> getAppIcon(String? packageName) async {
-    if (SettingManager.getConfig().perapp.hideAppIcon) {
+    if (SettingManager.getConfig().ui.perAppHideAppIcon) {
       return null;
     }
     if (_pkgMgr == null || packageName == null) {
@@ -384,6 +390,7 @@ class _PerAppAndroidScreenState
   }
 
   Widget createWidget(PackageInfoEx current, Size windowSize) {
+    var perapp = ClashSettingManager.getConfig().Extension!.Tun.perApp;
     return Container(
       margin: const EdgeInsets.only(bottom: 2),
       child: Material(
@@ -449,20 +456,16 @@ class _PerAppAndroidScreenState
                           ),
                           Checkbox(
                             tristate: true,
-                            value: SettingManager.getConfig()
-                                .perapp
-                                .list
-                                .contains(current.info.packageName!),
+                            value: perapp.PackageIds != null &&
+                                perapp.PackageIds!
+                                    .contains(current.info.packageName!),
                             onChanged: (bool? value) {
+                              perapp.PackageIds ??= [];
                               if (value == true) {
-                                SettingManager.getConfig()
-                                    .perapp
-                                    .list
+                                perapp.PackageIds!
                                     .add(current.info.packageName!);
                               } else {
-                                SettingManager.getConfig()
-                                    .perapp
-                                    .list
+                                perapp.PackageIds!
                                     .remove(current.info.packageName!);
                               }
 
@@ -483,34 +486,35 @@ class _PerAppAndroidScreenState
   }
 
   Future<List<GroupItem>> getGroupOptions() async {
+    var perapp = ClashSettingManager.getConfig().Extension!.Tun.perApp;
     final tcontext = Translations.of(context);
 
     List<GroupItemOptions> options = [
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
               name: tcontext.meta.enable,
-              switchValue: SettingManager.getConfig().perapp.enable,
+              switchValue: perapp.Enable,
               onSwitch: (bool value) async {
-                SettingManager.getConfig().perapp.enable = value;
+                perapp.Enable = value;
 
                 setState(() {});
               })),
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
               name: tcontext.PerAppAndroidScreen.whiteListMode,
-              switchValue: SettingManager.getConfig().perapp.isInclude,
+              switchValue: perapp.WhiteList,
               tips: tcontext.PerAppAndroidScreen.whiteListModeTip,
               onSwitch: (bool value) async {
-                SettingManager.getConfig().perapp.isInclude = value;
+                perapp.WhiteList = value;
 
                 setState(() {});
               })),
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
               name: tcontext.meta.hideSystemApp,
-              switchValue: SettingManager.getConfig().perapp.hideSystemApp,
+              switchValue: SettingManager.getConfig().ui.perAppHideSystemApp,
               onSwitch: (bool value) async {
-                SettingManager.getConfig().perapp.hideSystemApp = value;
+                SettingManager.getConfig().ui.perAppHideSystemApp = value;
                 _loading = true;
                 getInstalledPackages();
                 setState(() {});
@@ -518,9 +522,9 @@ class _PerAppAndroidScreenState
       GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
               name: tcontext.meta.hideAppIcon,
-              switchValue: SettingManager.getConfig().perapp.hideAppIcon,
+              switchValue: SettingManager.getConfig().ui.perAppHideAppIcon,
               onSwitch: (bool value) async {
-                SettingManager.getConfig().perapp.hideAppIcon = value;
+                SettingManager.getConfig().ui.perAppHideAppIcon = value;
                 setState(() {});
               })),
     ];
@@ -529,6 +533,7 @@ class _PerAppAndroidScreenState
   }
 
   void onTapMore() {
+    var perapp = ClashSettingManager.getConfig().Extension!.Tun.perApp;
     final tcontext = Translations.of(context);
     showMenu(
         context: context,
@@ -546,6 +551,7 @@ class _PerAppAndroidScreenState
                 ),
               ),
               onTap: () async {
+                perapp.PackageIds ??= [];
                 try {
                   ClipboardData? data = await Clipboard.getData("text/plain");
                   if (data == null || data.text == null || data.text!.isEmpty) {
@@ -557,10 +563,11 @@ class _PerAppAndroidScreenState
                   }
                   for (var app in list) {
                     app = app.trim();
-                    if (SettingManager.getConfig().perapp.list.contains(app)) {
+                    if (perapp.PackageIds!.contains(app)) {
                       continue;
                     }
-                    SettingManager.getConfig().perapp.list.add(app);
+
+                    perapp.PackageIds!.add(app);
                   }
                   setState(() {});
                 } catch (err) {
@@ -583,12 +590,12 @@ class _PerAppAndroidScreenState
               ),
             ),
             onTap: () async {
+              perapp.PackageIds ??= [];
               try {
-                if (SettingManager.getConfig().perapp.list.isEmpty) {
+                if (perapp.PackageIds!.isEmpty) {
                   return;
                 }
-                String content =
-                    SettingManager.getConfig().perapp.list.join("\n");
+                String content = perapp.PackageIds!.join("\n");
                 await Clipboard.setData(ClipboardData(text: content));
                 if (!mounted) {
                   return;

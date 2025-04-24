@@ -199,34 +199,65 @@ enum ClashFindProcessMode {
 
 ///Extension
 @JsonSerializable(explicitToJson: true)
-class RawExtensionTun {
-  @JsonKey(name: 'http_proxy_enable')
-  bool? HttpProxyEnable;
-  @JsonKey(name: 'http_proxy_server')
-  String? HttpProxyServer;
-  @JsonKey(name: 'http_proxy_server_port')
-  int? HttpProxyServerPort;
-  @JsonKey(name: 'http_proxy_bypass_domain')
-  List<String>? HttpProxyBypassDomain;
-  @JsonKey(name: 'http_proxy_match_domain')
-  List<String>? HttpProxyMatchDomain;
+class RawExtensionTunHttpProxy {
+  @JsonKey(name: 'enable')
+  bool? Enable;
+  @JsonKey(name: 'server')
+  String? Server;
+  @JsonKey(name: 'server_port')
+  int? ServerPort;
+  @JsonKey(name: 'bypass_domain')
+  List<String>? BypassDomain;
+  @JsonKey(name: 'match_domain')
+  List<String>? MatchDomain;
   @JsonKey(name: 'allow_bypass')
   bool? AllowBypass;
 
-  RawExtensionTun.by(
-      {this.HttpProxyEnable,
-      this.HttpProxyServer,
-      this.HttpProxyServerPort,
-      this.HttpProxyBypassDomain,
-      this.HttpProxyMatchDomain,
+  RawExtensionTunHttpProxy.by(
+      {this.Enable,
+      this.Server,
+      this.ServerPort,
+      this.BypassDomain,
+      this.MatchDomain,
       this.AllowBypass});
+  RawExtensionTunHttpProxy(this.Enable, this.Server, this.ServerPort,
+      this.BypassDomain, this.MatchDomain, this.AllowBypass);
+  factory RawExtensionTunHttpProxy.fromJson(Map<String, dynamic> json) =>
+      _$RawExtensionTunHttpProxyFromJson(json);
+  Map<String, dynamic> toJson() => _$RawExtensionTunHttpProxyToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawExtensionTunPerApp {
+  @JsonKey(name: 'enable')
+  bool? Enable;
+  @JsonKey(name: 'white_list')
+  bool? WhiteList;
+  @JsonKey(name: 'package_ids')
+  List<String>? PackageIds;
+
+  RawExtensionTunPerApp.by({this.Enable, this.WhiteList, this.PackageIds});
+  RawExtensionTunPerApp(this.Enable, this.WhiteList, this.PackageIds);
+  factory RawExtensionTunPerApp.fromJson(Map<String, dynamic> json) =>
+      _$RawExtensionTunPerAppFromJson(json);
+  Map<String, dynamic> toJson() => _$RawExtensionTunPerAppToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RawExtensionTun {
+  @JsonKey(name: 'http_proxy')
+  RawExtensionTunHttpProxy httpProxy;
+  @JsonKey(name: 'per_app')
+  RawExtensionTunPerApp perApp;
+
+  RawExtensionTun.by({
+    required this.httpProxy,
+    required this.perApp,
+  });
   RawExtensionTun(
-      this.HttpProxyEnable,
-      this.HttpProxyServer,
-      this.HttpProxyServerPort,
-      this.HttpProxyBypassDomain,
-      this.HttpProxyMatchDomain,
-      this.AllowBypass);
+    this.httpProxy,
+    this.perApp,
+  );
   factory RawExtensionTun.fromJson(Map<String, dynamic> json) =>
       _$RawExtensionTunFromJson(json);
   Map<String, dynamic> toJson() => _$RawExtensionTunToJson(this);
