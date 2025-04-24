@@ -429,16 +429,19 @@ class GroupHelper {
                 onPicker: (String? selected) async {
                   setting.LogLevel = selected;
                 })),
-        GroupItemOptions(
-            pushOptions: GroupItemPushOptions(
-                name: tcontext.PerAppAndroidScreen.title,
-                onPush: () async {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          settings: PerAppAndroidScreen.routSettings(),
-                          builder: (context) => const PerAppAndroidScreen()));
-                })),
+        Platform.isAndroid
+            ? GroupItemOptions(
+                pushOptions: GroupItemPushOptions(
+                    name: tcontext.PerAppAndroidScreen.title,
+                    onPush: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              settings: PerAppAndroidScreen.routSettings(),
+                              builder: (context) =>
+                                  const PerAppAndroidScreen()));
+                    }))
+            : GroupItemOptions(),
         !inProduction
             ? GroupItemOptions(
                 textFormFieldOptions: GroupItemTextFieldOptions(
