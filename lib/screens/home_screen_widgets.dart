@@ -61,6 +61,9 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     AppLifecycleStateNofity.onStatePaused(hashCode, _onStatePaused);
     ProfileManager.onEventCurrentChanged.add(_onCurrentChanged);
     ProfileManager.onEventUpdate.add(_onUpdate);
+    if (!AppLifecycleStateNofity.isPaused()) {
+      _onStateResumed();
+    }
   }
 
   @override

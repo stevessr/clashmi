@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.net.VpnService
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
@@ -76,19 +75,12 @@ class TileService : TileService() {
         }
 
         try {
-            val context = this as Context
-            val intent = VpnService.prepare(context)
-            if (intent != null) {
-                return
-            }
             updateTile(true)
             startByService()
         } catch (e: Exception) {
             var stackTrace = e.getStackTrace().joinToString(separator = "\n")
             writeLog("TileService onClick: exception: $e \n$stackTrace")
         }
-        updateTile(true)
-        startBy()
     }
 
     override fun onTileRemoved() {
