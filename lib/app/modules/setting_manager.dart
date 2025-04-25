@@ -39,8 +39,11 @@ class SettingConfigItemUI {
     hideAfterLaunch = map["hide_after_launch"] ?? false;
     perAppHideSystemApp = map["perapp_hide_system_app"] ?? true;
     perAppHideAppIcon = map["perapp_hide_app_icon"] ?? false;
-    tvMode = map["tv_mode"] ?? false;
-    TextFieldEx.popupEdit = tvMode;
+    if (Platform.isAndroid) {
+      tvMode = map["tv_mode"] ?? false;
+      TextFieldEx.popupEdit = tvMode;
+    }
+
     switch (theme) {
       case "dark":
         theme = ThemeDefine.kThemeDark;
