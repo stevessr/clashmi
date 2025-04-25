@@ -27,7 +27,11 @@ abstract final class ICloudUtils {
     }
     List<String> fileList = [];
     for (var file in result.data!) {
-      fileList.add(file.relativePath);
+      var relativePath = file.relativePath;
+      try {
+        relativePath = Uri.decodeComponent(relativePath);
+      } catch (err) {}
+      fileList.add(relativePath);
     }
     return ReturnResult(data: fileList);
   }
