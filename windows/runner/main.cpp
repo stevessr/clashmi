@@ -29,7 +29,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
                       _In_ wchar_t *command_line, _In_ int show_command)
 {
 
-  const wchar_t *kWindowName = L"ClashMi";
+  const wchar_t *kWindowName = L"Clash Mi";
   HWND hwnd = ::FindWindow(L"FLUTTER_RUNNER_WIN32_WINDOW", kWindowName);
   if (hwnd != NULL)
   {
