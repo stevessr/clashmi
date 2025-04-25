@@ -4,13 +4,10 @@ import 'package:protocol_handler/protocol_handler.dart';
 import 'package:win32_registry/win32_registry.dart';
 
 class SystemSchemeUtils {
-  static const String _kClashMiScheme = "clashmi";
   static const String _kClashScheme = "clash";
 
-  static String getClashMiScheme() => _kClashMiScheme;
   static String getClashScheme() => _kClashScheme;
 
-  static String getClashMiSchemeWith() => "$_kClashMiScheme://";
   static String getClashSchemeWith() => "$_kClashScheme://";
 
   static bool isRegistered(String scheme) {
