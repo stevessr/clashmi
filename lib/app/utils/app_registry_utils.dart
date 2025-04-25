@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:win32_registry/win32_registry.dart';
 
-abstract final class ClashMiRegistryUtils {
+abstract final class AppRegistryUtils {
   static const String _registryPath = 'Software\\ClashMi';
   static const String _registryValueNameDid = 'did';
   static String? getDid() {

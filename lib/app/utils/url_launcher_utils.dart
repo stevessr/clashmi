@@ -1,5 +1,5 @@
 import 'package:clashmi/app/runtime/return_result.dart';
-import 'package:clashmi/app/utils/clashmi_url_utils.dart';
+import 'package:clashmi/app/utils/app_url_utils.dart';
 import 'package:clashmi/app/utils/log.dart';
 import 'package:clashmi/app/utils/platform_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -41,7 +41,7 @@ class UrlLauncherUtils {
 
   static Future<String> reorganizationUrlWithAnchor(String url,
       {String anchor = "", int bodyLen = 0}) async {
-    String queryParams = await ClashMiUrlUtils.getQueryParamsForUrl(bodyLen);
+    String queryParams = await AppUrlUtils.getQueryParamsForUrl(bodyLen);
     String newUrl = UrlLauncherUtils.reorganizationUrl(url, queryParams) ?? url;
     String arpha = newUrl.endsWith("#") ? "" : "#";
     newUrl = "$newUrl$arpha$anchor";

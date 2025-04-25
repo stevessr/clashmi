@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 
 import 'package:clashmi/app/modules/setting_manager.dart';
-import 'package:clashmi/app/private/clashmi_url_utils_private.dart';
+import 'package:clashmi/app/private/app_url_utils_private.dart';
 import 'package:clashmi/app/utils/app_utils.dart';
 import 'package:clashmi/app/utils/did.dart';
 import 'package:clashmi/app/utils/install_referrer_utils.dart';
 
-abstract final class ClashMiUrlUtils {
+abstract final class AppUrlUtils {
   static String getQueryParamsForAnalytics(int bodyLen) {
-    return ClashmiUrlUtilsPrivate.signQueryParams(
+    return AppUrlUtilsPrivate.signQueryParams(
         AppUtils.getBuildinVersion(), bodyLen, {});
   }
 
@@ -39,7 +39,7 @@ abstract final class ClashMiUrlUtils {
       "i_r": Uri.encodeComponent(installRefer),
     };
 
-    return ClashmiUrlUtilsPrivate.signQueryParams(
+    return AppUrlUtilsPrivate.signQueryParams(
         AppUtils.getBuildinVersion(), bodyLen, params);
   }
 }

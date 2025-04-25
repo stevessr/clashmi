@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:clashmi/app/utils/clashmi_registry_utils.dart';
+import 'package:clashmi/app/utils/app_registry_utils.dart';
 import 'package:clashmi/app/utils/secure_storage_utils.dart';
 import 'package:uuid/uuid.dart';
 
@@ -30,14 +30,14 @@ abstract final class Did {
 
   static String? _tryLoadFromPlatformSpecificLocation() {
     if (Platform.isWindows) {
-      return ClashMiRegistryUtils.getDid();
+      return AppRegistryUtils.getDid();
     }
     return null;
   }
 
   static void _trySaveToPlatformSpecificLocation(String did) {
     if (Platform.isWindows) {
-      ClashMiRegistryUtils.saveDid(did);
+      AppRegistryUtils.saveDid(did);
     }
   }
 
