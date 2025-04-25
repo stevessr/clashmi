@@ -1,6 +1,7 @@
 import 'package:clashmi/app/clash/clash_config.dart';
 import 'package:clashmi/app/clash/clash_http_api.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
+import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/widgets/sheet.dart';
 import 'package:flutter/material.dart';
 
@@ -93,7 +94,7 @@ class _ProxyScreenProxiesNodeWidget
           subtitle: delay != null && delay != 0 ? Text("$delay ms") : null,
           minLeadingWidth: 40,
           selected: node.now == name,
-          selectedColor: Colors.blue,
+          selectedColor: ThemeDefine.kColorBlue,
           onTap: () async {
             var error = await ClashHttpApi.setProxiesNode(node.name, name);
             if (!mounted) {

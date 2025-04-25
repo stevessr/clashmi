@@ -5,6 +5,7 @@ import 'package:clashmi/app/modules/profile_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/file_view_screen.dart';
+import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/widgets/sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,7 +72,8 @@ class ProfilesBoardItem extends StatelessWidget {
                   child: Text(
                     setting.getShowName(),
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: selected ? Colors.blue : null),
+                    style: TextStyle(
+                        color: selected ? ThemeDefine.kColorBlue : null),
                   ),
                 ),
                 Align(
@@ -79,7 +81,8 @@ class ProfilesBoardItem extends StatelessWidget {
                   child: Text(
                     remote ? "URL" : "Local",
                     style: TextStyle(
-                        color: selected ? Colors.blue : null, fontSize: 12),
+                        color: selected ? ThemeDefine.kColorBlue : null,
+                        fontSize: 12),
                   ),
                 ),
                 tranffic.isNotEmpty
@@ -88,7 +91,7 @@ class ProfilesBoardItem extends StatelessWidget {
                         child: Text(
                           tranffic,
                           style: TextStyle(
-                              color: selected ? Colors.blue : null,
+                              color: selected ? ThemeDefine.kColorBlue : null,
                               fontSize: 12),
                         ))
                     : SizedBox.shrink(),
@@ -98,7 +101,7 @@ class ProfilesBoardItem extends StatelessWidget {
                         child: Text(
                           tranfficExpire.item2,
                           style: TextStyle(
-                              color: selected ? Colors.blue : null,
+                              color: selected ? ThemeDefine.kColorBlue : null,
                               fontSize: 12),
                         ))
                     : SizedBox.shrink(),
@@ -117,7 +120,7 @@ class ProfilesBoardItem extends StatelessWidget {
           child: Text(
             updateInterval,
             textAlign: TextAlign.right,
-            style: TextStyle(color: selected ? Colors.blue : null),
+            style: TextStyle(color: selected ? ThemeDefine.kColorBlue : null),
           ),
         ),
         SizedBox(

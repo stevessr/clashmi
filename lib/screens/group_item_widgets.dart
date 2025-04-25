@@ -407,7 +407,9 @@ class GroupItemStringPicker extends StatelessWidget {
           title: Text(
             key.item2,
             style: TextStyle(
-                color: options.selected == key.item1 ? Colors.blue : null),
+                color: options.selected == key.item1
+                    ? ThemeDefine.kColorBlue
+                    : null),
           ),
           minLeadingWidth: 40,
           onTap: () async {
@@ -422,8 +424,8 @@ class GroupItemStringPicker extends StatelessWidget {
         widgets.add(ListTile(
           title: Text(
             key,
-            style:
-                TextStyle(color: options.selected == key ? Colors.blue : null),
+            style: TextStyle(
+                color: options.selected == key ? ThemeDefine.kColorBlue : null),
           ),
           minLeadingWidth: 40,
           onTap: () async {

@@ -15,6 +15,8 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:libclash_vpn_service/vpn_service.dart';
 
+import 'theme_define.dart';
+
 class InAppWebViewScreen extends StatefulWidget {
   static RouteSettings routSettings(String viewTag) {
     return RouteSettings(name: "InAppWebViewScreen:$viewTag");
@@ -266,7 +268,7 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
         ? null
         : PullToRefreshController(
             settings: PullToRefreshSettings(
-              color: Colors.blue,
+              color: ThemeDefine.kColorBlue,
             ),
             onRefresh: () async {
               if (defaultTargetPlatform == TargetPlatform.android) {

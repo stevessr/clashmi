@@ -4,7 +4,6 @@ import 'package:clashmi/screens/theme_config.dart';
 import 'package:clashmi/screens/theme_define.dart';
 
 class ThemeDataLight {
-  static const Color homeColor = Colors.white;
   static const Color mainColor = Colors.white;
   static const Color mainBgColor = Color(0xFFF0F0F0);
   static ThemeData theme(BuildContext context) {

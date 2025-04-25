@@ -4,9 +4,8 @@ import 'package:clashmi/screens/theme_config.dart';
 import 'package:clashmi/screens/theme_define.dart';
 
 class ThemeDataDark {
-  static const Color homeColor = Color(0xFF202020);
-  static const Color mainColor = Color(0xFF303030);
-  static const Color mainBgColor = Color(0xFF202020);
+  static const Color mainColor = Colors.black; // Color(0xFF303030);
+  static const Color mainBgColor = Colors.black;
   static ThemeData theme(BuildContext context) {
     return ThemeData(
       useMaterial3: true,
@@ -37,7 +36,7 @@ class ThemeDataDark {
       iconTheme: const IconThemeData(
         color: Colors.white,
       ),
-      cardTheme: const CardTheme(color: Colors.black),
+      cardTheme: const CardTheme(color: Color(0xFF202020)),
       checkboxTheme: CheckboxThemeData(
         fillColor: WidgetStateProperty.resolveWith((Set<WidgetState> states) {
           return mainColor;
