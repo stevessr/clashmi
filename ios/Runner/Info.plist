@@ -31,7 +31,7 @@
 		<string>http</string>
 		<string>https</string>
 		<string>itms-beta</string>
-		<string>clashmi</string>
+		<string>clash</string>
 		<string>tg</string>
 	</array>
 	<key>CFBundleURLTypes</key>
@@ -40,7 +40,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>clashmi</string>
+			<string>clash</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>clashmi</string>

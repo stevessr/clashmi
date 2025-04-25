@@ -28,12 +28,6 @@ class SchemeHandler {
       if (uri.host == "install-config") {
         return await _installConfig(context, uri);
       }
-    } else if (uri.isScheme(SystemSchemeUtils.getClashMiScheme())) {
-      if (uri.host == AppSchemeActions.installConfigAction()) {
-        return await _installConfig(context, uri);
-      } else {
-        return ReturnResultError("unsupport action: ${uri.host}");
-      }
     }
     return ReturnResultError("unsupport scheme: ${uri.scheme}");
   }
@@ -45,18 +39,13 @@ class SchemeHandler {
     }
     String? name;
     String? url;
-    String? ispId;
-    String? ispUser;
+
     if (!context.mounted) {
       return null;
     }
     try {
       name = uri.queryParameters["name"];
       url = uri.queryParameters["url"];
-      if (uri.scheme == SystemSchemeUtils.getClashMiScheme()) {
-        ispId = uri.queryParameters["isp-id"];
-        ispUser = uri.queryParameters["isp-user"];
-      }
     } catch (err) {
       DialogUtils.showAlertDialog(context, err.toString(),
           showCopy: true, showFAQ: true, withVersion: true);
@@ -73,16 +62,7 @@ class SchemeHandler {
         url = Uri.decodeComponent(url);
       } catch (err) {}
     }
-    if (ispId != null) {
-      try {
-        ispId = Uri.decodeComponent(ispId);
-      } catch (err) {}
-    }
-    if (ispUser != null) {
-      try {
-        ispUser = Uri.decodeComponent(ispUser);
-      } catch (err) {}
-    }
+
     if (url == null || url.isEmpty) {
       return ReturnResultError("url empty");
     }

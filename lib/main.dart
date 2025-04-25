@@ -257,9 +257,8 @@ class MyAppState extends State<MyApp>
     String schemeArg = processArgs.firstWhere(
       (element) {
         return element
-                .trim()
-                .startsWith(SystemSchemeUtils.getClashMiSchemeWith()) ||
-            element.trim().startsWith(SystemSchemeUtils.getClashSchemeWith());
+            .trim()
+            .startsWith(SystemSchemeUtils.getClashSchemeWith());
       },
       orElse: () => '',
     );
