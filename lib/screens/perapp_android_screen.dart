@@ -65,6 +65,7 @@ class _PerAppAndroidScreenState
   @override
   void dispose() {
     super.dispose();
+    ClashSettingManager.saveSetting();
     SettingManager.saveConfig();
   }
 
