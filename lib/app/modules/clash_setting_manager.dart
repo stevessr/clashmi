@@ -13,6 +13,7 @@ import 'package:clashmi/app/utils/app_utils.dart';
 import 'package:clashmi/app/utils/log.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:path/path.dart' as path;
 
 class ClashSettingManager {
@@ -336,13 +337,6 @@ class ClashSettingManager {
     _setting.Sniffer ??= defaultSniffer();
     _setting.TLS ??= defaultTLS();
     _setting.Extension ??= defaultExtension();
-    if (_setting.Extension!.Tun.perApp.PackageIds == null ||
-        _setting.Extension!.Tun.perApp.PackageIds!.isEmpty) {
-      final appsetting = SettingManager.getConfig();
-      _setting.Extension!.Tun.perApp.Enable = appsetting.perapp.enable;
-      _setting.Extension!.Tun.perApp.WhiteList = appsetting.perapp.isInclude;
-      _setting.Extension!.Tun.perApp.PackageIds = appsetting.perapp.list;
-    }
   }
 
   static Future<void> _initFixed() async {

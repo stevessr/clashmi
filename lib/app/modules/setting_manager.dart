@@ -100,61 +100,11 @@ class SettingConfigItemWebDev {
   }
 }
 
-class SettingConfigItemPerapp {
-  bool enable = true;
-  bool isInclude = true; //android
-  List<String> _listAndroid = [];
-
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> ret = {
-      'enable': enable,
-      'is_include': isInclude,
-      'list_android': _listAndroid,
-    };
-    return ret;
-  }
-
-  void fromJson(Map<String, dynamic>? map) {
-    if (map == null) {
-      return;
-    }
-
-    enable = map["enable"] ?? map["perapp_enable"] ?? true;
-    isInclude = map["is_include"] ?? map["perapp_is_include"] ?? true;
-    _listAndroid =
-        ConvertUtils.getListStringFromDynamic(map["list_android"], true, [])!;
-
-    if (_listAndroid.isEmpty) {
-      _listAndroid = ConvertUtils.getListStringFromDynamic(
-          map["list"] ?? map["perapp"], true, [])!;
-    }
-  }
-
-  static SettingConfigItemPerapp fromJsonStatic(Map<String, dynamic>? map) {
-    SettingConfigItemPerapp config = SettingConfigItemPerapp();
-    config.fromJson(map);
-    return config;
-  }
-
-  List<String> get list {
-    if (Platform.isAndroid) {
-      return _listAndroid;
-    }
-    return [];
-  }
-
-  set list(List<String> list) {
-    if (Platform.isAndroid) {
-      _listAndroid = list;
-    }
-  }
-}
-
 class SettingConfig {
   static const int kDefaultBoardPort = 7066;
   String languageTag = "";
   SettingConfigItemUI ui = SettingConfigItemUI();
-  SettingConfigItemPerapp perapp = SettingConfigItemPerapp();
+
   SettingConfigItemWebDev webdav = SettingConfigItemWebDev();
   bool alwayOn = false;
   String autoUpdateChannel = "stable"; //stable, beta
@@ -164,7 +114,6 @@ class SettingConfig {
 
   Map<String, dynamic> toJson() => {
         'language_tag': languageTag,
-        'perapp': perapp,
         'ui': ui,
         'webdav': webdav,
         'alway_on': alwayOn,
@@ -179,7 +128,7 @@ class SettingConfig {
     }
 
     languageTag = map["language_tag"] ?? "";
-    perapp = SettingConfigItemPerapp.fromJsonStatic(map["perapp"]);
+
     ui = SettingConfigItemUI.fromJsonStatic(map["ui"]);
 
     alwayOn = map["alway_on"] ?? false;
