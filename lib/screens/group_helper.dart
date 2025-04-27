@@ -2,7 +2,7 @@
 
 import 'dart:async';
 import 'dart:io';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:clashmi/app/clash/clash_config.dart';
 import 'package:clashmi/app/local_services/vpn_service.dart';
 import 'package:clashmi/app/modules/auto_update_manager.dart';
@@ -14,6 +14,7 @@ import 'package:clashmi/app/utils/backup_and_sync_utils.dart';
 import 'package:clashmi/app/utils/file_utils.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/app/utils/platform_utils.dart';
+import 'package:clashmi/app/utils/url_launcher_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/backup_and_sync_icloud_screen.dart';
 import 'package:clashmi/screens/backup_and_sync_webdav_screen.dart';
@@ -28,6 +29,7 @@ import 'package:clashmi/screens/list_add_screen.dart';
 import 'package:clashmi/screens/perapp_android_screen.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/themes.dart';
+import 'package:clashmi/screens/version_update_screen.dart';
 import 'package:clashmi/screens/webview_helper.dart';
 import 'package:clashmi/screens/widgets/text_field.dart';
 import 'package:file_picker/file_picker.dart';
@@ -38,6 +40,39 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class GroupHelper {
+  static Future<void> newVersionUpdate(BuildContext context) async {
+    AutoUpdateCheckVersion versionCheck = AutoUpdateManager.getVersionCheck();
+    if (!versionCheck.newVersion) {
+      return;
+    }
+
+    if (AutoUpdateManager.isSupport()) {
+      String? installerNew = await AutoUpdateManager.checkReplace();
+      if (!context.mounted) {
+        return;
+      }
+      if (installerNew != null) {
+        await Navigator.push(
+            context,
+            MaterialPageRoute(
+                settings: VersionUpdateScreen.routSettings(),
+                fullscreenDialog: true,
+                builder: (context) => const VersionUpdateScreen(force: false)));
+      } else {
+        if (Platform.isAndroid) {
+          await UrlLauncherUtils.loadUrl(versionCheck.url,
+              mode: LaunchMode.externalApplication);
+        } else {
+          await WebviewHelper.loadUrl(
+              context, versionCheck.url, "newVersionUpdate");
+        }
+      }
+    } else {
+      await WebviewHelper.loadUrl(
+          context, versionCheck.url, "newVersionUpdate");
+    }
+  }
+
   static Future<void> showBackupAndSync(BuildContext context) async {
     Future<List<GroupItem>> getOptions(BuildContext context) async {
       final tcontext = Translations.of(context);

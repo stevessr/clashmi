@@ -154,6 +154,7 @@
         "tvMode": "TV Mode",
         "autoUpdate": "Auto Update",
         "updateChannel": "Auto Update Channel",
+        "hasNewVersion": "Update Version $p",
         "devOptions": "Developer Options",
         "about": "About",
         "name": "Name",

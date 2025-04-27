@@ -261,6 +261,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get tvMode => 'حالت تلویزیون';
 	@override String get autoUpdate => 'به روز رسانی خودکار';
 	@override String get updateChannel => 'کانال به‌روزرسانی خودکار';
+	@override String hasNewVersion({required Object p}) => 'به‌روزرسانی نسخه ${p} ';
 	@override String get devOptions => 'تنظیمات توسعه‌دهندگان';
 	@override String get about => 'درباره';
 	@override String get name => 'نام';
@@ -546,6 +547,7 @@ extension on TranslationsFa {
 			case 'meta.tvMode': return 'حالت تلویزیون';
 			case 'meta.autoUpdate': return 'به روز رسانی خودکار';
 			case 'meta.updateChannel': return 'کانال به‌روزرسانی خودکار';
+			case 'meta.hasNewVersion': return ({required Object p}) => 'به‌روزرسانی نسخه ${p} ';
 			case 'meta.devOptions': return 'تنظیمات توسعه‌دهندگان';
 			case 'meta.about': return 'درباره';
 			case 'meta.name': return 'نام';

@@ -261,6 +261,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get tvMode => 'Режим ТВ';
 	@override String get autoUpdate => 'Автоматические обновления';
 	@override String get updateChannel => 'Канал автоматического обновления';
+	@override String hasNewVersion({required Object p}) => 'Обновить версию ${p}';
 	@override String get devOptions => 'Параметры разработчика';
 	@override String get about => 'О Karing';
 	@override String get name => 'Название';
@@ -546,6 +547,7 @@ extension on TranslationsRu {
 			case 'meta.tvMode': return 'Режим ТВ';
 			case 'meta.autoUpdate': return 'Автоматические обновления';
 			case 'meta.updateChannel': return 'Канал автоматического обновления';
+			case 'meta.hasNewVersion': return ({required Object p}) => 'Обновить версию ${p}';
 			case 'meta.devOptions': return 'Параметры разработчика';
 			case 'meta.about': return 'О Karing';
 			case 'meta.name': return 'Название';

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:clashmi/app/clash/clash_config.dart';
 import 'package:clashmi/app/clash/clash_http_api.dart';
 import 'package:clashmi/app/local_services/vpn_service.dart';
+import 'package:clashmi/app/modules/auto_update_manager.dart';
 import 'package:clashmi/app/modules/clash_setting_manager.dart';
 import 'package:clashmi/app/modules/profile_manager.dart';
 import 'package:clashmi/app/modules/zashboard.dart';
@@ -542,6 +543,7 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AutoUpdateCheckVersion versionCheck = AutoUpdateManager.getVersionCheck();
     final tcontext = Translations.of(context);
     var widgets = [
       ListTile(
@@ -625,6 +627,30 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
           GroupHelper.showBackupAndSync(context);
         },
       ),
+    ];
+    if (versionCheck.newVersion) {
+      widgets.add(
+        ListTile(
+          title: Text(tcontext.meta.hasNewVersion(p: versionCheck.version)),
+          leading: Icon(
+            Icons.fiber_new_outlined,
+            size: 20,
+            color: Colors.red,
+          ),
+          minLeadingWidth: 40,
+          trailing: Icon(
+            Icons.keyboard_arrow_right,
+            size: 20,
+          ),
+          minVerticalPadding: 22,
+          onTap: () async {
+            GroupHelper.newVersionUpdate(context);
+          },
+        ),
+      );
+    }
+
+    widgets.addAll([
       ListTile(
         title: Text(tcontext.meta.help),
         leading: Icon(
@@ -661,7 +687,7 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
                   builder: (context) => AboutScreen()));
         },
       )
-    ];
+    ]);
 
     return Card(
         child: Padding(

@@ -261,6 +261,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get tvMode => 'وضع التلفزيون';
 	@override String get autoUpdate => 'التحديثات التلقائية';
 	@override String get updateChannel => 'تحديث القنوات تلقائيا';
+	@override String hasNewVersion({required Object p}) => 'تحديث الإصدار ${p}';
 	@override String get devOptions => 'خيارات للمطور';
 	@override String get about => 'عن';
 	@override String get name => 'اسم';
@@ -546,6 +547,7 @@ extension on TranslationsAr {
 			case 'meta.tvMode': return 'وضع التلفزيون';
 			case 'meta.autoUpdate': return 'التحديثات التلقائية';
 			case 'meta.updateChannel': return 'تحديث القنوات تلقائيا';
+			case 'meta.hasNewVersion': return ({required Object p}) => 'تحديث الإصدار ${p}';
 			case 'meta.devOptions': return 'خيارات للمطور';
 			case 'meta.about': return 'عن';
 			case 'meta.name': return 'اسم';

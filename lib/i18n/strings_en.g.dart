@@ -264,6 +264,7 @@ class TranslationsMetaEn {
 	String get tvMode => 'TV Mode';
 	String get autoUpdate => 'Auto Update';
 	String get updateChannel => 'Auto Update Channel';
+	String hasNewVersion({required Object p}) => 'Update Version ${p}';
 	String get devOptions => 'Developer Options';
 	String get about => 'About';
 	String get name => 'Name';
@@ -549,6 +550,7 @@ extension on Translations {
 			case 'meta.tvMode': return 'TV Mode';
 			case 'meta.autoUpdate': return 'Auto Update';
 			case 'meta.updateChannel': return 'Auto Update Channel';
+			case 'meta.hasNewVersion': return ({required Object p}) => 'Update Version ${p}';
 			case 'meta.devOptions': return 'Developer Options';
 			case 'meta.about': return 'About';
 			case 'meta.name': return 'Name';
