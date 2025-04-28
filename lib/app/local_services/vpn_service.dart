@@ -113,7 +113,8 @@ class VPNService {
         "$secondsPadding$seconds";
   }
 
-  static Future<bool> _prepareConfig(String profileName) async {
+  static Future<bool> _prepareConfig(String profileName,
+      {String profilePatchPatch = ""}) async {
     final setting = ClashSettingManager.getConfig();
     final controlPort = ClashSettingManager.getControlPort();
 
@@ -135,7 +136,8 @@ class VPNService {
     config.work_dir = PathUtils.appAssetsDir();
     config.cache_dir = await PathUtils.cacheDir();
     config.core_path = path.join(await PathUtils.profilesDir(), profileName);
-    config.patch_core_path = await PathUtils.serviceCorePatchPath();
+    config.core_path_patch = profilePatchPatch;
+    config.core_path_patch_final = await PathUtils.serviceCorePatchPath();
     config.log_path = await PathUtils.serviceLogFilePath();
     config.err_path = await PathUtils.serviceStdErrorFilePath();
     config.id = await Did.getDid();
@@ -210,12 +212,14 @@ class VPNService {
   }
 
   static Future<ReturnResultError?> restart(
-      String profileName, Duration timeout) async {
+      String profileName, Duration timeout,
+      {String profilePatchPatch = ""}) async {
     var started = await getStarted();
     if (!started) {
       return null;
     }
-    bool reinstall = await _prepareConfig(profileName);
+    bool reinstall =
+        await _prepareConfig(profileName, profilePatchPatch: profilePatchPatch);
     if (reinstall) {
       await uninstall();
     }
@@ -265,9 +269,10 @@ class VPNService {
     return null;
   }
 
-  static Future<ReturnResultError?> start(
-      String profileName, Duration timeout) async {
-    bool reinstall = await _prepareConfig(profileName);
+  static Future<ReturnResultError?> start(String profileName, Duration timeout,
+      {String profilePatchPatch = ""}) async {
+    bool reinstall =
+        await _prepareConfig(profileName, profilePatchPatch: profilePatchPatch);
     if (reinstall) {
       await uninstall();
     }

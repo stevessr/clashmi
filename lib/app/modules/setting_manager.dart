@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:clashmi/app/utils/convert_utils.dart';
 import 'package:clashmi/app/utils/log.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';

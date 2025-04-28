@@ -17,7 +17,8 @@ class VpnServiceConfig: Codable {
     var work_dir: String = ""
     var cache_dir: String = ""
     var core_path: String = ""
-    var patch_core_path: String = ""
+    var core_path_patch: String = ""
+    var core_path_patch_final: String = ""
     var log_path: String = ""
     var err_path: String = ""
     var id: String = ""
@@ -149,7 +150,8 @@ extension ExtensionProvider {
     fileprivate func startService() async throws {
         let startOptions = LibclashStartOptions()
         startOptions.configFile = config!.core_path
-        startOptions.patchConfigFile = config!.patch_core_path
+        startOptions.configFilePatch = config!.core_path_patch
+        startOptions.configFilePatchFinal = config!.core_path_patch_final
 
         let tunInterface = ExtensionPlatformInterface(self)
         var error: NSError?

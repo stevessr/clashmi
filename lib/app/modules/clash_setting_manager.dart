@@ -7,13 +7,11 @@ import 'dart:io';
 import 'package:clashmi/app/clash/clash_config.dart';
 import 'package:clashmi/app/clash/clash_http_api.dart';
 import 'package:clashmi/app/local_services/vpn_service.dart';
-import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/app_utils.dart';
 import 'package:clashmi/app/utils/log.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:path/path.dart' as path;
 
 class ClashSettingManager {
@@ -279,24 +277,37 @@ class ClashSettingManager {
   }
 
   static Future<String> getPatchContent(bool overwrite) async {
-    late String content;
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     if (overwrite) {
       final map = _setting.toJson();
       MapHelper.removeNullOrEmpty(map, true, true);
-      content = encoder.convert(map);
-    } else {
-      final setting = defaultConfigNoOverwrite();
-      final map = setting.toJson();
-      MapHelper.removeNullOrEmpty(map, true, true);
-      content = encoder.convert(map);
+      const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+      String content = encoder.convert(map);
+      return content;
     }
+    return getPatchFinalContent();
+  }
+
+  static String getPatchFinalContent() {
+    final setting = defaultConfigNoOverwrite();
+    final map = setting.toJson();
+    MapHelper.removeNullOrEmpty(map, true, true);
+    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+    String content = encoder.convert(map);
+
     return content;
   }
 
   static Future<void> saveCorePatch(bool overwrite) async {
     final content = await getPatchContent(overwrite);
     String filePath = await PathUtils.serviceCorePatchPath();
+    try {
+      await File(filePath).writeAsString(content, flush: true);
+    } catch (err, stacktrace) {}
+  }
+
+  static Future<void> saveCorePatchFinal() async {
+    final content = getPatchFinalContent();
+    String filePath = await PathUtils.serviceCorePatchFinalPath();
     try {
       await File(filePath).writeAsString(content, flush: true);
     } catch (err, stacktrace) {}
