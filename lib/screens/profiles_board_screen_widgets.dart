@@ -274,6 +274,14 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
             )
           : const SizedBox.shrink(),
       ListTile(
+        title: Text("核心配置"),
+        minLeadingWidth: 40,
+        onTap: () async {
+          Navigator.of(context).pop();
+          showCorePatch(setting);
+        },
+      ),
+      ListTile(
         title: Text(tcontext.meta.remove),
         minLeadingWidth: 40,
         onTap: () async {
@@ -283,6 +291,48 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
       ),
     ];
 
+    showSheet(
+      title: setting.id,
+      context: context,
+      body: SizedBox(
+          height: 400,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: Scrollbar(
+                child: ListView.separated(
+              itemBuilder: (BuildContext context, int index) {
+                return widgets[index];
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const Divider(
+                  height: 1,
+                  thickness: 0.3,
+                );
+              },
+              itemCount: widgets.length,
+            )),
+          )),
+    );
+  }
+
+  void showCorePatch(ProfileSetting setting) {
+    var widgets = [
+      ListTile(
+        title: Text("当前核心配置"),
+        minLeadingWidth: 40,
+        onTap: () async {},
+      ),
+      ListTile(
+        title: Text("核心配置-覆写"),
+        minLeadingWidth: 40,
+        onTap: () async {},
+      ),
+      ListTile(
+        title: Text("核心配置-不覆写"),
+        minLeadingWidth: 40,
+        onTap: () async {},
+      ),
+    ];
     showSheet(
       title: setting.id,
       context: context,

@@ -98,6 +98,17 @@ class PathUtils {
     return "profiles";
   }
 
+  static Future<String> profilePatchsDir() async {
+    String dir = await profileDir();
+    String cdir = path.join(dir, profilePatchsName());
+    await FileUtils.createDir(cdir);
+    return cdir;
+  }
+
+  static String profilePatchsName() {
+    return "profilePatchs";
+  }
+
   static Future<String> backupDir() async {
     String dir = await profileDir();
     String cdir = path.join(dir, "backup");
@@ -247,6 +258,11 @@ class PathUtils {
     return path.join(filePath, profilesFileName());
   }
 
+  static Future<String> profilePatchsConfigFilePath() async {
+    String filePath = await PathUtils.profileDir();
+    return path.join(filePath, profilePatchsFileName());
+  }
+
   static String serviceCoreSettingFileName() {
     return "service_core_setting.json";
   }
@@ -276,6 +292,10 @@ class PathUtils {
 
   static String profilesFileName() {
     return "profiles.json";
+  }
+
+  static String profilePatchsFileName() {
+    return "profile_patchs.json";
   }
 
   static Future<String> settingFilePath() async {
