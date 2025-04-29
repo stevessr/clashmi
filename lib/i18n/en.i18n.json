@@ -100,6 +100,7 @@
         "shareUrl": "Share Link",
         "coreSettingTips": "Note: After modifying the configuration, you need to reconnect to take effect",
         "overwrite": "Overwrite",
+        "overwriteSettings": "Overwrite Settings",
         "externalController": "External Controller",
         "secret": "Secret",
         "tcpConcurrent": "TCP Concurrent Handshake",
@@ -121,6 +122,8 @@
         "website": "Website",
         "rule": "Rule",
         "global": "Global",
+        "direct": "Direct",
+        "block": "Block",
         "qrcode": "QR Code",
         "qrcodeTooLong": "The text is too long to display",
         "qrcodeShare": "Share QR Code",
@@ -235,11 +238,10 @@
     "sniffer": {
         "overrideDest": "Override"
     },
-    "outboundRuleMode": {
+    "profilePatchMode": {
         "currentSelected": "Current Selected",
-        "urltest": "Auto Select",
-        "direct": "Direct",
-        "block": "Block"
+        "overwrite": "Built-in Overwrite",
+        "noOverwrite": "Built-in - no Overwrite"
     },
     "protocolSniff": "Protocol Sniff",
     "protocolSniffOverrideDestination": "The Sniff domain name override the connection target address",

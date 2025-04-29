@@ -100,6 +100,7 @@
         "shareUrl": "اشتراک لینک",
         "coreSettingTips": "توجه: پس از تغییر پیکربندی، باید دوباره وصل شوید تا اعمال شود",
         "overwrite": "لغو",
+        "overwriteSettings": "لغو تنظیمات",
         "externalController": "کنترل خارجی",
         "secret": "Secret",
         "tcpConcurrent": "دست دادن همزمان TCP",
@@ -121,6 +122,8 @@
         "website": "وبسایت",
         "rule": "قانون",
         "global": "عمومی",
+        "direct": "مستقیم",
+        "block": "مسدود",
         "qrcode": "کد QR",
         "qrcodeTooLong": "متن برای نمایش خیلی طولانی است",
         "qrcodeShare": "اشتراک کدQR",
@@ -235,11 +238,10 @@
     "sniffer": {
         "overrideDest": "پوشش"
     },
-    "outboundRuleMode": {
+    "profilePatchMode": {
         "currentSelected": "فعلی انتخاب شده",
-        "urltest": "انتخاب خودکار",
-        "direct": "مستقیم",
-        "block": "مسدود"
+        "overwrite": "Overwrite داخلی",
+        "noOverwrite": "داخلی - رونویسی نشده است"
     },
     "protocolSniff": "تشخیص پروتکل",
     "protocolSniffOverrideDestination": "نام دامنه شناسایی شده آدرس هدف اتصال را پوشش می دهد",

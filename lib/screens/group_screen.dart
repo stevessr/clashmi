@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:clashmi/screens/group_item_options.dart';
 import 'package:clashmi/screens/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -18,7 +19,8 @@ class GroupScreen extends LasyRenderingStatefulWidget {
   }
 
   final String title;
-  final Future<List<GroupItem>> Function(BuildContext context) getOptions;
+  final Future<List<GroupItem>> Function(
+      BuildContext context, SetStateCallback? setstate) getOptions;
   final bool hasReturn;
   final Future<bool> Function(BuildContext context)? onDone;
   final String? tipsIfNoOnDone;
@@ -122,6 +124,7 @@ class GroupScreenState extends LasyRenderingState<GroupScreen>
                               if (await widget.onDone!(context)) {
                                 Navigator.pop(context, true);
                               }
+                              setState(() {});
                             },
                             child: SizedBox(
                               width: 50,
@@ -200,10 +203,22 @@ class GroupScreenState extends LasyRenderingState<GroupScreen>
   }
 
   Future<List<GroupItem>> getGroupOptions() async {
-    var groups = await widget.getOptions(context);
+    var groups = await widget.getOptions(context, () {
+      setState(() {});
+    });
     for (var group in groups) {
       for (var option in group.options) {
-        if ((option.switchOptions != null) &&
+        if ((option.textOptions != null) &&
+            (option.textOptions!.onPush != null)) {
+          var callback = option.textOptions!.onPush;
+          option.textOptions!.onPush = () async {
+            await callback!();
+            if (!mounted) {
+              return;
+            }
+            setState(() {});
+          };
+        } else if ((option.switchOptions != null) &&
             (option.switchOptions!.onSwitch != null)) {
           var callback = option.switchOptions!.onSwitch;
           option.switchOptions!.onSwitch = (bool value) async {

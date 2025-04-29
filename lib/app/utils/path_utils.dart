@@ -272,15 +272,6 @@ class PathUtils {
     return path.join(filePath, serviceCoreSettingFileName());
   }
 
-  static String serviceCorePatchFileName() {
-    return "service_core_patch.json";
-  }
-
-  static Future<String> serviceCorePatchPath() async {
-    String filePath = await profileDir();
-    return path.join(filePath, serviceCorePatchFileName());
-  }
-
   static String serviceCorePatchFinalFileName() {
     return "service_core_patch_final.json";
   }

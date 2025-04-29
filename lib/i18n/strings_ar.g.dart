@@ -48,7 +48,7 @@ class TranslationsAr implements Translations {
 	@override late final _TranslationsTunAr tun = _TranslationsTunAr._(_root);
 	@override late final _TranslationsDnsAr dns = _TranslationsDnsAr._(_root);
 	@override late final _TranslationsSnifferAr sniffer = _TranslationsSnifferAr._(_root);
-	@override late final _TranslationsOutboundRuleModeAr outboundRuleMode = _TranslationsOutboundRuleModeAr._(_root);
+	@override late final _TranslationsProfilePatchModeAr profilePatchMode = _TranslationsProfilePatchModeAr._(_root);
 	@override String get protocolSniff => 'الكشف عن البروتوكول';
 	@override String get protocolSniffOverrideDestination => 'يغطي اسم المجال المكتشف عنوان هدف الاتصال';
 	@override String get edgeRuntimeNotInstalled => 'لم يتم تثبيت وقت تشغيل Edge WebView2 على الجهاز الحالي ولا يمكن عرض الصفحة، يرجى تنزيل وتثبيت وقت تشغيل Edge WebView2 (x64)، وإعادة تشغيل التطبيق والمحاولة مرة أخرى.';
@@ -207,6 +207,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get shareUrl => 'شارك الرابط';
 	@override String get coreSettingTips => 'ملاحظة: بعد تعديل التكوين، تحتاج إلى إعادة الاتصال حتى يسري مفعوله';
 	@override String get overwrite => 'تجاوز';
+	@override String get overwriteSettings => 'تجاوز الإعدادات';
 	@override String get externalController => 'الرقابة الخارجية';
 	@override String get secret => 'Secret';
 	@override String get tcpConcurrent => 'مصافحة TCP المتزامنة';
@@ -228,6 +229,8 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get website => 'موقع إلكتروني';
 	@override String get rule => 'قاعدة';
 	@override String get global => 'عالمي';
+	@override String get direct => 'مباشر';
+	@override String get block => 'حاجز';
 	@override String get qrcode => 'رمز الاستجابة السريعة';
 	@override String get qrcodeTooLong => 'النص طويل جدًا لعرضه';
 	@override String get qrcodeShare => 'شارك رمز الاستجابة السريعة';
@@ -378,17 +381,16 @@ class _TranslationsSnifferAr implements TranslationsSnifferEn {
 	@override String get overrideDest => 'غطاء';
 }
 
-// Path: outboundRuleMode
-class _TranslationsOutboundRuleModeAr implements TranslationsOutboundRuleModeEn {
-	_TranslationsOutboundRuleModeAr._(this._root);
+// Path: profilePatchMode
+class _TranslationsProfilePatchModeAr implements TranslationsProfilePatchModeEn {
+	_TranslationsProfilePatchModeAr._(this._root);
 
 	final TranslationsAr _root; // ignore: unused_field
 
 	// Translations
 	@override String get currentSelected => 'المحدد الحالي';
-	@override String get urltest => 'اختيار آلي';
-	@override String get direct => 'مباشر';
-	@override String get block => 'حاجز';
+	@override String get overwrite => 'التجاوز المدمج';
+	@override String get noOverwrite => 'مُدمج - غير قابل للكتابة فوقه';
 }
 
 // Path: main.tray
@@ -493,6 +495,7 @@ extension on TranslationsAr {
 			case 'meta.shareUrl': return 'شارك الرابط';
 			case 'meta.coreSettingTips': return 'ملاحظة: بعد تعديل التكوين، تحتاج إلى إعادة الاتصال حتى يسري مفعوله';
 			case 'meta.overwrite': return 'تجاوز';
+			case 'meta.overwriteSettings': return 'تجاوز الإعدادات';
 			case 'meta.externalController': return 'الرقابة الخارجية';
 			case 'meta.secret': return 'Secret';
 			case 'meta.tcpConcurrent': return 'مصافحة TCP المتزامنة';
@@ -514,6 +517,8 @@ extension on TranslationsAr {
 			case 'meta.website': return 'موقع إلكتروني';
 			case 'meta.rule': return 'قاعدة';
 			case 'meta.global': return 'عالمي';
+			case 'meta.direct': return 'مباشر';
+			case 'meta.block': return 'حاجز';
 			case 'meta.qrcode': return 'رمز الاستجابة السريعة';
 			case 'meta.qrcodeTooLong': return 'النص طويل جدًا لعرضه';
 			case 'meta.qrcodeShare': return 'شارك رمز الاستجابة السريعة';
@@ -617,10 +622,9 @@ extension on TranslationsAr {
 			case 'dns.fallbackGeoIp': return '${_root.dns.fallback} GeoIp';
 			case 'dns.fallbackGeoIpCode': return '${_root.dns.fallback} GeoIpCode';
 			case 'sniffer.overrideDest': return 'غطاء';
-			case 'outboundRuleMode.currentSelected': return 'المحدد الحالي';
-			case 'outboundRuleMode.urltest': return 'اختيار آلي';
-			case 'outboundRuleMode.direct': return 'مباشر';
-			case 'outboundRuleMode.block': return 'حاجز';
+			case 'profilePatchMode.currentSelected': return 'المحدد الحالي';
+			case 'profilePatchMode.overwrite': return 'التجاوز المدمج';
+			case 'profilePatchMode.noOverwrite': return 'مُدمج - غير قابل للكتابة فوقه';
 			case 'protocolSniff': return 'الكشف عن البروتوكول';
 			case 'protocolSniffOverrideDestination': return 'يغطي اسم المجال المكتشف عنوان هدف الاتصال';
 			case 'edgeRuntimeNotInstalled': return 'لم يتم تثبيت وقت تشغيل Edge WebView2 على الجهاز الحالي ولا يمكن عرض الصفحة، يرجى تنزيل وتثبيت وقت تشغيل Edge WebView2 (x64)، وإعادة تشغيل التطبيق والمحاولة مرة أخرى.';

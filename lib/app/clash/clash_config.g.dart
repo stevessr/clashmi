@@ -513,7 +513,6 @@ Map<String, dynamic> _$RawTLSToJson(RawTLS instance) => <String, dynamic>{
     };
 
 RawConfig _$RawConfigFromJson(Map<String, dynamic> json) => RawConfig(
-      json['overwrite'] as bool?,
       (json['port'] as num?)?.toInt(),
       (json['socks-port'] as num?)?.toInt(),
       (json['redir-port'] as num?)?.toInt(),
@@ -615,7 +614,6 @@ RawConfig _$RawConfigFromJson(Map<String, dynamic> json) => RawConfig(
     );
 
 Map<String, dynamic> _$RawConfigToJson(RawConfig instance) => <String, dynamic>{
-      'overwrite': instance.OverWrite,
       'port': instance.Port,
       'socks-port': instance.SocksPort,
       'redir-port': instance.RedirPort,

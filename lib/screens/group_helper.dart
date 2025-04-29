@@ -2,6 +2,9 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'package:clashmi/app/modules/profile_manager.dart';
+import 'package:clashmi/app/modules/profile_patch_manager.dart';
+import 'package:clashmi/screens/add_profile_patch_by_import_from_file_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:clashmi/app/clash/clash_config.dart';
 import 'package:clashmi/app/local_services/vpn_service.dart';
@@ -74,7 +77,8 @@ class GroupHelper {
   }
 
   static Future<void> showBackupAndSync(BuildContext context) async {
-    Future<List<GroupItem>> getOptions(BuildContext context) async {
+    Future<List<GroupItem>> getOptions(
+        BuildContext context, SetStateCallback? setstate) async {
       final tcontext = Translations.of(context);
 
       List<GroupItemOptions> options = [
@@ -131,7 +135,8 @@ class GroupHelper {
   static Future<void> onTapImportExport(BuildContext context) async {
     final tcontext = Translations.of(context);
 
-    Future<List<GroupItem>> getOptions(BuildContext context) async {
+    Future<List<GroupItem>> getOptions(
+        BuildContext context, SetStateCallback? setstate) async {
       List<GroupItemOptions> options = [
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
@@ -246,7 +251,8 @@ class GroupHelper {
   }
 
   static Future<void> showHelp(BuildContext context) async {
-    Future<List<GroupItem>> getOptions(BuildContext context) async {
+    Future<List<GroupItem>> getOptions(
+        BuildContext context, SetStateCallback? setstate) async {
       final tcontext = Translations.of(context);
 
       List<GroupItemOptions> options = [
@@ -302,7 +308,8 @@ class GroupHelper {
   }
 
   static Future<void> showAppSettings(BuildContext context) async {
-    Future<List<GroupItem>> getOptions(BuildContext context) async {
+    Future<List<GroupItem>> getOptions(
+        BuildContext context, SetStateCallback? setstate) async {
       final tcontext = Translations.of(context);
       var setting = SettingManager.getConfig();
       List<GroupItemOptions> options = [
@@ -400,11 +407,17 @@ class GroupHelper {
 
   static Future<void> showClashSettings(BuildContext context) async {
     final tcontext = Translations.of(context);
-    Future<List<GroupItem>> getOptions(BuildContext context) async {
+    Future<List<GroupItem>> getOptions(
+        BuildContext context, SetStateCallback? setstate) async {
       const inProduction = bool.fromEnvironment("dart.vm.product");
+      final currentPatch = ProfilePatchManager.getCurrent();
+      final remark = currentPatch.remark.isEmpty
+          ? currentPatch.getShowName(context)
+          : currentPatch.remark;
       final started = await VPNService.getStarted();
-
+      if (!context.mounted) {}
       var setting = ClashSettingManager.getConfig();
+
       var dns = setting.DNS!;
       var extensions = setting.Extension!;
       final logLevels = ClashLogLevel.toList();
@@ -423,18 +436,26 @@ class GroupHelper {
             pushOptions: GroupItemPushOptions(
                 name: tcontext.meta.reset,
                 onPush: () async {
-                  setting.OverWrite = true;
                   ClashSettingManager.reset();
+                  ProfilePatchManager.reset();
                 })),
       ];
       List<GroupItemOptions> options2 = [
         GroupItemOptions(
+            pushOptions: GroupItemPushOptions(
+                name: tcontext.meta.overwrite,
+                text: remark,
+                textWidthPercent: 0.5,
+                onPush: () async {
+                  await showProfilePatch(context);
+                })),
+        /*GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.meta.overwrite,
                 switchValue: setting.OverWrite,
                 onSwitch: (bool value) async {
                   setting.OverWrite = value;
-                })),
+                })),*/
         GroupItemOptions(
             textFormFieldOptions: GroupItemTextFieldOptions(
                 name: tcontext.meta.externalController,
@@ -642,12 +663,8 @@ class GroupHelper {
         groups.add(GroupItem(options: options));
       }
 
-      if (setting.OverWrite != true) {
-        groups.addAll([
-          GroupItem(options: options1),
-          GroupItem(options: options2),
-        ]);
-      } else {
+      if (currentPatch.id.isEmpty ||
+          currentPatch.id == kProfilePatchBuildinOverwrite) {
         groups.addAll([
           GroupItem(options: options1),
           GroupItem(options: options2),
@@ -656,6 +673,11 @@ class GroupHelper {
           GroupItem(options: options5),
           GroupItem(options: options6),
           GroupItem(options: options7),
+        ]);
+      } else {
+        groups.addAll([
+          GroupItem(options: options1),
+          GroupItem(options: options2),
         ]);
       }
 
@@ -670,9 +692,10 @@ class GroupHelper {
                   title: tcontext.meta.settingCore,
                   getOptions: getOptions,
                   onDone: (context) async {
-                    var setting = ClashSettingManager.getConfig();
+                    final currentPatch = ProfilePatchManager.getCurrent();
                     final content = await ClashSettingManager.getPatchContent(
-                        setting.OverWrite == true);
+                        currentPatch.id.isEmpty ||
+                            currentPatch.id == kProfilePatchBuildinOverwrite);
 
                     if (!context.mounted) {
                       return false;
@@ -682,7 +705,8 @@ class GroupHelper {
                         MaterialPageRoute(
                             settings: FileViewScreen.routSettings(),
                             builder: (context) => FileViewScreen(
-                                  title: PathUtils.serviceCorePatchFileName(),
+                                  title:
+                                      PathUtils.serviceCorePatchFinalFileName(),
                                   content: content,
                                 )));
 
@@ -691,11 +715,105 @@ class GroupHelper {
                   onDoneIcon: Icons.file_present,
                 )));
     ClashSettingManager.saveSetting();
+    ProfilePatchManager.save();
+    ProfileManager.save();
+  }
+
+  static Future<void> showProfilePatch(BuildContext context) async {
+    final tcontext = Translations.of(context);
+    final currentPatch = ProfilePatchManager.getCurrent();
+    Future<List<GroupItem>> getOptions(
+        BuildContext context, SetStateCallback? setstate) async {
+      List<GroupItemOptions> options = [
+        GroupItemOptions(
+            textOptions: GroupItemTextOptions(
+                name: "",
+                text: tcontext.profilePatchMode.overwrite,
+                textStyle: TextStyle(
+                    color: currentPatch.id == kProfilePatchBuildinOverwrite
+                        ? ThemeDefine.kColorBlue
+                        : null),
+                onPush: () async {
+                  ProfilePatchManager.setCurrent(kProfilePatchBuildinOverwrite);
+                  Navigator.of(context).pop();
+                })),
+        GroupItemOptions(
+            textOptions: GroupItemTextOptions(
+                name: "",
+                text: tcontext.profilePatchMode.noOverwrite,
+                textStyle: TextStyle(
+                    color: currentPatch.id == kProfilePatchBuildinNoOverwrite
+                        ? ThemeDefine.kColorBlue
+                        : null),
+                onPush: () async {
+                  ProfilePatchManager.setCurrent(
+                      kProfilePatchBuildinNoOverwrite);
+                  Navigator.of(context).pop();
+                }))
+      ];
+      List<GroupItemOptions> options1 = [];
+      final profilePatchs = ProfilePatchManager.getProfilePatchs();
+      for (var patch in profilePatchs) {
+        options1.add(GroupItemOptions(
+            textOptions: GroupItemTextOptions(
+                name: "",
+                text: patch.remark,
+                textWidthPercent: 0.8,
+                textStyle: TextStyle(
+                    color: currentPatch.id == patch.id
+                        ? ThemeDefine.kColorBlue
+                        : null),
+                child: InkWell(
+                  onTap: () {
+                    ProfilePatchManager.removeProfilePatch(patch.id);
+                    ProfileManager.removePatch(patch.id);
+                    setstate?.call();
+                  },
+                  child: Icon(
+                    Icons.remove_circle_outlined,
+                    color: Colors.red,
+                  ),
+                ),
+                onPush: () async {
+                  ProfilePatchManager.setCurrent(patch.id);
+                  Navigator.of(context).pop();
+                })));
+      }
+      if (options1.isNotEmpty) {
+        return [
+          GroupItem(options: options),
+          GroupItem(options: options1),
+        ];
+      }
+      return [
+        GroupItem(options: options),
+      ];
+    }
+
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            settings: GroupScreen.routSettings("overwrite"),
+            builder: (context) => GroupScreen(
+                title: tcontext.meta.overwrite,
+                getOptions: getOptions,
+                onDoneIcon: Icons.add,
+                onDone: (BuildContext context) async {
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          settings: AddProfilePatchByImportFromFileScreen
+                              .routSettings(),
+                          builder: (context) =>
+                              const AddProfilePatchByImportFromFileScreen()));
+                  return false;
+                })));
   }
 
   static Future<void> showClashSettingsTUN(BuildContext context) async {
     final tcontext = Translations.of(context);
-    Future<List<GroupItem>> getOptions(BuildContext context) async {
+    Future<List<GroupItem>> getOptions(
+        BuildContext context, SetStateCallback? setstate) async {
       var setting = ClashSettingManager.getConfig();
       var tun = setting.Tun!;
       var extensions = setting.Extension!;
@@ -800,7 +918,8 @@ class GroupHelper {
 
   static Future<void> showClashSettingsDNS(BuildContext context) async {
     final tcontext = Translations.of(context);
-    Future<List<GroupItem>> getOptions(BuildContext context) async {
+    Future<List<GroupItem>> getOptions(
+        BuildContext context, SetStateCallback? setstate) async {
       var setting = ClashSettingManager.getConfig();
       var dns = setting.DNS!;
       final enhancedModes = ClashDnsEnhancedMode.toList();
@@ -1005,7 +1124,8 @@ class GroupHelper {
 
   static Future<void> showClashSettingsNTP(BuildContext context) async {
     final tcontext = Translations.of(context);
-    Future<List<GroupItem>> getOptions(BuildContext context) async {
+    Future<List<GroupItem>> getOptions(
+        BuildContext context, SetStateCallback? setstate) async {
       var setting = ClashSettingManager.getConfig();
       var ntp = setting.NTP!;
       List<GroupItemOptions> options = [
@@ -1060,7 +1180,8 @@ class GroupHelper {
 
   static Future<void> showClashSettingsTLS(BuildContext context) async {
     final tcontext = Translations.of(context);
-    Future<List<GroupItem>> getOptions(BuildContext context) async {
+    Future<List<GroupItem>> getOptions(
+        BuildContext context, SetStateCallback? setstate) async {
       var setting = ClashSettingManager.getConfig();
       var tls = setting.TLS!;
       List<GroupItemOptions> options = [
@@ -1121,7 +1242,8 @@ class GroupHelper {
 
   static Future<void> showClashSettingsSniffer(BuildContext context) async {
     final tcontext = Translations.of(context);
-    Future<List<GroupItem>> getOptions(BuildContext context) async {
+    Future<List<GroupItem>> getOptions(
+        BuildContext context, SetStateCallback? setstate) async {
       var setting = ClashSettingManager.getConfig();
       var sniffer = setting.Sniffer!;
       List<GroupItemOptions> options = [
@@ -1165,7 +1287,8 @@ class GroupHelper {
 
   static Future<void> showClashSettingsGEO(BuildContext context) async {
     final tcontext = Translations.of(context);
-    Future<List<GroupItem>> getOptions(BuildContext context) async {
+    Future<List<GroupItem>> getOptions(
+        BuildContext context, SetStateCallback? setstate) async {
       var setting = ClashSettingManager.getConfig();
       var geo = setting.GeoXUrl!;
       List<GroupItemOptions> options = [

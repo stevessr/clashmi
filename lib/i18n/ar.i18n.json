@@ -100,6 +100,7 @@
         "shareUrl": "شارك الرابط",
         "coreSettingTips": "ملاحظة: بعد تعديل التكوين، تحتاج إلى إعادة الاتصال حتى يسري مفعوله",
         "overwrite": "تجاوز",
+        "overwriteSettings": "تجاوز الإعدادات",
         "externalController": "الرقابة الخارجية",
         "secret": "Secret",
         "tcpConcurrent": "مصافحة TCP المتزامنة",
@@ -121,6 +122,8 @@
         "website": "موقع إلكتروني",
         "rule": "قاعدة",
         "global": "عالمي",
+        "direct": "مباشر",
+        "block": "حاجز",
         "qrcode": "رمز الاستجابة السريعة",
         "qrcodeTooLong": "النص طويل جدًا لعرضه",
         "qrcodeShare": "شارك رمز الاستجابة السريعة",
@@ -235,11 +238,10 @@
     "sniffer": {
         "overrideDest": "غطاء"
     },
-    "outboundRuleMode": {
+    "profilePatchMode": {
         "currentSelected": "المحدد الحالي",
-        "urltest": "اختيار آلي",
-        "direct": "مباشر",
-        "block": "حاجز"
+        "overwrite": "التجاوز المدمج",
+        "noOverwrite": "مُدمج - غير قابل للكتابة فوقه"
     },
     "protocolSniff": "الكشف عن البروتوكول",
     "protocolSniffOverrideDestination": "يغطي اسم المجال المكتشف عنوان هدف الاتصال",

@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tuple/tuple.dart';
 
+typedef SetStateCallback = void Function();
+
 class GroupItemTextOptions {
   GroupItemTextOptions(
       {required this.name,
@@ -13,6 +15,7 @@ class GroupItemTextOptions {
       this.textStyle,
       this.textColor,
       this.textWidthPercent = 0.5,
+      this.child,
       this.onPush});
 
   final String name;
@@ -21,7 +24,8 @@ class GroupItemTextOptions {
 
   final Color? textColor;
   final double textWidthPercent;
-  void Function()? onPush;
+  final Widget? child;
+  Future<void> Function()? onPush;
 }
 
 class GroupItemTextFieldOptions {
@@ -104,6 +108,7 @@ class GroupItemPushOptions {
   final TextStyle? textStyle;
   final Color? textColor;
   final double textWidthPercent;
+  SetStateCallback? setstate;
   Future<void> Function()? onPush;
   Future<void> Function()? onLongPress;
 }

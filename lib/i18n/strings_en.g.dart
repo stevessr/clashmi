@@ -51,7 +51,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsTunEn tun = TranslationsTunEn._(_root);
 	late final TranslationsDnsEn dns = TranslationsDnsEn._(_root);
 	late final TranslationsSnifferEn sniffer = TranslationsSnifferEn._(_root);
-	late final TranslationsOutboundRuleModeEn outboundRuleMode = TranslationsOutboundRuleModeEn._(_root);
+	late final TranslationsProfilePatchModeEn profilePatchMode = TranslationsProfilePatchModeEn._(_root);
 	String get protocolSniff => 'Protocol Sniff';
 	String get protocolSniffOverrideDestination => 'The Sniff domain name override the connection target address';
 	String get edgeRuntimeNotInstalled => 'The current device has not installed the Edge WebView2 runtime, so the page cannot be displayed. Please download and install the Edge WebView2 runtime (x64), restart the App and try again.';
@@ -210,6 +210,7 @@ class TranslationsMetaEn {
 	String get shareUrl => 'Share Link';
 	String get coreSettingTips => 'Note: After modifying the configuration, you need to reconnect to take effect';
 	String get overwrite => 'Overwrite';
+	String get overwriteSettings => 'Overwrite Settings';
 	String get externalController => 'External Controller';
 	String get secret => 'Secret';
 	String get tcpConcurrent => 'TCP Concurrent Handshake';
@@ -231,6 +232,8 @@ class TranslationsMetaEn {
 	String get website => 'Website';
 	String get rule => 'Rule';
 	String get global => 'Global';
+	String get direct => 'Direct';
+	String get block => 'Block';
 	String get qrcode => 'QR Code';
 	String get qrcodeTooLong => 'The text is too long to display';
 	String get qrcodeShare => 'Share QR Code';
@@ -381,17 +384,16 @@ class TranslationsSnifferEn {
 	String get overrideDest => 'Override';
 }
 
-// Path: outboundRuleMode
-class TranslationsOutboundRuleModeEn {
-	TranslationsOutboundRuleModeEn._(this._root);
+// Path: profilePatchMode
+class TranslationsProfilePatchModeEn {
+	TranslationsProfilePatchModeEn._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get currentSelected => 'Current Selected';
-	String get urltest => 'Auto Select';
-	String get direct => 'Direct';
-	String get block => 'Block';
+	String get overwrite => 'Built-in Overwrite';
+	String get noOverwrite => 'Built-in - no Overwrite';
 }
 
 // Path: main.tray
@@ -496,6 +498,7 @@ extension on Translations {
 			case 'meta.shareUrl': return 'Share Link';
 			case 'meta.coreSettingTips': return 'Note: After modifying the configuration, you need to reconnect to take effect';
 			case 'meta.overwrite': return 'Overwrite';
+			case 'meta.overwriteSettings': return 'Overwrite Settings';
 			case 'meta.externalController': return 'External Controller';
 			case 'meta.secret': return 'Secret';
 			case 'meta.tcpConcurrent': return 'TCP Concurrent Handshake';
@@ -517,6 +520,8 @@ extension on Translations {
 			case 'meta.website': return 'Website';
 			case 'meta.rule': return 'Rule';
 			case 'meta.global': return 'Global';
+			case 'meta.direct': return 'Direct';
+			case 'meta.block': return 'Block';
 			case 'meta.qrcode': return 'QR Code';
 			case 'meta.qrcodeTooLong': return 'The text is too long to display';
 			case 'meta.qrcodeShare': return 'Share QR Code';
@@ -620,10 +625,9 @@ extension on Translations {
 			case 'dns.fallbackGeoIp': return '${_root.dns.fallback} GeoIp';
 			case 'dns.fallbackGeoIpCode': return '${_root.dns.fallback} GeoIpCode';
 			case 'sniffer.overrideDest': return 'Override';
-			case 'outboundRuleMode.currentSelected': return 'Current Selected';
-			case 'outboundRuleMode.urltest': return 'Auto Select';
-			case 'outboundRuleMode.direct': return 'Direct';
-			case 'outboundRuleMode.block': return 'Block';
+			case 'profilePatchMode.currentSelected': return 'Current Selected';
+			case 'profilePatchMode.overwrite': return 'Built-in Overwrite';
+			case 'profilePatchMode.noOverwrite': return 'Built-in - no Overwrite';
 			case 'protocolSniff': return 'Protocol Sniff';
 			case 'protocolSniffOverrideDestination': return 'The Sniff domain name override the connection target address';
 			case 'edgeRuntimeNotInstalled': return 'The current device has not installed the Edge WebView2 runtime, so the page cannot be displayed. Please download and install the Edge WebView2 runtime (x64), restart the App and try again.';

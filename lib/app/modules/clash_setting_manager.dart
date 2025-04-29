@@ -186,7 +186,6 @@ class ClashSettingManager {
 
   static RawConfig defaultConfig() {
     return RawConfig.by(
-      OverWrite: true,
       IPv6: false,
       LogLevel: ClashLogLevel.error.name,
       Mode: ClashConfigsMode.rule.name,
@@ -293,20 +292,11 @@ class ClashSettingManager {
     MapHelper.removeNullOrEmpty(map, true, true);
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     String content = encoder.convert(map);
-
     return content;
   }
 
-  static Future<void> saveCorePatch(bool overwrite) async {
+  static Future<void> saveCorePatchFinal(bool overwrite) async {
     final content = await getPatchContent(overwrite);
-    String filePath = await PathUtils.serviceCorePatchPath();
-    try {
-      await File(filePath).writeAsString(content, flush: true);
-    } catch (err, stacktrace) {}
-  }
-
-  static Future<void> saveCorePatchFinal() async {
-    final content = getPatchFinalContent();
     String filePath = await PathUtils.serviceCorePatchFinalPath();
     try {
       await File(filePath).writeAsString(content, flush: true);

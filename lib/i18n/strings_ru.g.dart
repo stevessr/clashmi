@@ -48,7 +48,7 @@ class TranslationsRu implements Translations {
 	@override late final _TranslationsTunRu tun = _TranslationsTunRu._(_root);
 	@override late final _TranslationsDnsRu dns = _TranslationsDnsRu._(_root);
 	@override late final _TranslationsSnifferRu sniffer = _TranslationsSnifferRu._(_root);
-	@override late final _TranslationsOutboundRuleModeRu outboundRuleMode = _TranslationsOutboundRuleModeRu._(_root);
+	@override late final _TranslationsProfilePatchModeRu profilePatchMode = _TranslationsProfilePatchModeRu._(_root);
 	@override String get protocolSniff => 'Определение протокола';
 	@override String get protocolSniffOverrideDestination => 'Обнаруженное имя домена перезаписывает целевой адрес подключения.';
 	@override String get edgeRuntimeNotInstalled => 'Среда выполнения Edge WebView2 не установлена ​​на текущем устройстве, и страница не может быть отображена. Загрузите и установите среду выполнения Edge WebView2 (x64), перезапустите приложение и повторите попытку.';
@@ -207,6 +207,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get shareUrl => 'Поделиться ссылкой';
 	@override String get coreSettingTips => 'Примечание: После изменения конфигурации необходимо повторно подключиться, чтобы изменения вступили в силу.';
 	@override String get overwrite => 'Переопределить';
+	@override String get overwriteSettings => 'Переопределить настройки';
 	@override String get externalController => 'Внешний контроль';
 	@override String get secret => 'Secret';
 	@override String get tcpConcurrent => 'Параллельное TCP-подтверждение';
@@ -228,6 +229,8 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get website => 'Веб-сайт';
 	@override String get rule => 'Правила';
 	@override String get global => 'Глобально';
+	@override String get direct => 'Напрямую';
+	@override String get block => 'Блокировать';
 	@override String get qrcode => 'QR-код';
 	@override String get qrcodeTooLong => 'Слишком большой текст для отображения';
 	@override String get qrcodeShare => 'Поделиться QR-кодом';
@@ -378,17 +381,16 @@ class _TranslationsSnifferRu implements TranslationsSnifferEn {
 	@override String get overrideDest => 'крышка';
 }
 
-// Path: outboundRuleMode
-class _TranslationsOutboundRuleModeRu implements TranslationsOutboundRuleModeEn {
-	_TranslationsOutboundRuleModeRu._(this._root);
+// Path: profilePatchMode
+class _TranslationsProfilePatchModeRu implements TranslationsProfilePatchModeEn {
+	_TranslationsProfilePatchModeRu._(this._root);
 
 	final TranslationsRu _root; // ignore: unused_field
 
 	// Translations
 	@override String get currentSelected => 'Текущий сервер';
-	@override String get urltest => 'Автовыбор';
-	@override String get direct => 'Напрямую';
-	@override String get block => 'Блокировать';
+	@override String get overwrite => 'Встроенная функция переопределения';
+	@override String get noOverwrite => 'Встроенный - не перезаписывается';
 }
 
 // Path: main.tray
@@ -493,6 +495,7 @@ extension on TranslationsRu {
 			case 'meta.shareUrl': return 'Поделиться ссылкой';
 			case 'meta.coreSettingTips': return 'Примечание: После изменения конфигурации необходимо повторно подключиться, чтобы изменения вступили в силу.';
 			case 'meta.overwrite': return 'Переопределить';
+			case 'meta.overwriteSettings': return 'Переопределить настройки';
 			case 'meta.externalController': return 'Внешний контроль';
 			case 'meta.secret': return 'Secret';
 			case 'meta.tcpConcurrent': return 'Параллельное TCP-подтверждение';
@@ -514,6 +517,8 @@ extension on TranslationsRu {
 			case 'meta.website': return 'Веб-сайт';
 			case 'meta.rule': return 'Правила';
 			case 'meta.global': return 'Глобально';
+			case 'meta.direct': return 'Напрямую';
+			case 'meta.block': return 'Блокировать';
 			case 'meta.qrcode': return 'QR-код';
 			case 'meta.qrcodeTooLong': return 'Слишком большой текст для отображения';
 			case 'meta.qrcodeShare': return 'Поделиться QR-кодом';
@@ -617,10 +622,9 @@ extension on TranslationsRu {
 			case 'dns.fallbackGeoIp': return '${_root.dns.fallback} GeoIp';
 			case 'dns.fallbackGeoIpCode': return '${_root.dns.fallback} GeoIpCode';
 			case 'sniffer.overrideDest': return 'крышка';
-			case 'outboundRuleMode.currentSelected': return 'Текущий сервер';
-			case 'outboundRuleMode.urltest': return 'Автовыбор';
-			case 'outboundRuleMode.direct': return 'Напрямую';
-			case 'outboundRuleMode.block': return 'Блокировать';
+			case 'profilePatchMode.currentSelected': return 'Текущий сервер';
+			case 'profilePatchMode.overwrite': return 'Встроенная функция переопределения';
+			case 'profilePatchMode.noOverwrite': return 'Встроенный - не перезаписывается';
 			case 'protocolSniff': return 'Определение протокола';
 			case 'protocolSniffOverrideDestination': return 'Обнаруженное имя домена перезаписывает целевой адрес подключения.';
 			case 'edgeRuntimeNotInstalled': return 'Среда выполнения Edge WebView2 не установлена ​​на текущем устройстве, и страница не может быть отображена. Загрузите и установите среду выполнения Edge WebView2 (x64), перезапустите приложение и повторите попытку.';

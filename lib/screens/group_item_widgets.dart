@@ -23,6 +23,12 @@ class GroupItemText extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          options.child ?? SizedBox.shrink(),
+          options.child != null
+              ? SizedBox(
+                  width: 5,
+                )
+              : SizedBox.shrink(),
           Expanded(
             flex: ((1 - options.textWidthPercent) * 10).toInt(),
             child: Align(

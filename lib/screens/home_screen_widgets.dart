@@ -126,7 +126,6 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
 
                               if (value) {
                                 var err = await VPNService.start(
-                                    currentProfile.id,
                                     const Duration(seconds: 60));
                                 if (!context.mounted) {
                                   return;
@@ -203,7 +202,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
                 text: tcontext.meta.global),
             SegemntedElevatedButtonItem(
                 value: ClashConfigsMode.direct.index,
-                text: tcontext.outboundRuleMode.direct)
+                text: tcontext.meta.direct)
           ],
           selected: ClashSettingManager.getConfigsMode().index,
           padding: const EdgeInsets.fromLTRB(0, 3, 0, 3),
@@ -384,7 +383,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
       return;
     }
 
-    final err = await VPNService.restart(id, const Duration(seconds: 60));
+    final err = await VPNService.restart(const Duration(seconds: 60));
     if (err != null) {
       if (!mounted) {
         return;

@@ -899,8 +899,6 @@ class RawTLS {
 
 @JsonSerializable(explicitToJson: true)
 class RawConfig {
-  @JsonKey(name: 'overwrite')
-  bool? OverWrite;
   @JsonKey(name: 'port')
   int? Port;
   @JsonKey(name: 'socks-port')
@@ -1028,8 +1026,7 @@ class RawConfig {
   RawExtension? Extension;
 
   RawConfig.by(
-      {this.OverWrite,
-      this.Port,
+      {this.Port,
       this.SocksPort,
       this.RedirPort,
       this.TProxyPort,
@@ -1089,7 +1086,6 @@ class RawConfig {
       this.ClashForAndroid,
       required this.Extension});
   RawConfig(
-      this.OverWrite,
       this.Port,
       this.SocksPort,
       this.RedirPort,

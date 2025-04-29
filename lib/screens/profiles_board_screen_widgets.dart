@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:clashmi/app/clash/clash_http_api.dart';
 import 'package:clashmi/app/modules/profile_manager.dart';
+import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/file_view_screen.dart';
@@ -27,7 +28,15 @@ class ProfilesBoardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var settings = SettingManager.getConfig();
+    final tcontext = Translations.of(context);
+    final settings = SettingManager.getConfig();
+    final patch = ProfilePatchManager.getProfilePatch(setting.patch);
+    String patchRemark = "";
+    if (setting.patch.isEmpty || patch == null || patch.id.isEmpty) {
+      patchRemark = tcontext.profilePatchMode.currentSelected;
+    } else {
+      patchRemark = patch.getShowName(context);
+    }
     bool remote = setting.url != null && setting.url!.isNotEmpty;
     String tranffic = "";
     Tuple2<bool, String>? tranfficExpire;
@@ -74,6 +83,15 @@ class ProfilesBoardItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: selected ? ThemeDefine.kColorBlue : null),
+                  ),
+                ),
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    patchRemark,
+                    style: TextStyle(
+                        color: selected ? ThemeDefine.kColorBlue : null,
+                        fontSize: 12),
                   ),
                 ),
                 Align(
@@ -274,11 +292,12 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
             )
           : const SizedBox.shrink(),
       ListTile(
-        title: Text("核心配置"),
+        title: Text(tcontext.meta.settingCore),
         minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
-          showCorePatch(setting);
+          await showCorePatch(setting);
+          setState(() {});
         },
       ),
       ListTile(
@@ -315,25 +334,73 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
     );
   }
 
-  void showCorePatch(ProfileSetting setting) {
+  Future<void> showCorePatch(ProfileSetting setting) async {
+    final tcontext = Translations.of(context);
     var widgets = [
       ListTile(
-        title: Text("当前核心配置"),
+        title: Text(
+          tcontext.profilePatchMode.currentSelected,
+          style: TextStyle(
+            color: setting.patch.isEmpty ? ThemeDefine.kColorBlue : null,
+          ),
+        ),
         minLeadingWidth: 40,
-        onTap: () async {},
+        onTap: () async {
+          setting.patch = "";
+          Navigator.of(context).pop();
+        },
       ),
       ListTile(
-        title: Text("核心配置-覆写"),
+        title: Text(
+          tcontext.profilePatchMode.overwrite,
+          style: TextStyle(
+            color: setting.patch.isEmpty ||
+                    setting.patch == kProfilePatchBuildinOverwrite
+                ? ThemeDefine.kColorBlue
+                : null,
+          ),
+        ),
         minLeadingWidth: 40,
-        onTap: () async {},
+        onTap: () async {
+          setting.patch = kProfilePatchBuildinOverwrite;
+          Navigator.of(context).pop();
+        },
       ),
       ListTile(
-        title: Text("核心配置-不覆写"),
+        title: Text(
+          tcontext.profilePatchMode.noOverwrite,
+          style: TextStyle(
+            color: setting.patch == kProfilePatchBuildinNoOverwrite
+                ? ThemeDefine.kColorBlue
+                : null,
+          ),
+        ),
         minLeadingWidth: 40,
-        onTap: () async {},
+        onTap: () async {
+          setting.patch = kProfilePatchBuildinNoOverwrite;
+          Navigator.of(context).pop();
+        },
       ),
     ];
-    showSheet(
+    final items = ProfilePatchManager.getProfilePatchs();
+    for (var item in items) {
+      widgets.add(
+        ListTile(
+          title: Text(
+            item.remark,
+            style: TextStyle(
+              color: setting.patch == item.id ? ThemeDefine.kColorBlue : null,
+            ),
+          ),
+          minLeadingWidth: 40,
+          onTap: () async {
+            setting.patch = item.id;
+            Navigator.of(context).pop();
+          },
+        ),
+      );
+    }
+    await showSheet(
       title: setting.id,
       context: context,
       body: SizedBox(
@@ -355,5 +422,6 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
             )),
           )),
     );
+    ProfileManager.save();
   }
 }

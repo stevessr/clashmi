@@ -431,7 +431,8 @@ class _BackupAndSyncWebdavScreenState
   Future<void> onTapSetting() async {
     final tcontext = Translations.of(context);
 
-    Future<List<GroupItem>> getOptions(BuildContext context) async {
+    Future<List<GroupItem>> getOptions(
+        BuildContext context, SetStateCallback? setstate) async {
       List<GroupItemOptions> options = [
         GroupItemOptions(
             textFormFieldOptions: GroupItemTextFieldOptions(

@@ -100,6 +100,7 @@
         "shareUrl": "分享链接",
         "coreSettingTips": "注意:修改配置后,需要重新连接才会生效",
         "overwrite": "覆写",
+        "overwriteSettings": "覆写设置",
         "externalController": "外部控制",
         "secret": "Secret",
         "tcpConcurrent": "TCP并发握手",
@@ -121,6 +122,8 @@
         "website": "官网",
         "rule": "规则",
         "global": "全局",
+        "direct": "直连",
+        "block": "拦截",
         "qrcode": "二维码",
         "qrcodeTooLong": "文本过长,无法展示",
         "qrcodeShare": "分享二维码",
@@ -235,11 +238,10 @@
     "sniffer": {
         "overrideDest": "覆盖"
     },
-    "outboundRuleMode": {
+    "profilePatchMode": {
         "currentSelected": "当前选择",
-        "urltest": "自动选择",
-        "direct": "直连",
-        "block": "拦截"
+        "overwrite": "内置-覆写",
+        "noOverwrite": "内置-不覆写"
     },
     "protocolSniff": "协议探测",
     "protocolSniffOverrideDestination": "探测的域名覆盖连接目标地址",

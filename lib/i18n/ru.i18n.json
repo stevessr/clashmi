@@ -100,6 +100,7 @@
         "shareUrl": "Поделиться ссылкой",
         "coreSettingTips": "Примечание: После изменения конфигурации необходимо повторно подключиться, чтобы изменения вступили в силу.",
         "overwrite": "Переопределить",
+        "overwriteSettings": "Переопределить настройки",
         "externalController": "Внешний контроль",
         "secret": "Secret",
         "tcpConcurrent": "Параллельное TCP-подтверждение",
@@ -121,6 +122,8 @@
         "website": "Веб-сайт",
         "rule": "Правила",
         "global": "Глобально",
+        "direct": "Напрямую",
+        "block": "Блокировать",
         "qrcode": "QR-код",
         "qrcodeTooLong": "Слишком большой текст для отображения",
         "qrcodeShare": "Поделиться QR-кодом",
@@ -235,11 +238,10 @@
     "sniffer": {
         "overrideDest": "крышка"
     },
-    "outboundRuleMode": {
+    "profilePatchMode": {
         "currentSelected": "Текущий сервер",
-        "urltest": "Автовыбор",
-        "direct": "Напрямую",
-        "block": "Блокировать"
+        "overwrite": "Встроенная функция переопределения",
+        "noOverwrite": "Встроенный - не перезаписывается"
     },
     "protocolSniff": "Определение протокола",
     "protocolSniffOverrideDestination": "Обнаруженное имя домена перезаписывает целевой адрес подключения.",

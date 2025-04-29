@@ -5,6 +5,8 @@ import 'dart:io';
 
 import 'package:clashmi/app/clash/clash_http_api.dart';
 import 'package:clashmi/app/modules/clash_setting_manager.dart';
+import 'package:clashmi/app/modules/profile_manager.dart';
+import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/app_args.dart';
@@ -54,7 +56,7 @@ class VPNService {
 
     launchAtStartup.setup(
         appName: packageInfo.appName,
-        appPath: Platform.resolvedExecutable, //windows下开机启动的路径里不能有/,否则无法正常启动
+        appPath: Platform.resolvedExecutable,
         args: [AppArgs.launchStartup]);
 
     FlutterVpnService.onStateChanged(
@@ -65,7 +67,6 @@ class VPNService {
     });
 
     if (Platform.isWindows) {
-      //启动后就把之前残留的进程杀掉,后续验证端口需要用
       await stop();
     }
   }
@@ -113,8 +114,8 @@ class VPNService {
         "$secondsPadding$seconds";
   }
 
-  static Future<bool> _prepareConfig(String profileName,
-      {String profilePatchPatch = ""}) async {
+  static Future<bool> _prepareConfig(ProfileSetting profile) async {
+    final currentPatch = ProfilePatchManager.getCurrent();
     final setting = ClashSettingManager.getConfig();
     final controlPort = ClashSettingManager.getControlPort();
 
@@ -135,9 +136,10 @@ class VPNService {
     config.base_dir = await PathUtils.profileDir();
     config.work_dir = PathUtils.appAssetsDir();
     config.cache_dir = await PathUtils.cacheDir();
-    config.core_path = path.join(await PathUtils.profilesDir(), profileName);
-    config.core_path_patch = profilePatchPatch;
-    config.core_path_patch_final = await PathUtils.serviceCorePatchPath();
+    config.core_path = path.join(await PathUtils.profilesDir(), profile.id);
+    config.core_path_patch =
+        await ProfilePatchManager.getProfilePatchPath(profile.patch);
+    config.core_path_patch_final = await PathUtils.serviceCorePatchFinalPath();
     config.log_path = await PathUtils.serviceLogFilePath();
     config.err_path = await PathUtils.serviceStdErrorFilePath();
     config.id = await Did.getDid();
@@ -156,8 +158,15 @@ class VPNService {
       uiLocalizedDescription: vpnName,
       excludePorts: excludePorts,
     );
-
-    await ClashSettingManager.saveCorePatch(setting.OverWrite == true);
+    bool overwrite = true;
+    if (profile.patch.isEmpty ||
+        !ProfilePatchManager.existProfilePatch(profile.patch)) {
+      overwrite = currentPatch.id.isEmpty ||
+          currentPatch.id == kProfilePatchBuildinOverwrite;
+    } else {
+      overwrite = profile.patch == kProfilePatchBuildinOverwrite;
+    }
+    await ClashSettingManager.saveCorePatchFinal(overwrite);
 
     File confFile = File(configFilePath);
     bool reinstall = false;
@@ -212,14 +221,17 @@ class VPNService {
   }
 
   static Future<ReturnResultError?> restart(
-      String profileName, Duration timeout,
-      {String profilePatchPatch = ""}) async {
+    Duration timeout,
+  ) async {
+    final profile = ProfileManager.getCurrent();
+    if (profile == null) {
+      return ReturnResultError("current profile is empty");
+    }
     var started = await getStarted();
     if (!started) {
       return null;
     }
-    bool reinstall =
-        await _prepareConfig(profileName, profilePatchPatch: profilePatchPatch);
+    bool reinstall = await _prepareConfig(profile);
     if (reinstall) {
       await uninstall();
     }
@@ -269,10 +281,13 @@ class VPNService {
     return null;
   }
 
-  static Future<ReturnResultError?> start(String profileName, Duration timeout,
-      {String profilePatchPatch = ""}) async {
-    bool reinstall =
-        await _prepareConfig(profileName, profilePatchPatch: profilePatchPatch);
+  static Future<ReturnResultError?> start(Duration timeout) async {
+    final profile = ProfileManager.getCurrent();
+    if (profile == null) {
+      return ReturnResultError("current profile is empty");
+    }
+
+    bool reinstall = await _prepareConfig(profile);
     if (reinstall) {
       await uninstall();
     }
@@ -420,19 +435,8 @@ class VPNService {
     return started ? mixedPort : null;
   }
 
-  static Future<ReturnResultError?> reload(
-      String profileName, Duration timeout) async {
-    //reload经常因为连接中的请求造成阻塞,重新载入配置文件可能延迟高,新配置生效不及时
-    return restart(profileName, timeout);
-    /*  var started = await getStarted();
-    if (!started) {
-      return ReturnResultError("service is not running");
-    }
-    VpnServiceResultError? err = await FlutterVpnService.reload();
-    if (err != null) {
-      return convertErr(err);
-    }
-    return null;*/
+  static Future<ReturnResultError?> reload(Duration timeout) async {
+    return restart(timeout);
   }
 
   static String getBundleId() {

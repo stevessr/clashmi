@@ -4,6 +4,7 @@ import 'package:clashmi/app/local_services/vpn_service.dart';
 import 'package:clashmi/app/modules/auto_update_manager.dart';
 import 'package:clashmi/app/modules/clash_setting_manager.dart';
 import 'package:clashmi/app/modules/profile_manager.dart';
+import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/app/utils/app_lifecycle_state_notify.dart';
 import 'package:clashmi/app/utils/log.dart';
 
@@ -20,6 +21,7 @@ class Biz {
   static Future<void> init(bool launchAtStartup) async {
     await ClashSettingManager.init();
     await ProfileManager.init();
+    await ProfilePatchManager.init();
     await VPNService.init();
 
     for (var callback in onEventInitFinish) {
@@ -38,6 +40,7 @@ class Biz {
     AppLifecycleStateNofity.uninit();
 
     await VPNService.uninit();
+    await ProfilePatchManager.uninit();
     await ProfileManager.uninit();
     await ClashSettingManager.uninit();
   }

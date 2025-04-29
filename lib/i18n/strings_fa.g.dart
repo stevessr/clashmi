@@ -48,7 +48,7 @@ class TranslationsFa implements Translations {
 	@override late final _TranslationsTunFa tun = _TranslationsTunFa._(_root);
 	@override late final _TranslationsDnsFa dns = _TranslationsDnsFa._(_root);
 	@override late final _TranslationsSnifferFa sniffer = _TranslationsSnifferFa._(_root);
-	@override late final _TranslationsOutboundRuleModeFa outboundRuleMode = _TranslationsOutboundRuleModeFa._(_root);
+	@override late final _TranslationsProfilePatchModeFa profilePatchMode = _TranslationsProfilePatchModeFa._(_root);
 	@override String get protocolSniff => 'تشخیص پروتکل';
 	@override String get protocolSniffOverrideDestination => 'نام دامنه شناسایی شده آدرس هدف اتصال را پوشش می دهد';
 	@override String get edgeRuntimeNotInstalled => 'زمان اجرا Edge WebView2 روی دستگاه فعلی نصب نشده است و صفحه قابل نمایش نیست لطفاً زمان اجرا Edge WebView2 (x64) را بارگیری و نصب کنید، برنامه را مجدداً راه اندازی کنید و دوباره امتحان کنید.';
@@ -207,6 +207,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get shareUrl => 'اشتراک لینک';
 	@override String get coreSettingTips => 'توجه: پس از تغییر پیکربندی، باید دوباره وصل شوید تا اعمال شود';
 	@override String get overwrite => 'لغو';
+	@override String get overwriteSettings => 'لغو تنظیمات';
 	@override String get externalController => 'کنترل خارجی';
 	@override String get secret => 'Secret';
 	@override String get tcpConcurrent => 'دست دادن همزمان TCP';
@@ -228,6 +229,8 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get website => 'وبسایت';
 	@override String get rule => 'قانون';
 	@override String get global => 'عمومی';
+	@override String get direct => 'مستقیم';
+	@override String get block => 'مسدود';
 	@override String get qrcode => 'کد QR';
 	@override String get qrcodeTooLong => 'متن برای نمایش خیلی طولانی است';
 	@override String get qrcodeShare => 'اشتراک کدQR';
@@ -378,17 +381,16 @@ class _TranslationsSnifferFa implements TranslationsSnifferEn {
 	@override String get overrideDest => 'پوشش';
 }
 
-// Path: outboundRuleMode
-class _TranslationsOutboundRuleModeFa implements TranslationsOutboundRuleModeEn {
-	_TranslationsOutboundRuleModeFa._(this._root);
+// Path: profilePatchMode
+class _TranslationsProfilePatchModeFa implements TranslationsProfilePatchModeEn {
+	_TranslationsProfilePatchModeFa._(this._root);
 
 	final TranslationsFa _root; // ignore: unused_field
 
 	// Translations
 	@override String get currentSelected => 'فعلی انتخاب شده';
-	@override String get urltest => 'انتخاب خودکار';
-	@override String get direct => 'مستقیم';
-	@override String get block => 'مسدود';
+	@override String get overwrite => 'Overwrite داخلی';
+	@override String get noOverwrite => 'داخلی - رونویسی نشده است';
 }
 
 // Path: main.tray
@@ -493,6 +495,7 @@ extension on TranslationsFa {
 			case 'meta.shareUrl': return 'اشتراک لینک';
 			case 'meta.coreSettingTips': return 'توجه: پس از تغییر پیکربندی، باید دوباره وصل شوید تا اعمال شود';
 			case 'meta.overwrite': return 'لغو';
+			case 'meta.overwriteSettings': return 'لغو تنظیمات';
 			case 'meta.externalController': return 'کنترل خارجی';
 			case 'meta.secret': return 'Secret';
 			case 'meta.tcpConcurrent': return 'دست دادن همزمان TCP';
@@ -514,6 +517,8 @@ extension on TranslationsFa {
 			case 'meta.website': return 'وبسایت';
 			case 'meta.rule': return 'قانون';
 			case 'meta.global': return 'عمومی';
+			case 'meta.direct': return 'مستقیم';
+			case 'meta.block': return 'مسدود';
 			case 'meta.qrcode': return 'کد QR';
 			case 'meta.qrcodeTooLong': return 'متن برای نمایش خیلی طولانی است';
 			case 'meta.qrcodeShare': return 'اشتراک کدQR';
@@ -617,10 +622,9 @@ extension on TranslationsFa {
 			case 'dns.fallbackGeoIp': return '${_root.dns.fallback} GeoIp';
 			case 'dns.fallbackGeoIpCode': return '${_root.dns.fallback} GeoIpCode';
 			case 'sniffer.overrideDest': return 'پوشش';
-			case 'outboundRuleMode.currentSelected': return 'فعلی انتخاب شده';
-			case 'outboundRuleMode.urltest': return 'انتخاب خودکار';
-			case 'outboundRuleMode.direct': return 'مستقیم';
-			case 'outboundRuleMode.block': return 'مسدود';
+			case 'profilePatchMode.currentSelected': return 'فعلی انتخاب شده';
+			case 'profilePatchMode.overwrite': return 'Overwrite داخلی';
+			case 'profilePatchMode.noOverwrite': return 'داخلی - رونویسی نشده است';
 			case 'protocolSniff': return 'تشخیص پروتکل';
 			case 'protocolSniffOverrideDestination': return 'نام دامنه شناسایی شده آدرس هدف اتصال را پوشش می دهد';
 			case 'edgeRuntimeNotInstalled': return 'زمان اجرا Edge WebView2 روی دستگاه فعلی نصب نشده است و صفحه قابل نمایش نیست لطفاً زمان اجرا Edge WebView2 (x64) را بارگیری و نصب کنید، برنامه را مجدداً راه اندازی کنید و دوباره امتحان کنید.';

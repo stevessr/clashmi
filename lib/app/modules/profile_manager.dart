@@ -24,6 +24,7 @@ class ProfileSetting {
   ProfileSetting({this.id = "", this.remark = "", this.update, this.url});
   String id = "";
   String remark = "";
+  String patch = "";
   DateTime? update;
   String? url;
   num upload = 0;
@@ -33,6 +34,7 @@ class ProfileSetting {
   Map<String, dynamic> toJson() => {
         'id': id,
         'remark': remark,
+        'patch': patch,
         'update': update.toString(),
         'url': url,
         'upload': upload,
@@ -47,6 +49,7 @@ class ProfileSetting {
 
     id = map['id'] ?? '';
     remark = map['remark'] ?? '';
+    patch = map['patch'] ?? '';
     final updateTime = map['update'];
     if (updateTime is String) {
       update = DateTime.tryParse(updateTime);
@@ -218,6 +221,7 @@ class ProfileManager {
   }
 
   static Future<void> load() async {
+    String dir = await PathUtils.profilesDir();
     String filePath = await PathUtils.profilesConfigFilePath();
     var file = File(filePath);
     bool exists = await file.exists();
@@ -227,11 +231,23 @@ class ProfileManager {
         if (content.isNotEmpty) {
           var config = jsonDecode(content);
           _profileConfig.fromJson(config);
+          for (int i = 0; i < _profileConfig.profiles.length; ++i) {
+            final filePath = path.join(dir, _profileConfig.profiles[i].id);
+            try {
+              if (!await File(filePath).exists()) {
+                _profileConfig.profiles.removeAt(i);
+                --i;
+              }
+            } catch (err) {
+              _profileConfig.profiles.removeAt(i);
+              --i;
+            }
+          }
         }
       } catch (err, stacktrace) {}
     }
     Map<String, String?> existProfiles = {};
-    String dir = await PathUtils.profilesDir();
+
     var files =
         FileUtils.recursionFile(dir, extensionFilter: {".yaml", ".yml"});
     for (var file in files) {
@@ -297,6 +313,14 @@ class ProfileManager {
     _profileConfig._currentId = id;
     for (var event in onEventCurrentChanged) {
       event(id);
+    }
+  }
+
+  static void removePatch(String patch) {
+    for (var profile in _profileConfig.profiles) {
+      if (profile.patch == patch) {
+        profile.patch = "";
+      }
     }
   }
 

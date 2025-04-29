@@ -48,7 +48,7 @@ class TranslationsZhCn implements Translations {
 	@override late final _TranslationsTunZhCn tun = _TranslationsTunZhCn._(_root);
 	@override late final _TranslationsDnsZhCn dns = _TranslationsDnsZhCn._(_root);
 	@override late final _TranslationsSnifferZhCn sniffer = _TranslationsSnifferZhCn._(_root);
-	@override late final _TranslationsOutboundRuleModeZhCn outboundRuleMode = _TranslationsOutboundRuleModeZhCn._(_root);
+	@override late final _TranslationsProfilePatchModeZhCn profilePatchMode = _TranslationsProfilePatchModeZhCn._(_root);
 	@override String get protocolSniff => '协议探测';
 	@override String get protocolSniffOverrideDestination => '探测的域名覆盖连接目标地址';
 	@override String get edgeRuntimeNotInstalled => '当前设备尚未安装Edge WebView2运行时,无法展示页面,请下载安装Edge WebView2运行时(x64)后,重启App再试';
@@ -207,6 +207,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get shareUrl => '分享链接';
 	@override String get coreSettingTips => '注意:修改配置后,需要重新连接才会生效';
 	@override String get overwrite => '覆写';
+	@override String get overwriteSettings => '覆写设置';
 	@override String get externalController => '外部控制';
 	@override String get secret => 'Secret';
 	@override String get tcpConcurrent => 'TCP并发握手';
@@ -228,6 +229,8 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get website => '官网';
 	@override String get rule => '规则';
 	@override String get global => '全局';
+	@override String get direct => '直连';
+	@override String get block => '拦截';
 	@override String get qrcode => '二维码';
 	@override String get qrcodeTooLong => '文本过长,无法展示';
 	@override String get qrcodeShare => '分享二维码';
@@ -378,17 +381,16 @@ class _TranslationsSnifferZhCn implements TranslationsSnifferEn {
 	@override String get overrideDest => '覆盖';
 }
 
-// Path: outboundRuleMode
-class _TranslationsOutboundRuleModeZhCn implements TranslationsOutboundRuleModeEn {
-	_TranslationsOutboundRuleModeZhCn._(this._root);
+// Path: profilePatchMode
+class _TranslationsProfilePatchModeZhCn implements TranslationsProfilePatchModeEn {
+	_TranslationsProfilePatchModeZhCn._(this._root);
 
 	final TranslationsZhCn _root; // ignore: unused_field
 
 	// Translations
 	@override String get currentSelected => '当前选择';
-	@override String get urltest => '自动选择';
-	@override String get direct => '直连';
-	@override String get block => '拦截';
+	@override String get overwrite => '内置-覆写';
+	@override String get noOverwrite => '内置-不覆写';
 }
 
 // Path: main.tray
@@ -493,6 +495,7 @@ extension on TranslationsZhCn {
 			case 'meta.shareUrl': return '分享链接';
 			case 'meta.coreSettingTips': return '注意:修改配置后,需要重新连接才会生效';
 			case 'meta.overwrite': return '覆写';
+			case 'meta.overwriteSettings': return '覆写设置';
 			case 'meta.externalController': return '外部控制';
 			case 'meta.secret': return 'Secret';
 			case 'meta.tcpConcurrent': return 'TCP并发握手';
@@ -514,6 +517,8 @@ extension on TranslationsZhCn {
 			case 'meta.website': return '官网';
 			case 'meta.rule': return '规则';
 			case 'meta.global': return '全局';
+			case 'meta.direct': return '直连';
+			case 'meta.block': return '拦截';
 			case 'meta.qrcode': return '二维码';
 			case 'meta.qrcodeTooLong': return '文本过长,无法展示';
 			case 'meta.qrcodeShare': return '分享二维码';
@@ -617,10 +622,9 @@ extension on TranslationsZhCn {
 			case 'dns.fallbackGeoIp': return '${_root.dns.fallback} GeoIp';
 			case 'dns.fallbackGeoIpCode': return '${_root.dns.fallback} GeoIpCode';
 			case 'sniffer.overrideDest': return '覆盖';
-			case 'outboundRuleMode.currentSelected': return '当前选择';
-			case 'outboundRuleMode.urltest': return '自动选择';
-			case 'outboundRuleMode.direct': return '直连';
-			case 'outboundRuleMode.block': return '拦截';
+			case 'profilePatchMode.currentSelected': return '当前选择';
+			case 'profilePatchMode.overwrite': return '内置-覆写';
+			case 'profilePatchMode.noOverwrite': return '内置-不覆写';
 			case 'protocolSniff': return '协议探测';
 			case 'protocolSniffOverrideDestination': return '探测的域名覆盖连接目标地址';
 			case 'edgeRuntimeNotInstalled': return '当前设备尚未安装Edge WebView2运行时,无法展示页面,请下载安装Edge WebView2运行时(x64)后,重启App再试';
