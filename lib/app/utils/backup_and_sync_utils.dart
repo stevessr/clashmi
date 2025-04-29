@@ -2,6 +2,7 @@
 
 import 'package:clashmi/app/extension/datetime.dart';
 import 'package:clashmi/app/modules/profile_manager.dart';
+import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/app_utils.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
@@ -28,13 +29,18 @@ class BackupAndSyncUtils {
 
   static List<Tuple2<String, bool>> getZipFileNameList() {
     final profiles = ProfileManager.getProfiles();
+    final profilePatchs = ProfilePatchManager.getProfilePatchs();
     var list = [
       Tuple2(PathUtils.serviceCoreSettingFileName(), true),
       Tuple2(PathUtils.settingFileName(), true),
       Tuple2(PathUtils.profilesFileName(), true),
+      Tuple2(PathUtils.profilePatchsFileName(), true),
     ];
     if (profiles.isNotEmpty) {
       list.add(Tuple2(PathUtils.profilesName(), true));
+    }
+    if (profilePatchs.isNotEmpty) {
+      list.add(Tuple2(PathUtils.profilePatchsName(), true));
     }
 
     return list;
