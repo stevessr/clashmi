@@ -33,7 +33,9 @@ class ProfilesBoardItem extends StatelessWidget {
     final patch = ProfilePatchManager.getProfilePatch(setting.patch);
     String patchRemark = "";
     if (setting.patch.isEmpty || patch == null || patch.id.isEmpty) {
-      patchRemark = tcontext.profilePatchMode.currentSelected;
+      final currentPatch = ProfilePatchManager.getCurrent();
+      patchRemark =
+          "${tcontext.profilePatchMode.currentSelected} [${currentPatch.getShowName(context)}]";
     } else {
       patchRemark = patch.getShowName(context);
     }
@@ -354,8 +356,7 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
         title: Text(
           tcontext.profilePatchMode.overwrite,
           style: TextStyle(
-            color: setting.patch.isEmpty ||
-                    setting.patch == kProfilePatchBuildinOverwrite
+            color: setting.patch == kProfilePatchBuildinOverwrite
                 ? ThemeDefine.kColorBlue
                 : null,
           ),
