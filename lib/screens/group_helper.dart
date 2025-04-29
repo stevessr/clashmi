@@ -449,13 +449,6 @@ class GroupHelper {
                 onPush: () async {
                   await showProfilePatch(context);
                 })),
-        /*GroupItemOptions(
-            switchOptions: GroupItemSwitchOptions(
-                name: tcontext.meta.overwrite,
-                switchValue: setting.OverWrite,
-                onSwitch: (bool value) async {
-                  setting.OverWrite = value;
-                })),*/
         GroupItemOptions(
             textFormFieldOptions: GroupItemTextFieldOptions(
                 name: tcontext.meta.externalController,
