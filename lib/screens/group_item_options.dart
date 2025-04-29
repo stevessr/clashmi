@@ -108,7 +108,6 @@ class GroupItemPushOptions {
   final TextStyle? textStyle;
   final Color? textColor;
   final double textWidthPercent;
-  SetStateCallback? setstate;
   Future<void> Function()? onPush;
   Future<void> Function()? onLongPress;
 }
