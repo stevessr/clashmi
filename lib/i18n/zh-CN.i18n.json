@@ -175,6 +175,7 @@
         "setting": "设置",
         "settingCore": "核心设置",
         "settingApp": "应用设置",
+        "coreOverwrite": "核心覆写",
         "iCloud": "iCloud",
         "webdav": "Webdav",
         "lanSync": "局域网同步",

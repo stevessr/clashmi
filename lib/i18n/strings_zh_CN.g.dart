@@ -282,6 +282,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get setting => '设置';
 	@override String get settingCore => '核心设置';
 	@override String get settingApp => '应用设置';
+	@override String get coreOverwrite => '核心覆写';
 	@override String get iCloud => 'iCloud';
 	@override String get webdav => 'Webdav';
 	@override String get lanSync => '局域网同步';
@@ -570,6 +571,7 @@ extension on TranslationsZhCn {
 			case 'meta.setting': return '设置';
 			case 'meta.settingCore': return '核心设置';
 			case 'meta.settingApp': return '应用设置';
+			case 'meta.coreOverwrite': return '核心覆写';
 			case 'meta.iCloud': return 'iCloud';
 			case 'meta.webdav': return 'Webdav';
 			case 'meta.lanSync': return '局域网同步';

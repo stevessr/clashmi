@@ -282,6 +282,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get setting => 'إعدادات';
 	@override String get settingCore => 'الإعدادات الأساسية';
 	@override String get settingApp => 'إعدادات التطبيق';
+	@override String get coreOverwrite => 'تجاوز النواة';
 	@override String get iCloud => 'iCloud';
 	@override String get webdav => 'Webdav';
 	@override String get lanSync => 'LAN SYNC';
@@ -570,6 +571,7 @@ extension on TranslationsAr {
 			case 'meta.setting': return 'إعدادات';
 			case 'meta.settingCore': return 'الإعدادات الأساسية';
 			case 'meta.settingApp': return 'إعدادات التطبيق';
+			case 'meta.coreOverwrite': return 'تجاوز النواة';
 			case 'meta.iCloud': return 'iCloud';
 			case 'meta.webdav': return 'Webdav';
 			case 'meta.lanSync': return 'LAN SYNC';

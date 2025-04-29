@@ -175,6 +175,7 @@
         "setting": "Settings",
         "settingCore": "Core Settings",
         "settingApp": "App Settings",
+        "coreOverwrite": "Core Overwrite",
         "iCloud": "iCloud",
         "webdav": "Webdav",
         "lanSync": "LAN Sync",

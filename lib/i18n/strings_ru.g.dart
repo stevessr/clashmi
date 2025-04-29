@@ -282,6 +282,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get setting => 'Настройки';
 	@override String get settingCore => 'Основные настройки';
 	@override String get settingApp => 'Настройки приложения';
+	@override String get coreOverwrite => 'Переопределение ядра';
 	@override String get iCloud => 'iCloud';
 	@override String get webdav => 'Webdav';
 	@override String get lanSync => 'Синхронизация по локальной сети';
@@ -570,6 +571,7 @@ extension on TranslationsRu {
 			case 'meta.setting': return 'Настройки';
 			case 'meta.settingCore': return 'Основные настройки';
 			case 'meta.settingApp': return 'Настройки приложения';
+			case 'meta.coreOverwrite': return 'Переопределение ядра';
 			case 'meta.iCloud': return 'iCloud';
 			case 'meta.webdav': return 'Webdav';
 			case 'meta.lanSync': return 'Синхронизация по локальной сети';

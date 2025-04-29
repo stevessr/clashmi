@@ -285,6 +285,7 @@ class TranslationsMetaEn {
 	String get setting => 'Settings';
 	String get settingCore => 'Core Settings';
 	String get settingApp => 'App Settings';
+	String get coreOverwrite => 'Core Overwrite';
 	String get iCloud => 'iCloud';
 	String get webdav => 'Webdav';
 	String get lanSync => 'LAN Sync';
@@ -573,6 +574,7 @@ extension on Translations {
 			case 'meta.setting': return 'Settings';
 			case 'meta.settingCore': return 'Core Settings';
 			case 'meta.settingApp': return 'App Settings';
+			case 'meta.coreOverwrite': return 'Core Overwrite';
 			case 'meta.iCloud': return 'iCloud';
 			case 'meta.webdav': return 'Webdav';
 			case 'meta.lanSync': return 'LAN Sync';

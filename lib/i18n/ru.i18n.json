@@ -175,6 +175,7 @@
         "setting": "Настройки",
         "settingCore": "Основные настройки",
         "settingApp": "Настройки приложения",
+        "coreOverwrite": "Переопределение ядра",
         "iCloud": "iCloud",
         "webdav": "Webdav",
         "lanSync": "Синхронизация по локальной сети",

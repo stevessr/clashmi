@@ -282,6 +282,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get setting => 'تنظیمات';
 	@override String get settingCore => 'تنظیمات اصلی';
 	@override String get settingApp => 'تنظیمات برنامه';
+	@override String get coreOverwrite => 'Core Override';
 	@override String get iCloud => 'iCloud';
 	@override String get webdav => 'Webdav';
 	@override String get lanSync => 'LAN Sync';
@@ -570,6 +571,7 @@ extension on TranslationsFa {
 			case 'meta.setting': return 'تنظیمات';
 			case 'meta.settingCore': return 'تنظیمات اصلی';
 			case 'meta.settingApp': return 'تنظیمات برنامه';
+			case 'meta.coreOverwrite': return 'Core Override';
 			case 'meta.iCloud': return 'iCloud';
 			case 'meta.webdav': return 'Webdav';
 			case 'meta.lanSync': return 'LAN Sync';

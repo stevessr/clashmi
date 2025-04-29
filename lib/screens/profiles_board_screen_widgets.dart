@@ -294,7 +294,7 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
             )
           : const SizedBox.shrink(),
       ListTile(
-        title: Text(tcontext.meta.settingCore),
+        title: Text(tcontext.meta.coreOverwrite),
         minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
