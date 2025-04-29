@@ -330,5 +330,7 @@ class ProfilePatchManager {
     return filePath;
   }
 
-  static void reset() {}
+  static void reset() {
+    _profilePatchConfig._currentId = "";
+  }
 }
