@@ -180,7 +180,7 @@ class ClashSettingManager {
           perApp: RawExtensionTunPerApp.by(Enable: false),
         ),
         PprofAddr: null,
-        DelayTestUrl: "https://www.gstatic.com",
+        DelayTestUrl: "https://www.gstatic.com/generate_204",
         DelayTestTimeout: 5000);
   }
 
@@ -193,7 +193,8 @@ class ClashSettingManager {
       ExternalController: "127.0.0.1:9090",
       GlobalClientFingerprint: ClashGlobalClientFingerprint.chrome.name,
       DisableKeepAlive: false,
-      KeepAliveInterval: 15,
+      KeepAliveIdle: 30,
+      KeepAliveInterval: 30,
       DNS: defaultDNS(),
       NTP: defaultNTP(),
       Tun: defaultTun(),

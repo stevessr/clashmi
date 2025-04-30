@@ -199,7 +199,8 @@ class _ProxyBoardScreenState extends LasyRenderingState<ProxyBoardScreen>
     for (var node in nodes) {
       final result = await ClashHttpApi.getDelay(
         node.name,
-        url: setting.Extension?.DelayTestUrl ?? "https://www.gstatic.com",
+        url: setting.Extension?.DelayTestUrl ??
+            "https://www.gstatic.com/generate_204",
         timeout:
             Duration(milliseconds: setting.Extension?.DelayTestTimeout ?? 5000),
       );

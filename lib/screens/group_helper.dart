@@ -592,6 +592,7 @@ class GroupHelper {
                     return;
                   }
                   setting.DisableKeepAlive = duration == null;
+                  setting.KeepAliveIdle = duration?.inSeconds;
                   setting.KeepAliveInterval = duration?.inSeconds;
                 })),
       ];
