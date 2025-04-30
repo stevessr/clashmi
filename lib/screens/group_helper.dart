@@ -387,7 +387,21 @@ class GroupHelper {
                       int.tryParse(value) ?? SettingConfig.kDefaultBoardPort;
                 })),
       ];
-
+      List<GroupItemOptions> options1 = [
+        GroupItemOptions(
+            switchOptions: GroupItemSwitchOptions(
+                name: tcontext.meta.autoSetSystemProxy,
+                switchValue: setting.autoSetSystemProxy,
+                onSwitch: (bool value) async {
+                  setting.autoSetSystemProxy = value;
+                })),
+      ];
+      if (PlatformUtils.isPC()) {
+        return [
+          GroupItem(options: options),
+          GroupItem(options: options1),
+        ];
+      }
       return [
         GroupItem(options: options),
       ];

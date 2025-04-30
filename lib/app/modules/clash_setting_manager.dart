@@ -402,6 +402,6 @@ class ClashSettingManager {
   }
 
   static int? getMixedPort() {
-    return null;
+    return _setting.MixedPort;
   }
 }

@@ -226,6 +226,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get sniffer => 'شم';
 	@override String get userAgent => 'UserAgent';
 	@override String get systemProxy => 'وكيل النظام';
+	@override String get autoSetSystemProxy => 'وكيل نظام تعيين تلقائي عند الاتصال';
 	@override String get website => 'موقع إلكتروني';
 	@override String get rule => 'قاعدة';
 	@override String get global => 'عالمي';
@@ -515,6 +516,7 @@ extension on TranslationsAr {
 			case 'meta.sniffer': return 'شم';
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.systemProxy': return 'وكيل النظام';
+			case 'meta.autoSetSystemProxy': return 'وكيل نظام تعيين تلقائي عند الاتصال';
 			case 'meta.website': return 'موقع إلكتروني';
 			case 'meta.rule': return 'قاعدة';
 			case 'meta.global': return 'عالمي';

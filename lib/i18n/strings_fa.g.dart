@@ -226,6 +226,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get sniffer => 'بو کشیدن';
 	@override String get userAgent => 'UserAgent';
 	@override String get systemProxy => 'پروکسی سیستم';
+	@override String get autoSetSystemProxy => 'تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال';
 	@override String get website => 'وبسایت';
 	@override String get rule => 'قانون';
 	@override String get global => 'عمومی';
@@ -515,6 +516,7 @@ extension on TranslationsFa {
 			case 'meta.sniffer': return 'بو کشیدن';
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.systemProxy': return 'پروکسی سیستم';
+			case 'meta.autoSetSystemProxy': return 'تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال';
 			case 'meta.website': return 'وبسایت';
 			case 'meta.rule': return 'قانون';
 			case 'meta.global': return 'عمومی';

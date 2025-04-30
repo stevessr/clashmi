@@ -119,6 +119,7 @@
         "sniffer": "شم",
         "userAgent": "UserAgent",
         "systemProxy": "وكيل النظام",
+        "autoSetSystemProxy": "وكيل نظام تعيين تلقائي عند الاتصال",
         "website": "موقع إلكتروني",
         "rule": "قاعدة",
         "global": "عالمي",

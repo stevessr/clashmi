@@ -226,6 +226,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get sniffer => 'Обнюхивание';
 	@override String get userAgent => 'UserAgent';
 	@override String get systemProxy => 'Системный прокси';
+	@override String get autoSetSystemProxy => 'Установить системный прокси после подключения';
 	@override String get website => 'Веб-сайт';
 	@override String get rule => 'Правила';
 	@override String get global => 'Глобально';
@@ -515,6 +516,7 @@ extension on TranslationsRu {
 			case 'meta.sniffer': return 'Обнюхивание';
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.systemProxy': return 'Системный прокси';
+			case 'meta.autoSetSystemProxy': return 'Установить системный прокси после подключения';
 			case 'meta.website': return 'Веб-сайт';
 			case 'meta.rule': return 'Правила';
 			case 'meta.global': return 'Глобально';

@@ -226,6 +226,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get sniffer => '嗅探';
 	@override String get userAgent => 'UserAgent';
 	@override String get systemProxy => '系统代理';
+	@override String get autoSetSystemProxy => '连接后自动设置系统代理';
 	@override String get website => '官网';
 	@override String get rule => '规则';
 	@override String get global => '全局';
@@ -515,6 +516,7 @@ extension on TranslationsZhCn {
 			case 'meta.sniffer': return '嗅探';
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.systemProxy': return '系统代理';
+			case 'meta.autoSetSystemProxy': return '连接后自动设置系统代理';
 			case 'meta.website': return '官网';
 			case 'meta.rule': return '规则';
 			case 'meta.global': return '全局';

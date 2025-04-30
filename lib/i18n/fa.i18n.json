@@ -119,6 +119,7 @@
         "sniffer": "بو کشیدن",
         "userAgent": "UserAgent",
         "systemProxy": "پروکسی سیستم",
+        "autoSetSystemProxy": "تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال",
         "website": "وبسایت",
         "rule": "قانون",
         "global": "عمومی",

@@ -229,6 +229,7 @@ class TranslationsMetaEn {
 	String get sniffer => 'Sniffer';
 	String get userAgent => 'UserAgent';
 	String get systemProxy => 'System Proxy';
+	String get autoSetSystemProxy => 'Auto Set System Proxy when Connected';
 	String get website => 'Website';
 	String get rule => 'Rule';
 	String get global => 'Global';
@@ -518,6 +519,7 @@ extension on Translations {
 			case 'meta.sniffer': return 'Sniffer';
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.systemProxy': return 'System Proxy';
+			case 'meta.autoSetSystemProxy': return 'Auto Set System Proxy when Connected';
 			case 'meta.website': return 'Website';
 			case 'meta.rule': return 'Rule';
 			case 'meta.global': return 'Global';

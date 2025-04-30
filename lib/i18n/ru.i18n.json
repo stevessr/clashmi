@@ -119,6 +119,7 @@
         "sniffer": "Обнюхивание",
         "userAgent": "UserAgent",
         "systemProxy": "Системный прокси",
+        "autoSetSystemProxy": "Установить системный прокси после подключения",
         "website": "Веб-сайт",
         "rule": "Правила",
         "global": "Глобально",

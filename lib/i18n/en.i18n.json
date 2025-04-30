@@ -119,6 +119,7 @@
         "sniffer": "Sniffer",
         "userAgent": "UserAgent",
         "systemProxy": "System Proxy",
+        "autoSetSystemProxy": "Auto Set System Proxy when Connected",
         "website": "Website",
         "rule": "Rule",
         "global": "Global",

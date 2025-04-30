@@ -119,6 +119,7 @@
         "sniffer": "嗅探",
         "userAgent": "UserAgent",
         "systemProxy": "系统代理",
+        "autoSetSystemProxy": "连接后自动设置系统代理",
         "website": "官网",
         "rule": "规则",
         "global": "全局",

@@ -176,7 +176,7 @@ class SettingConfig {
 
   static bool getAutoSetSystemProxyDefault() {
     if (Platform.isWindows) {
-      return false;
+      return true;
     }
     return false;
   }
