@@ -17,6 +17,7 @@ import 'package:clashmi/app/utils/http_utils.dart';
 import 'package:clashmi/app/utils/local_storage.dart';
 import 'package:clashmi/app/utils/log.dart';
 import 'package:clashmi/app/utils/network_utils.dart';
+import 'package:clashmi/app/utils/system_scheme_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/home_screen_widgets.dart';
@@ -195,6 +196,14 @@ class _HomeScreenState extends LasyRenderingState<HomeScreen>
 
     AppLifecycleStateNofity.onStateResumed(hashCode, _onStateResumed);
     AppLifecycleStateNofity.onStatePaused(hashCode, _onStatePaused);
+
+    if (Platform.isWindows) {
+      bool reg =
+          SystemSchemeUtils.isRegistered(SystemSchemeUtils.getClashScheme());
+      if (!reg) {
+        SystemSchemeUtils.register(SystemSchemeUtils.getClashScheme());
+      }
+    }
 
     _onInitAllFinished = true;
 

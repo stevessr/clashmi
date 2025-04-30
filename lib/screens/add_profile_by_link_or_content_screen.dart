@@ -20,10 +20,12 @@ class AddProfileByLinkOrContentScreen extends LasyRenderingStatefulWidget {
   static int pushed = 0;
   final String url;
   final String remark;
+  final bool overwrite;
   const AddProfileByLinkOrContentScreen({
     super.key,
     this.url = "",
     this.remark = "",
+    this.overwrite = false,
   });
 
   @override
@@ -66,7 +68,8 @@ class _AddProfileByLinkOrContentScreenState
     _loading = true;
     setState(() {});
 
-    final result = await ProfileManager.addRemoteProfile(url, remark: remark);
+    final result = await ProfileManager.addRemoteProfile(url,
+        remark: remark, overwrite: widget.overwrite);
 
     if (!mounted) {
       return;

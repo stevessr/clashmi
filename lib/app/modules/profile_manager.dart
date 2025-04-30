@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/app/utils/date_time_utils.dart';
 import 'package:clashmi/app/utils/file_utils.dart';
@@ -365,7 +366,7 @@ class ProfileManager {
   }
 
   static Future<ReturnResult<String>> addRemoteProfile(String url,
-      {String remark = ""}) async {
+      {String remark = "", bool overwrite = true}) async {
     final uri = Uri.tryParse(url);
     if (uri == null) {
       return ReturnResult(error: ReturnResultError("invalid url"));
@@ -380,17 +381,19 @@ class ProfileManager {
     }
     await FileUtils.append(savePath, "\n$urlComment$url\n");
 
-    var siteTitle = remark;
     if (remark.isEmpty) {
       final result = await HttpUtils.httpGetTitle(url, userAgent);
-      siteTitle = result.data ?? "";
+      remark = result.data ?? "";
     }
 
     int index = _profileConfig.profiles.indexWhere((value) {
       return value.id == id;
     });
     final profile = ProfileSetting(
-        id: id, remark: siteTitle, update: DateTime.now(), url: url);
+        id: id, remark: remark, update: DateTime.now(), url: url);
+    if (!overwrite) {
+      profile.patch = kProfilePatchBuildinNoOverwrite;
+    }
     profile.updateSubscriptionTraffic(result.data);
     if (index < 0) {
       _profileConfig.profiles.add(profile);

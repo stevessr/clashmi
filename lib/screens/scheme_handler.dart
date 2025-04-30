@@ -33,6 +33,7 @@ class SchemeHandler {
     }
     String? name;
     String? url;
+    bool overwrite = true;
 
     if (!context.mounted) {
       return null;
@@ -40,6 +41,10 @@ class SchemeHandler {
     try {
       name = uri.queryParameters["name"];
       url = uri.queryParameters["url"];
+      String? ow = uri.queryParameters["overwrite"];
+      if (ow != null) {
+        overwrite = ow == "true" || ow == "1";
+      }
     } catch (err) {
       DialogUtils.showAlertDialog(context, err.toString(),
           showCopy: true, showFAQ: true, withVersion: true);
@@ -65,13 +70,13 @@ class SchemeHandler {
       return null;
     }
     ReturnResultError? result =
-        await addConfigBySubscriptionLink(context, url, name, false);
+        await addConfigBySubscriptionLink(context, url, name ?? "", overwrite);
 
     return result;
   }
 
   static Future<ReturnResultError?> addConfigBySubscriptionLink(
-      BuildContext context, String url, String? name, bool autoAdd) async {
+      BuildContext context, String url, String name, bool overwrite) async {
     int kMaxPush = 1;
     if (AddProfileByLinkOrContentScreen.pushed >= kMaxPush) {
       return ReturnResultError("addprofile request already exists");
@@ -87,7 +92,8 @@ class SchemeHandler {
             settings: AddProfileByLinkOrContentScreen.routSettings(),
             builder: (context) => AddProfileByLinkOrContentScreen(
                   url: url,
-                  remark: name ?? "",
+                  remark: name,
+                  overwrite: overwrite,
                 )));
     if (ok != true) {
       return ReturnResultError("addprofile failed or canceled by user");
