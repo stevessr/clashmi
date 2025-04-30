@@ -469,6 +469,15 @@ class GroupHelper {
                   } catch (e) {}
                 })),
         GroupItemOptions(
+            textFormFieldOptions: GroupItemTextFieldOptions(
+                name: tcontext.meta.mixedPort,
+                text: setting.MixedPort?.toString() ?? "",
+                textWidthPercent: 0.5,
+                hint: tcontext.meta.required,
+                onChanged: (String value) {
+                  setting.MixedPort = int.tryParse(value);
+                })),
+        GroupItemOptions(
             stringPickerOptions: GroupItemStringPickerOptions(
                 name: tcontext.meta.logLevel,
                 selected: logLevels.contains(setting.LogLevel)
@@ -548,15 +557,6 @@ class GroupHelper {
                 })),
       ];
       List<GroupItemOptions> options4 = [
-        GroupItemOptions(
-            textFormFieldOptions: GroupItemTextFieldOptions(
-                name: tcontext.meta.mixedPort,
-                text: setting.MixedPort?.toString() ?? "",
-                textWidthPercent: 0.5,
-                hint: tcontext.meta.required,
-                onChanged: (String value) {
-                  setting.MixedPort = int.tryParse(value);
-                })),
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.meta.allowLan,

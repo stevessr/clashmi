@@ -10,6 +10,7 @@ import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/add_profile_by_import_from_file_screen.dart';
 import 'package:clashmi/screens/add_profile_by_link_or_content_screen.dart';
 import 'package:clashmi/screens/add_profile_by_scan_qrcode_screen.dart';
+import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/profiles_board_screen_widgets.dart';
 import 'package:clashmi/screens/theme_config.dart';
 import 'package:clashmi/screens/themes.dart';
@@ -213,6 +214,36 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
               MaterialPageRoute(
                   settings: AddProfileByLinkOrContentScreen.routSettings(),
                   builder: (context) => AddProfileByLinkOrContentScreen()));
+        },
+      ),
+      ListTile(
+        title: Text(tcontext.meta.importFromClipboard),
+        minLeadingWidth: 40,
+        onTap: () async {
+          Navigator.of(context).pop();
+          ClipboardData? data;
+          try {
+            data = await Clipboard.getData("text/plain");
+          } catch (err) {
+            if (!mounted) {
+              return;
+            }
+            DialogUtils.showAlertDialog(context, err.toString(),
+                showCopy: true, showFAQ: true, withVersion: true);
+            return;
+          }
+          if (!mounted) {
+            return;
+          }
+          if (data == null || data.text == null || data.text!.isEmpty) {
+            return;
+          }
+          await Navigator.push(
+              context,
+              MaterialPageRoute(
+                  settings: AddProfileByLinkOrContentScreen.routSettings(),
+                  builder: (context) =>
+                      AddProfileByLinkOrContentScreen(url: data!.text!)));
         },
       ),
       ListTile(

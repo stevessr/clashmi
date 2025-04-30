@@ -186,11 +186,11 @@ class ClashSettingManager {
 
   static RawConfig defaultConfig() {
     return RawConfig.by(
-      IPv6: false,
-      LogLevel: ClashLogLevel.error.name,
       Mode: ClashConfigsMode.rule.name,
       MixedPort: 7890,
+      LogLevel: ClashLogLevel.error.name,
       ExternalController: "127.0.0.1:9090",
+      IPv6: false,
       GlobalClientFingerprint: ClashGlobalClientFingerprint.chrome.name,
       DisableKeepAlive: false,
       KeepAliveIdle: 30,
@@ -210,6 +210,7 @@ class ClashSettingManager {
   static RawConfig defaultConfigNoOverwrite() {
     return RawConfig.by(
       Mode: _setting.Mode,
+      MixedPort: _setting.MixedPort,
       LogLevel: _setting.LogLevel,
       ExternalController: _setting.ExternalController,
       Secret: _setting.Secret,
