@@ -71,7 +71,11 @@ class VPNService {
     }
   }
 
-  static Future<void> uninit() async {}
+  static Future<void> uninit() async {
+    if (PlatformUtils.isPC()) {
+      await stop();
+    }
+  }
 
   static ReturnResultError? convertErr(VpnServiceResultError? err) {
     if (err == null) {
