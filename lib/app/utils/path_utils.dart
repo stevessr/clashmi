@@ -185,10 +185,10 @@ class PathUtils {
       return "clashmi.exe";
     }
     if (Platform.isMacOS) {
-      return "ClashMi";
+      return "Clash Mi";
     }
     if (Platform.isLinux) {
-      return "ClashMi";
+      return "Clash Mi";
     }
     return "";
   }
