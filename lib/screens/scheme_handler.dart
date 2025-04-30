@@ -13,7 +13,7 @@ class SchemeHandler {
   static void Function(bool)? vpnReconnect;
   static Future<ReturnResultError?> handle(
       BuildContext context, String url) async {
-    //clashmi://install-config?url=https://xxxxx.com/clash/config
+    //clash://install-config?url=https://xxxxx.com/clash/config
     Uri? uri = Uri.tryParse(url);
     if (uri == null) {
       return ReturnResultError("parse url failed: $url");

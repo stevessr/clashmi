@@ -43,7 +43,7 @@
 			<string>clash</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>clashmi</string>
+				<string>clash</string>
 			</array>
 		</dict>
 	</array>
