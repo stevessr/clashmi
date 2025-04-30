@@ -579,21 +579,19 @@ class GroupHelper {
         GroupItemOptions(
             timerIntervalPickerOptions: GroupItemTimerIntervalPickerOptions(
                 name: tcontext.meta.tcpkeepAliveInterval,
-                duration:
-                    !Platform.isAndroid && setting.DisableKeepAlive == true
-                        ? null
-                        : Duration(seconds: setting.KeepAliveInterval ?? 30),
+                duration: setting.DisableKeepAlive == true
+                    ? null
+                    : Duration(seconds: setting.KeepAliveInterval ?? 30),
                 showDays: false,
                 showHours: false,
                 showSeconds: true,
                 showMinutes: true,
-                showDisable: !Platform.isAndroid,
+                showDisable: true,
                 onPicker: (bool canceled, Duration? duration) async {
                   if (canceled) {
                     return;
                   }
-                  setting.DisableKeepAlive =
-                      !Platform.isAndroid && duration == null;
+                  setting.DisableKeepAlive = duration == null;
                   setting.KeepAliveIdle = duration?.inSeconds;
                   setting.KeepAliveInterval = duration?.inSeconds;
                 })),
