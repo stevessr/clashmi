@@ -214,6 +214,7 @@ class DialogUtils {
                   decoration: InputDecoration(
                     labelText: labelText,
                   ),
+                  textAlign: TextAlign.end,
                 ),
               ),
               const SizedBox(
@@ -296,6 +297,7 @@ class DialogUtils {
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           textInputAction: TextInputAction.next,
+                          textAlign: TextAlign.end,
                         ),
                       )),
                   const Text(
@@ -314,6 +316,7 @@ class DialogUtils {
                           FilteringTextInputFormatter.digitsOnly
                         ],
                         textInputAction: TextInputAction.done,
+                        textAlign: TextAlign.end,
                       ),
                     ),
                   ),
@@ -496,6 +499,7 @@ class DialogUtils {
                           ],
                           textInputAction: TextInputAction.done,
                           controller: textController,
+                          textAlign: TextAlign.end,
                         ),
                       ),
                       const SizedBox(width: 10),
