@@ -17,8 +17,13 @@ class AddProfileByLinkOrContentScreen extends LasyRenderingStatefulWidget {
     return const RouteSettings(name: "AddProfileByLinkOrContentScreen");
   }
 
+  static int pushed = 0;
+  final String url;
+  final String remark;
   const AddProfileByLinkOrContentScreen({
     super.key,
+    this.url = "",
+    this.remark = "",
   });
 
   @override
@@ -35,6 +40,9 @@ class _AddProfileByLinkOrContentScreenState
 
   @override
   void initState() {
+    ++AddProfileByLinkOrContentScreen.pushed;
+    _textControllerLink.text = widget.url.trim();
+    _textControllerRemark.text = widget.remark.trim();
     super.initState();
   }
 
@@ -43,6 +51,7 @@ class _AddProfileByLinkOrContentScreenState
 
   @override
   void dispose() {
+    --AddProfileByLinkOrContentScreen.pushed;
     _textControllerLink.dispose();
     _textControllerRemark.dispose();
     super.dispose();
