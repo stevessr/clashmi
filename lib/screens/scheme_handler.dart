@@ -43,7 +43,7 @@ class SchemeHandler {
       url = uri.queryParameters["url"];
       String? ow = uri.queryParameters["overwrite"];
       if (ow != null) {
-        overwrite = ow == "true" || ow == "1";
+        overwrite = ow == "true" || ow == "1" || ow == "yes";
       }
     } catch (err) {
       DialogUtils.showAlertDialog(context, err.toString(),

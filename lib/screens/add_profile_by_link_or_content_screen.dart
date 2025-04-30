@@ -25,7 +25,7 @@ class AddProfileByLinkOrContentScreen extends LasyRenderingStatefulWidget {
     super.key,
     this.url = "",
     this.remark = "",
-    this.overwrite = false,
+    this.overwrite = true,
   });
 
   @override
