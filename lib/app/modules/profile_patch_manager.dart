@@ -6,6 +6,7 @@ import 'dart:io';
 
 import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/file_utils.dart';
+import 'package:clashmi/app/utils/log.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:flutter/widgets.dart';
@@ -77,6 +78,7 @@ class ProfilePatchManager {
   static final List<void Function(String)> onEventCurrentChanged = [];
   static final List<void Function(String)> onEventAdd = [];
   static final List<void Function(String)> onEventRemove = [];
+  static bool _saving = false;
 
   static Future<void> init() async {
     await load();
@@ -108,12 +110,19 @@ class ProfilePatchManager {
   }
 
   static Future<void> save() async {
+    if (_saving) {
+      return;
+    }
+    _saving = true;
     String filePath = await PathUtils.profilePatchsConfigFilePath();
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     String content = encoder.convert(_profilePatchConfig);
     try {
       await File(filePath).writeAsString(content, flush: true);
-    } catch (err, stacktrace) {}
+    } catch (err, stacktrace) {
+      Log.w("ProfilePatchManager.save exception ${err.toString()} ");
+    }
+    _saving = false;
   }
 
   static Future<void> load() async {
@@ -141,7 +150,9 @@ class ProfilePatchManager {
             }
           }
         }
-      } catch (err, stacktrace) {}
+      } catch (err, stacktrace) {
+        Log.w("ProfilePatchManager.load exception ${err.toString()} ");
+      }
     }
     Set<String> existProfiles = {};
 

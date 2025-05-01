@@ -9,6 +9,7 @@ import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/app/utils/date_time_utils.dart';
 import 'package:clashmi/app/utils/file_utils.dart';
 import 'package:clashmi/app/utils/http_utils.dart';
+import 'package:clashmi/app/utils/log.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 import 'package:clashmi/app/local_services/vpn_service.dart';
@@ -172,6 +173,7 @@ class ProfileManager {
   static final List<void Function(String)> onEventRemove = [];
   static final List<void Function(String, bool)> onEventUpdate = [];
   static final Set<String> updating = {};
+  static bool _saving = false;
 
   static Future<void> init() async {
     await load();
@@ -213,12 +215,19 @@ class ProfileManager {
   }
 
   static Future<void> save() async {
+    if (_saving) {
+      return;
+    }
+    _saving = true;
     String filePath = await PathUtils.profilesConfigFilePath();
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     String content = encoder.convert(_profileConfig);
     try {
       await File(filePath).writeAsString(content, flush: true);
-    } catch (err, stacktrace) {}
+    } catch (err, stacktrace) {
+      Log.w("ProfileManager.save exception  $filePath ${err.toString()}");
+    }
+    _saving = false;
   }
 
   static Future<void> load() async {
@@ -245,7 +254,9 @@ class ProfileManager {
             }
           }
         }
-      } catch (err, stacktrace) {}
+      } catch (err, stacktrace) {
+        Log.w("ProfileManager.load exception ${err.toString()} ");
+      }
     }
     Map<String, String?> existProfiles = {};
 

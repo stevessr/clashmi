@@ -129,7 +129,7 @@ class GroupHelper {
                   title: tcontext.meta.help,
                   getOptions: getOptions,
                 )));
-    SettingManager.saveConfig();
+    SettingManager.save();
   }
 
   static Future<void> onTapImportExport(BuildContext context) async {
@@ -304,7 +304,7 @@ class GroupHelper {
                   title: tcontext.meta.help,
                   getOptions: getOptions,
                 )));
-    SettingManager.saveConfig();
+    SettingManager.save();
   }
 
   static Future<void> showAppSettings(BuildContext context) async {
@@ -396,14 +396,34 @@ class GroupHelper {
                   setting.autoSetSystemProxy = value;
                 })),
       ];
+      List<GroupItemOptions> options2 = [
+        GroupItemOptions(
+            textFormFieldOptions: GroupItemTextFieldOptions(
+                name: tcontext.meta.delayTestUrl,
+                text: setting.delayTestUrl,
+                textWidthPercent: 0.5,
+                onChanged: (String value) {
+                  setting.delayTestUrl = value;
+                })),
+        GroupItemOptions(
+            textFormFieldOptions: GroupItemTextFieldOptions(
+                name: tcontext.meta.delayTestTimeout,
+                text: setting.delayTestTimeout.toString(),
+                textWidthPercent: 0.5,
+                onChanged: (String value) {
+                  setting.delayTestTimeout = int.tryParse(value) ?? 5000;
+                })),
+      ];
       if (PlatformUtils.isPC()) {
         return [
           GroupItem(options: options),
           GroupItem(options: options1),
+          GroupItem(options: options2),
         ];
       }
       return [
         GroupItem(options: options),
+        GroupItem(options: options2),
       ];
     }
 
@@ -416,7 +436,7 @@ class GroupHelper {
                   title: tcontext.meta.settingApp,
                   getOptions: getOptions,
                 )));
-    SettingManager.saveConfig();
+    SettingManager.save();
   }
 
   static Future<void> showClashSettings(BuildContext context) async {
@@ -541,7 +561,14 @@ class GroupHelper {
                     }))
             : GroupItemOptions(),
       ];
-
+      List<GroupItemOptions> options22 = [
+        GroupItemOptions(
+            pushOptions: GroupItemPushOptions(
+                name: tcontext.meta.tun,
+                onPush: () async {
+                  showClashSettingsTUN(context);
+                })),
+      ];
       List<GroupItemOptions> options3 = [
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
@@ -610,24 +637,7 @@ class GroupHelper {
                   setting.KeepAliveInterval = duration?.inSeconds;
                 })),
       ];
-      List<GroupItemOptions> options6 = [
-        GroupItemOptions(
-            textFormFieldOptions: GroupItemTextFieldOptions(
-                name: tcontext.meta.delayTestUrl,
-                text: extensions.DelayTestUrl,
-                textWidthPercent: 0.5,
-                onChanged: (String value) {
-                  extensions.DelayTestUrl = value;
-                })),
-        GroupItemOptions(
-            textFormFieldOptions: GroupItemTextFieldOptions(
-                name: tcontext.meta.delayTestTimeout,
-                text: extensions.DelayTestTimeout?.toString(),
-                textWidthPercent: 0.5,
-                onChanged: (String value) {
-                  extensions.DelayTestTimeout = int.tryParse(value);
-                })),
-      ];
+
       List<GroupItemOptions> options7 = [
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
@@ -679,13 +689,13 @@ class GroupHelper {
           GroupItem(options: options3),
           GroupItem(options: options4),
           GroupItem(options: options5),
-          GroupItem(options: options6),
           GroupItem(options: options7),
         ]);
       } else {
         groups.addAll([
           GroupItem(options: options1),
           GroupItem(options: options2),
+          GroupItem(options: options22),
         ]);
       }
 
@@ -722,7 +732,7 @@ class GroupHelper {
                   },
                   onDoneIcon: Icons.file_present,
                 )));
-    ClashSettingManager.saveSetting();
+    ClashSettingManager.save();
     ProfilePatchManager.save();
     ProfileManager.save();
   }

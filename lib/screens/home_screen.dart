@@ -53,8 +53,6 @@ class _HomeScreenState extends LasyRenderingState<HomeScreen>
     with WidgetsBindingObserver, ProtocolListener, AfterLayoutMixin {
   static const String userAgreementAgreedIdKey = 'userAgreementAgreedKey';
 
-  bool _agreementApproved = false;
-
   bool _onInitAllFinished = false;
   String _initUrl = "";
 
@@ -115,7 +113,7 @@ class _HomeScreenState extends LasyRenderingState<HomeScreen>
         agreement = "true";
       }
     } catch (e) {}
-    _agreementApproved = true;
+
     if (agreement != null) {
       String? installer = await AutoUpdateManager.checkReplace();
       if (installer != null) {

@@ -473,7 +473,7 @@ class _BackupAndSyncWebdavScreenState
                   SettingManager.getConfig().webdav.url = "";
                   SettingManager.getConfig().webdav.user = "";
                   SettingManager.getConfig().webdav.password = "";
-                  SettingManager.saveConfig();
+                  SettingManager.save();
                   Navigator.pop(context, true);
                 })),
       ];
@@ -513,7 +513,7 @@ class _BackupAndSyncWebdavScreenState
                         _userController.text.trim();
                     SettingManager.getConfig().webdav.password =
                         _passwordController.text.trim();
-                    SettingManager.saveConfig();
+                    SettingManager.save();
 
                     return true;
                   },

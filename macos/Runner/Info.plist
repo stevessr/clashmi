@@ -38,6 +38,7 @@
 		<string>https</string>
 		<string>itms-beta</string>
 		<string>clash</string>
+		<string>clashmi</string>
 		<string>tg</string>
 	</array>
 	<key>CFBundleURLTypes</key>
@@ -50,6 +51,9 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>clash</string>
+				<string>clashmi</string>
+				<string>clashmeta</string>
+				<string>flclash</string>
 			</array>
 		</dict>
 	</array>

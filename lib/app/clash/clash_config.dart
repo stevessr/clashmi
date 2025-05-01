@@ -269,18 +269,12 @@ class RawExtension {
   RawExtensionTun Tun;
   @JsonKey(name: 'pprof-addr')
   String? PprofAddr;
-  @JsonKey(name: 'delay-test-url')
-  String? DelayTestUrl;
-  @JsonKey(name: 'delay-test-timeout')
-  int? DelayTestTimeout;
 
-  RawExtension.by(
-      {required this.Tun,
-      this.PprofAddr,
-      this.DelayTestUrl,
-      this.DelayTestTimeout});
-  RawExtension(
-      this.Tun, this.PprofAddr, this.DelayTestUrl, this.DelayTestTimeout);
+  RawExtension.by({
+    required this.Tun,
+    this.PprofAddr,
+  });
+  RawExtension(this.Tun, this.PprofAddr);
   factory RawExtension.fromJson(Map<String, dynamic> json) =>
       _$RawExtensionFromJson(json);
   Map<String, dynamic> toJson() => _$RawExtensionToJson(this);

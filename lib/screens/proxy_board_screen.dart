@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:after_layout/after_layout.dart';
 import 'package:clashmi/app/clash/clash_config.dart';
 import 'package:clashmi/app/clash/clash_http_api.dart';
-import 'package:clashmi/app/modules/clash_setting_manager.dart';
+import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/proxy_board_screen_widgets.dart';
@@ -184,7 +184,7 @@ class _ProxyBoardScreenState extends LasyRenderingState<ProxyBoardScreen>
   }
 
   Future<void> onTapTestDelay() async {
-    final setting = ClashSettingManager.getConfig();
+    final setting = SettingManager.getConfig();
     List<ClashProxiesNode> nodes = [];
     for (var node in _nodes) {
       if (node.type == ClashProtocolType.urltest.name ||
@@ -199,10 +199,8 @@ class _ProxyBoardScreenState extends LasyRenderingState<ProxyBoardScreen>
     for (var node in nodes) {
       final result = await ClashHttpApi.getDelay(
         node.name,
-        url: setting.Extension?.DelayTestUrl ??
-            "https://www.gstatic.com/generate_204",
-        timeout:
-            Duration(milliseconds: setting.Extension?.DelayTestTimeout ?? 5000),
+        url: setting.delayTestUrl,
+        timeout: Duration(milliseconds: setting.delayTestTimeout),
       );
       node.delay = result.data;
       if (!mounted) {

@@ -101,15 +101,18 @@ class SettingConfigItemWebDev {
 
 class SettingConfig {
   static const int kDefaultBoardPort = 7066;
+  static const String kDefaultDelayTestUrl =
+      "https://www.gstatic.com/generate_204";
   String languageTag = "";
   SettingConfigItemUI ui = SettingConfigItemUI();
-
   SettingConfigItemWebDev webdav = SettingConfigItemWebDev();
   bool alwayOn = false;
   String autoUpdateChannel = "stable"; //stable, beta
   bool autoSetSystemProxy = getAutoSetSystemProxyDefault();
   String _userAgent = "";
   int boardPort = kDefaultBoardPort;
+  String delayTestUrl = kDefaultDelayTestUrl;
+  int delayTestTimeout = 5000;
 
   Map<String, dynamic> toJson() => {
         'language_tag': languageTag,
@@ -120,6 +123,8 @@ class SettingConfig {
         'auto_set_system_proxy': autoSetSystemProxy,
         'user_agent': _userAgent,
         'board_port': boardPort,
+        'delay_test_url': delayTestUrl,
+        'delay_test_url_timeout': delayTestTimeout,
       };
   void fromJson(Map<String, dynamic>? map) {
     if (map == null) {
@@ -139,6 +144,8 @@ class SettingConfig {
         map["auto_set_system_proxy"] ?? getAutoSetSystemProxyDefault();
     _userAgent = map["user_agent"] ?? "";
     boardPort = map["board_port"] ?? kDefaultBoardPort;
+    delayTestUrl = map["delay_test_url"] ?? kDefaultDelayTestUrl;
+    delayTestTimeout = map["delay_test_url_timeout"] ?? 5000;
   }
 
   String userAgent() {
@@ -183,19 +190,19 @@ class SettingConfig {
 }
 
 class SettingManager {
-  static bool _savingConfig = false;
+  static bool _saving = false;
   static final SettingConfig _config = SettingConfig();
   static Future<void> init({bool fromBackupRestore = false}) async {
-    await loadConfig();
-    bool save = await parseConfig();
-    if (save) {
-      saveConfig();
+    await load();
+    bool needSave = await parseConfig();
+    if (needSave) {
+      save();
     }
   }
 
   static Future<void> uninit() async {}
   static Future<void> reload() async {
-    await loadConfig();
+    await load();
   }
 
   static Future<bool> parseConfig() async {
@@ -242,7 +249,7 @@ class SettingManager {
     return save;
   }
 
-  static Future<void> loadConfig() async {
+  static Future<void> load() async {
     String filePath = await PathUtils.settingFilePath();
     var file = File(filePath);
     bool exists = await file.exists();
@@ -257,24 +264,24 @@ class SettingManager {
         _config.fromJson(config);
       }
     } catch (err, stacktrace) {
-      Log.w("SettingManager.loadConfig exception $filePath ${err.toString()}");
+      Log.w("SettingManager.load exception $filePath ${err.toString()}");
     }
   }
 
-  static void saveConfig() async {
-    if (_savingConfig) {
+  static void save() async {
+    if (_saving) {
       return;
     }
-    _savingConfig = true;
+    _saving = true;
     String filePath = await PathUtils.settingFilePath();
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     String content = encoder.convert(_config.toJson());
     try {
       await File(filePath).writeAsString(content, flush: true);
     } catch (err, stacktrace) {
-      Log.w("SettingManager.saveConfig exception  $filePath ${err.toString()}");
+      Log.w("SettingManager.save exception  $filePath ${err.toString()}");
     }
-    _savingConfig = false;
+    _saving = false;
   }
 
   static SettingConfig getConfig() {

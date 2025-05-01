@@ -64,16 +64,12 @@ Map<String, dynamic> _$RawExtensionTunToJson(RawExtensionTun instance) =>
 RawExtension _$RawExtensionFromJson(Map<String, dynamic> json) => RawExtension(
       RawExtensionTun.fromJson(json['tun'] as Map<String, dynamic>),
       json['pprof-addr'] as String?,
-      json['delay-test-url'] as String?,
-      (json['delay-test-timeout'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$RawExtensionToJson(RawExtension instance) =>
     <String, dynamic>{
       'tun': instance.Tun.toJson(),
       'pprof-addr': instance.PprofAddr,
-      'delay-test-url': instance.DelayTestUrl,
-      'delay-test-timeout': instance.DelayTestTimeout,
     };
 
 RawTunnel _$RawTunnelFromJson(Map<String, dynamic> json) => RawTunnel(

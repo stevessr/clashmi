@@ -23,12 +23,12 @@ class ClashSettingManager {
     ClashHttpApi.getControlPort = () {
       return getControlPort();
     };
-    await loadSetting();
+    await load();
     await initGeo();
   }
 
   static Future<void> reload() async {
-    await loadSetting();
+    await load();
   }
 
   static RawTun defaultTun() {
@@ -175,13 +175,12 @@ class ClashSettingManager {
 
   static RawExtension defaultExtension() {
     return RawExtension.by(
-        Tun: RawExtensionTun.by(
-          httpProxy: RawExtensionTunHttpProxy.by(Enable: false),
-          perApp: RawExtensionTunPerApp.by(Enable: false),
-        ),
-        PprofAddr: null,
-        DelayTestUrl: "https://www.gstatic.com/generate_204",
-        DelayTestTimeout: 5000);
+      Tun: RawExtensionTun.by(
+        httpProxy: RawExtensionTunHttpProxy.by(Enable: false),
+        perApp: RawExtensionTunPerApp.by(Enable: false),
+      ),
+      PprofAddr: null,
+    );
   }
 
   static RawConfig defaultConfig() {
@@ -219,13 +218,14 @@ class ClashSettingManager {
         Enable: false,
       ),
       NTP: RawNTP.by(OverWrite: false, Enable: false),
-      Tun: RawTun.by(OverWrite: false, Enable: false),
+      Tun: _setting.Tun,
       GeoXUrl: RawGeoXUrl.by(),
       Sniffer: RawSniffer.by(OverWrite: false, Enable: false),
       TLS: RawTLS.by(OverWrite: false),
       Extension: RawExtension.by(
         Tun: RawExtensionTun.by(
-          httpProxy: RawExtensionTunHttpProxy.by(Enable: false),
+          httpProxy: _setting.Extension?.Tun.httpProxy ??
+              RawExtensionTunHttpProxy.by(Enable: false),
           perApp: _setting.Extension?.Tun.perApp ??
               RawExtensionTunPerApp.by(Enable: false),
         ),
@@ -266,7 +266,7 @@ class ClashSettingManager {
     }
   }
 
-  static Future<void> saveSetting() async {
+  static Future<void> save() async {
     String filePath = await PathUtils.serviceCoreSettingFilePath();
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     final map = _setting.toJson();
@@ -274,7 +274,9 @@ class ClashSettingManager {
     String content = encoder.convert(map);
     try {
       await File(filePath).writeAsString(content, flush: true);
-    } catch (err, stacktrace) {}
+    } catch (err, stacktrace) {
+      Log.w("ClashSettingManager.save exception  $filePath ${err.toString()}");
+    }
   }
 
   static Future<String> getPatchContent(bool overwrite) async {
@@ -305,7 +307,7 @@ class ClashSettingManager {
     } catch (err, stacktrace) {}
   }
 
-  static Future<void> loadSetting() async {
+  static Future<void> load() async {
     String filePath = await PathUtils.serviceCoreSettingFilePath();
     var file = File(filePath);
     bool exists = await file.exists();
@@ -316,7 +318,7 @@ class ClashSettingManager {
           await _load(content);
         }
       } catch (err, stacktrace) {
-        Log.w("ClashSettingManager.loadSetting exception ${err.toString()} ");
+        Log.w("ClashSettingManager.load exception ${err.toString()} ");
       }
     }
     await _initFixed();
@@ -364,7 +366,7 @@ class ClashSettingManager {
   static Future<ReturnResultError?> setConfigsMode(
       ClashConfigsMode mode) async {
     _setting.Mode = mode.name;
-    await saveSetting();
+    await save();
 
     bool run = await VPNService.getStarted();
     if (!run) {
