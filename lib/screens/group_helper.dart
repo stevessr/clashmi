@@ -774,28 +774,45 @@ class GroupHelper {
       for (var patch in profilePatchs) {
         options1.add(GroupItemOptions(
             textOptions: GroupItemTextOptions(
-                name: "",
-                text: patch.remark,
-                textWidthPercent: 0.8,
-                textStyle: TextStyle(
-                    color: currentPatch.id == patch.id
-                        ? ThemeDefine.kColorBlue
-                        : null),
-                child: InkWell(
-                  onTap: () {
-                    ProfilePatchManager.removeProfilePatch(patch.id);
-                    ProfileManager.removePatch(patch.id);
-                    setstate?.call();
-                  },
-                  child: Icon(
-                    Icons.remove_circle_outlined,
-                    color: Colors.red,
-                  ),
-                ),
-                onPush: () async {
-                  ProfilePatchManager.setCurrent(patch.id);
-                  Navigator.of(context).pop();
-                })));
+          name: "",
+          text: patch.remark,
+          textWidthPercent: 0.8,
+          textStyle: TextStyle(
+              color:
+                  currentPatch.id == patch.id ? ThemeDefine.kColorBlue : null),
+          child: InkWell(
+            onTap: () {
+              ProfilePatchManager.removeProfilePatch(patch.id);
+              ProfileManager.removePatch(patch.id);
+              setstate?.call();
+            },
+            child: Icon(
+              Icons.remove_circle_outlined,
+              color: Colors.red,
+            ),
+          ),
+          onPush: () async {
+            ProfilePatchManager.setCurrent(patch.id);
+            Navigator.of(context).pop();
+          },
+          onLongPress: () async {
+            final filePath =
+                await ProfilePatchManager.getProfilePatchPath(patch.id);
+            final content = await File(filePath).readAsString();
+
+            if (!context.mounted) {
+              return;
+            }
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    settings: FileViewScreen.routSettings(),
+                    builder: (context) => FileViewScreen(
+                          title: patch.id,
+                          content: content,
+                        )));
+          },
+        )));
       }
       if (options1.isNotEmpty) {
         return [

@@ -16,7 +16,8 @@ class GroupItemTextOptions {
       this.textColor,
       this.textWidthPercent = 0.5,
       this.child,
-      this.onPush});
+      this.onPush,
+      this.onLongPress});
 
   final String name;
   final String? text;
@@ -26,6 +27,7 @@ class GroupItemTextOptions {
   final double textWidthPercent;
   final Widget? child;
   Future<void> Function()? onPush;
+  Future<void> Function()? onLongPress;
 }
 
 class GroupItemTextFieldOptions {

@@ -20,6 +20,7 @@ class GroupItemText extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: options.onPush,
+      onLongPress: options.onLongPress,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
