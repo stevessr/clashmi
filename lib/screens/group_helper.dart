@@ -387,7 +387,7 @@ class GroupHelper {
                       int.tryParse(value) ?? SettingConfig.kDefaultBoardPort;
                 })),
       ];
-      List<GroupItemOptions> options1 = [
+      List<GroupItemOptions> options0 = [
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
           name: tcontext.meta.launchAtStartup,
@@ -409,6 +409,8 @@ class GroupHelper {
             }
           },
         )),
+      ];
+      List<GroupItemOptions> options1 = [
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.meta.autoSetSystemProxy,
@@ -435,17 +437,15 @@ class GroupHelper {
                   setting.delayTestTimeout = int.tryParse(value) ?? 5000;
                 })),
       ];
-      if (PlatformUtils.isPC()) {
-        return [
-          GroupItem(options: options),
-          GroupItem(options: options1),
-          GroupItem(options: options2),
-        ];
+      List<GroupItem> gitems = [GroupItem(options: options)];
+      if (Platform.isWindows) {
+        gitems.add(GroupItem(options: options0));
       }
-      return [
-        GroupItem(options: options),
-        GroupItem(options: options2),
-      ];
+      if (PlatformUtils.isPC()) {
+        gitems.add(GroupItem(options: options1));
+      }
+      gitems.add(GroupItem(options: options2));
+      return gitems;
     }
 
     final tcontext = Translations.of(context);
