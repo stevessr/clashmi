@@ -264,8 +264,6 @@ class _HomeScreenState extends LasyRenderingState<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    AutoUpdateCheckVersion checkVersion = AutoUpdateManager.getVersionCheck();
-
     var themes = Provider.of<Themes>(context, listen: false);
     Color? color = themes.getThemeHomeColor(context);
 
