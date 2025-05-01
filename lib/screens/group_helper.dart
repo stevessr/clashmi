@@ -389,6 +389,25 @@ class GroupHelper {
       ];
       List<GroupItemOptions> options0 = [
         GroupItemOptions(
+            textFormFieldOptions: GroupItemTextFieldOptions(
+                name: tcontext.meta.delayTestUrl,
+                text: setting.delayTestUrl,
+                textWidthPercent: 0.5,
+                onChanged: (String value) {
+                  setting.delayTestUrl = value;
+                })),
+        GroupItemOptions(
+            textFormFieldOptions: GroupItemTextFieldOptions(
+                name: tcontext.meta.delayTestTimeout,
+                text: setting.delayTestTimeout.toString(),
+                textWidthPercent: 0.5,
+                onChanged: (String value) {
+                  setting.delayTestTimeout = int.tryParse(value) ?? 5000;
+                })),
+      ];
+
+      List<GroupItemOptions> options1 = [
+        GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
           name: tcontext.meta.launchAtStartup,
           switchValue: await VPNService.getLaunchAtStartup(),
@@ -410,7 +429,7 @@ class GroupHelper {
           },
         )),
       ];
-      List<GroupItemOptions> options1 = [
+      List<GroupItemOptions> options2 = [
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.meta.autoSetSystemProxy,
@@ -419,32 +438,18 @@ class GroupHelper {
                   setting.autoSetSystemProxy = value;
                 })),
       ];
-      List<GroupItemOptions> options2 = [
-        GroupItemOptions(
-            textFormFieldOptions: GroupItemTextFieldOptions(
-                name: tcontext.meta.delayTestUrl,
-                text: setting.delayTestUrl,
-                textWidthPercent: 0.5,
-                onChanged: (String value) {
-                  setting.delayTestUrl = value;
-                })),
-        GroupItemOptions(
-            textFormFieldOptions: GroupItemTextFieldOptions(
-                name: tcontext.meta.delayTestTimeout,
-                text: setting.delayTestTimeout.toString(),
-                textWidthPercent: 0.5,
-                onChanged: (String value) {
-                  setting.delayTestTimeout = int.tryParse(value) ?? 5000;
-                })),
+
+      List<GroupItem> gitems = [
+        GroupItem(options: options),
+        GroupItem(options: options0)
       ];
-      List<GroupItem> gitems = [GroupItem(options: options)];
       if (Platform.isWindows) {
-        gitems.add(GroupItem(options: options0));
-      }
-      if (PlatformUtils.isPC()) {
         gitems.add(GroupItem(options: options1));
       }
-      gitems.add(GroupItem(options: options2));
+      if (PlatformUtils.isPC()) {
+        gitems.add(GroupItem(options: options2));
+      }
+
       return gitems;
     }
 
