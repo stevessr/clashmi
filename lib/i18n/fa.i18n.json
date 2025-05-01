@@ -118,6 +118,8 @@
         "geo": "GEO",
         "sniffer": "بو کشیدن",
         "userAgent": "UserAgent",
+        "launchAtStartup": "اجرا در راه‌اندازی",
+        "launchAtStartupRunAsAdmin": "لطفاً Clash Mi را به عنوان مدیر راه اندازی مجدد کنید",
         "systemProxy": "پروکسی سیستم",
         "autoSetSystemProxy": "تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال",
         "website": "وبسایت",

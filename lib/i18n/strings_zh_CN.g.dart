@@ -225,6 +225,8 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get geo => 'GEO';
 	@override String get sniffer => '嗅探';
 	@override String get userAgent => 'UserAgent';
+	@override String get launchAtStartup => '开机启动';
+	@override String get launchAtStartupRunAsAdmin => '请以管理员身份重新启动Clash Mi';
 	@override String get systemProxy => '系统代理';
 	@override String get autoSetSystemProxy => '连接后自动设置系统代理';
 	@override String get website => '官网';
@@ -515,6 +517,8 @@ extension on TranslationsZhCn {
 			case 'meta.geo': return 'GEO';
 			case 'meta.sniffer': return '嗅探';
 			case 'meta.userAgent': return 'UserAgent';
+			case 'meta.launchAtStartup': return '开机启动';
+			case 'meta.launchAtStartupRunAsAdmin': return '请以管理员身份重新启动Clash Mi';
 			case 'meta.systemProxy': return '系统代理';
 			case 'meta.autoSetSystemProxy': return '连接后自动设置系统代理';
 			case 'meta.website': return '官网';

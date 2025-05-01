@@ -228,6 +228,8 @@ class TranslationsMetaEn {
 	String get geo => 'GEO';
 	String get sniffer => 'Sniffer';
 	String get userAgent => 'UserAgent';
+	String get launchAtStartup => 'Launch at Startup';
+	String get launchAtStartupRunAsAdmin => 'Please restart Clash Mi as administrator';
 	String get systemProxy => 'System Proxy';
 	String get autoSetSystemProxy => 'Auto Set System Proxy when Connected';
 	String get website => 'Website';
@@ -518,6 +520,8 @@ extension on Translations {
 			case 'meta.geo': return 'GEO';
 			case 'meta.sniffer': return 'Sniffer';
 			case 'meta.userAgent': return 'UserAgent';
+			case 'meta.launchAtStartup': return 'Launch at Startup';
+			case 'meta.launchAtStartupRunAsAdmin': return 'Please restart Clash Mi as administrator';
 			case 'meta.systemProxy': return 'System Proxy';
 			case 'meta.autoSetSystemProxy': return 'Auto Set System Proxy when Connected';
 			case 'meta.website': return 'Website';

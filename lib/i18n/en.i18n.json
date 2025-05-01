@@ -118,6 +118,8 @@
         "geo": "GEO",
         "sniffer": "Sniffer",
         "userAgent": "UserAgent",
+        "launchAtStartup": "Launch at Startup",
+        "launchAtStartupRunAsAdmin": "Please restart Clash Mi as administrator",
         "systemProxy": "System Proxy",
         "autoSetSystemProxy": "Auto Set System Proxy when Connected",
         "website": "Website",

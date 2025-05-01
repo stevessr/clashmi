@@ -118,6 +118,8 @@
         "geo": "GEO",
         "sniffer": "嗅探",
         "userAgent": "UserAgent",
+        "launchAtStartup": "开机启动",
+        "launchAtStartupRunAsAdmin": "请以管理员身份重新启动Clash Mi",
         "systemProxy": "系统代理",
         "autoSetSystemProxy": "连接后自动设置系统代理",
         "website": "官网",

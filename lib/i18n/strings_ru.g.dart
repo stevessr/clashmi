@@ -225,6 +225,8 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get geo => 'GEO';
 	@override String get sniffer => 'Обнюхивание';
 	@override String get userAgent => 'UserAgent';
+	@override String get launchAtStartup => 'Запуск при включении';
+	@override String get launchAtStartupRunAsAdmin => 'Пожалуйста, перезапустите Clash Mi от имени администратора.';
 	@override String get systemProxy => 'Системный прокси';
 	@override String get autoSetSystemProxy => 'Установить системный прокси после подключения';
 	@override String get website => 'Веб-сайт';
@@ -515,6 +517,8 @@ extension on TranslationsRu {
 			case 'meta.geo': return 'GEO';
 			case 'meta.sniffer': return 'Обнюхивание';
 			case 'meta.userAgent': return 'UserAgent';
+			case 'meta.launchAtStartup': return 'Запуск при включении';
+			case 'meta.launchAtStartupRunAsAdmin': return 'Пожалуйста, перезапустите Clash Mi от имени администратора.';
 			case 'meta.systemProxy': return 'Системный прокси';
 			case 'meta.autoSetSystemProxy': return 'Установить системный прокси после подключения';
 			case 'meta.website': return 'Веб-сайт';

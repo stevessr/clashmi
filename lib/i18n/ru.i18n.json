@@ -118,6 +118,8 @@
         "geo": "GEO",
         "sniffer": "Обнюхивание",
         "userAgent": "UserAgent",
+        "launchAtStartup": "Запуск при включении",
+        "launchAtStartupRunAsAdmin": "Пожалуйста, перезапустите Clash Mi от имени администратора.",
         "systemProxy": "Системный прокси",
         "autoSetSystemProxy": "Установить системный прокси после подключения",
         "website": "Веб-сайт",

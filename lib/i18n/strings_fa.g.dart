@@ -225,6 +225,8 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get geo => 'GEO';
 	@override String get sniffer => 'بو کشیدن';
 	@override String get userAgent => 'UserAgent';
+	@override String get launchAtStartup => 'اجرا در راه‌اندازی';
+	@override String get launchAtStartupRunAsAdmin => 'لطفاً Clash Mi را به عنوان مدیر راه اندازی مجدد کنید';
 	@override String get systemProxy => 'پروکسی سیستم';
 	@override String get autoSetSystemProxy => 'تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال';
 	@override String get website => 'وبسایت';
@@ -515,6 +517,8 @@ extension on TranslationsFa {
 			case 'meta.geo': return 'GEO';
 			case 'meta.sniffer': return 'بو کشیدن';
 			case 'meta.userAgent': return 'UserAgent';
+			case 'meta.launchAtStartup': return 'اجرا در راه‌اندازی';
+			case 'meta.launchAtStartupRunAsAdmin': return 'لطفاً Clash Mi را به عنوان مدیر راه اندازی مجدد کنید';
 			case 'meta.systemProxy': return 'پروکسی سیستم';
 			case 'meta.autoSetSystemProxy': return 'تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال';
 			case 'meta.website': return 'وبسایت';

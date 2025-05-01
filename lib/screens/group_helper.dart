@@ -390,6 +390,27 @@ class GroupHelper {
       List<GroupItemOptions> options1 = [
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
+          name: tcontext.meta.launchAtStartup,
+          switchValue: await VPNService.getLaunchAtStartup(),
+          onSwitch: (bool value) async {
+            if (!VPNService.isRunAsAdmin()) {
+              DialogUtils.showAlertDialog(
+                  context, tcontext.meta.launchAtStartupRunAsAdmin,
+                  showCopy: true, showFAQ: false, withVersion: true);
+              return;
+            }
+            ReturnResultError? err = await VPNService.setLaunchAtStartup(value);
+            if (err != null) {
+              if (!context.mounted) {
+                return;
+              }
+              DialogUtils.showAlertDialog(context, err.message,
+                  showCopy: true, showFAQ: false, withVersion: true);
+            }
+          },
+        )),
+        GroupItemOptions(
+            switchOptions: GroupItemSwitchOptions(
                 name: tcontext.meta.autoSetSystemProxy,
                 switchValue: setting.autoSetSystemProxy,
                 onSwitch: (bool value) async {
