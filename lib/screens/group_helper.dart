@@ -354,14 +354,6 @@ class GroupHelper {
                       TextFieldEx.popupEdit = setting.ui.tvMode;
                     }))
             : GroupItemOptions(),
-        GroupItemOptions(
-            textFormFieldOptions: GroupItemTextFieldOptions(
-                name: tcontext.meta.userAgent,
-                text: setting.userAgent(),
-                textWidthPercent: 0.5,
-                onChanged: (String value) {
-                  setting.setUserAgent(value);
-                })),
         AutoUpdateManager.isSupport()
             ? GroupItemOptions(
                 stringPickerOptions: GroupItemStringPickerOptions(
@@ -377,6 +369,16 @@ class GroupHelper {
                       AutoUpdateManager.updateChannelChanged();
                     }))
             : GroupItemOptions(),
+      ];
+      List<GroupItemOptions> options0 = [
+        GroupItemOptions(
+            textFormFieldOptions: GroupItemTextFieldOptions(
+                name: tcontext.meta.userAgent,
+                text: setting.userAgent(),
+                textWidthPercent: 0.5,
+                onChanged: (String value) {
+                  setting.setUserAgent(value);
+                })),
         GroupItemOptions(
             textFormFieldOptions: GroupItemTextFieldOptions(
                 name: tcontext.meta.boardPort,
@@ -387,7 +389,7 @@ class GroupHelper {
                       int.tryParse(value) ?? SettingConfig.kDefaultBoardPort;
                 })),
       ];
-      List<GroupItemOptions> options0 = [
+      List<GroupItemOptions> options1 = [
         GroupItemOptions(
             textFormFieldOptions: GroupItemTextFieldOptions(
                 name: tcontext.meta.delayTestUrl,
@@ -406,7 +408,7 @@ class GroupHelper {
                 })),
       ];
 
-      List<GroupItemOptions> options1 = [
+      List<GroupItemOptions> options2 = [
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
           name: tcontext.meta.launchAtStartup,
@@ -429,7 +431,7 @@ class GroupHelper {
           },
         )),
       ];
-      List<GroupItemOptions> options2 = [
+      List<GroupItemOptions> options3 = [
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.meta.autoSetSystemProxy,
@@ -441,13 +443,14 @@ class GroupHelper {
 
       List<GroupItem> gitems = [
         GroupItem(options: options),
-        GroupItem(options: options0)
+        GroupItem(options: options0),
+        GroupItem(options: options1)
       ];
       if (Platform.isWindows) {
-        gitems.add(GroupItem(options: options1));
+        gitems.add(GroupItem(options: options2));
       }
       if (PlatformUtils.isPC()) {
-        gitems.add(GroupItem(options: options2));
+        gitems.add(GroupItem(options: options3));
       }
 
       return gitems;
@@ -612,6 +615,25 @@ class GroupHelper {
                   setting.TCPConcurrent = value;
                 })),
         GroupItemOptions(
+            timerIntervalPickerOptions: GroupItemTimerIntervalPickerOptions(
+                name: tcontext.meta.tcpkeepAliveInterval,
+                duration: setting.DisableKeepAlive == true
+                    ? null
+                    : Duration(seconds: setting.KeepAliveInterval ?? 30),
+                showDays: false,
+                showHours: false,
+                showSeconds: true,
+                showMinutes: true,
+                showDisable: true,
+                onPicker: (bool canceled, Duration? duration) async {
+                  if (canceled) {
+                    return;
+                  }
+                  setting.DisableKeepAlive = duration == null;
+                  setting.KeepAliveIdle = duration?.inSeconds;
+                  setting.KeepAliveInterval = duration?.inSeconds;
+                })),
+        GroupItemOptions(
             stringPickerOptions: GroupItemStringPickerOptions(
                 name: tcontext.meta.globalClientFingerprint,
                 selected:
@@ -642,29 +664,8 @@ class GroupHelper {
                   setting.Authentication = value.isEmpty ? null : [value];
                 })),
       ];
-      List<GroupItemOptions> options5 = [
-        GroupItemOptions(
-            timerIntervalPickerOptions: GroupItemTimerIntervalPickerOptions(
-                name: tcontext.meta.tcpkeepAliveInterval,
-                duration: setting.DisableKeepAlive == true
-                    ? null
-                    : Duration(seconds: setting.KeepAliveInterval ?? 30),
-                showDays: false,
-                showHours: false,
-                showSeconds: true,
-                showMinutes: true,
-                showDisable: true,
-                onPicker: (bool canceled, Duration? duration) async {
-                  if (canceled) {
-                    return;
-                  }
-                  setting.DisableKeepAlive = duration == null;
-                  setting.KeepAliveIdle = duration?.inSeconds;
-                  setting.KeepAliveInterval = duration?.inSeconds;
-                })),
-      ];
 
-      List<GroupItemOptions> options7 = [
+      List<GroupItemOptions> options5 = [
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
                 name: tcontext.meta.tun,
@@ -715,7 +716,6 @@ class GroupHelper {
           GroupItem(options: options3),
           GroupItem(options: options4),
           GroupItem(options: options5),
-          GroupItem(options: options7),
         ]);
       } else {
         groups.addAll([
