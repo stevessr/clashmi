@@ -121,6 +121,7 @@
         "launchAtStartup": "Запуск при включении",
         "launchAtStartupRunAsAdmin": "Пожалуйста, перезапустите Clash Mi от имени администратора.",
         "systemProxy": "Системный прокси",
+        "autoConnectAfterLaunch": "Автоматическое подключение после запуска",
         "autoSetSystemProxy": "Установить системный прокси после подключения",
         "website": "Веб-сайт",
         "rule": "Правила",

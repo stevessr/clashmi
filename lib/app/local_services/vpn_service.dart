@@ -231,6 +231,10 @@ class VPNService {
     if (profile == null) {
       return ReturnResultError("current profile is empty");
     }
+    final prepareResult = await ProfileManager.prepare(profile);
+    if (prepareResult != null) {
+      return prepareResult;
+    }
     var started = await getStarted();
     if (!started) {
       return null;
@@ -290,7 +294,10 @@ class VPNService {
     if (profile == null) {
       return ReturnResultError("current profile is empty");
     }
-
+    final prepareResult = await ProfileManager.prepare(profile);
+    if (prepareResult != null) {
+      return prepareResult;
+    }
     bool reinstall = await _prepareConfig(profile);
     if (reinstall) {
       await uninstall();

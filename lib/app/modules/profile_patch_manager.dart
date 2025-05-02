@@ -167,9 +167,11 @@ class ProfilePatchManager {
         --i;
       }
     }
-
-    if (_profilePatchConfig.profilePatchs.isEmpty) {
-      for (var value in existProfiles) {
+    for (var value in existProfiles) {
+      int index = _profilePatchConfig.profilePatchs.indexWhere((value) {
+        return value.id == _profilePatchConfig._currentId;
+      });
+      if (index < 0) {
         _profilePatchConfig.profilePatchs
             .add(ProfilePatchSetting(id: value, remark: value));
       }

@@ -27,7 +27,6 @@ abstract final class DownloadUtils {
   static Future<ReturnResult<HttpHeaders>> downloadWithPort(
       Uri uri, String downloadPath, String? useAgent, int? port) async {
     String downloadPathTemp = "$downloadPath.tmp";
-    await FileUtils.deletePath(downloadPath);
     if (!await FileUtils.deletePath(downloadPathTemp)) {
       return ReturnResult(
           error: ReturnResultError("delete $downloadPathTemp failed"));
@@ -43,6 +42,7 @@ abstract final class DownloadUtils {
     try {
       var file = File(downloadPathTemp);
       if (await file.exists()) {
+        await FileUtils.deletePath(downloadPath);
         await file.rename(downloadPath);
       }
     } catch (err) {

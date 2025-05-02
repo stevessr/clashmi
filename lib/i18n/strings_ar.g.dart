@@ -228,6 +228,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get launchAtStartup => 'إطلاق عند بدء التشغيل';
 	@override String get launchAtStartupRunAsAdmin => 'يرجى إعادة تشغيل Clash Mi كمسؤول';
 	@override String get systemProxy => 'وكيل النظام';
+	@override String get autoConnectAfterLaunch => 'اتصال السيارات بعد الإطلاق';
 	@override String get autoSetSystemProxy => 'وكيل نظام تعيين تلقائي عند الاتصال';
 	@override String get website => 'موقع إلكتروني';
 	@override String get rule => 'قاعدة';
@@ -520,6 +521,7 @@ extension on TranslationsAr {
 			case 'meta.launchAtStartup': return 'إطلاق عند بدء التشغيل';
 			case 'meta.launchAtStartupRunAsAdmin': return 'يرجى إعادة تشغيل Clash Mi كمسؤول';
 			case 'meta.systemProxy': return 'وكيل النظام';
+			case 'meta.autoConnectAfterLaunch': return 'اتصال السيارات بعد الإطلاق';
 			case 'meta.autoSetSystemProxy': return 'وكيل نظام تعيين تلقائي عند الاتصال';
 			case 'meta.website': return 'موقع إلكتروني';
 			case 'meta.rule': return 'قاعدة';

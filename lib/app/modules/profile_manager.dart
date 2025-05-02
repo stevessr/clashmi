@@ -23,12 +23,12 @@ import 'package:tuple/tuple.dart';
 const int kRemarkMaxLength = 32;
 
 class ProfileSetting {
-  ProfileSetting({this.id = "", this.remark = "", this.update, this.url});
+  ProfileSetting({this.id = "", this.remark = "", this.update, this.url = ""});
   String id = "";
   String remark = "";
   String patch = "";
   DateTime? update;
-  String? url;
+  String url;
   num upload = 0;
   num download = 0;
   num total = 0;
@@ -64,10 +64,14 @@ class ProfileSetting {
   }
 
   String getType() {
-    if (url != null) {
+    if (url.isNotEmpty) {
       return "URL";
     }
     return "Local";
+  }
+
+  bool isRemote() {
+    return url.isNotEmpty;
   }
 
   String getShowName() {
@@ -241,48 +245,35 @@ class ProfileManager {
         if (content.isNotEmpty) {
           var config = jsonDecode(content);
           _profileConfig.fromJson(config);
-          for (int i = 0; i < _profileConfig.profiles.length; ++i) {
-            final filePath = path.join(dir, _profileConfig.profiles[i].id);
-            try {
-              if (!await File(filePath).exists()) {
-                _profileConfig.profiles.removeAt(i);
-                --i;
-              }
-            } catch (err) {
-              _profileConfig.profiles.removeAt(i);
-              --i;
-            }
-          }
         }
       } catch (err, stacktrace) {
         Log.w("ProfileManager.load exception ${err.toString()} ");
       }
     }
-    Map<String, String?> existProfiles = {};
 
+    Map<String, String?> existProfiles = {};
     var files =
         FileUtils.recursionFile(dir, extensionFilter: {".yaml", ".yml"});
     for (var file in files) {
-      String? line = await FileUtils.readLastLine(file);
-      if (line != null && line.startsWith(urlComment)) {
-        line = line.substring(urlComment.length);
-      } else {
-        line = null;
-      }
-      existProfiles[path.basename(file)] = line;
+      String? line = await FileUtils.readLastLineStartWith(file, urlComment);
+      existProfiles[path.basename(file)] =
+          line?.substring(urlComment.length).trim();
     }
     for (int i = 0; i < _profileConfig.profiles.length; ++i) {
-      if (!existProfiles.containsKey(_profileConfig.profiles[i].id)) {
+      if (!existProfiles.containsKey(_profileConfig.profiles[i].id) &&
+          !_profileConfig.profiles[i].isRemote()) {
         _profileConfig.profiles.removeAt(i);
         --i;
       }
     }
-
-    if (_profileConfig.profiles.isEmpty) {
-      existProfiles.forEach((key, value) {
-        _profileConfig.profiles.add(ProfileSetting(id: key, url: value));
+    existProfiles.forEach((key, value) {
+      int index = _profileConfig.profiles.indexWhere((value) {
+        return value.id == _profileConfig._currentId;
       });
-    }
+      if (index < 0) {
+        _profileConfig.profiles.add(ProfileSetting(id: key, url: value ?? ""));
+      }
+    });
 
     if (_profileConfig._currentId.isNotEmpty) {
       int index = _profileConfig.profiles.indexWhere((value) {
@@ -310,6 +301,25 @@ class ProfileManager {
       return null;
     }
     return _profileConfig.profiles[index];
+  }
+
+  static Future<ReturnResultError?> prepare(ProfileSetting profile) async {
+    String dir = await PathUtils.profilesDir();
+    final filePath = path.join(dir, profile.id);
+    try {
+      if (!await File(filePath).exists()) {
+        if (profile.isRemote()) {
+          final result = await updateProfile(profile.id);
+          if (result == null) {
+            return null;
+          }
+          return ReturnResultError(
+              "Profile download failed: ${profile.id} ${result.message}");
+        }
+        return ReturnResultError("Profile not exist: $filePath");
+      }
+    } catch (err) {}
+    return null;
   }
 
   static void setCurrent(String id) {
@@ -438,10 +448,10 @@ class ProfileManager {
       return null;
     }
     ProfileSetting profile = _profileConfig.profiles[index];
-    if (profile.url == null || profile.url!.isEmpty) {
+    if (!profile.isRemote()) {
       return null;
     }
-    final uri = Uri.tryParse(profile.url!);
+    final uri = Uri.tryParse(profile.url);
     if (uri == null) {
       return null;
     }
@@ -462,7 +472,7 @@ class ProfileManager {
     }
     await FileUtils.append(savePath, "\n$urlComment${profile.url}\n");
     if (profile.remark.isEmpty) {
-      final result = await HttpUtils.httpGetTitle(profile.url!, userAgent);
+      final result = await HttpUtils.httpGetTitle(profile.url, userAgent);
       profile.remark = result.data ?? "";
     }
     profile.update = DateTime.now();

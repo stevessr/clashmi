@@ -228,6 +228,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get launchAtStartup => 'اجرا در راه‌اندازی';
 	@override String get launchAtStartupRunAsAdmin => 'لطفاً Clash Mi را به عنوان مدیر راه اندازی مجدد کنید';
 	@override String get systemProxy => 'پروکسی سیستم';
+	@override String get autoConnectAfterLaunch => 'اتصال خودکار پس‌از راه‌اندازی';
 	@override String get autoSetSystemProxy => 'تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال';
 	@override String get website => 'وبسایت';
 	@override String get rule => 'قانون';
@@ -520,6 +521,7 @@ extension on TranslationsFa {
 			case 'meta.launchAtStartup': return 'اجرا در راه‌اندازی';
 			case 'meta.launchAtStartupRunAsAdmin': return 'لطفاً Clash Mi را به عنوان مدیر راه اندازی مجدد کنید';
 			case 'meta.systemProxy': return 'پروکسی سیستم';
+			case 'meta.autoConnectAfterLaunch': return 'اتصال خودکار پس‌از راه‌اندازی';
 			case 'meta.autoSetSystemProxy': return 'تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال';
 			case 'meta.website': return 'وبسایت';
 			case 'meta.rule': return 'قانون';

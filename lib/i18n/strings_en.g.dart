@@ -231,6 +231,7 @@ class TranslationsMetaEn {
 	String get launchAtStartup => 'Launch at Startup';
 	String get launchAtStartupRunAsAdmin => 'Please restart Clash Mi as administrator';
 	String get systemProxy => 'System Proxy';
+	String get autoConnectAfterLaunch => 'Auto Connection after Launch';
 	String get autoSetSystemProxy => 'Auto Set System Proxy when Connected';
 	String get website => 'Website';
 	String get rule => 'Rule';
@@ -523,6 +524,7 @@ extension on Translations {
 			case 'meta.launchAtStartup': return 'Launch at Startup';
 			case 'meta.launchAtStartupRunAsAdmin': return 'Please restart Clash Mi as administrator';
 			case 'meta.systemProxy': return 'System Proxy';
+			case 'meta.autoConnectAfterLaunch': return 'Auto Connection after Launch';
 			case 'meta.autoSetSystemProxy': return 'Auto Set System Proxy when Connected';
 			case 'meta.website': return 'Website';
 			case 'meta.rule': return 'Rule';

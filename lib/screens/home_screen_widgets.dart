@@ -5,8 +5,10 @@ import 'package:clashmi/app/clash/clash_config.dart';
 import 'package:clashmi/app/clash/clash_http_api.dart';
 import 'package:clashmi/app/local_services/vpn_service.dart';
 import 'package:clashmi/app/modules/auto_update_manager.dart';
+import 'package:clashmi/app/modules/biz.dart';
 import 'package:clashmi/app/modules/clash_setting_manager.dart';
 import 'package:clashmi/app/modules/profile_manager.dart';
+import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/app/modules/zashboard.dart';
 import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/app_lifecycle_state_notify.dart';
@@ -65,6 +67,9 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     if (!AppLifecycleStateNofity.isPaused()) {
       _onStateResumed();
     }
+    Biz.onEventInitAllFinish.add(() async {
+      await _onInitAllFinish();
+    });
   }
 
   @override
@@ -111,35 +116,39 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
                     child: Switch.adaptive(
                       value: _state == FlutterVpnServiceState.connected,
                       focusNode: _focusNodeConnect,
-                      onChanged: currentProfile == null
-                          ? null
-                          : (bool value) async {
-                              if (_working ||
-                                  _state == FlutterVpnServiceState.connecting ||
-                                  _state ==
-                                      FlutterVpnServiceState.disconnecting ||
-                                  _state ==
-                                      FlutterVpnServiceState.reasserting) {
-                                return;
-                              }
-                              _working = true;
+                      onChanged: (bool value) async {
+                        if (currentProfile == null) {
+                          await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  settings: ProfilesBoardScreen.routSettings(),
+                                  builder: (context) => ProfilesBoardScreen()));
+                          setState(() {});
+                          return;
+                        }
+                        if (_working ||
+                            _state == FlutterVpnServiceState.connecting ||
+                            _state == FlutterVpnServiceState.disconnecting ||
+                            _state == FlutterVpnServiceState.reasserting) {
+                          return;
+                        }
+                        _working = true;
 
-                              if (value) {
-                                var err = await VPNService.start(
-                                    const Duration(seconds: 60));
-                                if (!context.mounted) {
-                                  return;
-                                }
-                                if (err != null) {
-                                  DialogUtils.showAlertDialog(
-                                      context, err.message);
-                                }
-                              } else {
-                                await VPNService.stop();
-                              }
-                              _working = false;
-                              setState(() {});
-                            },
+                        if (value) {
+                          var err = await VPNService.start(
+                              const Duration(seconds: 60));
+                          if (!context.mounted) {
+                            return;
+                          }
+                          if (err != null) {
+                            DialogUtils.showAlertDialog(context, err.message);
+                          }
+                        } else {
+                          await VPNService.stop();
+                        }
+                        _working = false;
+                        setState(() {});
+                      },
                     ),
                   ),
                 ),
@@ -329,6 +338,22 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
         textAlign: TextAlign.start,
       ),
     );
+  }
+
+  Future<void> _onInitAllFinish() async {
+    if (PlatformUtils.isPC()) {
+      if (SettingManager.getConfig().autoConnectAfterLaunch) {
+        if (ProfileManager.getCurrent() != null) {
+          var state = await VPNService.getState();
+          if (state == FlutterVpnServiceState.invalid ||
+              state == FlutterVpnServiceState.disconnected) {
+            _working = true;
+            await VPNService.start(const Duration(seconds: 60));
+            _working = false;
+          }
+        }
+      }
+    }
   }
 
   Future<void> _onStateChanged(

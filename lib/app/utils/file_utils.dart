@@ -265,7 +265,8 @@ abstract final class FileUtils {
     return false;
   }
 
-  static Future<String?> readLastLine(String filePath) async {
+  static Future<String?> readLastLineStartWith(
+      String filePath, String startsWith) async {
     if (filePath.isEmpty) return null;
 
     try {
@@ -280,7 +281,11 @@ abstract final class FileUtils {
         String str = utf8.decode(data);
         List<String> lines = str.split('\n');
         if (lines.isNotEmpty) {
-          return lines.last;
+          for (var i = lines.length - 1; i >= 0; i--) {
+            if (lines[i].startsWith(startsWith)) {
+              return lines[i];
+            }
+          }
         }
       }
     } catch (e) {}

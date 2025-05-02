@@ -121,6 +121,7 @@
         "launchAtStartup": "اجرا در راه‌اندازی",
         "launchAtStartupRunAsAdmin": "لطفاً Clash Mi را به عنوان مدیر راه اندازی مجدد کنید",
         "systemProxy": "پروکسی سیستم",
+        "autoConnectAfterLaunch": "اتصال خودکار پس‌از راه‌اندازی",
         "autoSetSystemProxy": "تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال",
         "website": "وبسایت",
         "rule": "قانون",

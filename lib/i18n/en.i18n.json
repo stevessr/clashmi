@@ -121,6 +121,7 @@
         "launchAtStartup": "Launch at Startup",
         "launchAtStartupRunAsAdmin": "Please restart Clash Mi as administrator",
         "systemProxy": "System Proxy",
+        "autoConnectAfterLaunch": "Auto Connection after Launch",
         "autoSetSystemProxy": "Auto Set System Proxy when Connected",
         "website": "Website",
         "rule": "Rule",

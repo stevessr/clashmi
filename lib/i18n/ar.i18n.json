@@ -121,6 +121,7 @@
         "launchAtStartup": "إطلاق عند بدء التشغيل",
         "launchAtStartupRunAsAdmin": "يرجى إعادة تشغيل Clash Mi كمسؤول",
         "systemProxy": "وكيل النظام",
+        "autoConnectAfterLaunch": "اتصال السيارات بعد الإطلاق",
         "autoSetSystemProxy": "وكيل نظام تعيين تلقائي عند الاتصال",
         "website": "موقع إلكتروني",
         "rule": "قاعدة",

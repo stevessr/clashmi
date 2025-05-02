@@ -434,6 +434,13 @@ class GroupHelper {
       List<GroupItemOptions> options3 = [
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
+                name: tcontext.meta.autoConnectAfterLaunch,
+                switchValue: setting.autoConnectAfterLaunch,
+                onSwitch: (bool value) async {
+                  setting.autoConnectAfterLaunch = value;
+                })),
+        GroupItemOptions(
+            switchOptions: GroupItemSwitchOptions(
                 name: tcontext.meta.autoSetSystemProxy,
                 switchValue: setting.autoSetSystemProxy,
                 onSwitch: (bool value) async {

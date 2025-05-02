@@ -108,6 +108,7 @@ class SettingConfig {
   SettingConfigItemWebDev webdav = SettingConfigItemWebDev();
   bool alwayOn = false;
   String autoUpdateChannel = "stable"; //stable, beta
+  bool autoConnectAfterLaunch = false;
   bool autoSetSystemProxy = getAutoSetSystemProxyDefault();
   String _userAgent = "";
   int boardPort = kDefaultBoardPort;
@@ -120,6 +121,7 @@ class SettingConfig {
         'webdav': webdav,
         'alway_on': alwayOn,
         'auto_update_channel': autoUpdateChannel,
+        'auto_connect_after_launch': autoConnectAfterLaunch,
         'auto_set_system_proxy': autoSetSystemProxy,
         'user_agent': _userAgent,
         'board_port': boardPort,
@@ -140,6 +142,7 @@ class SettingConfig {
     if (autoUpdateChannel.isEmpty) {
       autoUpdateChannel = "stable";
     }
+    autoConnectAfterLaunch = map["auto_connect_after_launch"] ?? false;
     autoSetSystemProxy =
         map["auto_set_system_proxy"] ?? getAutoSetSystemProxyDefault();
     _userAgent = map["user_agent"] ?? "";

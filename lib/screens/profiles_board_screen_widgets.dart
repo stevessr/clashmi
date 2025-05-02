@@ -39,12 +39,12 @@ class ProfilesBoardItem extends StatelessWidget {
     } else {
       patchRemark = patch.getShowName(context);
     }
-    bool remote = setting.url != null && setting.url!.isNotEmpty;
+
     String tranffic = "";
     Tuple2<bool, String>? tranfficExpire;
     String updateInterval = "";
 
-    if (remote) {
+    if (setting.isRemote()) {
       if (setting.upload != 0 || setting.download != 0 || setting.total != 0) {
         String upload =
             ClashHttpApi.convertTrafficToStringDouble(setting.upload);
@@ -99,7 +99,7 @@ class ProfilesBoardItem extends StatelessWidget {
                 Align(
                   alignment: AlignmentDirectional.centerStart,
                   child: Text(
-                    remote ? "URL" : "Local",
+                    setting.getType(),
                     style: TextStyle(
                         color: selected ? ThemeDefine.kColorBlue : null,
                         fontSize: 12),
@@ -226,7 +226,7 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
 
   void showMore(ProfileSetting setting) {
     final tcontext = Translations.of(context);
-    bool remote = setting.url != null && setting.url!.isNotEmpty;
+
     var widgets = [
       ListTile(
         title: Text(tcontext.meta.view),
@@ -248,7 +248,7 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
                       )));
         },
       ),
-      remote
+      setting.isRemote()
           ? ListTile(
               title: Text(tcontext.meta.update),
               minLeadingWidth: 40,
@@ -281,14 +281,14 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
                             )));
               },
             ),
-      setting.url != null && setting.url!.isNotEmpty
+      setting.isRemote()
           ? ListTile(
               title: Text(tcontext.meta.copyUrl),
               minLeadingWidth: 40,
               onTap: () async {
                 Navigator.of(context).pop();
                 try {
-                  Clipboard.setData(ClipboardData(text: setting.url!));
+                  Clipboard.setData(ClipboardData(text: setting.url));
                 } catch (e) {}
               },
             )

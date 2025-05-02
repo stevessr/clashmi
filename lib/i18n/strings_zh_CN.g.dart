@@ -228,6 +228,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get launchAtStartup => '开机启动';
 	@override String get launchAtStartupRunAsAdmin => '请以管理员身份重新启动Clash Mi';
 	@override String get systemProxy => '系统代理';
+	@override String get autoConnectAfterLaunch => '启动后自动连接';
 	@override String get autoSetSystemProxy => '连接后自动设置系统代理';
 	@override String get website => '官网';
 	@override String get rule => '规则';
@@ -520,6 +521,7 @@ extension on TranslationsZhCn {
 			case 'meta.launchAtStartup': return '开机启动';
 			case 'meta.launchAtStartupRunAsAdmin': return '请以管理员身份重新启动Clash Mi';
 			case 'meta.systemProxy': return '系统代理';
+			case 'meta.autoConnectAfterLaunch': return '启动后自动连接';
 			case 'meta.autoSetSystemProxy': return '连接后自动设置系统代理';
 			case 'meta.website': return '官网';
 			case 'meta.rule': return '规则';

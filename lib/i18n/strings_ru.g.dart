@@ -228,6 +228,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get launchAtStartup => 'Запуск при включении';
 	@override String get launchAtStartupRunAsAdmin => 'Пожалуйста, перезапустите Clash Mi от имени администратора.';
 	@override String get systemProxy => 'Системный прокси';
+	@override String get autoConnectAfterLaunch => 'Автоматическое подключение после запуска';
 	@override String get autoSetSystemProxy => 'Установить системный прокси после подключения';
 	@override String get website => 'Веб-сайт';
 	@override String get rule => 'Правила';
@@ -520,6 +521,7 @@ extension on TranslationsRu {
 			case 'meta.launchAtStartup': return 'Запуск при включении';
 			case 'meta.launchAtStartupRunAsAdmin': return 'Пожалуйста, перезапустите Clash Mi от имени администратора.';
 			case 'meta.systemProxy': return 'Системный прокси';
+			case 'meta.autoConnectAfterLaunch': return 'Автоматическое подключение после запуска';
 			case 'meta.autoSetSystemProxy': return 'Установить системный прокси после подключения';
 			case 'meta.website': return 'Веб-сайт';
 			case 'meta.rule': return 'Правила';
