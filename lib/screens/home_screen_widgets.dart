@@ -350,6 +350,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
             _working = true;
             await VPNService.start(const Duration(seconds: 60));
             _working = false;
+            setState(() {});
           }
         }
       }
