@@ -419,15 +419,6 @@ class VPNService {
     return false;
   }
 
-  static Future<List<int?>> getPortsBySetting() async {
-    bool start = await getStarted();
-    if (start) {
-      final mixedPort = ClashSettingManager.getMixedPort();
-      return [mixedPort, null];
-    }
-    return [null];
-  }
-
   static Future<List<int?>> getPortsByPrefer(bool preferForward) async {
     var started = await getStarted();
     if (started) {

@@ -86,7 +86,6 @@ class RemoteConfig {
   static const String kDefaultConfig = "https://dot.$kDefaultHost/config.json";
   static const String kDefaultAutoUpdate =
       "https://dot.$kDefaultHost/autoupdate.json";
-  static const String kDefaultOutpost = "https://outpost.$kDefaultHost/put";
 
   static const String kDefaultGetTranffic =
       "https://$kDefaultHost/page/sponsor#list";
@@ -107,7 +106,6 @@ class RemoteConfig {
   String notice = kDefaultNotice;
   String config = kDefaultConfig;
   String autoUpdate = kDefaultAutoUpdate;
-  String outpost = kDefaultOutpost;
 
   String getTranffic = kDefaultGetTranffic;
   String tutorial = kDefaultTutorial;
