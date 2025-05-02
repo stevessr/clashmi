@@ -17,12 +17,14 @@ class ProfilesBoardItem extends StatelessWidget {
     super.key,
     required this.setting,
     required this.selected,
+    required this.showDivider,
     required this.onTap,
     required this.onTapMore,
   });
 
   final ProfileSetting setting;
   final bool selected;
+  final bool showDivider;
   final Function() onTap;
   final Function() onTapMore;
 
@@ -67,11 +69,11 @@ class ProfilesBoardItem extends StatelessWidget {
         }
       }
     }
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Expanded(
-          child: InkWell(
+    return InkWell(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -128,48 +130,54 @@ class ProfilesBoardItem extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
+                showDivider
+                    ? const Divider(
+                        height: 1,
+                        thickness: 0.3,
+                      )
+                    : SizedBox.shrink(),
               ],
             ),
-            onTap: () {
-              onTap();
-            },
           ),
-        ),
-        SizedBox(
-          width: 50,
-          child: Text(
-            updateInterval,
-            textAlign: TextAlign.right,
-            style: TextStyle(color: selected ? ThemeDefine.kColorBlue : null),
+          SizedBox(
+            width: 50,
+            child: Text(
+              updateInterval,
+              textAlign: TextAlign.right,
+              style: TextStyle(color: selected ? ThemeDefine.kColorBlue : null),
+            ),
           ),
-        ),
-        SizedBox(
-          width: 40,
-          height: 40,
-          child: ProfileManager.updating.contains(setting.id)
-              ? const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: RepaintBoundary(
-                        child: CircularProgressIndicator(strokeWidth: 2),
+          SizedBox(
+            width: 40,
+            height: 40,
+            child: ProfileManager.updating.contains(setting.id)
+                ? const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: RepaintBoundary(
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
                       ),
+                    ],
+                  )
+                : InkWell(
+                    child: Icon(
+                      Icons.more_vert_outlined,
+                      size: 20,
                     ),
-                  ],
-                )
-              : InkWell(
-                  child: Icon(
-                    Icons.more_vert_outlined,
-                    size: 20,
+                    onTap: () {
+                      onTapMore();
+                    },
                   ),
-                  onTap: () {
-                    onTapMore();
-                  },
-                ),
-        )
-      ],
+          ),
+        ],
+      ),
+      onTap: () {
+        onTap();
+      },
     );
   }
 }
@@ -185,41 +193,51 @@ class ProfilesBoardScreenWidget extends StatefulWidget {
 
 class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    ProfileManager.save();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final current = ProfileManager.getCurrent();
 
-    var widgets = [];
-    for (var setting in widget.settings) {
-      final isCurrent = current != null && current.id == setting.id;
+    List<Widget> widgets = [];
+    for (int i = 0; i < widget.settings.length; ++i) {
+      var setting = widget.settings[i];
+      final isCurrent = current?.id == setting.id;
 
-      widgets.add(ProfilesBoardItem(
-          setting: setting,
-          selected: isCurrent,
-          onTap: () {
-            ProfileManager.setCurrent(setting.id);
-            ProfileManager.save();
-            Navigator.of(context).pop();
-          },
-          onTapMore: () {
-            showMore(setting);
-          }));
+      widgets.add(Material(
+          key: Key(setting.id),
+          child: ProfilesBoardItem(
+              setting: setting,
+              selected: isCurrent,
+              showDivider: i != widget.settings.length - 1,
+              onTap: () {
+                ProfileManager.setCurrent(setting.id);
+                Navigator.of(context).pop();
+              },
+              onTapMore: () {
+                showMore(setting);
+              })));
     }
 
     return Card(
         child: Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: Scrollbar(
-          child: ListView.separated(
-        itemBuilder: (_, index) {
-          return widgets[index];
+          child: ReorderableListView(
+        children: widgets,
+        onReorder: (int oldIndex, int newIndex) {
+          ProfileManager.reorder(oldIndex, newIndex);
+
+          setState(() {});
         },
-        separatorBuilder: (BuildContext context, int index) {
-          return const Divider(
-            height: 1,
-            thickness: 0.3,
-          );
-        },
-        itemCount: widgets.length,
       )),
     ));
   }
@@ -423,6 +441,5 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
             )),
           )),
     );
-    ProfileManager.save();
   }
 }

@@ -514,4 +514,16 @@ class ProfileManager {
     final filePath = path.join(await PathUtils.profilesDir(), id);
     return filePath;
   }
+
+  static void reorder(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    if (oldIndex >= _profileConfig.profiles.length ||
+        newIndex >= _profileConfig.profiles.length) {
+      return;
+    }
+    var item = _profileConfig.profiles.removeAt(oldIndex);
+    _profileConfig.profiles.insert(newIndex, item);
+  }
 }
