@@ -17,7 +17,7 @@ class Zashboard {
 
   static Future<String> getUrl() async {
     String secret = await ClashHttpApi.getSecret();
-    return 'http://127.0.0.1:$_port?hostname=127.0.0.1&port=${ClashSettingManager.getControlPort()}&secret=$secret';
+    return 'http://127.0.0.1:$_port?hostname=127.0.0.1&port=${ClashSettingManager.getControlPort()}&secret=$secret&http=true';
   }
 
   static Future<ReturnResultError?> start() async {
@@ -32,7 +32,8 @@ class Zashboard {
 
       try {
         ServerSocket serverSocket = await ServerSocket.bind(
-            InternetAddress.loopbackIPv4, SettingManager.getConfig().boardPort);
+            InternetAddress.loopbackIPv4,
+            SettingManager.getConfig().boardLocalPort);
         _port = serverSocket.port;
         await serverSocket.close();
       } catch (err) {

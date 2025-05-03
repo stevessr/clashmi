@@ -153,6 +153,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get edit => '编辑';
 	@override String get view => '查看';
 	@override String get remark => '备注';
+	@override String get editRemark => '修改备注';
 	@override String get more => '更多';
 	@override String get tips => '提示';
 	@override String get copy => '拷贝';
@@ -262,7 +263,9 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get help => '帮助';
 	@override String get tutorial => '使用教程';
 	@override String get board => '面板';
-	@override String get boardPort => '面板端口';
+	@override String get boardOnline => '使用在线面板';
+	@override String get boardOnlineUrl => '在线面板URL';
+	@override String get boardLocalPort => '本地面板端口';
 	@override String get proxy => '代理';
 	@override String get theme => '主题';
 	@override String get tvMode => 'TV模式';
@@ -446,6 +449,7 @@ extension on TranslationsZhCn {
 			case 'meta.edit': return '编辑';
 			case 'meta.view': return '查看';
 			case 'meta.remark': return '备注';
+			case 'meta.editRemark': return '修改备注';
 			case 'meta.more': return '更多';
 			case 'meta.tips': return '提示';
 			case 'meta.copy': return '拷贝';
@@ -555,7 +559,9 @@ extension on TranslationsZhCn {
 			case 'meta.help': return '帮助';
 			case 'meta.tutorial': return '使用教程';
 			case 'meta.board': return '面板';
-			case 'meta.boardPort': return '面板端口';
+			case 'meta.boardOnline': return '使用在线面板';
+			case 'meta.boardOnlineUrl': return '在线面板URL';
+			case 'meta.boardLocalPort': return '本地面板端口';
 			case 'meta.proxy': return '代理';
 			case 'meta.theme': return '主题';
 			case 'meta.tvMode': return 'TV模式';

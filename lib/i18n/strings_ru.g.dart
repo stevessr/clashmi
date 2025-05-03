@@ -153,6 +153,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get edit => 'Редактировать';
 	@override String get view => 'Просмотр';
 	@override String get remark => 'Примечание';
+	@override String get editRemark => 'Заметки об изменениях';
 	@override String get more => 'Больше';
 	@override String get tips => 'Инфо';
 	@override String get copy => 'Скопировать';
@@ -262,7 +263,9 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get help => 'помощь';
 	@override String get tutorial => 'Руководство';
 	@override String get board => 'панель';
-	@override String get boardPort => 'Порты панели';
+	@override String get boardOnline => 'Использование онлайн-панели';
+	@override String get boardOnlineUrl => 'URL-адрес онлайн-панели';
+	@override String get boardLocalPort => 'Порт локальной панели';
 	@override String get proxy => 'действующий';
 	@override String get theme => 'тема';
 	@override String get tvMode => 'Режим ТВ';
@@ -446,6 +449,7 @@ extension on TranslationsRu {
 			case 'meta.edit': return 'Редактировать';
 			case 'meta.view': return 'Просмотр';
 			case 'meta.remark': return 'Примечание';
+			case 'meta.editRemark': return 'Заметки об изменениях';
 			case 'meta.more': return 'Больше';
 			case 'meta.tips': return 'Инфо';
 			case 'meta.copy': return 'Скопировать';
@@ -555,7 +559,9 @@ extension on TranslationsRu {
 			case 'meta.help': return 'помощь';
 			case 'meta.tutorial': return 'Руководство';
 			case 'meta.board': return 'панель';
-			case 'meta.boardPort': return 'Порты панели';
+			case 'meta.boardOnline': return 'Использование онлайн-панели';
+			case 'meta.boardOnlineUrl': return 'URL-адрес онлайн-панели';
+			case 'meta.boardLocalPort': return 'Порт локальной панели';
 			case 'meta.proxy': return 'действующий';
 			case 'meta.theme': return 'тема';
 			case 'meta.tvMode': return 'Режим ТВ';

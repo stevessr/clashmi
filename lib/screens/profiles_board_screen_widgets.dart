@@ -5,6 +5,7 @@ import 'package:clashmi/app/modules/profile_manager.dart';
 import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/i18n/strings.g.dart';
+import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/file_view_screen.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/widgets/sheet.dart';
@@ -299,6 +300,26 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
                             )));
               },
             ),
+      ListTile(
+        title: Text(tcontext.meta.editRemark),
+        minLeadingWidth: 40,
+        onTap: () async {
+          Navigator.of(context).pop();
+          var text = await DialogUtils.showTextInputDialog(
+              context, tcontext.meta.remark, setting.remark, "", null, (text) {
+            text = text.trim();
+            if (text.isEmpty) {
+              return false;
+            }
+
+            return true;
+          });
+          if (text != null) {
+            setting.remark = text;
+            setState(() {});
+          }
+        },
+      ),
       setting.isRemote()
           ? ListTile(
               title: Text(tcontext.meta.copyUrl),

@@ -78,6 +78,10 @@ class ProfileSetting {
     return remark.isEmpty ? id : "$remark [$id]";
   }
 
+  String getShortShowName() {
+    return remark.isEmpty ? id : remark;
+  }
+
   void updateSubscriptionTraffic(HttpHeaders? header) {
     if (header == null) {
       return;

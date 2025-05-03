@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:clashmi/app/modules/profile_manager.dart';
 import 'package:clashmi/app/modules/profile_patch_manager.dart';
+import 'package:clashmi/app/modules/zashboard.dart';
 import 'package:clashmi/screens/add_profile_patch_by_import_from_file_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:clashmi/app/clash/clash_config.dart';
@@ -379,16 +380,8 @@ class GroupHelper {
                 onChanged: (String value) {
                   setting.setUserAgent(value);
                 })),
-        GroupItemOptions(
-            textFormFieldOptions: GroupItemTextFieldOptions(
-                name: tcontext.meta.boardPort,
-                text: setting.boardPort.toString(),
-                textWidthPercent: 0.5,
-                onChanged: (String value) {
-                  setting.boardPort =
-                      int.tryParse(value) ?? SettingConfig.kDefaultBoardPort;
-                })),
       ];
+
       List<GroupItemOptions> options1 = [
         GroupItemOptions(
             textFormFieldOptions: GroupItemTextFieldOptions(
@@ -409,6 +402,43 @@ class GroupHelper {
       ];
 
       List<GroupItemOptions> options2 = [
+        !Platform.isIOS
+            ? GroupItemOptions(
+                switchOptions: GroupItemSwitchOptions(
+                name: tcontext.meta.boardOnline,
+                switchValue: setting.boardOnline,
+                onSwitch: (bool value) async {
+                  setting.boardOnline = value;
+                  if (value) {
+                    Zashboard.stop();
+                  }
+                },
+              ))
+            : GroupItemOptions(),
+        !Platform.isIOS && setting.boardOnline
+            ? GroupItemOptions(
+                textFormFieldOptions: GroupItemTextFieldOptions(
+                    name: tcontext.meta.boardOnlineUrl,
+                    text: setting.boardUrl,
+                    textWidthPercent: 0.5,
+                    onChanged: (String value) {
+                      setting.boardUrl = value;
+                    }))
+            : GroupItemOptions(),
+        Platform.isIOS || !setting.boardOnline
+            ? GroupItemOptions(
+                textFormFieldOptions: GroupItemTextFieldOptions(
+                    name: tcontext.meta.boardLocalPort,
+                    text: setting.boardLocalPort.toString(),
+                    textWidthPercent: 0.5,
+                    onChanged: (String value) {
+                      setting.boardLocalPort = int.tryParse(value) ??
+                          SettingConfig.kDefaultBoardPort;
+                    }))
+            : GroupItemOptions(),
+      ];
+
+      List<GroupItemOptions> options3 = [
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
           name: tcontext.meta.launchAtStartup,
@@ -431,7 +461,7 @@ class GroupHelper {
           },
         )),
       ];
-      List<GroupItemOptions> options3 = [
+      List<GroupItemOptions> options4 = [
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.meta.autoConnectAfterLaunch,
@@ -451,13 +481,14 @@ class GroupHelper {
       List<GroupItem> gitems = [
         GroupItem(options: options),
         GroupItem(options: options0),
-        GroupItem(options: options1)
+        GroupItem(options: options1),
+        GroupItem(options: options2)
       ];
       if (Platform.isWindows) {
-        gitems.add(GroupItem(options: options2));
+        gitems.add(GroupItem(options: options3));
       }
       if (PlatformUtils.isPC()) {
-        gitems.add(GroupItem(options: options3));
+        gitems.add(GroupItem(options: options4));
       }
 
       return gitems;

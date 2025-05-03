@@ -100,6 +100,7 @@ class SettingConfigItemWebDev {
 }
 
 class SettingConfig {
+  static const String kDefaultBoardUrl = "https://board.zash.run.place/";
   static const int kDefaultBoardPort = 7066;
   static const String kDefaultDelayTestUrl =
       "https://www.gstatic.com/generate_204";
@@ -111,7 +112,9 @@ class SettingConfig {
   bool autoConnectAfterLaunch = false;
   bool autoSetSystemProxy = getAutoSetSystemProxyDefault();
   String _userAgent = "";
-  int boardPort = kDefaultBoardPort;
+  bool boardOnline = false;
+  String boardUrl = kDefaultBoardUrl;
+  int boardLocalPort = kDefaultBoardPort;
   String delayTestUrl = kDefaultDelayTestUrl;
   int delayTestTimeout = 5000;
 
@@ -124,7 +127,9 @@ class SettingConfig {
         'auto_connect_after_launch': autoConnectAfterLaunch,
         'auto_set_system_proxy': autoSetSystemProxy,
         'user_agent': _userAgent,
-        'board_port': boardPort,
+        'board_online': boardOnline,
+        'board_url': boardUrl,
+        'board_port': boardLocalPort,
         'delay_test_url': delayTestUrl,
         'delay_test_url_timeout': delayTestTimeout,
       };
@@ -146,7 +151,10 @@ class SettingConfig {
     autoSetSystemProxy =
         map["auto_set_system_proxy"] ?? getAutoSetSystemProxyDefault();
     _userAgent = map["user_agent"] ?? "";
-    boardPort = map["board_port"] ?? kDefaultBoardPort;
+
+    boardOnline = map["board_online"] ?? false;
+    boardUrl = map["board_url"] ?? kDefaultBoardPort;
+    boardLocalPort = map["board_port"] ?? kDefaultBoardUrl;
     delayTestUrl = map["delay_test_url"] ?? kDefaultDelayTestUrl;
     delayTestTimeout = map["delay_test_url_timeout"] ?? 5000;
   }

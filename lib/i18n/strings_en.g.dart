@@ -156,6 +156,7 @@ class TranslationsMetaEn {
 	String get edit => 'Edit';
 	String get view => 'View';
 	String get remark => 'Remark';
+	String get editRemark => 'Edit Remark';
 	String get more => 'More';
 	String get tips => 'Info';
 	String get copy => 'Copy';
@@ -265,7 +266,9 @@ class TranslationsMetaEn {
 	String get help => 'Help';
 	String get tutorial => 'Tutorial';
 	String get board => 'Board';
-	String get boardPort => 'Board Port';
+	String get boardOnline => 'Use Online Board';
+	String get boardOnlineUrl => 'Online Board URL';
+	String get boardLocalPort => 'Local Board Port';
 	String get proxy => 'Proxy';
 	String get theme => 'Theme';
 	String get tvMode => 'TV Mode';
@@ -449,6 +452,7 @@ extension on Translations {
 			case 'meta.edit': return 'Edit';
 			case 'meta.view': return 'View';
 			case 'meta.remark': return 'Remark';
+			case 'meta.editRemark': return 'Edit Remark';
 			case 'meta.more': return 'More';
 			case 'meta.tips': return 'Info';
 			case 'meta.copy': return 'Copy';
@@ -558,7 +562,9 @@ extension on Translations {
 			case 'meta.help': return 'Help';
 			case 'meta.tutorial': return 'Tutorial';
 			case 'meta.board': return 'Board';
-			case 'meta.boardPort': return 'Board Port';
+			case 'meta.boardOnline': return 'Use Online Board';
+			case 'meta.boardOnlineUrl': return 'Online Board URL';
+			case 'meta.boardLocalPort': return 'Local Board Port';
 			case 'meta.proxy': return 'Proxy';
 			case 'meta.theme': return 'Theme';
 			case 'meta.tvMode': return 'TV Mode';

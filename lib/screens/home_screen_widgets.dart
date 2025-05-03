@@ -83,6 +83,8 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     final tcontext = Translations.of(context);
     bool connected = _state == FlutterVpnServiceState.connected;
     final currentProfile = ProfileManager.getCurrent();
+    final currentProfileName = currentProfile?.getShortShowName() ?? "";
+
     var widgets = [
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -231,9 +233,10 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
       ),
       ListTile(
         title: Text(tcontext.meta.myProfiles),
-        subtitle: currentProfile == null
-            ? Text("")
-            : Text(currentProfile.getShowName()),
+        subtitle: Text(currentProfileName,
+            style: TextStyle(
+              color: ThemeDefine.kColorBlue,
+            )),
         trailing: Icon(
           Icons.keyboard_arrow_right,
           size: 20,
@@ -280,6 +283,31 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
         ),
         minVerticalPadding: 20,
         onTap: () async {
+          var setting = SettingManager.getConfig();
+          if (setting.boardOnline && setting.boardUrl.isNotEmpty) {
+            final uri = Uri.tryParse(setting.boardUrl);
+            if (uri == null) {
+              final msg = "${tcontext.meta.urlInvalid}:${setting.boardUrl}";
+              DialogUtils.showAlertDialog(context, msg);
+              return;
+            }
+            final shortUrl = Uri(
+              scheme: uri.scheme,
+              userInfo: uri.userInfo,
+              host: uri.host,
+              port: uri.port,
+            );
+
+            String secret = await ClashHttpApi.getSecret();
+            final url =
+                '${shortUrl.toString()}/?hostname=127.0.0.1&port=${ClashSettingManager.getControlPort()}&secret=$secret&http=true';
+            if (!context.mounted) {
+              return;
+            }
+            await WebviewHelper.loadUrl(context, url, "onlineboard",
+                title: tcontext.meta.board, inappWebViewOpenExternal: false);
+            return;
+          }
           ReturnResultError? err = await Zashboard.start();
           if (err != null) {
             if (!context.mounted) {
@@ -333,10 +361,11 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
 
   Widget _buildWithValue(BuildContext context, String value, Widget? child) {
     return SizedBox(
-      child: Text(
-        value,
-        textAlign: TextAlign.start,
-      ),
+      child: Text(value,
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            color: ThemeDefine.kColorBlue,
+          )),
     );
   }
 

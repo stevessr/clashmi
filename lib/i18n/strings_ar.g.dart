@@ -153,6 +153,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get edit => 'يحرر';
 	@override String get view => 'يفحص';
 	@override String get remark => 'ملاحظة';
+	@override String get editRemark => 'ملاحظات التعديل';
 	@override String get more => 'أكثر';
 	@override String get tips => 'معلومات';
 	@override String get copy => 'ينسخ';
@@ -262,7 +263,9 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get help => 'يساعد';
 	@override String get tutorial => 'درس تعليمي';
 	@override String get board => 'لوحة';
-	@override String get boardPort => 'منافذ اللوحة';
+	@override String get boardOnline => 'استخدام اللوحة عبر الإنترنت';
+	@override String get boardOnlineUrl => 'عنوان URL للوحة عبر الإنترنت';
+	@override String get boardLocalPort => 'منفذ اللوحة المحلية';
 	@override String get proxy => 'التمثيل';
 	@override String get theme => 'سمة';
 	@override String get tvMode => 'وضع التلفزيون';
@@ -446,6 +449,7 @@ extension on TranslationsAr {
 			case 'meta.edit': return 'يحرر';
 			case 'meta.view': return 'يفحص';
 			case 'meta.remark': return 'ملاحظة';
+			case 'meta.editRemark': return 'ملاحظات التعديل';
 			case 'meta.more': return 'أكثر';
 			case 'meta.tips': return 'معلومات';
 			case 'meta.copy': return 'ينسخ';
@@ -555,7 +559,9 @@ extension on TranslationsAr {
 			case 'meta.help': return 'يساعد';
 			case 'meta.tutorial': return 'درس تعليمي';
 			case 'meta.board': return 'لوحة';
-			case 'meta.boardPort': return 'منافذ اللوحة';
+			case 'meta.boardOnline': return 'استخدام اللوحة عبر الإنترنت';
+			case 'meta.boardOnlineUrl': return 'عنوان URL للوحة عبر الإنترنت';
+			case 'meta.boardLocalPort': return 'منفذ اللوحة المحلية';
 			case 'meta.proxy': return 'التمثيل';
 			case 'meta.theme': return 'سمة';
 			case 'meta.tvMode': return 'وضع التلفزيون';

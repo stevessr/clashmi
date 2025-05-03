@@ -171,11 +171,6 @@ class _ProxyBoardScreenState extends LasyRenderingState<ProxyBoardScreen>
   Future<List<ClashProxiesNode>> getProxies() async {
     var result = await ClashHttpApi.getProxies();
     if (result.error != null) {
-      if (!mounted) {
-        _nodes = [];
-        return _nodes;
-      }
-      DialogUtils.showAlertDialog(context, result.error!.message);
       _nodes = [];
       return _nodes;
     }

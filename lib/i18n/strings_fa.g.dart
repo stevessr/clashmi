@@ -153,6 +153,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get edit => 'ویرایش کنید';
 	@override String get view => 'بررسی';
 	@override String get remark => 'ملاحضات';
+	@override String get editRemark => 'یادداشت های اصلاحی';
 	@override String get more => 'بیشتر';
 	@override String get tips => 'اطلاعات';
 	@override String get copy => 'کپی';
@@ -262,7 +263,9 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get help => 'کمک کند';
 	@override String get tutorial => 'آموزش';
 	@override String get board => 'پانل';
-	@override String get boardPort => 'پورت های پنل';
+	@override String get boardOnline => 'با استفاده از پنل آنلاین';
+	@override String get boardOnlineUrl => 'آدرس پنل آنلاین';
+	@override String get boardLocalPort => 'پورت پانل محلی';
 	@override String get proxy => 'بازیگری';
 	@override String get theme => 'موضوع';
 	@override String get tvMode => 'حالت تلویزیون';
@@ -446,6 +449,7 @@ extension on TranslationsFa {
 			case 'meta.edit': return 'ویرایش کنید';
 			case 'meta.view': return 'بررسی';
 			case 'meta.remark': return 'ملاحضات';
+			case 'meta.editRemark': return 'یادداشت های اصلاحی';
 			case 'meta.more': return 'بیشتر';
 			case 'meta.tips': return 'اطلاعات';
 			case 'meta.copy': return 'کپی';
@@ -555,7 +559,9 @@ extension on TranslationsFa {
 			case 'meta.help': return 'کمک کند';
 			case 'meta.tutorial': return 'آموزش';
 			case 'meta.board': return 'پانل';
-			case 'meta.boardPort': return 'پورت های پنل';
+			case 'meta.boardOnline': return 'با استفاده از پنل آنلاین';
+			case 'meta.boardOnlineUrl': return 'آدرس پنل آنلاین';
+			case 'meta.boardLocalPort': return 'پورت پانل محلی';
 			case 'meta.proxy': return 'بازیگری';
 			case 'meta.theme': return 'موضوع';
 			case 'meta.tvMode': return 'حالت تلویزیون';
