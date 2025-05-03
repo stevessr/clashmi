@@ -42,6 +42,7 @@ class GroupItemTextFieldOptions {
     this.hint,
     this.errorText,
     this.enabled,
+    this.readOnly = false,
     this.autoFocus = false,
     this.focusNode,
     this.textInputAction,
@@ -60,6 +61,7 @@ class GroupItemTextFieldOptions {
   final TextStyle? textStyle;
   final String? hint;
   final String? errorText;
+  final bool readOnly;
   final bool? enabled;
   final bool autoFocus;
   final FocusNode? focusNode;

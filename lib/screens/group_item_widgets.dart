@@ -112,6 +112,7 @@ class GroupItemTextField extends StatelessWidget {
             alignment: AlignmentDirectional.centerEnd,
             child: TextFieldEx(
               style: options.textStyle,
+              readOnly: options.readOnly,
               controller: controller,
               textInputAction: options.textInputAction,
               cursorColor: Colors.black,
@@ -444,30 +445,32 @@ class GroupItemStringPicker extends StatelessWidget {
       }
     }
     return InkWell(
-        onTap: () {
-          showSheet(
-            title: "",
-            context: context,
-            body: SizedBox(
-                height: 400,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Scrollbar(
-                      child: ListView.separated(
-                    itemBuilder: (BuildContext context, int index) {
-                      return widgets[index];
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const Divider(
-                        height: 1,
-                        thickness: 0.3,
-                      );
-                    },
-                    itemCount: widgets.length,
-                  )),
-                )),
-          );
-        },
+        onTap: options.onPicker == null
+            ? null
+            : () {
+                showSheet(
+                  title: "",
+                  context: context,
+                  body: SizedBox(
+                      height: 400,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        child: Scrollbar(
+                            child: ListView.separated(
+                          itemBuilder: (BuildContext context, int index) {
+                            return widgets[index];
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const Divider(
+                              height: 1,
+                              thickness: 0.3,
+                            );
+                          },
+                          itemCount: widgets.length,
+                        )),
+                      )),
+                );
+              },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

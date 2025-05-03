@@ -396,6 +396,7 @@ class GroupHelper {
                 name: tcontext.meta.delayTestTimeout,
                 text: setting.delayTestTimeout.toString(),
                 textWidthPercent: 0.5,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 onChanged: (String value) {
                   setting.delayTestTimeout = int.tryParse(value) ?? 5000;
                 })),
@@ -431,6 +432,7 @@ class GroupHelper {
                     name: tcontext.meta.boardLocalPort,
                     text: setting.boardLocalPort.toString(),
                     textWidthPercent: 0.5,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     onChanged: (String value) {
                       setting.boardLocalPort = int.tryParse(value) ??
                           SettingConfig.kDefaultBoardPort;
@@ -575,6 +577,7 @@ class GroupHelper {
                 text: setting.MixedPort?.toString() ?? "",
                 textWidthPercent: 0.5,
                 hint: tcontext.meta.required,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 onChanged: (String value) {
                   setting.MixedPort = int.tryParse(value);
                 })),
@@ -929,32 +932,40 @@ class GroupHelper {
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.meta.enable,
                 switchValue: tun.Enable,
-                onSwitch: (bool value) async {
-                  tun.Enable = value;
-                })),
+                onSwitch: tun.OverWrite != true
+                    ? null
+                    : (bool value) async {
+                        tun.Enable = value;
+                      })),
         GroupItemOptions(
             stringPickerOptions: GroupItemStringPickerOptions(
                 name: tcontext.tun.stack,
                 selected:
                     tunStacks.contains(tun.Stack) ? tun.Stack : tunStacks.last,
                 strings: tunStacks,
-                onPicker: (String? selected) async {
-                  tun.Stack = selected;
-                })),
+                onPicker: tun.OverWrite != true || tun.Enable != true
+                    ? null
+                    : (String? selected) async {
+                        tun.Stack = selected;
+                      })),
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.tun.dnsHijack,
                 switchValue: tun.DNSHijack?.isNotEmpty,
-                onSwitch: (bool value) async {
-                  tun.DNSHijack = value ? ["172.19.0.2:53"] : null;
-                })),
+                onSwitch: tun.OverWrite != true || tun.Enable != true
+                    ? null
+                    : (bool value) async {
+                        tun.DNSHijack = value ? ["172.19.0.2:53"] : null;
+                      })),
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.tun.strictRoute,
                 switchValue: tun.StrictRoute,
-                onSwitch: (bool value) async {
-                  tun.StrictRoute = value;
-                })),
+                onSwitch: tun.OverWrite != true || tun.Enable != true
+                    ? null
+                    : (bool value) async {
+                        tun.StrictRoute = value;
+                      })),
       ];
       List<GroupItemOptions> options1 = [];
       if (Platform.isAndroid) {
@@ -963,9 +974,11 @@ class GroupHelper {
               switchOptions: GroupItemSwitchOptions(
                   name: tcontext.tun.allowBypass,
                   switchValue: extensions.Tun.httpProxy.AllowBypass,
-                  onSwitch: (bool value) async {
-                    extensions.Tun.httpProxy.AllowBypass = value;
-                  })),
+                  onSwitch: tun.OverWrite != true || tun.Enable != true
+                      ? null
+                      : (bool value) async {
+                          extensions.Tun.httpProxy.AllowBypass = value;
+                        })),
         ]);
       }
       if (Platform.isAndroid || Platform.isIOS) {
@@ -974,28 +987,34 @@ class GroupHelper {
               switchOptions: GroupItemSwitchOptions(
                   name: tcontext.tun.appendHttpProxy,
                   switchValue: extensions.Tun.httpProxy.Enable,
-                  onSwitch: (bool value) async {
-                    extensions.Tun.httpProxy.Enable = value;
-                    extensions.Tun.httpProxy.Server =
-                        value ? "127.0.0.1" : null;
-                    extensions.Tun.httpProxy.ServerPort =
-                        value ? setting.MixedPort : null;
-                  })),
+                  onSwitch: tun.OverWrite != true || tun.Enable != true
+                      ? null
+                      : (bool value) async {
+                          extensions.Tun.httpProxy.Enable = value;
+                          extensions.Tun.httpProxy.Server =
+                              value ? "127.0.0.1" : null;
+                          extensions.Tun.httpProxy.ServerPort =
+                              value ? setting.MixedPort : null;
+                        })),
           GroupItemOptions(
               pushOptions: GroupItemPushOptions(
                   name: tcontext.tun.bypassHttpProxyDomain,
-                  onPush: () async {
-                    extensions.Tun.httpProxy.BypassDomain ??= [];
-                    await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            settings: ListAddScreen.routSettings(
-                                "HttpProxyBypassDomain"),
-                            builder: (context) => ListAddScreen(
-                                  title: tcontext.tun.bypassHttpProxyDomain,
-                                  data: extensions.Tun.httpProxy.BypassDomain!,
-                                )));
-                  }))
+                  onPush: tun.OverWrite != true || tun.Enable != true
+                      ? null
+                      : () async {
+                          extensions.Tun.httpProxy.BypassDomain ??= [];
+                          await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  settings: ListAddScreen.routSettings(
+                                      "HttpProxyBypassDomain"),
+                                  builder: (context) => ListAddScreen(
+                                        title:
+                                            tcontext.tun.bypassHttpProxyDomain,
+                                        data: extensions
+                                            .Tun.httpProxy.BypassDomain!,
+                                      )));
+                        }))
         ]);
       }
 
@@ -1035,44 +1054,56 @@ class GroupHelper {
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.meta.enable,
                 switchValue: dns.Enable,
-                onSwitch: (bool value) async {
-                  dns.Enable = value;
-                })),
+                onSwitch: dns.OverWrite != true
+                    ? null
+                    : (bool value) async {
+                        dns.Enable = value;
+                      })),
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.dns.preferH3,
                 switchValue: dns.PreferH3,
-                onSwitch: (bool value) async {
-                  dns.PreferH3 = value;
-                })),
+                onSwitch: dns.OverWrite != true || dns.Enable != true
+                    ? null
+                    : (bool value) async {
+                        dns.PreferH3 = value;
+                      })),
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.dns.useHosts,
                 switchValue: dns.UseHosts,
-                onSwitch: (bool value) async {
-                  dns.UseHosts = value;
-                })),
+                onSwitch: dns.OverWrite != true || dns.Enable != true
+                    ? null
+                    : (bool value) async {
+                        dns.UseHosts = value;
+                      })),
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.dns.useSystemHosts,
                 switchValue: dns.UseSystemHosts,
-                onSwitch: (bool value) async {
-                  dns.UseSystemHosts = value;
-                })),
-        /* GroupItemOptions(
+                onSwitch: dns.OverWrite != true || dns.Enable != true
+                    ? null
+                    : (bool value) async {
+                        dns.UseSystemHosts = value;
+                      })),
+        /*   GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
               name: "RespectRules",
               switchValue: dns.RespectRules,
-              onSwitch: (bool value) async {
+              onSwitch: dns.OverWrite != true || dns.Enable != true
+                    ? null
+                    : (bool value) async {
                 dns.RespectRules = value;
-              })),
-      GroupItemOptions(
+              }))  ,
+        GroupItemOptions(
           switchOptions: GroupItemSwitchOptions(
               name: "DirectNameServerFollowPolicy",
               switchValue: dns.DirectNameServerFollowPolicy,
-              onSwitch: (bool value) async {
+              onSwitch:dns.OverWrite != true || dns.Enable != true
+                    ? null
+                    :  (bool value) async {
                 dns.DirectNameServerFollowPolicy = value;
-              })),*/
+              }))  ,*/
       ];
       List<GroupItemOptions> options1 = [
         GroupItemOptions(
@@ -1082,9 +1113,11 @@ class GroupHelper {
                     ? dns.EnhancedMode
                     : enhancedModes.last,
                 strings: enhancedModes,
-                onPicker: (String? selected) async {
-                  dns.EnhancedMode = selected;
-                })),
+                onPicker: dns.OverWrite != true || dns.Enable != true
+                    ? null
+                    : (String? selected) async {
+                        dns.EnhancedMode = selected;
+                      })),
         GroupItemOptions(
             stringPickerOptions: GroupItemStringPickerOptions(
                 name: tcontext.dns.fakeIPFilterMode,
@@ -1092,59 +1125,71 @@ class GroupHelper {
                     ? dns.FakeIPFilterMode
                     : fakeIPFilterModes.last,
                 strings: fakeIPFilterModes,
-                onPicker: (String? selected) async {
-                  dns.FakeIPFilterMode = selected;
-                })),
+                onPicker: dns.OverWrite != true || dns.Enable != true
+                    ? null
+                    : (String? selected) async {
+                        dns.FakeIPFilterMode = selected;
+                      })),
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
                 name: tcontext.dns.fakeIPFilter,
-                onPush: () async {
-                  dns.FakeIPFilter ??= [];
-                  await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          settings: ListAddScreen.routSettings("FakeIPFilter"),
-                          builder: (context) => ListAddScreen(
-                                title: tcontext.dns.fakeIPFilter,
-                                data: dns.FakeIPFilter!,
-                              )));
-                })),
+                onPush: dns.OverWrite != true || dns.Enable != true
+                    ? null
+                    : () async {
+                        dns.FakeIPFilter ??= [];
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                settings:
+                                    ListAddScreen.routSettings("FakeIPFilter"),
+                                builder: (context) => ListAddScreen(
+                                      title: tcontext.dns.fakeIPFilter,
+                                      data: dns.FakeIPFilter!,
+                                    )));
+                      })),
       ];
       List<GroupItemOptions> options2 = [
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
                 name: tcontext.dns.defaultNameServer,
-                onPush: () async {
-                  dns.DefaultNameserver ??= [];
-                  await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          settings:
-                              ListAddScreen.routSettings("DefaultNameserver"),
-                          builder: (context) => ListAddScreen(
-                                title: tcontext.dns.defaultNameServer,
-                                data: dns.DefaultNameserver!,
-                              )));
-                })),
+                onPush: dns.OverWrite != true || dns.Enable != true
+                    ? null
+                    : () async {
+                        dns.DefaultNameserver ??= [];
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                settings: ListAddScreen.routSettings(
+                                    "DefaultNameserver"),
+                                builder: (context) => ListAddScreen(
+                                      title: tcontext.dns.defaultNameServer,
+                                      data: dns.DefaultNameserver!,
+                                    )));
+                      })),
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
                 name: tcontext.dns.nameServer,
-                onPush: () async {
-                  dns.NameServer ??= [];
-                  await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          settings: ListAddScreen.routSettings("NameServer"),
-                          builder: (context) => ListAddScreen(
-                                title: tcontext.dns.nameServer,
-                                data: dns.NameServer!,
-                              )));
-                })),
+                onPush: dns.OverWrite != true || dns.Enable != true
+                    ? null
+                    : () async {
+                        dns.NameServer ??= [];
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                settings:
+                                    ListAddScreen.routSettings("NameServer"),
+                                builder: (context) => ListAddScreen(
+                                      title: tcontext.dns.nameServer,
+                                      data: dns.NameServer!,
+                                    )));
+                      })),
 
         /*GroupItemOptions(
           pushOptions: GroupItemPushOptions(
               name: "ProxyServerNameserver",
-              onPush: () async {
+              onPush: dns.OverWrite != true || dns.Enable != true
+                    ? null
+                    : () async {
                 dns.ProxyServerNameserver ??= [];
                 await Navigator.push(
                     context,
@@ -1159,7 +1204,9 @@ class GroupHelper {
       GroupItemOptions(
           pushOptions: GroupItemPushOptions(
               name: "DirectNameServer",
-              onPush: () async {
+              onPush: dns.OverWrite != true || dns.Enable != true
+                    ? null
+                    : () async {
                 dns.DirectNameServer ??= [];
                 await Navigator.push(
                     context,
@@ -1174,30 +1221,36 @@ class GroupHelper {
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
                 name: tcontext.dns.fallbackNameServer,
-                onPush: () async {
-                  dns.Fallback ??= [];
-                  await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          settings: ListAddScreen.routSettings("Fallback"),
-                          builder: (context) => ListAddScreen(
-                                title: tcontext.dns.fallbackNameServer,
-                                data: dns.Fallback!,
-                              )));
-                })),
+                onPush: dns.OverWrite != true || dns.Enable != true
+                    ? null
+                    : () async {
+                        dns.Fallback ??= [];
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                settings:
+                                    ListAddScreen.routSettings("Fallback"),
+                                builder: (context) => ListAddScreen(
+                                      title: tcontext.dns.fallbackNameServer,
+                                      data: dns.Fallback!,
+                                    )));
+                      })),
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.dns.fallbackGeoIp,
                 switchValue: dns.FallbackFilter?.GeoIP,
-                onSwitch: (bool value) async {
-                  dns.FallbackFilter ??= RawFallbackFilter.by();
-                  dns.FallbackFilter?.GeoIP = value;
-                })),
+                onSwitch: dns.OverWrite != true || dns.Enable != true
+                    ? null
+                    : (bool value) async {
+                        dns.FallbackFilter ??= RawFallbackFilter.by();
+                        dns.FallbackFilter?.GeoIP = value;
+                      })),
         GroupItemOptions(
             textFormFieldOptions: GroupItemTextFieldOptions(
                 name: tcontext.dns.fallbackGeoIpCode,
                 text: dns.FallbackFilter?.GeoIPCode,
                 textWidthPercent: 0.5,
+                readOnly: dns.OverWrite != true || dns.Enable != true,
                 onChanged: (String value) {
                   dns.FallbackFilter ??= RawFallbackFilter.by();
                   dns.FallbackFilter?.GeoIPCode = value;
@@ -1239,15 +1292,18 @@ class GroupHelper {
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.meta.enable,
                 switchValue: ntp.Enable,
-                onSwitch: (bool value) async {
-                  ntp.Enable = value;
-                })),
+                onSwitch: ntp.OverWrite != true
+                    ? null
+                    : (bool value) async {
+                        ntp.Enable = value;
+                      })),
         GroupItemOptions(
             textFormFieldOptions: GroupItemTextFieldOptions(
                 name: tcontext.meta.server,
                 text: ntp.Server,
                 textWidthPercent: 0.5,
                 hint: tcontext.meta.required,
+                readOnly: ntp.OverWrite != true || ntp.Enable != true,
                 onChanged: (String value) {
                   ntp.Server = value;
                 })),
@@ -1257,6 +1313,8 @@ class GroupHelper {
                 text: ntp.Port?.toString() ?? "",
                 textWidthPercent: 0.5,
                 hint: tcontext.meta.required,
+                readOnly: ntp.OverWrite != true || ntp.Enable != true,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 onChanged: (String value) {
                   ntp.Port = int.tryParse(value);
                 })),
@@ -1296,6 +1354,7 @@ class GroupHelper {
                 name: tcontext.tls.certificate,
                 text: tls.Certificate,
                 textWidthPercent: 0.5,
+                readOnly: tls.OverWrite != true,
                 onChanged: (String value) {
                   tls.Certificate = value;
                 })),
@@ -1304,24 +1363,27 @@ class GroupHelper {
                 name: tcontext.tls.privateKey,
                 text: tls.PrivateKey,
                 textWidthPercent: 0.5,
+                readOnly: tls.OverWrite != true,
                 onChanged: (String value) {
                   tls.PrivateKey = value;
                 })),
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
                 name: tcontext.tls.customTrustCert,
-                onPush: () async {
-                  tls.CustomTrustCert ??= [];
-                  await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          settings:
-                              ListAddScreen.routSettings("CustomTrustCert"),
-                          builder: (context) => ListAddScreen(
-                                title: tcontext.tls.customTrustCert,
-                                data: tls.CustomTrustCert!,
-                              )));
-                })),
+                onPush: tls.OverWrite != true
+                    ? null
+                    : () async {
+                        tls.CustomTrustCert ??= [];
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                settings: ListAddScreen.routSettings(
+                                    "CustomTrustCert"),
+                                builder: (context) => ListAddScreen(
+                                      title: tcontext.tls.customTrustCert,
+                                      data: tls.CustomTrustCert!,
+                                    )));
+                      })),
       ];
 
       return [
@@ -1357,16 +1419,20 @@ class GroupHelper {
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.meta.enable,
                 switchValue: sniffer.Enable,
-                onSwitch: (bool value) async {
-                  sniffer.Enable = value;
-                })),
+                onSwitch: sniffer.OverWrite != true
+                    ? null
+                    : (bool value) async {
+                        sniffer.Enable = value;
+                      })),
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.sniffer.overrideDest,
                 switchValue: sniffer.OverrideDest,
-                onSwitch: (bool value) async {
-                  sniffer.OverrideDest = value;
-                })),
+                onSwitch: sniffer.OverWrite != true || sniffer.Enable != true
+                    ? null
+                    : (bool value) async {
+                        sniffer.OverrideDest = value;
+                      })),
       ];
 
       return [
@@ -1402,9 +1468,11 @@ class GroupHelper {
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.meta.autoUpdate,
                 switchValue: setting.GeoAutoUpdate,
-                onSwitch: (bool value) async {
-                  setting.GeoAutoUpdate = value;
-                })),
+                onSwitch: geo.OverWrite != true
+                    ? null
+                    : (bool value) async {
+                        setting.GeoAutoUpdate = value;
+                      })),
         GroupItemOptions(
             timerIntervalPickerOptions: GroupItemTimerIntervalPickerOptions(
                 name: tcontext.meta.updateInterval,
@@ -1413,20 +1481,23 @@ class GroupHelper {
                 showMinutes: false,
                 showSeconds: false,
                 showDisable: false,
-                onPicker: (bool canceled, Duration? duration) async {
-                  if (canceled) {
-                    return;
-                  }
-                  if (duration == null) {
-                    return;
-                  }
-                  setting.GeoUpdateInterval = duration.inSeconds;
-                })),
+                onPicker: geo.OverWrite != true
+                    ? null
+                    : (bool canceled, Duration? duration) async {
+                        if (canceled) {
+                          return;
+                        }
+                        if (duration == null) {
+                          return;
+                        }
+                        setting.GeoUpdateInterval = duration.inSeconds;
+                      })),
         GroupItemOptions(
             textFormFieldOptions: GroupItemTextFieldOptions(
                 name: "GeoIp",
                 text: geo.GeoIp,
                 textWidthPercent: 0.5,
+                readOnly: geo.OverWrite != true,
                 onChanged: (String value) {
                   geo.GeoIp = value;
                 })),
@@ -1435,6 +1506,7 @@ class GroupHelper {
                 name: "GeoSite",
                 text: geo.GeoSite,
                 textWidthPercent: 0.5,
+                readOnly: geo.OverWrite != true,
                 onChanged: (String value) {
                   geo.GeoSite = value;
                 })),
@@ -1443,6 +1515,7 @@ class GroupHelper {
                 name: "Mmdb",
                 text: geo.Mmdb,
                 textWidthPercent: 0.5,
+                readOnly: geo.OverWrite != true,
                 onChanged: (String value) {
                   geo.Mmdb = value;
                 })),
@@ -1451,6 +1524,7 @@ class GroupHelper {
                 name: "ASN",
                 text: geo.ASN,
                 textWidthPercent: 0.5,
+                readOnly: geo.OverWrite != true,
                 onChanged: (String value) {
                   geo.ASN = value;
                 })),
