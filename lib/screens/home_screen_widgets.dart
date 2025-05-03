@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:clashmi/app/clash/clash_config.dart';
 import 'package:clashmi/app/clash/clash_http_api.dart';
@@ -14,6 +15,7 @@ import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/app_lifecycle_state_notify.dart';
 import 'package:clashmi/app/utils/file_utils.dart';
 import 'package:clashmi/app/utils/http_utils.dart';
+import 'package:clashmi/app/utils/network_utils.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/app/utils/platform_utils.dart';
 import 'package:clashmi/app/utils/websocket.dart';
@@ -297,10 +299,11 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
               host: uri.host,
               port: uri.port,
             );
-
+            String host =
+                Platform.isIOS ? await _getLocalAddress() : "127.0.0.1";
             String secret = await ClashHttpApi.getSecret();
             final url =
-                '${shortUrl.toString()}/?hostname=127.0.0.1&port=${ClashSettingManager.getControlPort()}&secret=$secret&http=true';
+                '${shortUrl.toString()}/?hostname=$host&port=${ClashSettingManager.getControlPort()}&secret=$secret&http=true';
             if (!context.mounted) {
               return;
             }
@@ -367,6 +370,25 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
             color: ThemeDefine.kColorBlue,
           )),
     );
+  }
+
+  Future<String> _getLocalAddress() async {
+    String ipLocal = "127.0.0.1";
+    String ipInterface = ipLocal;
+
+    List<NetInterfacesInfo> interfaces =
+        await NetworkUtils.getInterfaces(addressType: InternetAddressType.IPv4);
+    if (interfaces.isNotEmpty) {
+      ipInterface = interfaces.first.address;
+    }
+    for (var interf in interfaces) {
+      if (interf.name.startsWith("en") || interf.name.startsWith("wlan")) {
+        ipInterface = interf.address;
+        break;
+      }
+    }
+
+    return ipInterface;
   }
 
   Future<void> _onInitAllFinish() async {
