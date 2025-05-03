@@ -286,7 +286,9 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
         minVerticalPadding: 20,
         onTap: () async {
           var setting = SettingManager.getConfig();
-          if (setting.boardOnline && setting.boardUrl.isNotEmpty) {
+          if (!Platform.isIOS &&
+              setting.boardOnline &&
+              setting.boardUrl.isNotEmpty) {
             final uri = Uri.tryParse(setting.boardUrl);
             if (uri == null) {
               final msg = "${tcontext.meta.urlInvalid}:${setting.boardUrl}";
