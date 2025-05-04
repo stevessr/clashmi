@@ -144,7 +144,7 @@ class AutoUpdateManager {
     try {
       String content = await file.readAsString();
       if (content.isNotEmpty) {
-        if (content.contains("karing")) {
+        if (content.contains("karing") || content.contains("RLU59OsJ")) {
           FileUtils.deleteFile(file);
           return;
         }
