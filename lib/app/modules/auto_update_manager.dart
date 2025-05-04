@@ -144,6 +144,10 @@ class AutoUpdateManager {
     try {
       String content = await file.readAsString();
       if (content.isNotEmpty) {
+        if (content.contains("karing")) {
+          FileUtils.deleteFile(file);
+          return;
+        }
         var config = jsonDecode(content);
         _versionCheck.fromJson(config);
       }

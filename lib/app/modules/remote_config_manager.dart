@@ -61,6 +61,10 @@ class RemoteConfigManager {
     try {
       String content = await file.readAsString();
       if (content.isNotEmpty) {
+        if (content.contains("karing.app")) {
+          FileUtils.deleteFile(file);
+          return;
+        }
         var config = jsonDecode(content);
         _config.fromJson(config);
       }
