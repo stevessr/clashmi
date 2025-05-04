@@ -220,6 +220,9 @@ class ProfileManager {
       final filePath = path.join(dir, id);
       await FileUtils.deletePath(filePath);
     }
+    for (var event in onEventCurrentChanged) {
+      event(_profileConfig._currentId);
+    }
   }
 
   static Future<void> save() async {

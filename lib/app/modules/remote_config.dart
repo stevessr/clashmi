@@ -82,10 +82,10 @@ class RemoteConfigDonate {
 
 class RemoteConfig {
   static const String kDefaultHost = "clashmi.app";
-  static const String kDefaultNotice = "https://dot.$kDefaultHost/notice.json";
-  static const String kDefaultConfig = "https://dot.$kDefaultHost/config.json";
+  static const String kDefaultConfig =
+      "https://dot.$kDefaultHost/clashmi_config.json";
   static const String kDefaultAutoUpdate =
-      "https://dot.$kDefaultHost/autoupdate.json";
+      "https://dot.$kDefaultHost/clashmi_autoupdate.json";
 
   static const String kDefaultGetTranffic =
       "https://$kDefaultHost/page/sponsor#list";
@@ -103,7 +103,6 @@ class RemoteConfig {
   List<RemoteConfigGetProfile> getProfile = [];
   List<RemoteConfigChannel> channels = [];
   String host = kDefaultHost;
-  String notice = kDefaultNotice;
   String config = kDefaultConfig;
   String autoUpdate = kDefaultAutoUpdate;
 
