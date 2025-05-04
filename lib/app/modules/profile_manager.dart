@@ -210,7 +210,7 @@ class ProfileManager {
     await load();
     for (var id in ids) {
       int index = _profileConfig.profiles.indexWhere((value) {
-        return value.id == _profileConfig._currentId;
+        return value.id == id;
       });
       if (index < 0) {
         idsToDelete.add(id);

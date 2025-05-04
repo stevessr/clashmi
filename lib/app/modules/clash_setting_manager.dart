@@ -34,8 +34,7 @@ class ClashSettingManager {
   static RawTun defaultTun() {
     return RawTun.by(
         OverWrite: true,
-        Enable:
-            true, //Platform.isAndroid || Platform.isIOS || Platform.isMacOS,
+        Enable: !Platform.isWindows,
         Stack: "gvisor",
         MTU: 9000,
         Inet4Address: ["$_gateWay.1/30"],

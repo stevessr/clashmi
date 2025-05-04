@@ -97,7 +97,7 @@ class ProfilePatchManager {
     await load();
     for (var id in ids) {
       int index = _profilePatchConfig.profilePatchs.indexWhere((value) {
-        return value.id == _profilePatchConfig._currentId;
+        return value.id == id;
       });
       if (index < 0) {
         idsToDelete.add(id);
