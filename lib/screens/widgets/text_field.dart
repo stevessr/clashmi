@@ -4,6 +4,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui show BoxHeightStyle, BoxWidthStyle;
 
+import 'package:flutter/services.dart';
+
 class TextFieldEx extends TextField {
   static bool popupEdit = false;
   const TextFieldEx({
@@ -84,6 +86,41 @@ class TextFieldEx extends TextField {
 }
 
 class _TextFieldExState<T> extends State<TextFieldEx> {
+  final _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _focusNode.onKeyEvent = ((_, event) {
+      final keys = HardwareKeyboard.instance.logicalKeysPressed;
+      final key = event.logicalKey;
+      if (!keys.contains(key)) {
+        return KeyEventResult.ignored;
+      }
+      if (key == LogicalKeyboardKey.arrowUp) {
+        FocusScope.of(context).focusInDirection(TraversalDirection.up);
+        return KeyEventResult.handled;
+      } else if (key == LogicalKeyboardKey.arrowDown) {
+        FocusScope.of(context).focusInDirection(TraversalDirection.down);
+        return KeyEventResult.handled;
+      } else if (key == LogicalKeyboardKey.arrowLeft) {
+        FocusScope.of(context).focusInDirection(TraversalDirection.left);
+        return KeyEventResult.handled;
+      } else if (key == LogicalKeyboardKey.arrowRight) {
+        FocusScope.of(context).focusInDirection(TraversalDirection.right);
+        return KeyEventResult.handled;
+      }
+      return KeyEventResult.ignored;
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -94,7 +131,7 @@ class _TextFieldExState<T> extends State<TextFieldEx> {
               },
         child: TextField(
           controller: widget.controller,
-          focusNode: TextFieldEx.popupEdit ? null : widget.focusNode,
+          focusNode: TextFieldEx.popupEdit ? _focusNode : widget.focusNode,
           undoController: TextFieldEx.popupEdit ? null : widget.undoController,
           decoration: widget.decoration,
           keyboardType: widget.keyboardType,
@@ -105,7 +142,7 @@ class _TextFieldExState<T> extends State<TextFieldEx> {
           textAlign: widget.textAlign,
           textAlignVertical: widget.textAlignVertical,
           textDirection: widget.textDirection,
-          readOnly: widget.readOnly || TextFieldEx.popupEdit,
+          readOnly: TextFieldEx.popupEdit || widget.readOnly,
           //toolbarOptions: widget.toolbarOptions,
           showCursor: widget.showCursor,
           autofocus: TextFieldEx.popupEdit ? false : widget.autofocus,
@@ -142,8 +179,8 @@ class _TextFieldExState<T> extends State<TextFieldEx> {
           enableInteractiveSelection: widget.enableInteractiveSelection,
           selectionControls: widget.selectionControls,
           onTap: TextFieldEx.popupEdit
-              ? () {
-                  showTextFieldInputDialog();
+              ? () async {
+                  await showTextFieldInputDialog();
                 }
               : widget.onTap,
           onTapAlwaysCalled:
@@ -217,7 +254,10 @@ class _TextFieldExState<T> extends State<TextFieldEx> {
                   maxLength: widget.maxLength,
                   maxLengthEnforcement: widget.maxLengthEnforcement,
                   onChanged: widget.onChanged,
-                  onEditingComplete: widget.onEditingComplete,
+                  onEditingComplete: () {
+                    FocusScope.of(context)
+                        .focusInDirection(TraversalDirection.down);
+                  },
                   onSubmitted: widget.onSubmitted,
                   onAppPrivateCommand: widget.onAppPrivateCommand,
                   inputFormatters: widget.inputFormatters,

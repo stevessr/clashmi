@@ -78,17 +78,35 @@ class ThemeDataDark {
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-              backgroundColor: ThemeDefine.kColorBlue,
-              foregroundColor: Colors.black,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(35)))),
+          style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.resolveWith(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.focused)) {
+              return ThemeDefine.kColorBlue[800];
+            }
+            if (states.contains(WidgetState.selected)) {
+              return ThemeDefine.kColorBlue[200];
+            }
+            return ThemeDefine.kColorBlue;
+          },
+        ),
+        foregroundColor: WidgetStateProperty.resolveWith(
+          (Set<WidgetState> states) {
+            return Colors.black;
+          },
+        ),
+        shape: WidgetStateProperty.resolveWith(
+          (Set<WidgetState> states) {
+            return RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(35));
+          },
+        ),
+      )),
       dialogTheme: DialogTheme(
           surfaceTintColor: Colors.black,
           backgroundColor: Colors.black,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))),
-
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: ThemeDefine.kColorBlue,
         circularTrackColor: Colors.black,
