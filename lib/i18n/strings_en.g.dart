@@ -269,6 +269,9 @@ class TranslationsMetaEn {
 	String get boardOnline => 'Use Online Board';
 	String get boardOnlineUrl => 'Online Board URL';
 	String get boardLocalPort => 'Local Board Port';
+	String get disableFontScaler => 'Disable Font scaling(Restart takes effect)';
+	String get autoOrientation => 'Rotate with the screen';
+	String get restartTakesEffect => 'Restart takes effect';
 	String get proxy => 'Proxy';
 	String get theme => 'Theme';
 	String get tvMode => 'TV Mode';
@@ -565,6 +568,9 @@ extension on Translations {
 			case 'meta.boardOnline': return 'Use Online Board';
 			case 'meta.boardOnlineUrl': return 'Online Board URL';
 			case 'meta.boardLocalPort': return 'Local Board Port';
+			case 'meta.disableFontScaler': return 'Disable Font scaling(Restart takes effect)';
+			case 'meta.autoOrientation': return 'Rotate with the screen';
+			case 'meta.restartTakesEffect': return 'Restart takes effect';
 			case 'meta.proxy': return 'Proxy';
 			case 'meta.theme': return 'Theme';
 			case 'meta.tvMode': return 'TV Mode';

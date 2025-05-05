@@ -44,7 +44,7 @@ android {
     buildTypes {
         val keystore = rootProject.file("./key.properties")
         val prop = Properties().apply { keystore.inputStream().use(this::load) }
-        named("debug") { ndk { abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64") } }
+        named("debug") { ndk { abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64", "x86") } }
         named("profile") {
             signingConfig =
                     signingConfigs.create("profile") {
@@ -53,7 +53,7 @@ android {
                         keyAlias = prop.getProperty("keyAlias.release")
                         keyPassword = prop.getProperty("keyPassword.release")
                     }
-            ndk { abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64") }
+            ndk { abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64", "x86") }
         }
         named("release") {
             signingConfig =

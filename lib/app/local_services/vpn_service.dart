@@ -36,9 +36,8 @@ class VPNServiceSetServerOptions {
 
 class VPNService {
   static const localhost = "127.0.0.1";
-
   static bool _runAsAdmin = false;
-
+  static List<String> _abis = [];
   static final List<
           void Function(
               FlutterVpnServiceState state, Map<String, String> params)>
@@ -58,7 +57,10 @@ class VPNService {
         appName: packageInfo.appName,
         appPath: Platform.resolvedExecutable,
         args: [AppArgs.launchStartup]);
-
+    if (Platform.isAndroid) {
+      String abisAll = await FlutterVpnService.getABIs();
+      _abis = abisAll.replaceAll("[", "").replaceAll("]", "").split(",");
+    }
     FlutterVpnService.onStateChanged(
         (FlutterVpnServiceState state, Map<String, String> params) async {
       for (var callback in onEventStateChanged) {
@@ -75,6 +77,10 @@ class VPNService {
     if (PlatformUtils.isPC()) {
       await stop();
     }
+  }
+
+  static List<String> getABIs() {
+    return _abis;
   }
 
   static ReturnResultError? convertErr(VpnServiceResultError? err) {

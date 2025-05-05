@@ -266,6 +266,9 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get boardOnline => 'استخدام اللوحة عبر الإنترنت';
 	@override String get boardOnlineUrl => 'عنوان URL للوحة عبر الإنترنت';
 	@override String get boardLocalPort => 'منفذ اللوحة المحلية';
+	@override String get disableFontScaler => 'Disable Font scaling(Restart takes effect)';
+	@override String get autoOrientation => 'Rotate with the screen';
+	@override String get restartTakesEffect => 'Restart takes effect';
 	@override String get proxy => 'التمثيل';
 	@override String get theme => 'سمة';
 	@override String get tvMode => 'وضع التلفزيون';
@@ -562,6 +565,9 @@ extension on TranslationsAr {
 			case 'meta.boardOnline': return 'استخدام اللوحة عبر الإنترنت';
 			case 'meta.boardOnlineUrl': return 'عنوان URL للوحة عبر الإنترنت';
 			case 'meta.boardLocalPort': return 'منفذ اللوحة المحلية';
+			case 'meta.disableFontScaler': return 'Disable Font scaling(Restart takes effect)';
+			case 'meta.autoOrientation': return 'Rotate with the screen';
+			case 'meta.restartTakesEffect': return 'Restart takes effect';
 			case 'meta.proxy': return 'التمثيل';
 			case 'meta.theme': return 'سمة';
 			case 'meta.tvMode': return 'وضع التلفزيون';

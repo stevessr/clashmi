@@ -266,6 +266,9 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get boardOnline => 'Использование онлайн-панели';
 	@override String get boardOnlineUrl => 'URL-адрес онлайн-панели';
 	@override String get boardLocalPort => 'Порт локальной панели';
+	@override String get disableFontScaler => 'Отключить масштабирование шрифта';
+	@override String get autoOrientation => 'Следовать за поворотом экрана';
+	@override String get restartTakesEffect => 'Требуется перезапуск';
 	@override String get proxy => 'действующий';
 	@override String get theme => 'тема';
 	@override String get tvMode => 'Режим ТВ';
@@ -562,6 +565,9 @@ extension on TranslationsRu {
 			case 'meta.boardOnline': return 'Использование онлайн-панели';
 			case 'meta.boardOnlineUrl': return 'URL-адрес онлайн-панели';
 			case 'meta.boardLocalPort': return 'Порт локальной панели';
+			case 'meta.disableFontScaler': return 'Отключить масштабирование шрифта';
+			case 'meta.autoOrientation': return 'Следовать за поворотом экрана';
+			case 'meta.restartTakesEffect': return 'Требуется перезапуск';
 			case 'meta.proxy': return 'действующий';
 			case 'meta.theme': return 'тема';
 			case 'meta.tvMode': return 'Режим ТВ';

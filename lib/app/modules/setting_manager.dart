@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:clashmi/app/local_services/vpn_service.dart';
 import 'package:clashmi/app/utils/log.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
@@ -13,10 +14,10 @@ import 'package:country/country.dart' as country;
 
 class SettingConfigItemUI {
   String theme = ThemeDefine.kThemeLight;
-  bool autoOrientation = false;
+  bool autoOrientation = maybeTv();
   bool disableFontScaler = false;
   bool hideAfterLaunch = false;
-  bool tvMode = false;
+  bool tvMode = maybeTv();
   bool perAppHideSystemApp = true;
   bool perAppHideAppIcon = false;
   Map<String, dynamic> toJson() => {
@@ -33,13 +34,13 @@ class SettingConfigItemUI {
       return;
     }
     theme = map["theme"] ?? "";
-    autoOrientation = map["auto_orientation"] ?? false;
+    autoOrientation = map["auto_orientation"] ?? maybeTv();
     disableFontScaler = map["disable_font_scaler"] ?? false;
     hideAfterLaunch = map["hide_after_launch"] ?? false;
     perAppHideSystemApp = map["perapp_hide_system_app"] ?? true;
     perAppHideAppIcon = map["perapp_hide_app_icon"] ?? false;
     if (Platform.isAndroid) {
-      tvMode = map["tv_mode"] ?? false;
+      tvMode = map["tv_mode"] ?? maybeTv();
       TextFieldEx.popupEdit = tvMode;
     }
 
@@ -66,6 +67,16 @@ class SettingConfigItemUI {
     SettingConfigItemUI config = SettingConfigItemUI();
     config.fromJson(map);
     return config;
+  }
+
+  static bool maybeTv() {
+    if (Platform.isAndroid) {
+      final abis = VPNService.getABIs();
+      if (abis.length == 1 && abis.contains("armeabi")) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 

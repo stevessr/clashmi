@@ -355,6 +355,26 @@ class GroupHelper {
                       TextFieldEx.popupEdit = setting.ui.tvMode;
                     }))
             : GroupItemOptions(),
+        PlatformUtils.isMobile()
+            ? GroupItemOptions(
+                switchOptions: GroupItemSwitchOptions(
+                    name: tcontext.meta.autoOrientation,
+                    switchValue: setting.ui.autoOrientation,
+                    onSwitch: (bool value) async {
+                      setting.ui.autoOrientation = value;
+                      if (value) {
+                        SystemChrome.setPreferredOrientations([
+                          DeviceOrientation.portraitUp,
+                          DeviceOrientation.landscapeLeft,
+                          DeviceOrientation.portraitDown,
+                          DeviceOrientation.landscapeRight
+                        ]);
+                      } else {
+                        SystemChrome.setPreferredOrientations(
+                            [DeviceOrientation.portraitUp]);
+                      }
+                    }))
+            : GroupItemOptions(),
         AutoUpdateManager.isSupport()
             ? GroupItemOptions(
                 stringPickerOptions: GroupItemStringPickerOptions(
