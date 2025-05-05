@@ -125,11 +125,6 @@ flutter:
     - assets/datas/
 
   fonts:
-    - family: Roboto
-      fonts:
-        - asset: assets/fonts/Roboto-Regular.ttf
-        - asset: assets/fonts/Roboto-Bold.ttf
-          weight: 700
     - family: Emoji # from hiddify
       fonts:
         - asset: assets/fonts/Emoji.ttf
