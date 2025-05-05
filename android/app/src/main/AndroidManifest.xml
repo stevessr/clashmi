@@ -94,7 +94,7 @@
             android:name=".TileService"
             android:directBootAware="true"
             android:exported="true"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_tile"
             android:label="Clash Mi" 
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             android:process=":bg"
