@@ -2,7 +2,7 @@ name: clashmi
 description: clashmi
 
 publish_to: none 
-version: 1.0.0+35
+version: 1.0.0+36
 environment:
   sdk: ">=3.2.3 <4.0.0"
   flutter: ">=3.24.0"
@@ -70,7 +70,7 @@ dependencies:
   win32_registry: 1.1.5 #flutter_test
   share_plus: 10.1.4 
   open_file: 3.5.10 
-  app_installer: ^1.3.1
+  app_installer: 1.3.1
   app_settings: 5.2.0
   webdav_client: 1.2.2
   mime: 1.0.4
@@ -108,9 +108,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^5.0.0
-  build_runner: ^2.4.13
-  json_serializable: ^6.9.0 #dart run build_runner build --delete-conflicting-outputs
+  flutter_lints: 5.0.0
+  build_runner: 2.4.13
+  json_serializable: 6.9.0 #dart run build_runner build --delete-conflicting-outputs
 
 
 flutter:
