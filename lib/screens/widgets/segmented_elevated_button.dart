@@ -10,7 +10,7 @@ class SegemntedElevatedButtonItem {
 }
 
 class SegmentedElevatedButton extends StatefulWidget {
-  const SegmentedElevatedButton(
+  SegmentedElevatedButton(
       {super.key,
       required this.segments,
       required this.selected,
@@ -20,7 +20,7 @@ class SegmentedElevatedButton extends StatefulWidget {
       this.onPressed});
 
   final List<SegemntedElevatedButtonItem> segments;
-  final int selected;
+  int selected;
   final EdgeInsetsGeometry? padding;
   final Color? background;
   final ButtonStyle? buttonStyle;
@@ -32,19 +32,33 @@ class SegmentedElevatedButton extends StatefulWidget {
 
 class _SegmentedElevatedButton extends State<SegmentedElevatedButton> {
   final List<WidgetStatesController> _controllers = [];
+
+  @override
+  void initState() {
+    for (int i = 0; i < widget.segments.length; ++i) {
+      var controller = WidgetStatesController();
+      _controllers.add(controller);
+    }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    for (int i = 0; i < _controllers.length; ++i) {
+      _controllers[i].dispose();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var themes = Provider.of<Themes>(context, listen: false);
     Color? color = themes.getThemeHomeColor(context);
-    if (_controllers.isEmpty) {
-      for (int i = 0; i < widget.segments.length; ++i) {
-        var controller = WidgetStatesController();
-        if (i == widget.selected) {
-          controller.value = {WidgetState.selected};
-        }
-        _controllers.add(controller);
-      }
+    for (int i = 0; i < _controllers.length; ++i) {
+      _controllers[i].value =
+          i == widget.selected ? {WidgetState.selected} : {};
     }
+
     List<Widget> widgets = [];
     for (int i = 0; i < widget.segments.length; ++i) {
       widgets.add(ElevatedButton(
@@ -69,6 +83,7 @@ class _SegmentedElevatedButton extends State<SegmentedElevatedButton> {
               ),
             ),
         onPressed: () async {
+          widget.selected = i;
           for (int j = 0; j < widget.segments.length; ++j) {
             _controllers[j].value = i == j ? {WidgetState.selected} : {};
           }
@@ -79,9 +94,8 @@ class _SegmentedElevatedButton extends State<SegmentedElevatedButton> {
         child: Text(
           widget.segments[i].text,
           style: TextStyle(
-              color: _controllers[i].value.contains(WidgetState.selected)
-                  ? ThemeDefine.kColorBlue
-                  : Colors.black),
+              color:
+                  widget.selected == i ? ThemeDefine.kColorBlue : Colors.black),
         ),
       ));
     }

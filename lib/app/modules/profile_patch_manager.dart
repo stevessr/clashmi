@@ -177,7 +177,9 @@ class ProfilePatchManager {
       }
     }
 
-    if (_profilePatchConfig._currentId.isNotEmpty) {
+    if (_profilePatchConfig._currentId.isNotEmpty &&
+        _profilePatchConfig._currentId != kProfilePatchBuildinOverwrite &&
+        _profilePatchConfig._currentId != kProfilePatchBuildinNoOverwrite) {
       int index = _profilePatchConfig.profilePatchs.indexWhere((value) {
         return value.id == _profilePatchConfig._currentId;
       });

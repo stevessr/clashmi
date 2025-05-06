@@ -534,13 +534,9 @@ class GroupHelper {
         BuildContext context, SetStateCallback? setstate) async {
       const inProduction = bool.fromEnvironment("dart.vm.product");
       final currentPatch = ProfilePatchManager.getCurrent();
-      final remark = currentPatch.remark.isEmpty
-          ? currentPatch.getShowName(context)
-          : currentPatch.remark;
+      final remark = currentPatch.getShowName(context);
       final started = await VPNService.getStarted();
-      if (!context.mounted) {}
       var setting = ClashSettingManager.getConfig();
-
       var dns = setting.DNS!;
       var extensions = setting.Extension!;
       final logLevels = ClashLogLevel.toList();
