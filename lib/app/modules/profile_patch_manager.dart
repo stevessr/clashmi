@@ -326,6 +326,20 @@ class ProfilePatchManager {
     await save();
   }
 
+  static Future<void> removeAllProfile() async {
+    for (var profile in _profilePatchConfig.profilePatchs) {
+      final filePath =
+          path.join(await PathUtils.profilePatchsDir(), profile.id);
+      await FileUtils.deletePath(filePath);
+    }
+    _profilePatchConfig.profilePatchs.clear();
+    _profilePatchConfig._currentId = "";
+    for (var event in onEventCurrentChanged) {
+      event(_profilePatchConfig._currentId);
+    }
+    await save();
+  }
+
   static Future<String> getProfilePatchPath(String id) async {
     if (id.isEmpty) {
       id = _profilePatchConfig._currentId;

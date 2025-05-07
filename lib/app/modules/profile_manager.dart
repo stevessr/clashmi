@@ -518,6 +518,19 @@ class ProfileManager {
     await save();
   }
 
+  static Future<void> removeAllProfile() async {
+    for (var profile in _profileConfig.profiles) {
+      final filePath = path.join(await PathUtils.profilesDir(), profile.id);
+      await FileUtils.deletePath(filePath);
+    }
+    _profileConfig.profiles.clear();
+    _profileConfig._currentId = "";
+    for (var event in onEventCurrentChanged) {
+      event(_profileConfig._currentId);
+    }
+    await save();
+  }
+
   static Future<String> getProfilePath(String id) async {
     final filePath = path.join(await PathUtils.profilesDir(), id);
     return filePath;

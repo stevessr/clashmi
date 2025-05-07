@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:clashmi/app/local_services/vpn_service.dart';
 import 'package:clashmi/app/modules/clash_setting_manager.dart';
 import 'package:clashmi/app/modules/profile_manager.dart';
 import 'package:clashmi/app/modules/profile_patch_manager.dart';
@@ -53,10 +54,9 @@ class BackupHelper {
     if (result != null) {
       return result;
     }
-    final profilesDir = await PathUtils.profilesDir();
-    final profilePatchsDir = await PathUtils.profilePatchsDir();
-    await FileUtils.deletePath(profilesDir);
-    await FileUtils.deletePath(profilePatchsDir);
+    await VPNService.stop();
+    await ProfileManager.removeAllProfile();
+    await ProfilePatchManager.removeAllProfile();
     var dir = await PathUtils.profileDir();
     var error = await ZipUtils.unzip(zipPath, dir);
     if (error != null) {
