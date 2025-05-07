@@ -327,9 +327,9 @@ class ProfilePatchManager {
   }
 
   static Future<void> removeAllProfile() async {
+    var dir = await PathUtils.profilePatchsDir();
     for (var profile in _profilePatchConfig.profilePatchs) {
-      final filePath =
-          path.join(await PathUtils.profilePatchsDir(), profile.id);
+      final filePath = path.join(dir, profile.id);
       await FileUtils.deletePath(filePath);
     }
     _profilePatchConfig.profilePatchs.clear();
