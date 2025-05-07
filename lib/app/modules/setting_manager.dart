@@ -150,9 +150,8 @@ class SettingConfig {
     }
 
     languageTag = map["language_tag"] ?? "";
-
     ui = SettingConfigItemUI.fromJsonStatic(map["ui"]);
-
+    webdav = SettingConfigItemWebDev.fromJsonStatic(map["webdav"]);
     alwayOn = map["alway_on"] ?? false;
     autoUpdateChannel = map["auto_update_channel"] ?? "stable";
     if (autoUpdateChannel.isEmpty) {

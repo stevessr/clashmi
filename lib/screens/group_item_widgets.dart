@@ -431,7 +431,7 @@ class GroupItemStringPicker extends StatelessWidget {
       for (var key in options.strings!) {
         widgets.add(ListTile(
           title: Text(
-            key,
+            key ?? "",
             style: TextStyle(
                 color: options.selected == key ? ThemeDefine.kColorBlue : null),
           ),

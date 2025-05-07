@@ -7,7 +7,6 @@ import 'package:clashmi/app/clash/clash_config.dart';
 import 'package:clashmi/app/clash/clash_http_api.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/i18n/strings.g.dart';
-import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/proxy_board_screen_widgets.dart';
 import 'package:clashmi/screens/theme_config.dart';
 import 'package:clashmi/screens/themes.dart';

@@ -1,6 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 // https://github.com/MetaCubeX/mihomo/blob/Alpha/docs/config.yaml
+import 'package:clashmi/i18n/strings.g.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:tuple/tuple.dart';
 part 'clash_config.g.dart';
 
 class MapHelper {
@@ -38,6 +41,37 @@ class MapHelper {
       object.remove(item);
     }
     return object;
+  }
+}
+
+class BoolToTuple {
+  static List<Tuple2<String?, String>> toTupleList(BuildContext context) {
+    final tcontext = Translations.of(context);
+    return [
+      Tuple2(null, tcontext.meta.noOverwrite),
+      Tuple2("true", tcontext.meta.enable),
+      Tuple2("false", tcontext.meta.disable),
+    ];
+  }
+
+  static String getSelectedString(BuildContext context, bool? key) {
+    final list = toTupleList(context);
+    for (var item in list) {
+      if (item.item1?.toString() == key?.toString()) {
+        return item.item2;
+      }
+    }
+    return list[0].item2;
+  }
+
+  static bool? getSelectedKey(BuildContext context, String? selected) {
+    final list = toTupleList(context);
+    for (var item in list) {
+      if (item.item1.toString() == selected?.toString()) {
+        return item.item1 == null ? null : bool.tryParse(item.item1!);
+      }
+    }
+    return list[0].item1 == null ? null : bool.tryParse(list[0].item1!);
   }
 }
 
@@ -143,6 +177,7 @@ enum ClashLogLevel {
 }
 
 enum ClashGlobalClientFingerprint {
+  noOverwrite(name: null),
   none(name: "none"),
   random(name: "random"),
   chrome(name: "chrome"),
@@ -151,10 +186,11 @@ enum ClashGlobalClientFingerprint {
   ios(name: "ios");
 
   const ClashGlobalClientFingerprint({required this.name});
-  final String name;
+  final String? name;
 
-  static List<String> toList() {
+  static List<String?> toList() {
     return [
+      ClashGlobalClientFingerprint.noOverwrite.name,
       ClashGlobalClientFingerprint.none.name,
       ClashGlobalClientFingerprint.random.name,
       ClashGlobalClientFingerprint.chrome.name,
@@ -162,6 +198,36 @@ enum ClashGlobalClientFingerprint {
       ClashGlobalClientFingerprint.safari.name,
       ClashGlobalClientFingerprint.ios.name,
     ];
+  }
+
+  static List<Tuple2<String?, String>> toTupleList(BuildContext context) {
+    final tcontext = Translations.of(context);
+    return [
+      Tuple2(ClashGlobalClientFingerprint.noOverwrite.name,
+          tcontext.meta.noOverwrite),
+      Tuple2(ClashGlobalClientFingerprint.none.name,
+          ClashGlobalClientFingerprint.none.name!),
+      Tuple2(ClashGlobalClientFingerprint.random.name,
+          ClashGlobalClientFingerprint.random.name!),
+      Tuple2(ClashGlobalClientFingerprint.chrome.name,
+          ClashGlobalClientFingerprint.chrome.name!),
+      Tuple2(ClashGlobalClientFingerprint.firefox.name,
+          ClashGlobalClientFingerprint.firefox.name!),
+      Tuple2(ClashGlobalClientFingerprint.safari.name,
+          ClashGlobalClientFingerprint.safari.name!),
+      Tuple2(ClashGlobalClientFingerprint.ios.name,
+          ClashGlobalClientFingerprint.ios.name!),
+    ];
+  }
+
+  static String getSelectedString(BuildContext context, String? key) {
+    final list = toTupleList(context);
+    for (var item in list) {
+      if (item.item1 == key) {
+        return item.item2;
+      }
+    }
+    return list[0].item2;
   }
 }
 

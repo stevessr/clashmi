@@ -158,8 +158,8 @@ class GroupItemStringPickerOptions {
   final String name;
   final String? tips;
   final bool? reddot;
-  final List<String>? strings;
-  final List<Tuple2<String, String>>? tupleStrings;
+  final List<String?>? strings;
+  final List<Tuple2<String?, String>>? tupleStrings;
   String? selected;
   final double textWidthPercent;
   Future<void> Function(String?)? onPicker;

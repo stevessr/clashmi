@@ -167,13 +167,13 @@ class ProfilePatchManager {
         --i;
       }
     }
-    for (var value in existProfiles) {
+    for (var existValue in existProfiles) {
       int index = _profilePatchConfig.profilePatchs.indexWhere((value) {
-        return value.id == _profilePatchConfig._currentId;
+        return value.id == existValue;
       });
       if (index < 0) {
         _profilePatchConfig.profilePatchs
-            .add(ProfilePatchSetting(id: value, remark: value));
+            .add(ProfilePatchSetting(id: existValue, remark: existValue));
       }
     }
 

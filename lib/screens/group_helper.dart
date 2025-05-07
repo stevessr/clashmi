@@ -535,12 +535,25 @@ class GroupHelper {
       const inProduction = bool.fromEnvironment("dart.vm.product");
       final currentPatch = ProfilePatchManager.getCurrent();
       final remark = currentPatch.getShowName(context);
-      final started = await VPNService.getStarted();
       var setting = ClashSettingManager.getConfig();
-      var dns = setting.DNS!;
       var extensions = setting.Extension!;
       final logLevels = ClashLogLevel.toList();
-      final globalFingerprints = ClashGlobalClientFingerprint.toList();
+
+      final globalFingerprintsTuple =
+          ClashGlobalClientFingerprint.toTupleList(context);
+      final globalFingerprintsSelected =
+          ClashGlobalClientFingerprint.getSelectedString(
+              context, setting.GlobalClientFingerprint);
+
+      final ipv6Tuple = BoolToTuple.toTupleList(context);
+      final ipv6Selected = BoolToTuple.getSelectedString(context, setting.IPv6);
+
+      final tcpConcurrentTuple = BoolToTuple.toTupleList(context);
+      final tcpConcurrentSelected =
+          BoolToTuple.getSelectedString(context, setting.TCPConcurrent);
+
+      final started = await VPNService.getStarted();
+
       List<GroupItemOptions> options = [
         GroupItemOptions(
             textOptions: GroupItemTextOptions(
@@ -550,7 +563,7 @@ class GroupHelper {
           textWidthPercent: 1,
         )),
       ];
-      List<GroupItemOptions> options1 = [
+      List<GroupItemOptions> options0 = [
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
                 name: tcontext.meta.reset,
@@ -559,15 +572,8 @@ class GroupHelper {
                   ProfilePatchManager.reset();
                 })),
       ];
-      List<GroupItemOptions> options2 = [
-        GroupItemOptions(
-            pushOptions: GroupItemPushOptions(
-                name: tcontext.meta.overwrite,
-                text: remark,
-                textWidthPercent: 0.5,
-                onPush: () async {
-                  await showProfilePatch(context);
-                })),
+
+      List<GroupItemOptions> options1 = [
         GroupItemOptions(
             textFormFieldOptions: GroupItemTextFieldOptions(
                 name: tcontext.meta.externalController,
@@ -647,7 +653,16 @@ class GroupHelper {
                     }))
             : GroupItemOptions(),
       ];
-      List<GroupItemOptions> options22 = [
+
+      List<GroupItemOptions> options2 = [
+        GroupItemOptions(
+            stringPickerOptions: GroupItemStringPickerOptions(
+                name: "IPv6",
+                selected: ipv6Selected,
+                tupleStrings: ipv6Tuple,
+                onPicker: (String? selected) async {
+                  setting.IPv6 = BoolToTuple.getSelectedKey(context, selected);
+                })),
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
                 name: tcontext.meta.tun,
@@ -657,19 +672,36 @@ class GroupHelper {
       ];
       List<GroupItemOptions> options3 = [
         GroupItemOptions(
-            switchOptions: GroupItemSwitchOptions(
-                name: "IPv6",
-                switchValue: setting.IPv6,
-                onSwitch: (bool value) async {
-                  setting.IPv6 = value;
-                  dns.IPv6 = value;
+            pushOptions: GroupItemPushOptions(
+                name: tcontext.meta.overwrite,
+                text: remark,
+                tips: tcontext.meta.overwriteTips,
+                textWidthPercent: 0.5,
+                onPush: () async {
+                  await showProfilePatch(context);
                 })),
+      ];
+      List<GroupItem> groups = [];
+      if (started) {
+        groups.add(GroupItem(options: options));
+      }
+
+      groups.addAll([
+        GroupItem(options: options0),
+        GroupItem(options: options1),
+        GroupItem(options: options2),
+        GroupItem(options: options3),
+      ]);
+
+      List<GroupItemOptions> options4 = [
         GroupItemOptions(
-            switchOptions: GroupItemSwitchOptions(
+            stringPickerOptions: GroupItemStringPickerOptions(
                 name: tcontext.meta.tcpConcurrent,
-                switchValue: setting.TCPConcurrent,
-                onSwitch: (bool value) async {
-                  setting.TCPConcurrent = value;
+                selected: tcpConcurrentSelected,
+                tupleStrings: tcpConcurrentTuple,
+                onPicker: (String? selected) async {
+                  setting.TCPConcurrent =
+                      BoolToTuple.getSelectedKey(context, selected);
                 })),
         GroupItemOptions(
             timerIntervalPickerOptions: GroupItemTimerIntervalPickerOptions(
@@ -693,42 +725,22 @@ class GroupHelper {
         GroupItemOptions(
             stringPickerOptions: GroupItemStringPickerOptions(
                 name: tcontext.meta.globalClientFingerprint,
-                selected:
-                    globalFingerprints.contains(setting.GlobalClientFingerprint)
-                        ? setting.GlobalClientFingerprint
-                        : globalFingerprints.first,
-                strings: globalFingerprints,
+                selected: globalFingerprintsSelected,
+                tupleStrings: globalFingerprintsTuple,
                 onPicker: (String? selected) async {
                   setting.GlobalClientFingerprint = selected;
                 })),
       ];
-      List<GroupItemOptions> options4 = [
-        GroupItemOptions(
-            switchOptions: GroupItemSwitchOptions(
-                name: tcontext.meta.allowLan,
-                switchValue: setting.AllowLan,
-                onSwitch: (bool value) async {
-                  setting.AllowLan = value;
-                  setting.BindAddress = value ? "*" : null;
-                })),
-        GroupItemOptions(
-            textFormFieldOptions: GroupItemTextFieldOptions(
-                name: tcontext.meta.allowLanAuthentication,
-                text: setting.Authentication?.first,
-                hint: "username:password",
-                textWidthPercent: 0.5,
-                onChanged: (String value) {
-                  setting.Authentication = value.isEmpty ? null : [value];
-                })),
-      ];
-
       List<GroupItemOptions> options5 = [
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
-                name: tcontext.meta.tun,
+                name: tcontext.meta.allowLanAccess,
                 onPush: () async {
-                  showClashSettingsTUN(context);
+                  showClashSettingsLanAccess(context);
                 })),
+      ];
+
+      List<GroupItemOptions> options6 = [
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
                 name: tcontext.meta.dns,
@@ -760,25 +772,12 @@ class GroupHelper {
                   showClashSettingsGEO(context);
                 })),
       ];
-      List<GroupItem> groups = [];
-      if (started) {
-        groups.add(GroupItem(options: options));
-      }
-
       if (currentPatch.id.isEmpty ||
           currentPatch.id == kProfilePatchBuildinOverwrite) {
         groups.addAll([
-          GroupItem(options: options1),
-          GroupItem(options: options2),
-          GroupItem(options: options3),
           GroupItem(options: options4),
           GroupItem(options: options5),
-        ]);
-      } else {
-        groups.addAll([
-          GroupItem(options: options1),
-          GroupItem(options: options2),
-          GroupItem(options: options22),
+          GroupItem(options: options6),
         ]);
       }
 
@@ -797,7 +796,6 @@ class GroupHelper {
                     final content = await ClashSettingManager.getPatchContent(
                         currentPatch.id.isEmpty ||
                             currentPatch.id == kProfilePatchBuildinOverwrite);
-
                     if (!context.mounted) {
                       return false;
                     }
@@ -897,12 +895,14 @@ class GroupHelper {
           },
         )));
       }
+
       if (options1.isNotEmpty) {
         return [
           GroupItem(options: options),
           GroupItem(options: options1),
         ];
       }
+
       return [
         GroupItem(options: options),
       ];
@@ -926,6 +926,61 @@ class GroupHelper {
                               const AddProfilePatchByImportFromFileScreen()));
                   return false;
                 })));
+  }
+
+  static Future<void> showClashSettingsLanAccess(BuildContext context) async {
+    final tcontext = Translations.of(context);
+    Future<List<GroupItem>> getOptions(
+        BuildContext context, SetStateCallback? setstate) async {
+      var setting = ClashSettingManager.getConfig();
+
+      List<GroupItemOptions> options = [
+        GroupItemOptions(
+            switchOptions: GroupItemSwitchOptions(
+                name: tcontext.meta.overwrite,
+                switchValue: setting.AllowLan != null,
+                onSwitch: (bool value) async {
+                  setting.AllowLan = value ? false : null;
+                  if (!value) {
+                    setting.Authentication = null;
+                  }
+                })),
+        GroupItemOptions(
+            switchOptions: GroupItemSwitchOptions(
+                name: tcontext.meta.enable,
+                switchValue: setting.AllowLan == true,
+                onSwitch: setting.AllowLan == null
+                    ? null
+                    : (bool value) async {
+                        setting.AllowLan = value;
+                      })),
+        GroupItemOptions(
+            textFormFieldOptions: GroupItemTextFieldOptions(
+                name: tcontext.meta.authentication,
+                text: setting.Authentication?.first,
+                hint: "username:password",
+                readOnly: setting.AllowLan != true,
+                textWidthPercent: 0.5,
+                onChanged: setting.AllowLan != true
+                    ? null
+                    : (String value) {
+                        setting.Authentication = value.isEmpty ? null : [value];
+                      })),
+      ];
+
+      return [
+        GroupItem(options: options),
+      ];
+    }
+
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            settings: GroupScreen.routSettings("lanAccess"),
+            builder: (context) => GroupScreen(
+                  title: tcontext.meta.allowLanAccess,
+                  getOptions: getOptions,
+                )));
   }
 
   static Future<void> showClashSettingsTUN(BuildContext context) async {

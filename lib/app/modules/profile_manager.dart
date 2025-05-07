@@ -273,12 +273,13 @@ class ProfileManager {
         --i;
       }
     }
-    existProfiles.forEach((key, value) {
+    existProfiles.forEach((key, existValue) {
       int index = _profileConfig.profiles.indexWhere((value) {
-        return value.id == _profileConfig._currentId;
+        return value.id == key;
       });
       if (index < 0) {
-        _profileConfig.profiles.add(ProfileSetting(id: key, url: value ?? ""));
+        _profileConfig.profiles
+            .add(ProfileSetting(id: key, url: existValue ?? ""));
       }
     });
 
