@@ -301,13 +301,13 @@ class ProfilePatchManager {
   }
 
   static Future<void> removeProfilePatch(String id) async {
-    int index = _profilePatchConfig.profilePatchs.indexWhere((value) {
-      return value.id == id;
-    });
-    if (index < 0) {
-      return;
+    for (int i = 0; i < _profilePatchConfig.profilePatchs.length; ++i) {
+      if (id == _profilePatchConfig.profilePatchs[i].id) {
+        _profilePatchConfig.profilePatchs.removeAt(i);
+        --i;
+      }
     }
-    _profilePatchConfig.profilePatchs.removeAt(index);
+
     for (var event in onEventRemove) {
       event(id);
     }

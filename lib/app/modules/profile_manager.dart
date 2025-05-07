@@ -493,13 +493,13 @@ class ProfileManager {
   }
 
   static Future<void> removeProfile(String id) async {
-    int index = _profileConfig.profiles.indexWhere((value) {
-      return value.id == id;
-    });
-    if (index < 0) {
-      return;
+    for (int i = 0; i < _profileConfig.profiles.length; ++i) {
+      if (id == _profileConfig.profiles[i].id) {
+        _profileConfig.profiles.removeAt(i);
+        --i;
+      }
     }
-    _profileConfig.profiles.removeAt(index);
+
     for (var event in onEventRemove) {
       event(id);
     }
