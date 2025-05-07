@@ -8,6 +8,7 @@ import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/backup_and_sync_utils.dart';
+import 'package:clashmi/app/utils/file_utils.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/app/utils/zip_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
@@ -52,6 +53,10 @@ class BackupHelper {
     if (result != null) {
       return result;
     }
+    final profilesDir = await PathUtils.profilesDir();
+    final profilePatchsDir = await PathUtils.profilePatchsDir();
+    await FileUtils.deletePath(profilesDir);
+    await FileUtils.deletePath(profilePatchsDir);
     var dir = await PathUtils.profileDir();
     var error = await ZipUtils.unzip(zipPath, dir);
     if (error != null) {
