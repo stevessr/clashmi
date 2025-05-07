@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:clashmi/app/utils/error_reporter_utils.dart';
+import 'package:clashmi/app/utils/file_utils.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:logger/logger.dart';
 
@@ -20,6 +21,10 @@ class FileLogOutput extends LogOutput {
   @override
   Future<void> init() async {
     String logFilePath = await PathUtils.logFilePath();
+    if (_inProduction) {
+      await FileUtils.deletePath(logFilePath);
+    }
+
     _file = File(logFilePath);
     _raf = await _file!.open(mode: FileMode.writeOnlyAppend);
   }
