@@ -212,6 +212,7 @@ class ClashSettingManager {
       LogLevel: _setting.LogLevel,
       ExternalController: _setting.ExternalController,
       Secret: _setting.Secret,
+      IPv6: _setting.IPv6,
       DNS: RawDNS.by(
         OverWrite: false,
         Enable: false,
