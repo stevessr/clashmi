@@ -5,8 +5,8 @@ import 'package:clashmi/app/modules/profile_manager.dart';
 import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/i18n/strings.g.dart';
-import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/file_view_screen.dart';
+import 'package:clashmi/screens/profile_settings_edit_screen.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/widgets/sheet.dart';
 import 'package:flutter/material.dart';
@@ -248,7 +248,8 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
 
     var widgets = [
       ListTile(
-        title: Text(tcontext.meta.view),
+        title:
+            Text(setting.isRemote() ? tcontext.meta.view : tcontext.meta.edit),
         minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
@@ -264,6 +265,11 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
                   builder: (context) => FileViewScreen(
                         title: setting.getShowName(),
                         content: content,
+                        onSave: setting.isRemote()
+                            ? null
+                            : (BuildContext context, String content) async {
+                                await File(path).writeAsString(content);
+                              },
                       )));
         },
       ),
@@ -276,50 +282,7 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
                 ProfileManager.updateProfile(setting.id);
               },
             )
-          : ListTile(
-              title: Text(tcontext.meta.edit),
-              minLeadingWidth: 40,
-              onTap: () async {
-                Navigator.of(context).pop();
-                final path = await ProfileManager.getProfilePath(setting.id);
-                final content = await File(path).readAsString();
-                if (!mounted) {
-                  return;
-                }
-                await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        settings: FileViewScreen.routSettings(),
-                        builder: (context) => FileViewScreen(
-                              title: setting.getShowName(),
-                              content: content,
-                              onSave:
-                                  (BuildContext context, String content) async {
-                                await File(path).writeAsString(content);
-                              },
-                            )));
-              },
-            ),
-      ListTile(
-        title: Text(tcontext.meta.editRemark),
-        minLeadingWidth: 40,
-        onTap: () async {
-          Navigator.of(context).pop();
-          var text = await DialogUtils.showTextInputDialog(
-              context, tcontext.meta.remark, setting.remark, "", null, (text) {
-            text = text.trim();
-            if (text.isEmpty) {
-              return false;
-            }
-
-            return true;
-          });
-          if (text != null) {
-            setting.remark = text;
-            setState(() {});
-          }
-        },
-      ),
+          : const SizedBox.shrink(),
       setting.isRemote()
           ? ListTile(
               title: Text(tcontext.meta.copyUrl),
@@ -332,6 +295,21 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
               },
             )
           : const SizedBox.shrink(),
+      ListTile(
+        title: Text(tcontext.meta.profileEdit),
+        minLeadingWidth: 40,
+        onTap: () async {
+          Navigator.of(context).pop();
+          await Navigator.push(
+              context,
+              MaterialPageRoute(
+                  settings: ProfilesSettingsEditScreen.routSettings(),
+                  builder: (context) => ProfilesSettingsEditScreen(
+                        profileid: setting.id,
+                      )));
+          setState(() {});
+        },
+      ),
       ListTile(
         title: Text(tcontext.meta.coreOverwrite),
         minLeadingWidth: 40,

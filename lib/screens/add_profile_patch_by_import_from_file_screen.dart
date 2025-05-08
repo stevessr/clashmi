@@ -45,8 +45,7 @@ class _AddProfilePatchByImportFromFileScreenState
 
   Future<void> onAdd(BuildContext context) async {
     final tcontext = Translations.of(context);
-    Text remarkText = Text(_textControllerRemark.text);
-    String text = remarkText.data!.trim();
+    String text = _textControllerRemark.text.trim();
 
     final error =
         await ProfilePatchManager.addProfilePatch(_filePath, remark: text);
@@ -218,8 +217,7 @@ class _AddProfilePatchByImportFromFileScreenState
           return;
         }
         _filePath = fresult.files.first.path!;
-        Text remarkText = Text(_textControllerRemark.text);
-        if (remarkText.data!.isEmpty) {
+        if (_textControllerRemark.text.isEmpty) {
           _textControllerRemark.value = _textControllerRemark.value.copyWith(
             text: fresult.files.first.name,
           );

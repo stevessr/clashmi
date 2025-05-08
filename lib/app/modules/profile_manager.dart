@@ -23,10 +23,16 @@ import 'package:tuple/tuple.dart';
 const int kRemarkMaxLength = 32;
 
 class ProfileSetting {
-  ProfileSetting({this.id = "", this.remark = "", this.update, this.url = ""});
+  ProfileSetting(
+      {this.id = "",
+      this.remark = "",
+      this.updateInterval,
+      this.update,
+      this.url = ""});
   String id = "";
   String remark = "";
   String patch = "";
+  Duration? updateInterval;
   DateTime? update;
   String url;
   num upload = 0;
@@ -37,6 +43,7 @@ class ProfileSetting {
         'id': id,
         'remark': remark,
         'patch': patch,
+        'update_interval': updateInterval?.inSeconds,
         'update': update.toString(),
         'url': url,
         'upload': upload,
@@ -52,6 +59,13 @@ class ProfileSetting {
     id = map['id'] ?? '';
     remark = map['remark'] ?? '';
     patch = map['patch'] ?? '';
+    var updateIntervalTime = map['update_interval'];
+    if (updateIntervalTime is int) {
+      if (updateIntervalTime < 60) {
+        updateIntervalTime = 24 * 60;
+      }
+      updateInterval = Duration(seconds: updateIntervalTime);
+    }
     final updateTime = map['update'];
     if (updateTime is String) {
       update = DateTime.tryParse(updateTime);
@@ -188,13 +202,19 @@ class ProfileManager {
     VPNService.onEventStateChanged
         .add((FlutterVpnServiceState state, Map<String, String> params) async {
       if (state == FlutterVpnServiceState.connected) {
-        Future.delayed(const Duration(seconds: 3), () async {});
+        Future.delayed(const Duration(seconds: 3), () async {
+          updateProfileByTicker();
+        });
       }
     });
     AppLifecycleStateNofity.onStateResumed(null, () {
-      Future.delayed(const Duration(seconds: 3), () async {});
+      Future.delayed(const Duration(seconds: 3), () async {
+        updateProfileByTicker();
+      });
     });
-    Future.delayed(const Duration(seconds: 30), () async {});
+    Future.delayed(const Duration(seconds: 30), () async {
+      updateProfileByTicker();
+    });
   }
 
   static Future<void> uninit() async {}
@@ -372,8 +392,11 @@ class ProfileManager {
         return value.id == id;
       });
       if (index < 0) {
-        _profileConfig.profiles.add(
-            ProfileSetting(id: id, remark: remark, update: DateTime.now()));
+        _profileConfig.profiles.add(ProfileSetting(
+          id: id,
+          remark: remark,
+          update: DateTime.now(),
+        ));
       } else {
         _profileConfig.profiles[index] =
             ProfileSetting(id: id, remark: remark, update: DateTime.now());
@@ -419,7 +442,11 @@ class ProfileManager {
       return value.id == id;
     });
     final profile = ProfileSetting(
-        id: id, remark: remark, update: DateTime.now(), url: url);
+        id: id,
+        remark: remark,
+        updateInterval: const Duration(days: 1),
+        update: DateTime.now(),
+        url: url);
     if (!overwrite) {
       profile.patch = kProfilePatchBuildinNoOverwrite;
     }
@@ -449,6 +476,9 @@ class ProfileManager {
   }
 
   static Future<ReturnResultError?> updateProfile(String id) async {
+    if (updating.contains(id)) {
+      return null;
+    }
     int index = _profileConfig.profiles.indexWhere((value) {
       return value.id == id;
     });
@@ -471,25 +501,32 @@ class ProfileManager {
     final savePath = path.join(await PathUtils.profilesDir(), id);
     final result =
         await DownloadUtils.downloadWithPort(uri, savePath, userAgent, null);
-    updating.remove(id);
-    if (result.error != null) {
-      for (var event in onEventUpdate) {
-        event(id, true);
+    if (result.error == null) {
+      await FileUtils.append(savePath, "\n$urlComment${profile.url}\n");
+      if (profile.remark.isEmpty) {
+        final result = await HttpUtils.httpGetTitle(profile.url, userAgent);
+        profile.remark = result.data ?? "";
       }
-      return result.error;
-    }
-    await FileUtils.append(savePath, "\n$urlComment${profile.url}\n");
-    if (profile.remark.isEmpty) {
-      final result = await HttpUtils.httpGetTitle(profile.url, userAgent);
-      profile.remark = result.data ?? "";
-    }
-    profile.update = DateTime.now();
-    profile.updateSubscriptionTraffic(result.data);
-    for (var event in onEventUpdate) {
-      event(id, true);
+      profile.update = DateTime.now();
+      profile.updateSubscriptionTraffic(result.data);
     }
     await save();
-    return null;
+    updating.remove(id);
+    return result.error;
+  }
+
+  static Future<void> updateProfileByTicker() async {
+    DateTime now = DateTime.now();
+    for (var profile in _profileConfig.profiles) {
+      if (!profile.isRemote() || profile.updateInterval == null) {
+        continue;
+      }
+      if (profile.update == null ||
+          now.difference(profile.update!).inSeconds >=
+              profile.updateInterval!.inSeconds) {
+        updateProfile(profile.id);
+      }
+    }
   }
 
   static Future<void> removeProfile(String id) async {
@@ -530,6 +567,15 @@ class ProfileManager {
       event(_profileConfig._currentId);
     }
     await save();
+  }
+
+  static ProfileSetting? getProfile(String id) {
+    for (var profile in _profileConfig.profiles) {
+      if (id == profile.id) {
+        return profile;
+      }
+    }
+    return null;
   }
 
   static Future<String> getProfilePath(String id) async {

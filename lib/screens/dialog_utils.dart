@@ -229,9 +229,9 @@ class DialogUtils {
                         if (!context.mounted) {
                           return;
                         }
-                        Text newText = Text(textController.text);
-                        if ((newText.data != null) && callback(newText.data!)) {
-                          Navigator.pop(context, newText.data!);
+
+                        if (callback(textController.text)) {
+                          Navigator.pop(context, textController.text);
                         }
                       }),
                   const SizedBox(
@@ -335,18 +335,15 @@ class DialogUtils {
                         if (!context.mounted) {
                           return;
                         }
-                        Text newTextL = Text(textControllerL.text);
-                        Text newTextR = Text(textControllerR.text);
-                        if ((newTextL.data != null) &&
-                            newTextL.data!.isNotEmpty &&
-                            (newTextR.data != null) &&
-                            newTextR.data!.isNotEmpty &&
-                            callback(Tuple2(int.parse(newTextL.data!),
-                                int.parse(newTextR.data!)))) {
+
+                        if (textControllerL.text.isNotEmpty &&
+                            textControllerR.text.isNotEmpty &&
+                            callback(Tuple2(int.parse(textControllerL.text),
+                                int.parse(textControllerR.text)))) {
                           Navigator.pop(
                               context,
-                              Tuple2(int.parse(newTextL.data!),
-                                  int.parse(newTextR.data!)));
+                              Tuple2(int.parse(textControllerL.text),
+                                  int.parse(textControllerR.text)));
                         }
                       }),
                   const SizedBox(

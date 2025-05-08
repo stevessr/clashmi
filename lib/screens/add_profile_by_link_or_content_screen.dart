@@ -4,6 +4,8 @@ import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
 import 'package:clashmi/app/modules/profile_manager.dart';
+import 'package:clashmi/app/modules/setting_manager.dart';
+import 'package:clashmi/app/utils/http_utils.dart';
 import 'package:clashmi/app/utils/platform_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
@@ -61,10 +63,8 @@ class _AddProfileByLinkOrContentScreenState
 
   Future<void> onAdd(BuildContext context) async {
     final tcontext = Translations.of(context);
-    Text urlText = Text(_textControllerLink.text);
-    String url = urlText.data!.trim();
-    Text remarkText = Text(_textControllerRemark.text);
-    String remark = remarkText.data!.trim();
+    String url = _textControllerLink.text.trim();
+    String remark = _textControllerRemark.text.trim();
     _loading = true;
     setState(() {});
 
@@ -194,6 +194,28 @@ class _AddProfileByLinkOrContentScreenState
                                               hintText: tcontext
                                                   .meta.profileUrlOrContentHit),
                                           onChanged: (text) {},
+                                          onEditingComplete: () async {
+                                            String url =
+                                                _textControllerLink.text.trim();
+                                            if (url.isNotEmpty ||
+                                                null != Uri.tryParse(url)) {
+                                              final userAgent =
+                                                  SettingManager.getConfig()
+                                                      .userAgent();
+                                              final result =
+                                                  await HttpUtils.httpGetTitle(
+                                                      url, userAgent);
+                                              if (result.error == null) {
+                                                if (_textControllerRemark.text
+                                                    .trim()
+                                                    .isEmpty) {
+                                                  _textControllerRemark.text =
+                                                      result.data!;
+                                                  setState(() {});
+                                                }
+                                              }
+                                            }
+                                          },
                                         ),
                                       ),
                                     ),
