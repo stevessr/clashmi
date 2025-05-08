@@ -311,15 +311,6 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
         },
       ),
       ListTile(
-        title: Text(tcontext.meta.coreOverwrite),
-        minLeadingWidth: 40,
-        onTap: () async {
-          Navigator.of(context).pop();
-          await showCorePatch(setting);
-          setState(() {});
-        },
-      ),
-      ListTile(
         title: Text(tcontext.meta.remove),
         minLeadingWidth: 40,
         onTap: () async {
@@ -330,95 +321,6 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
     ];
 
     showSheet(
-      title: setting.id,
-      context: context,
-      body: SizedBox(
-          height: 400,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Scrollbar(
-                child: ListView.separated(
-              itemBuilder: (BuildContext context, int index) {
-                return widgets[index];
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return const Divider(
-                  height: 1,
-                  thickness: 0.3,
-                );
-              },
-              itemCount: widgets.length,
-            )),
-          )),
-    );
-  }
-
-  Future<void> showCorePatch(ProfileSetting setting) async {
-    final tcontext = Translations.of(context);
-    var widgets = [
-      ListTile(
-        title: Text(
-          tcontext.profilePatchMode.currentSelected,
-          style: TextStyle(
-            color: setting.patch.isEmpty ? ThemeDefine.kColorBlue : null,
-          ),
-        ),
-        minLeadingWidth: 40,
-        onTap: () async {
-          setting.patch = "";
-          Navigator.of(context).pop();
-        },
-      ),
-      ListTile(
-        title: Text(
-          tcontext.profilePatchMode.overwrite,
-          style: TextStyle(
-            color: setting.patch == kProfilePatchBuildinOverwrite
-                ? ThemeDefine.kColorBlue
-                : null,
-          ),
-        ),
-        minLeadingWidth: 40,
-        onTap: () async {
-          setting.patch = kProfilePatchBuildinOverwrite;
-          Navigator.of(context).pop();
-        },
-      ),
-      ListTile(
-        title: Text(
-          tcontext.profilePatchMode.noOverwrite,
-          style: TextStyle(
-            color: setting.patch == kProfilePatchBuildinNoOverwrite
-                ? ThemeDefine.kColorBlue
-                : null,
-          ),
-        ),
-        minLeadingWidth: 40,
-        onTap: () async {
-          setting.patch = kProfilePatchBuildinNoOverwrite;
-          Navigator.of(context).pop();
-        },
-      ),
-    ];
-    final items = ProfilePatchManager.getProfilePatchs();
-    for (var item in items) {
-      widgets.add(
-        ListTile(
-          title: Text(
-            item.remark,
-            style: TextStyle(
-              color: setting.patch == item.id ? ThemeDefine.kColorBlue : null,
-            ),
-          ),
-          minLeadingWidth: 40,
-          onTap: () async {
-            setting.patch = item.id;
-            Navigator.of(context).pop();
-          },
-        ),
-      );
-    }
-    await showSheet(
       title: setting.id,
       context: context,
       body: SizedBox(

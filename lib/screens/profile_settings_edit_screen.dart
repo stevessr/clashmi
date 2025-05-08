@@ -1,4 +1,5 @@
 import 'package:clashmi/app/modules/profile_manager.dart';
+import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/group_item_creator.dart';
@@ -7,6 +8,7 @@ import 'package:clashmi/screens/theme_config.dart';
 import 'package:clashmi/screens/widgets/framework.dart';
 import 'package:clashmi/screens/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:tuple/tuple.dart';
 
 class ProfilesSettingsEditScreen extends LasyRenderingStatefulWidget {
   static RouteSettings routSettings() {
@@ -27,6 +29,7 @@ class _ProfilesSettingsEditScreenState
   final _textControllerUrl = TextEditingController();
 
   Duration? _updateInterval = const Duration(hours: 24);
+  String _patch = "";
 
   @override
   void initState() {
@@ -38,6 +41,7 @@ class _ProfilesSettingsEditScreenState
       _textControllerUrl.value = _textControllerUrl.value.copyWith(
         text: profile.url,
       );
+      _patch = profile.patch;
       _updateInterval = profile.updateInterval;
     }
     super.initState();
@@ -184,6 +188,7 @@ class _ProfilesSettingsEditScreenState
     String urlText = _textControllerUrl.text.trim();
     if (profile.remark == remarkText &&
         profile.url == urlText &&
+        profile.patch == _patch &&
         profile.updateInterval == _updateInterval) {
       Navigator.pop(context);
       return;
@@ -201,6 +206,7 @@ class _ProfilesSettingsEditScreenState
     }
     profile.remark = remarkText;
     profile.url = urlText;
+    profile.patch = _patch;
     profile.updateInterval = _updateInterval;
     Navigator.pop(context);
   }
@@ -225,8 +231,28 @@ class _ProfilesSettingsEditScreenState
     }
     final tcontext = Translations.of(context);
 
+    List<Tuple2<String?, String>> overwrite = [
+      Tuple2("", tcontext.profilePatchMode.currentSelected),
+      Tuple2(
+          kProfilePatchBuildinOverwrite, tcontext.profilePatchMode.overwrite),
+      Tuple2(kProfilePatchBuildinNoOverwrite,
+          tcontext.profilePatchMode.noOverwrite)
+    ];
+    final items = ProfilePatchManager.getProfilePatchs();
+    for (var item in items) {
+      overwrite.add(Tuple2(item.id, item.id));
+    }
     List<GroupItem> groupOptions = [];
     List<GroupItemOptions> options = [
+      GroupItemOptions(
+          stringPickerOptions: GroupItemStringPickerOptions(
+              name: tcontext.meta.coreOverwrite,
+              selected: _patch,
+              tupleStrings: overwrite,
+              onPicker: (String? selected) async {
+                _patch = selected ?? "";
+                setState(() {});
+              })),
       profile.isRemote()
           ? GroupItemOptions(
               timerIntervalPickerOptions: GroupItemTimerIntervalPickerOptions(
