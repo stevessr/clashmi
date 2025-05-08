@@ -25,7 +25,8 @@ abstract final class DownloadUtils {
   }
 
   static Future<ReturnResult<HttpHeaders>> downloadWithPort(
-      Uri uri, String downloadPath, String? useAgent, int? port) async {
+      Uri uri, String downloadPath, String? useAgent, int? port,
+      {Duration? timeout}) async {
     String downloadPathTemp = "$downloadPath.tmp";
     if (!await FileUtils.deletePath(downloadPathTemp)) {
       return ReturnResult(
@@ -33,7 +34,7 @@ abstract final class DownloadUtils {
     }
 
     ReturnResult<HttpHeaders> result = await HttpUtils.httpDownload(
-        uri, downloadPathTemp, port, useAgent, null);
+        uri, downloadPathTemp, port, useAgent, timeout);
 
     if (result.error != null) {
       await FileUtils.deletePath(downloadPathTemp);

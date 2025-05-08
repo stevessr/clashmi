@@ -426,8 +426,9 @@ class ProfileManager {
     final id = "${url.hashCode}.yaml";
     final savePath = path.join(await PathUtils.profilesDir(), id);
     final userAgent = SettingManager.getConfig().userAgent();
-    final result =
-        await DownloadUtils.downloadWithPort(uri, savePath, userAgent, null);
+    final result = await DownloadUtils.downloadWithPort(
+        uri, savePath, userAgent, null,
+        timeout: const Duration(seconds: 20));
     if (result.error != null) {
       return ReturnResult(error: result.error);
     }
@@ -494,13 +495,17 @@ class ProfileManager {
       return null;
     }
     updating.add(id);
-    for (var event in onEventUpdate) {
-      event(id, false);
-    }
+    Future.delayed(const Duration(milliseconds: 10), () async {
+      for (var event in onEventUpdate) {
+        event(id, false);
+      }
+    });
+
     final userAgent = SettingManager.getConfig().userAgent();
     final savePath = path.join(await PathUtils.profilesDir(), id);
-    final result =
-        await DownloadUtils.downloadWithPort(uri, savePath, userAgent, null);
+    final result = await DownloadUtils.downloadWithPort(
+        uri, savePath, userAgent, null,
+        timeout: const Duration(seconds: 20));
     if (result.error == null) {
       await FileUtils.append(savePath, "\n$urlComment${profile.url}\n");
       if (profile.remark.isEmpty) {
@@ -512,6 +517,11 @@ class ProfileManager {
     }
     await save();
     updating.remove(id);
+    Future.delayed(const Duration(milliseconds: 10), () async {
+      for (var event in onEventUpdate) {
+        event(id, true);
+      }
+    });
     return result.error;
   }
 
