@@ -219,16 +219,6 @@ enum ClashGlobalClientFingerprint {
           ClashGlobalClientFingerprint.ios.name!),
     ];
   }
-
-  static String getSelectedString(BuildContext context, String? key) {
-    final list = toTupleList(context);
-    for (var item in list) {
-      if (item.item1 == key) {
-        return item.item2;
-      }
-    }
-    return list[0].item2;
-  }
 }
 
 enum ClashTunStack {

@@ -541,9 +541,6 @@ class GroupHelper {
 
       final globalFingerprintsTuple =
           ClashGlobalClientFingerprint.toTupleList(context);
-      final globalFingerprintsSelected =
-          ClashGlobalClientFingerprint.getSelectedString(
-              context, setting.GlobalClientFingerprint);
 
       final ipv6Tuple = BoolToTuple.toTupleList(context);
       final ipv6Selected = BoolToTuple.getSelectedString(context, setting.IPv6);
@@ -725,7 +722,7 @@ class GroupHelper {
         GroupItemOptions(
             stringPickerOptions: GroupItemStringPickerOptions(
                 name: tcontext.meta.globalClientFingerprint,
-                selected: globalFingerprintsSelected,
+                selected: setting.GlobalClientFingerprint,
                 tupleStrings: globalFingerprintsTuple,
                 onPicker: (String? selected) async {
                   setting.GlobalClientFingerprint = selected;
