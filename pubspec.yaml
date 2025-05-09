@@ -2,7 +2,7 @@ name: clashmi
 description: clashmi
 
 publish_to: none 
-version: 1.0.0+40
+version: 1.0.0+41
 environment:
   sdk: ">=3.2.3 <4.0.0"
   flutter: ">=3.24.0"
@@ -121,7 +121,6 @@ flutter:
     - assets/txts/
     - assets/fonts/
     - assets/images/
-    - assets/icons/
     - assets/datas/
 
   fonts:
@@ -135,15 +134,15 @@ flutter_launcher_icons: #flutter pub run flutter_launcher_icons
   android: ic_launcher
   ios: true
   image_path: logo-round.png 
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  min_sdk_android: 21 
   image_path_android: logo-round.png
   image_path_ios: logo.png
   remove_alpha_ios: true
   windows:
     generate: false 
     image_path: logo-round.png
-    icon_size: 48 # min:48, max:256, default: 48
+    icon_size: 48
   macos:
     generate: true
-    image_path: logo-round-macos.png #macos https://github.com/Yidadaa/ChatGPT-Next-Web/issues/156  1024 -> 854 -> 1024
+    image_path: logo-round-macos.png
  
