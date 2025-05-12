@@ -251,11 +251,24 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
         minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
-          await Navigator.push(
+          Navigator.push(
               context,
               MaterialPageRoute(
                   settings: AddProfileByScanQrcodeScanScreen.routSettings(),
-                  builder: (context) => AddProfileByScanQrcodeScanScreen()));
+                  builder: (context) =>
+                      const AddProfileByScanQrcodeScanScreen())).then((value) {
+            if ((value != null) && (value.qrcode != null)) {
+              if (!mounted) {
+                return;
+              }
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      settings: AddProfileByLinkOrContentScreen.routSettings(),
+                      builder: (context) =>
+                          AddProfileByLinkOrContentScreen(url: value.qrcode!)));
+            }
+          });
         },
       ),
       ListTile(
