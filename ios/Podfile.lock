@@ -51,13 +51,6 @@ PODS:
     - Flutter
   - flutter_secure_storage (6.0.0):
     - Flutter
-  - Google-Mobile-Ads-SDK (11.13.0):
-    - GoogleUserMessagingPlatform (>= 1.1)
-  - google_mobile_ads (5.3.1):
-    - Flutter
-    - Google-Mobile-Ads-SDK (~> 11.13.0)
-    - webview_flutter_wkwebview
-  - GoogleUserMessagingPlatform (3.0.0)
   - icloud_storage (0.0.1):
     - Flutter
   - image_picker_ios (0.0.1):
@@ -88,9 +81,6 @@ PODS:
   - SwiftyGif (5.4.5)
   - url_launcher_ios (0.0.1):
     - Flutter
-  - webview_flutter_wkwebview (0.0.1):
-    - Flutter
-    - FlutterMacOS
 
 DEPENDENCIES:
   - app_installer (from `.symlinks/plugins/app_installer/ios`)
@@ -101,7 +91,6 @@ DEPENDENCIES:
   - flutter_inappwebview_ios (from `.symlinks/plugins/flutter_inappwebview_ios/ios`)
   - flutter_install_referrer (from `.symlinks/plugins/flutter_install_referrer/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
-  - google_mobile_ads (from `.symlinks/plugins/google_mobile_ads/ios`)
   - icloud_storage (from `.symlinks/plugins/icloud_storage/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - libclash_vpn_service (from `.symlinks/plugins/libclash_vpn_service/ios`)
@@ -113,14 +102,11 @@ DEPENDENCIES:
   - qr_code_scanner_plus (from `.symlinks/plugins/qr_code_scanner_plus/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
-  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/darwin`)
 
 SPEC REPOS:
   trunk:
     - DKImagePickerController
     - DKPhotoGallery
-    - Google-Mobile-Ads-SDK
-    - GoogleUserMessagingPlatform
     - MTBBarcodeScanner
     - OrderedSet
     - SDWebImage
@@ -143,8 +129,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_install_referrer/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
-  google_mobile_ads:
-    :path: ".symlinks/plugins/google_mobile_ads/ios"
   icloud_storage:
     :path: ".symlinks/plugins/icloud_storage/ios"
   image_picker_ios:
@@ -167,8 +151,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/share_plus/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
-  webview_flutter_wkwebview:
-    :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
 
 SPEC CHECKSUMS:
   app_installer: 33dc04135cd44cbeadf243d332a717b2bc761a6c
@@ -181,9 +163,6 @@ SPEC CHECKSUMS:
   flutter_inappwebview_ios: 6f63631e2c62a7c350263b13fa5427aedefe81d4
   flutter_install_referrer: 37a7755603b4a9a94099a03755ec6d9584c3b099
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
-  Google-Mobile-Ads-SDK: 14f57f2dc33532a24db288897e26494640810407
-  google_mobile_ads: fe0e2c1764ad95323dd0e3081d0bb2d58411f957
-  GoogleUserMessagingPlatform: f8d0cdad3ca835406755d0a69aa634f00e76d576
   icloud_storage: d9ac7a33ced81df08ba7ea1bf3099cc0ee58f60a
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   libclash_vpn_service: e8feadcc44c252a36caf361b73a77da9128c2164
@@ -199,7 +178,6 @@ SPEC CHECKSUMS:
   share_plus: 8b6f8b3447e494cca5317c8c3073de39b3600d1f
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
-  webview_flutter_wkwebview: a4af96a051138e28e29f60101d094683b9f82188
 
 PODFILE CHECKSUM: 8474f7b3d90d4aa9da30c235f20c60cf0eb88028
 
