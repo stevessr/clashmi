@@ -559,7 +559,7 @@ class RawTun {
   @JsonKey(name: 'auto-route')
   bool? AutoRoute;
   @JsonKey(name: 'auto-detect-interface')
-  bool? AutoDetectInterface; //true
+  bool? AutoDetectInterface;
   @JsonKey(name: 'mtu')
   int? MTU;
   @JsonKey(name: 'gso')
