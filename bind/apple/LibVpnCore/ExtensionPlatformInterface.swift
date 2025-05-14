@@ -185,6 +185,10 @@ public class ExtensionPlatformInterface: NSObject, LibclashTunInterfaceProtocol{
 
         networkSettings = settings
         try await tunnel.setTunnelNetworkSettings(settings)
+        if let tunFd = tunnel.packetFlow.value(forKeyPath: "socket.fileDescriptor") as? Int32 {
+            ret0_.pointee = tunFd
+            return
+        }
         guard let tun_fd = getTunnelFd() else {
             throw NSError(domain: "missing file descriptor", code: 0)
         }
