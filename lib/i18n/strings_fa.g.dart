@@ -231,6 +231,8 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get userAgent => 'UserAgent';
 	@override String get launchAtStartup => 'اجرا در راه‌اندازی';
 	@override String get launchAtStartupRunAsAdmin => 'لطفاً Clash Mi را به عنوان مدیر راه اندازی مجدد کنید';
+	@override String get portableMode => 'حالت قابل‌حمل';
+	@override String get portableModeDisableTips => 'اگر نیاز دارین از حالت قابل‌حمل خارج شوید لطفا از [clashmi] خارج شده و به‌صورت دستی پوشه [portable] هم مسیر با فایل [clashmi.exe] را حذف کنید';
 	@override String get systemProxy => 'پروکسی سیستم';
 	@override String get autoConnectAfterLaunch => 'اتصال خودکار پس‌از راه‌اندازی';
 	@override String get autoSetSystemProxy => 'تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال';
@@ -533,6 +535,8 @@ extension on TranslationsFa {
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.launchAtStartup': return 'اجرا در راه‌اندازی';
 			case 'meta.launchAtStartupRunAsAdmin': return 'لطفاً Clash Mi را به عنوان مدیر راه اندازی مجدد کنید';
+			case 'meta.portableMode': return 'حالت قابل‌حمل';
+			case 'meta.portableModeDisableTips': return 'اگر نیاز دارین از حالت قابل‌حمل خارج شوید لطفا از [clashmi] خارج شده و به‌صورت دستی پوشه [portable] هم مسیر با فایل [clashmi.exe] را حذف کنید';
 			case 'meta.systemProxy': return 'پروکسی سیستم';
 			case 'meta.autoConnectAfterLaunch': return 'اتصال خودکار پس‌از راه‌اندازی';
 			case 'meta.autoSetSystemProxy': return 'تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال';

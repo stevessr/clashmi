@@ -234,6 +234,8 @@ class TranslationsMetaEn {
 	String get userAgent => 'UserAgent';
 	String get launchAtStartup => 'Launch at Startup';
 	String get launchAtStartupRunAsAdmin => 'Please restart Clash Mi as administrator';
+	String get portableMode => 'Portable Mode';
+	String get portableModeDisableTips => 'If you need to exit portable mode, please exit [clashmi] and manually delete the [portable] folder in the same directory as [clashmi.exe]';
 	String get systemProxy => 'System Proxy';
 	String get autoConnectAfterLaunch => 'Auto Connection after Launch';
 	String get autoSetSystemProxy => 'Auto Set System Proxy when Connected';
@@ -536,6 +538,8 @@ extension on Translations {
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.launchAtStartup': return 'Launch at Startup';
 			case 'meta.launchAtStartupRunAsAdmin': return 'Please restart Clash Mi as administrator';
+			case 'meta.portableMode': return 'Portable Mode';
+			case 'meta.portableModeDisableTips': return 'If you need to exit portable mode, please exit [clashmi] and manually delete the [portable] folder in the same directory as [clashmi.exe]';
 			case 'meta.systemProxy': return 'System Proxy';
 			case 'meta.autoConnectAfterLaunch': return 'Auto Connection after Launch';
 			case 'meta.autoSetSystemProxy': return 'Auto Set System Proxy when Connected';

@@ -124,6 +124,8 @@
         "userAgent": "UserAgent",
         "launchAtStartup": "إطلاق عند بدء التشغيل",
         "launchAtStartupRunAsAdmin": "يرجى إعادة تشغيل Clash Mi كمسؤول",
+        "portableMode": "الوضع المحمول",
+        "portableModeDisableTips": "إذا كنت بحاجة إلى الخروج من الوضع المحمول، فيرجى الخروج من [clashmi] وحذف المجلد [portable] يدويًا في نفس الدليل مثل [clashmi.exe]",
         "systemProxy": "وكيل النظام",
         "autoConnectAfterLaunch": "اتصال السيارات بعد الإطلاق",
         "autoSetSystemProxy": "وكيل نظام تعيين تلقائي عند الاتصال",

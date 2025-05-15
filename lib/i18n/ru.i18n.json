@@ -124,6 +124,8 @@
         "userAgent": "UserAgent",
         "launchAtStartup": "Запуск при включении",
         "launchAtStartupRunAsAdmin": "Пожалуйста, перезапустите Clash Mi от имени администратора.",
+        "portableMode": "Портативный режим",
+        "portableModeDisableTips": "Если вам нужно выйти из портативного режима, выйдите из [clashmi] и вручную удалите папку [portable] в том же каталоге, что и [clashmi.exe]",
         "systemProxy": "Системный прокси",
         "autoConnectAfterLaunch": "Автоматическое подключение после запуска",
         "autoSetSystemProxy": "Установить системный прокси после подключения",

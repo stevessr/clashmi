@@ -124,6 +124,8 @@
         "userAgent": "UserAgent",
         "launchAtStartup": "اجرا در راه‌اندازی",
         "launchAtStartupRunAsAdmin": "لطفاً Clash Mi را به عنوان مدیر راه اندازی مجدد کنید",
+        "portableMode": "حالت قابل‌حمل",
+        "portableModeDisableTips": "اگر نیاز دارین از حالت قابل‌حمل خارج شوید لطفا از [clashmi] خارج شده و به‌صورت دستی پوشه [portable] هم مسیر با فایل [clashmi.exe] را حذف کنید",
         "systemProxy": "پروکسی سیستم",
         "autoConnectAfterLaunch": "اتصال خودکار پس‌از راه‌اندازی",
         "autoSetSystemProxy": "تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال",

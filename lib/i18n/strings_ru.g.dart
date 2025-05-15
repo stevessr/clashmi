@@ -231,6 +231,8 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get userAgent => 'UserAgent';
 	@override String get launchAtStartup => 'Запуск при включении';
 	@override String get launchAtStartupRunAsAdmin => 'Пожалуйста, перезапустите Clash Mi от имени администратора.';
+	@override String get portableMode => 'Портативный режим';
+	@override String get portableModeDisableTips => 'Если вам нужно выйти из портативного режима, выйдите из [clashmi] и вручную удалите папку [portable] в том же каталоге, что и [clashmi.exe]';
 	@override String get systemProxy => 'Системный прокси';
 	@override String get autoConnectAfterLaunch => 'Автоматическое подключение после запуска';
 	@override String get autoSetSystemProxy => 'Установить системный прокси после подключения';
@@ -533,6 +535,8 @@ extension on TranslationsRu {
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.launchAtStartup': return 'Запуск при включении';
 			case 'meta.launchAtStartupRunAsAdmin': return 'Пожалуйста, перезапустите Clash Mi от имени администратора.';
+			case 'meta.portableMode': return 'Портативный режим';
+			case 'meta.portableModeDisableTips': return 'Если вам нужно выйти из портативного режима, выйдите из [clashmi] и вручную удалите папку [portable] в том же каталоге, что и [clashmi.exe]';
 			case 'meta.systemProxy': return 'Системный прокси';
 			case 'meta.autoConnectAfterLaunch': return 'Автоматическое подключение после запуска';
 			case 'meta.autoSetSystemProxy': return 'Установить системный прокси после подключения';

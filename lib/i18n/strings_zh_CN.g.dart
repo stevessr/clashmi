@@ -231,6 +231,8 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get userAgent => 'UserAgent';
 	@override String get launchAtStartup => '开机启动';
 	@override String get launchAtStartupRunAsAdmin => '请以管理员身份重新启动Clash Mi';
+	@override String get portableMode => '便携模式';
+	@override String get portableModeDisableTips => '如需退出便携模式,请退出[clashmi]后,手动删除[clashmi.exe]同目录下的[portable]文件夹即可';
 	@override String get systemProxy => '系统代理';
 	@override String get autoConnectAfterLaunch => '启动后自动连接';
 	@override String get autoSetSystemProxy => '连接后自动设置系统代理';
@@ -533,6 +535,8 @@ extension on TranslationsZhCn {
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.launchAtStartup': return '开机启动';
 			case 'meta.launchAtStartupRunAsAdmin': return '请以管理员身份重新启动Clash Mi';
+			case 'meta.portableMode': return '便携模式';
+			case 'meta.portableModeDisableTips': return '如需退出便携模式,请退出[clashmi]后,手动删除[clashmi.exe]同目录下的[portable]文件夹即可';
 			case 'meta.systemProxy': return '系统代理';
 			case 'meta.autoConnectAfterLaunch': return '启动后自动连接';
 			case 'meta.autoSetSystemProxy': return '连接后自动设置系统代理';

@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 import 'package:clashmi/app/modules/profile_manager.dart';
 import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/app/modules/zashboard.dart';
@@ -200,6 +201,66 @@ class GroupHelper {
       DialogUtils.showAlertDialog(context, err.toString(),
           showCopy: true, showFAQ: true, withVersion: true);
     }
+  }
+
+  static Future<void> onTapPortableModeOn(BuildContext context) async {
+    Directory? dir;
+    bool exist = false;
+    bool created = false;
+    try {
+      String portableProfileDir = PathUtils.profileDirForPortableMode();
+      dir = Directory(portableProfileDir);
+      exist = await dir.exists();
+      if (!exist) {
+        await dir.create(recursive: true);
+        created = true;
+        String profileDir = await PathUtils.profileDir();
+        var fileList = Directory(profileDir).listSync(followLinks: false);
+        for (var f in fileList) {
+          if (f is File) {
+            String ext = path.extension(f.path);
+            String basename = path.basename(f.path);
+            if (ext == ".log") {
+              continue;
+            }
+            var newFilePath = path.join(portableProfileDir, basename);
+            await f.copy(newFilePath);
+          } else if (f is Directory) {
+            String fbasename = path.basename(f.path);
+            if (fbasename == "cache" || fbasename == "webviewCache") {
+              continue;
+            }
+            final newDirPath = path.join(portableProfileDir, fbasename);
+            var newDir = Directory(newDirPath);
+            await newDir.create(recursive: false);
+            var fileList = f.listSync(followLinks: false);
+            for (var ff in fileList) {
+              if (ff is File) {
+                String ext = path.extension(ff.path);
+                String basename = path.basename(ff.path);
+                if (ext == ".log") {
+                  continue;
+                }
+                var newFilePath = path.join(newDirPath, basename);
+                await ff.copy(newFilePath);
+              }
+            }
+          }
+        }
+      }
+    } catch (err, stacktrace) {
+      if (!exist && created) {
+        await dir!.delete();
+      }
+      if (!context.mounted) {
+        return;
+      }
+      DialogUtils.showAlertDialog(context, err.toString(),
+          showCopy: true, showFAQ: true, withVersion: true);
+      return;
+    }
+    await VPNService.uninit();
+    await ServicesBinding.instance.exitApplication(AppExitType.required);
   }
 
   static Future<void> onTapExport(BuildContext context) async {
@@ -499,7 +560,21 @@ class GroupHelper {
                   setting.autoSetSystemProxy = value;
                 })),
       ];
-
+      List<GroupItemOptions> options5 = [
+        GroupItemOptions(
+            switchOptions: GroupItemSwitchOptions(
+          name: tcontext.meta.portableMode,
+          tips: tcontext.meta.portableModeDisableTips,
+          switchValue: PathUtils.portableMode(),
+          onSwitch: PathUtils.portableMode()
+              ? null
+              : (bool value) async {
+                  if (value) {
+                    onTapPortableModeOn(context);
+                  }
+                },
+        )),
+      ];
       List<GroupItem> gitems = [
         GroupItem(options: options),
         GroupItem(options: options0),
@@ -512,7 +587,9 @@ class GroupHelper {
       if (PlatformUtils.isPC()) {
         gitems.add(GroupItem(options: options4));
       }
-
+      if (Platform.isWindows) {
+        gitems.add(GroupItem(options: options5));
+      }
       return gitems;
     }
 

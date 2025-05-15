@@ -124,6 +124,8 @@
         "userAgent": "UserAgent",
         "launchAtStartup": "Launch at Startup",
         "launchAtStartupRunAsAdmin": "Please restart Clash Mi as administrator",
+        "portableMode": "Portable Mode",
+        "portableModeDisableTips": "If you need to exit portable mode, please exit [clashmi] and manually delete the [portable] folder in the same directory as [clashmi.exe]",
         "systemProxy": "System Proxy",
         "autoConnectAfterLaunch": "Auto Connection after Launch",
         "autoSetSystemProxy": "Auto Set System Proxy when Connected",
