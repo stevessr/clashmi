@@ -9,6 +9,8 @@ import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/backup_and_sync_utils.dart';
+import 'package:clashmi/app/utils/file_utils.dart';
+import 'package:clashmi/app/utils/http_utils.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/app/utils/zip_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
@@ -66,6 +68,44 @@ class BackupHelper {
     await ClashSettingManager.reload();
     await ProfileManager.reload();
     await ProfilePatchManager.reload();
+    return null;
+  }
+
+  static Future<ReturnResultError?> restoreBackupFromUrl(
+      BuildContext context, String url) async {
+    Uri? downloadUri = Uri.tryParse(url);
+    if (downloadUri == null) {
+      return ReturnResultError("invalid URL: $url");
+    }
+    if (!context.mounted) {
+      return null;
+    }
+    final tcontext = Translations.of(context);
+    bool? ok = await DialogUtils.showConfirmDialog(
+        context, tcontext.meta.rewriteConfirm);
+    if (ok != true) {
+      return null;
+    }
+    if (!context.mounted) {
+      return null;
+    }
+    DialogUtils.showLoadingDialog(context, text: "");
+    String dir = await PathUtils.cacheDir();
+    String filePath = path.join(dir, BackupAndSyncUtils.getZipFileName());
+    var result = await HttpUtils.httpDownload(
+        downloadUri, filePath, null, null, const Duration(seconds: 10));
+
+    if (!context.mounted) {
+      return null;
+    }
+    Navigator.pop(context);
+    if (result.error != null) {
+      DialogUtils.showAlertDialog(context, result.error!.message,
+          showCopy: true, showFAQ: true, withVersion: true);
+      return ReturnResultError(result.error!.message);
+    }
+    await backupRestoreFromZip(context, filePath);
+    await FileUtils.deletePath(filePath);
     return null;
   }
 

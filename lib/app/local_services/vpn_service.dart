@@ -63,6 +63,16 @@ class VPNService {
     }
     FlutterVpnService.onStateChanged(
         (FlutterVpnServiceState state, Map<String, String> params) async {
+      if (getSupportSystemProxy()) {
+        if (state == FlutterVpnServiceState.disconnected) {
+          bool enable = await FlutterVpnService.getSystemProxyEnable(
+              await getSystemProxyOptions());
+          if (enable) {
+            await FlutterVpnService.cleanSystemProxy();
+          }
+        }
+      }
+
       for (var callback in onEventStateChanged) {
         callback(state, params);
       }
@@ -400,16 +410,6 @@ class VPNService {
 
   static bool isRunAsAdmin() {
     return _runAsAdmin;
-  }
-
-  static Future<bool> getTunMode() async {
-    /* if (!SettingManager.getConfig().tun.enable) {
-      return false;
-    }*/
-    if (Platform.isWindows) {
-      return isRunAsAdmin();
-    }
-    return true;
   }
 
   static Future<FlutterVpnServiceState> getState() async {
