@@ -330,6 +330,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
           if (PlatformUtils.isMobile()) {
             await Zashboard.stop();
           }
+          _updateProxyNow();
         },
       ));
     }
@@ -448,6 +449,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     _startStateCheckTimer();
     _connectToConntection();
     _connectToTraffic();
+    _updateProxyNow();
   }
 
   Future<void> _onStatePaused() async {
@@ -559,10 +561,11 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
           _trafficSpeed.value =
               "↑ ${ClashHttpApi.convertTrafficToStringDouble(traffic.upload)}/s  ↓ ${ClashHttpApi.convertTrafficToStringDouble(traffic.download)}/s";
 
-          final duration = Duration(seconds: _proxyNow.value.isEmpty ? 1 : 5);
-          Future.delayed(duration, () async {
-            _updateProxyNow();
-          });
+          if (_proxyNow.value.isEmpty) {
+            Future.delayed(Duration(seconds: 1), () async {
+              _updateProxyNow();
+            });
+          }
         },
         onDone: () {
           _disconnectToTraffic();
