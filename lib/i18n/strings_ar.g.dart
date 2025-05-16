@@ -256,6 +256,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get rewriteConfirm => 'سيقوم هذا الملف بكتابة التكوين المحلي الحالي.هل تريد الاستمرار؟';
 	@override String get importAndExport => 'استيراد وتصدير';
 	@override String get import => 'يستورد';
+	@override String get importFromUrl => 'الاستيراد من عنوان URL';
 	@override String get export => 'يصدّر';
 	@override String get send => 'يرسل';
 	@override String get receive => 'تولي';
@@ -560,6 +561,7 @@ extension on TranslationsAr {
 			case 'meta.rewriteConfirm': return 'سيقوم هذا الملف بكتابة التكوين المحلي الحالي.هل تريد الاستمرار؟';
 			case 'meta.importAndExport': return 'استيراد وتصدير';
 			case 'meta.import': return 'يستورد';
+			case 'meta.importFromUrl': return 'الاستيراد من عنوان URL';
 			case 'meta.export': return 'يصدّر';
 			case 'meta.send': return 'يرسل';
 			case 'meta.receive': return 'تولي';

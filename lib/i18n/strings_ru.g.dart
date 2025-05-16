@@ -256,6 +256,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get rewriteConfirm => 'Этот файл перезапишет существующую локальную конфигурацию. Продолжить?';
 	@override String get importAndExport => 'Импорт и экспорт';
 	@override String get import => 'Импорт';
+	@override String get importFromUrl => 'Импорт из URL';
 	@override String get export => 'Экспорт';
 	@override String get send => 'Передать';
 	@override String get receive => 'Принять';
@@ -560,6 +561,7 @@ extension on TranslationsRu {
 			case 'meta.rewriteConfirm': return 'Этот файл перезапишет существующую локальную конфигурацию. Продолжить?';
 			case 'meta.importAndExport': return 'Импорт и экспорт';
 			case 'meta.import': return 'Импорт';
+			case 'meta.importFromUrl': return 'Импорт из URL';
 			case 'meta.export': return 'Экспорт';
 			case 'meta.send': return 'Передать';
 			case 'meta.receive': return 'Принять';

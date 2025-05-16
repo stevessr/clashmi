@@ -256,6 +256,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get rewriteConfirm => 'این فایل کانفیگ‌های محلی موجود را بازنویسی می‌کند. آیا می‌خواهید ادامه بدین؟';
 	@override String get importAndExport => 'وارد‌کردن و خروجی‌گرفتن';
 	@override String get import => 'وارد‌کردن';
+	@override String get importFromUrl => 'وارد کردن از URL';
 	@override String get export => 'خروجی‌گرفتن';
 	@override String get send => 'ارسال کنید';
 	@override String get receive => 'تصاحب';
@@ -560,6 +561,7 @@ extension on TranslationsFa {
 			case 'meta.rewriteConfirm': return 'این فایل کانفیگ‌های محلی موجود را بازنویسی می‌کند. آیا می‌خواهید ادامه بدین؟';
 			case 'meta.importAndExport': return 'وارد‌کردن و خروجی‌گرفتن';
 			case 'meta.import': return 'وارد‌کردن';
+			case 'meta.importFromUrl': return 'وارد کردن از URL';
 			case 'meta.export': return 'خروجی‌گرفتن';
 			case 'meta.send': return 'ارسال کنید';
 			case 'meta.receive': return 'تصاحب';

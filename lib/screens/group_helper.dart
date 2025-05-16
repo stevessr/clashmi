@@ -148,6 +148,12 @@ class GroupHelper {
                 })),
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
+                name: tcontext.meta.importFromUrl,
+                onPush: () async {
+                  onTapImportFromUrl(context);
+                })),
+        GroupItemOptions(
+            pushOptions: GroupItemPushOptions(
                 name: tcontext.meta.export,
                 onPush: () async {
                   onTapExport(context);
@@ -200,6 +206,29 @@ class GroupHelper {
       }
       DialogUtils.showAlertDialog(context, err.toString(),
           showCopy: true, showFAQ: true, withVersion: true);
+    }
+  }
+
+  static Future<void> onTapImportFromUrl(BuildContext context) async {
+    final tcontext = Translations.of(context);
+    String? text = await DialogUtils.showTextInputDialog(
+        context, tcontext.meta.url, "", null, null, (text) {
+      text = text.trim();
+
+      Uri? uri = Uri.tryParse(text);
+      if (uri == null || (!uri.isScheme("HTTP") && !uri.isScheme("HTTPS"))) {
+        DialogUtils.showAlertDialog(context, tcontext.meta.urlInvalid);
+        return false;
+      }
+
+      return true;
+    });
+
+    if (text != null) {
+      if (!context.mounted) {
+        return;
+      }
+      BackupHelper.restoreBackupFromUrl(context, text);
     }
   }
 

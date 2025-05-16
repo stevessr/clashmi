@@ -149,6 +149,7 @@
         "rewriteConfirm": "该文件将覆盖本地已有配置,是否继续?",
         "importAndExport": "导入/导出",
         "import": "导入",
+        "importFromUrl": "从URL导入",
         "export": "导出",
         "send": "发送",
         "receive": "接收",

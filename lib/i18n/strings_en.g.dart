@@ -259,6 +259,7 @@ class TranslationsMetaEn {
 	String get rewriteConfirm => 'This file will overwrite the existing local configuration. Do you want to continue?';
 	String get importAndExport => 'Import and Export';
 	String get import => 'Import';
+	String get importFromUrl => 'Import from URL';
 	String get export => 'Export';
 	String get send => 'Send';
 	String get receive => 'Receive';
@@ -563,6 +564,7 @@ extension on Translations {
 			case 'meta.rewriteConfirm': return 'This file will overwrite the existing local configuration. Do you want to continue?';
 			case 'meta.importAndExport': return 'Import and Export';
 			case 'meta.import': return 'Import';
+			case 'meta.importFromUrl': return 'Import from URL';
 			case 'meta.export': return 'Export';
 			case 'meta.send': return 'Send';
 			case 'meta.receive': return 'Receive';

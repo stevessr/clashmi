@@ -256,6 +256,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get rewriteConfirm => '该文件将覆盖本地已有配置,是否继续?';
 	@override String get importAndExport => '导入/导出';
 	@override String get import => '导入';
+	@override String get importFromUrl => '从URL导入';
 	@override String get export => '导出';
 	@override String get send => '发送';
 	@override String get receive => '接收';
@@ -560,6 +561,7 @@ extension on TranslationsZhCn {
 			case 'meta.rewriteConfirm': return '该文件将覆盖本地已有配置,是否继续?';
 			case 'meta.importAndExport': return '导入/导出';
 			case 'meta.import': return '导入';
+			case 'meta.importFromUrl': return '从URL导入';
 			case 'meta.export': return '导出';
 			case 'meta.send': return '发送';
 			case 'meta.receive': return '接收';

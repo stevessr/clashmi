@@ -149,6 +149,7 @@
         "rewriteConfirm": "This file will overwrite the existing local configuration. Do you want to continue?",
         "importAndExport": "Import and Export",
         "import": "Import",
+        "importFromUrl": "Import from URL",
         "export": "Export",
         "send": "Send",
         "receive": "Receive",
