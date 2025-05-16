@@ -123,6 +123,16 @@ enum ClashDnsEnhancedMode {
       ClashDnsEnhancedMode.normal.name,
     ];
   }
+
+  static List<Tuple2<String?, String>> toTupleList() {
+    return [
+      Tuple2(
+          ClashDnsEnhancedMode.fakeIp.name, ClashDnsEnhancedMode.fakeIp.name),
+      Tuple2(ClashDnsEnhancedMode.redirHost.name,
+          ClashDnsEnhancedMode.redirHost.name),
+      Tuple2(ClashDnsEnhancedMode.normal.name, "normal"),
+    ];
+  }
 }
 
 enum ClashDnsCacheAlgorithm {

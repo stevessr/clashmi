@@ -1215,6 +1215,7 @@ class GroupHelper {
       var setting = ClashSettingManager.getConfig();
       var dns = setting.DNS!;
       final enhancedModes = ClashDnsEnhancedMode.toList();
+      final enhancedModesTuple = ClashDnsEnhancedMode.toTupleList();
       final fakeIPFilterModes = ClashFakeIPFilterMode.toList();
       List<GroupItemOptions> options = [
         GroupItemOptions(
@@ -1286,7 +1287,7 @@ class GroupHelper {
                 selected: enhancedModes.contains(dns.EnhancedMode)
                     ? dns.EnhancedMode
                     : enhancedModes.last,
-                strings: enhancedModes,
+                tupleStrings: enhancedModesTuple,
                 onPicker: dns.OverWrite != true || dns.Enable != true
                     ? null
                     : (String? selected) async {
