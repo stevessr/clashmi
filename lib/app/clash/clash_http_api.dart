@@ -467,7 +467,7 @@ class ClashHttpApi {
 
   static Future<String> getConnectionsUrl() async {
     String secret = await getSecret();
-    return "$wshost:${getControlPort?.call()}/connections?token=$secret";
+    return "$wshost:${getControlPort?.call()}/connections?token=$secret&noConnections=true";
   }
 
   static Future<String> getLogUrl() async {
