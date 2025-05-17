@@ -460,21 +460,6 @@ class ClashHttpApi {
     return result.error;
   }
 
-  static Future<String> getTrafficUrl() async {
-    String secret = await getSecret();
-    return "$wshost:${getControlPort?.call()}/traffic?token=$secret";
-  }
-
-  static Future<String> getConnectionsUrl() async {
-    String secret = await getSecret();
-    return "$wshost:${getControlPort?.call()}/connections?token=$secret&noConnections=true";
-  }
-
-  static Future<String> getLogUrl() async {
-    String secret = await getSecret();
-    return "$wshost:${getControlPort?.call()}/logs?token=$secret&level=info";
-  }
-
   static String convertTrafficToStringDouble(num? value, {num kb = 1024}) {
     if (value == null || value < 0) {
       return "";

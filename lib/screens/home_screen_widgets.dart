@@ -32,6 +32,7 @@ import 'package:clashmi/screens/webview_helper.dart';
 import 'package:clashmi/screens/widgets/segmented_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:libclash_vpn_service/state.dart';
+import 'package:libclash_vpn_service/vpn_service.dart';
 
 class HomeScreenWidgetPart1 extends StatefulWidget {
   const HomeScreenWidgetPart1({super.key});
@@ -48,9 +49,8 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   bool _working = false;
   FlutterVpnServiceState _state = FlutterVpnServiceState.disconnected;
   Timer? _timerStateChecker;
+  Timer? _timerConnections;
 
-  Websocket? _websocketTraffic;
-  Websocket? _websocketConnections;
   //final ValueNotifier<String> _memory = ValueNotifier<String>(_kNoMemory);
   final ValueNotifier<String> _trafficSpeed = ValueNotifier<String>(_kNoSpeed);
   final ValueNotifier<String> _connections =
@@ -419,26 +419,19 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     //print("_onStateChanged $_state->$state");
     _state = state;
     if (state == FlutterVpnServiceState.disconnected) {
-      _disconnectToConntection();
-      _disconnectToTraffic();
-      _proxyNow.value = "";
+      _disconnectToCore();
     } else if (state == FlutterVpnServiceState.connecting) {
     } else if (state == FlutterVpnServiceState.connected) {
       if (!AppLifecycleStateNofity.isPaused()) {
-        _connectToConntection();
-        _connectToTraffic();
+        _connectToCore();
       }
     } else if (state == FlutterVpnServiceState.reasserting) {
-      _disconnectToConntection();
-      _disconnectToTraffic();
-      _proxyNow.value = "";
+      _disconnectToCore();
     } else if (state == FlutterVpnServiceState.disconnecting) {
       _stopStateCheckTimer();
       Zashboard.stop();
     } else {
-      _disconnectToConntection();
-      _disconnectToTraffic();
-      _proxyNow.value = "";
+      _disconnectToCore();
     }
 
     setState(() {});
@@ -447,15 +440,14 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   Future<void> _onStateResumed() async {
     _checkState();
     _startStateCheckTimer();
-    _connectToConntection();
-    _connectToTraffic();
+    _connectToCore();
+
     _updateProxyNow();
   }
 
   Future<void> _onStatePaused() async {
     _stopStateCheckTimer();
-    _disconnectToConntection();
-    _disconnectToTraffic();
+    _disconnectToCore();
   }
 
   Future<void> _onCurrentChanged(String id) async {
@@ -494,7 +486,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     _timerStateChecker = null;
   }
 
-  Future<void> _connectToConntection() async {
+  Future<void> _connectToCore() async {
     bool started = await VPNService.getStarted();
     if (!started) {
       return;
@@ -502,83 +494,48 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     if (AppLifecycleStateNofity.isPaused()) {
       return;
     }
+    const Duration duration = Duration(seconds: 1);
+    _timerConnections ??= Timer.periodic(duration, (timer) async {
+      if (AppLifecycleStateNofity.isPaused()) {
+        return;
+      }
+      String connections = await FlutterVpnService.clashiApiConnections(false);
+      String tranffic = await FlutterVpnService.clashiApiTraffic();
+      if (AppLifecycleStateNofity.isPaused()) {
+        return;
+      }
+      try {
+        var obj = jsonDecode(connections);
+        ClashConnections body = ClashConnections();
+        body.fromJson(obj);
+        //_memory.value =
+        //    ClashHttpApi.convertTrafficToStringDouble(body.memory);
+        _connections.value =
+            "↑ ${ClashHttpApi.convertTrafficToStringDouble(body.uploadTotal)}  ↓ ${ClashHttpApi.convertTrafficToStringDouble(body.downloadTotal)} ";
+      } catch (err) {}
+      try {
+        var obj = jsonDecode(tranffic);
+        ClashTraffic traffic = ClashTraffic();
+        traffic.fromJson(obj);
+        _trafficSpeed.value =
+            "↑ ${ClashHttpApi.convertTrafficToStringDouble(traffic.upload)}/s  ↓ ${ClashHttpApi.convertTrafficToStringDouble(traffic.download)}/s";
+      } catch (err) {}
 
-    _websocketConnections ??= Websocket(
-        url: await ClashHttpApi.getConnectionsUrl(),
-        userAgent: await HttpUtils.getUserAgent(),
-        onMessage: (String message) {
-          if (AppLifecycleStateNofity.isPaused()) {
-            Future.delayed(const Duration(seconds: 0), () async {
-              _disconnectToConntection();
-            });
-            return;
-          }
-          var obj = jsonDecode(message);
-          ClashConnections body = ClashConnections();
-          body.fromJson(obj);
-          //_memory.value =
-          //    ClashHttpApi.convertTrafficToStringDouble(body.memory);
-          _connections.value =
-              "↑ ${ClashHttpApi.convertTrafficToStringDouble(body.uploadTotal)}  ↓ ${ClashHttpApi.convertTrafficToStringDouble(body.downloadTotal)} ";
-        },
-        onDone: () {
-          _disconnectToConntection();
-        },
-        onError: (err) {
-          _disconnectToConntection();
+      if (_proxyNow.value.isEmpty) {
+        Future.delayed(Duration(seconds: 1), () async {
+          _updateProxyNow();
         });
-    await _websocketConnections!.connect();
+      }
+    });
   }
 
-  Future<void> _disconnectToConntection() async {
-    await _websocketConnections?.disconnect();
+  Future<void> _disconnectToCore() async {
+    _timerConnections?.cancel();
+    _timerConnections = null;
     _connections.value = _kNoConnection;
-    // _memory.value = _kNoMemory;
-  }
-
-  Future<void> _connectToTraffic() async {
-    bool started = await VPNService.getStarted();
-    if (!started) {
-      return;
-    }
-    if (AppLifecycleStateNofity.isPaused()) {
-      return;
-    }
-
-    _websocketTraffic ??= Websocket(
-        url: await ClashHttpApi.getTrafficUrl(),
-        userAgent: await HttpUtils.getUserAgent(),
-        onMessage: (String message) {
-          if (AppLifecycleStateNofity.isPaused()) {
-            Future.delayed(const Duration(seconds: 0), () async {
-              _disconnectToTraffic();
-            });
-            return;
-          }
-          var obj = jsonDecode(message);
-          ClashTraffic traffic = ClashTraffic();
-          traffic.fromJson(obj);
-          _trafficSpeed.value =
-              "↑ ${ClashHttpApi.convertTrafficToStringDouble(traffic.upload)}/s  ↓ ${ClashHttpApi.convertTrafficToStringDouble(traffic.download)}/s";
-
-          if (_proxyNow.value.isEmpty) {
-            Future.delayed(Duration(seconds: 1), () async {
-              _updateProxyNow();
-            });
-          }
-        },
-        onDone: () {
-          _disconnectToTraffic();
-        },
-        onError: (err) {
-          _disconnectToTraffic();
-        });
-    await _websocketTraffic!.connect();
-  }
-
-  Future<void> _disconnectToTraffic() async {
-    await _websocketTraffic?.disconnect();
     _trafficSpeed.value = _kNoSpeed;
+    // _memory.value = _kNoMemory;
+    _proxyNow.value = "";
   }
 
   Future<void> _updateProxyNow() async {
@@ -590,6 +547,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
         return;
       }
       _proxyNowUpdating = true;
+
       final result = await ClashHttpApi.getNowProxy(
           ClashSettingManager.getConfig().Mode ?? ClashConfigsMode.rule.name);
       if (result.error != null || result.data!.isEmpty) {

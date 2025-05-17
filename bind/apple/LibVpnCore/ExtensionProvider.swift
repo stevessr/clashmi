@@ -33,6 +33,7 @@ struct ProviderMessage: Codable {
 
 struct ProviderMessageResponse: Codable {
     var err: String?
+    var data: String? 
     var extra: [String: String] = [:]
 }
 
@@ -78,6 +79,12 @@ open class ExtensionProvider: NEPacketTunnelProvider {
             let message = try! JSONDecoder().decode(ProviderMessage.self, from: messageData)
             if message.messageId == "restart" {
                 try await restartService(extra: &messageResponse.extra)
+            } else if message.messageId == "clashiApiConnections"{
+                messageResponse.data = LibclashGetConnections(message.messageParams == "true")
+            } else if message.messageId == "clashiApiTraffic"{
+                messageResponse.data = LibclashGetTraffic()
+            } else {
+                messageResponse.err = "unsupport \(message.messageId)"
             }
         }
         catch let VpnError.Error(err) {
