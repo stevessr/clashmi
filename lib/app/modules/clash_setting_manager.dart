@@ -336,6 +336,7 @@ class ClashSettingManager {
       ),
       NTP: RawNTP.by(OverWrite: false, Enable: false),
       Tun: _setting.Tun,
+      GeodataLoader: _setting.GeodataLoader,
       GeoXUrl: RawGeoXUrl.by(),
       Sniffer: RawSniffer.by(OverWrite: false, Enable: false),
       TLS: RawTLS.by(OverWrite: false),
