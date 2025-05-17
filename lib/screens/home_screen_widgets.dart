@@ -53,7 +53,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
 
   //final ValueNotifier<String> _memory = ValueNotifier<String>(_kNoMemory);
   final ValueNotifier<String> _trafficSpeed = ValueNotifier<String>(_kNoSpeed);
-  final ValueNotifier<String> _connections =
+  final ValueNotifier<String> _trafficTotal =
       ValueNotifier<String>(_kNoConnection);
   final ValueNotifier<String> _proxyNow = ValueNotifier<String>("");
   bool _proxyNowUpdating = false;
@@ -186,7 +186,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
               ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                   ValueListenableBuilder<String>(
                     builder: _buildWithTrafficSpeedValue,
-                    valueListenable: _connections,
+                    valueListenable: _trafficTotal,
                   ),
                 ])
               : const SizedBox.shrink(),
@@ -510,7 +510,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
         body.fromJson(obj);
         //_memory.value =
         //    ClashHttpApi.convertTrafficToStringDouble(body.memory);
-        _connections.value =
+        _trafficTotal.value =
             "↑ ${ClashHttpApi.convertTrafficToStringDouble(body.uploadTotal)}  ↓ ${ClashHttpApi.convertTrafficToStringDouble(body.downloadTotal)} ";
       } catch (err) {}
       try {
@@ -532,7 +532,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   Future<void> _disconnectToCore() async {
     _timerConnections?.cancel();
     _timerConnections = null;
-    _connections.value = _kNoConnection;
+    _trafficTotal.value = _kNoConnection;
     _trafficSpeed.value = _kNoSpeed;
     // _memory.value = _kNoMemory;
     _proxyNow.value = "";
