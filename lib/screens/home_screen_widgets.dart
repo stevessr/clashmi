@@ -49,7 +49,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   bool _working = false;
   FlutterVpnServiceState _state = FlutterVpnServiceState.disconnected;
   Timer? _timerStateChecker;
-  Timer? _timerConnections;
+  Timer? _timerConnectToCore;
 
   //final ValueNotifier<String> _memory = ValueNotifier<String>(_kNoMemory);
   final ValueNotifier<String> _trafficSpeed = ValueNotifier<String>(_kNoSpeed);
@@ -495,7 +495,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
       return;
     }
     const Duration duration = Duration(seconds: 1);
-    _timerConnections ??= Timer.periodic(duration, (timer) async {
+    _timerConnectToCore ??= Timer.periodic(duration, (timer) async {
       if (AppLifecycleStateNofity.isPaused()) {
         return;
       }
@@ -530,8 +530,8 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   }
 
   Future<void> _disconnectToCore() async {
-    _timerConnections?.cancel();
-    _timerConnections = null;
+    _timerConnectToCore?.cancel();
+    _timerConnectToCore = null;
     _trafficTotal.value = _kNoConnection;
     _trafficSpeed.value = _kNoSpeed;
     // _memory.value = _kNoMemory;
