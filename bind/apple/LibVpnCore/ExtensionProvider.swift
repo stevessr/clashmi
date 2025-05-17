@@ -80,9 +80,13 @@ open class ExtensionProvider: NEPacketTunnelProvider {
             if message.messageId == "restart" {
                 try await restartService(extra: &messageResponse.extra)
             } else if message.messageId == "clashiApiConnections"{
-                messageResponse.data = LibclashGetConnections(message.messageParams == "true")
+                let content = LibclashGetConnections(message.messageParams == "true")
+                let data: Data = content.data(using: String.Encoding.utf8)!
+                return data
             } else if message.messageId == "clashiApiTraffic"{
-                messageResponse.data = LibclashGetTraffic()
+                let content = LibclashGetTraffic()
+                let data: Data = content.data(using: String.Encoding.utf8)!
+                return data
             } else {
                 messageResponse.err = "unsupport \(message.messageId)"
             }
