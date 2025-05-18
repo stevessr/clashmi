@@ -228,6 +228,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get tls => 'TLS';
 	@override String get geo => 'GEO';
 	@override String get geoDownloadByProxy => 'Загрузка Geo RuleSet через прокси';
+	@override String get geoRulesetTips => 'Geosite/Geoip/Asn будет преобразован в соответствующий RuleSet';
 	@override String get sniffer => 'Обнюхивание';
 	@override String get userAgent => 'UserAgent';
 	@override String get launchAtStartup => 'Запуск при включении';
@@ -534,6 +535,7 @@ extension on TranslationsRu {
 			case 'meta.tls': return 'TLS';
 			case 'meta.geo': return 'GEO';
 			case 'meta.geoDownloadByProxy': return 'Загрузка Geo RuleSet через прокси';
+			case 'meta.geoRulesetTips': return 'Geosite/Geoip/Asn будет преобразован в соответствующий RuleSet';
 			case 'meta.sniffer': return 'Обнюхивание';
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.launchAtStartup': return 'Запуск при включении';

@@ -228,6 +228,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get tls => 'TLS';
 	@override String get geo => 'GEO';
 	@override String get geoDownloadByProxy => '使用代理下载Geo RuleSet';
+	@override String get geoRulesetTips => 'Geosite/Geoip/Asn 会被转换成 对应的RuleSet';
 	@override String get sniffer => '嗅探';
 	@override String get userAgent => 'UserAgent';
 	@override String get launchAtStartup => '开机启动';
@@ -534,6 +535,7 @@ extension on TranslationsZhCn {
 			case 'meta.tls': return 'TLS';
 			case 'meta.geo': return 'GEO';
 			case 'meta.geoDownloadByProxy': return '使用代理下载Geo RuleSet';
+			case 'meta.geoRulesetTips': return 'Geosite/Geoip/Asn 会被转换成 对应的RuleSet';
 			case 'meta.sniffer': return '嗅探';
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.launchAtStartup': return '开机启动';

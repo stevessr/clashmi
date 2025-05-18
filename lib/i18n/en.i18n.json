@@ -121,6 +121,7 @@
         "tls": "TLS",
         "geo": "GEO",
         "geoDownloadByProxy": "Downloading Geo RuleSet by proxy",
+        "geoRulesetTips": "Geosite/Geoip/Asn will be converted into the corresponding RuleSet",
         "sniffer": "Sniffer",
         "userAgent": "UserAgent",
         "launchAtStartup": "Launch at Startup",

@@ -121,6 +121,7 @@
         "tls": "TLS",
         "geo": "GEO",
         "geoDownloadByProxy": "使用代理下载Geo RuleSet",
+        "geoRulesetTips": "Geosite/Geoip/Asn 会被转换成 对应的RuleSet",
         "sniffer": "嗅探",
         "userAgent": "UserAgent",
         "launchAtStartup": "开机启动",

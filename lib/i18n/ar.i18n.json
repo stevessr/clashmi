@@ -121,6 +121,7 @@
         "tls": "TLS",
         "geo": "GEO",
         "geoDownloadByProxy": "تنزيل Geo RuleSet باستخدام وكيل",
+        "geoRulesetTips": "سيتم تحويل Geosite/Geoip/Asn إلى مجموعة القواعد المقابلة",
         "sniffer": "شم",
         "userAgent": "UserAgent",
         "launchAtStartup": "إطلاق عند بدء التشغيل",

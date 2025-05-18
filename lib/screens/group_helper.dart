@@ -768,6 +768,7 @@ class GroupHelper {
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
                 name: "Geo RuleSet",
+                tips: tcontext.meta.geoRulesetTips,
                 onPush: () async {
                   showClashSettingsGEORuleset(context);
                 })),

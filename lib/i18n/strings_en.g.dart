@@ -231,6 +231,7 @@ class TranslationsMetaEn {
 	String get tls => 'TLS';
 	String get geo => 'GEO';
 	String get geoDownloadByProxy => 'Downloading Geo RuleSet by proxy';
+	String get geoRulesetTips => 'Geosite/Geoip/Asn will be converted into the corresponding RuleSet';
 	String get sniffer => 'Sniffer';
 	String get userAgent => 'UserAgent';
 	String get launchAtStartup => 'Launch at Startup';
@@ -537,6 +538,7 @@ extension on Translations {
 			case 'meta.tls': return 'TLS';
 			case 'meta.geo': return 'GEO';
 			case 'meta.geoDownloadByProxy': return 'Downloading Geo RuleSet by proxy';
+			case 'meta.geoRulesetTips': return 'Geosite/Geoip/Asn will be converted into the corresponding RuleSet';
 			case 'meta.sniffer': return 'Sniffer';
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.launchAtStartup': return 'Launch at Startup';
