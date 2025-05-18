@@ -227,7 +227,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get ntp => 'NTP';
 	@override String get tls => 'TLS';
 	@override String get geo => 'GEO';
-	@override String get geoDownloadByProxy => '使用代理下载GEO RuleSet';
+	@override String get geoDownloadByProxy => '使用代理下载Geo RuleSet';
 	@override String get sniffer => '嗅探';
 	@override String get userAgent => 'UserAgent';
 	@override String get launchAtStartup => '开机启动';
@@ -533,7 +533,7 @@ extension on TranslationsZhCn {
 			case 'meta.ntp': return 'NTP';
 			case 'meta.tls': return 'TLS';
 			case 'meta.geo': return 'GEO';
-			case 'meta.geoDownloadByProxy': return '使用代理下载GEO RuleSet';
+			case 'meta.geoDownloadByProxy': return '使用代理下载Geo RuleSet';
 			case 'meta.sniffer': return '嗅探';
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.launchAtStartup': return '开机启动';

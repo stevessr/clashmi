@@ -230,7 +230,7 @@ class TranslationsMetaEn {
 	String get ntp => 'NTP';
 	String get tls => 'TLS';
 	String get geo => 'GEO';
-	String get geoDownloadByProxy => 'Downloading GEO RuleSet by proxy';
+	String get geoDownloadByProxy => 'Downloading Geo RuleSet by proxy';
 	String get sniffer => 'Sniffer';
 	String get userAgent => 'UserAgent';
 	String get launchAtStartup => 'Launch at Startup';
@@ -536,7 +536,7 @@ extension on Translations {
 			case 'meta.ntp': return 'NTP';
 			case 'meta.tls': return 'TLS';
 			case 'meta.geo': return 'GEO';
-			case 'meta.geoDownloadByProxy': return 'Downloading GEO RuleSet by proxy';
+			case 'meta.geoDownloadByProxy': return 'Downloading Geo RuleSet by proxy';
 			case 'meta.sniffer': return 'Sniffer';
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.launchAtStartup': return 'Launch at Startup';

@@ -227,7 +227,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get ntp => 'NTP';
 	@override String get tls => 'TLS';
 	@override String get geo => 'GEO';
-	@override String get geoDownloadByProxy => 'دانلود GEO RuleSet با استفاده از یک پروکسی';
+	@override String get geoDownloadByProxy => 'دانلود Geo RuleSet با استفاده از یک پروکسی';
 	@override String get sniffer => 'بو کشیدن';
 	@override String get userAgent => 'UserAgent';
 	@override String get launchAtStartup => 'اجرا در راه‌اندازی';
@@ -533,7 +533,7 @@ extension on TranslationsFa {
 			case 'meta.ntp': return 'NTP';
 			case 'meta.tls': return 'TLS';
 			case 'meta.geo': return 'GEO';
-			case 'meta.geoDownloadByProxy': return 'دانلود GEO RuleSet با استفاده از یک پروکسی';
+			case 'meta.geoDownloadByProxy': return 'دانلود Geo RuleSet با استفاده از یک پروکسی';
 			case 'meta.sniffer': return 'بو کشیدن';
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.launchAtStartup': return 'اجرا در راه‌اندازی';

@@ -120,7 +120,7 @@
         "ntp": "NTP",
         "tls": "TLS",
         "geo": "GEO",
-        "geoDownloadByProxy": "Downloading GEO RuleSet by proxy",
+        "geoDownloadByProxy": "Downloading Geo RuleSet by proxy",
         "sniffer": "Sniffer",
         "userAgent": "UserAgent",
         "launchAtStartup": "Launch at Startup",
