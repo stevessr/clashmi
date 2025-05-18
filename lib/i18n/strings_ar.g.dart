@@ -227,6 +227,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get ntp => 'NTP';
 	@override String get tls => 'TLS';
 	@override String get geo => 'GEO';
+	@override String get geoDownloadByProxy => 'تنزيل GEO RuleSet باستخدام وكيل';
 	@override String get sniffer => 'شم';
 	@override String get userAgent => 'UserAgent';
 	@override String get launchAtStartup => 'إطلاق عند بدء التشغيل';
@@ -532,6 +533,7 @@ extension on TranslationsAr {
 			case 'meta.ntp': return 'NTP';
 			case 'meta.tls': return 'TLS';
 			case 'meta.geo': return 'GEO';
+			case 'meta.geoDownloadByProxy': return 'تنزيل GEO RuleSet باستخدام وكيل';
 			case 'meta.sniffer': return 'شم';
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.launchAtStartup': return 'إطلاق عند بدء التشغيل';

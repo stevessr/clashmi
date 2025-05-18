@@ -227,6 +227,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get ntp => 'NTP';
 	@override String get tls => 'TLS';
 	@override String get geo => 'GEO';
+	@override String get geoDownloadByProxy => 'Загрузка GEO RuleSet через прокси';
 	@override String get sniffer => 'Обнюхивание';
 	@override String get userAgent => 'UserAgent';
 	@override String get launchAtStartup => 'Запуск при включении';
@@ -532,6 +533,7 @@ extension on TranslationsRu {
 			case 'meta.ntp': return 'NTP';
 			case 'meta.tls': return 'TLS';
 			case 'meta.geo': return 'GEO';
+			case 'meta.geoDownloadByProxy': return 'Загрузка GEO RuleSet через прокси';
 			case 'meta.sniffer': return 'Обнюхивание';
 			case 'meta.userAgent': return 'UserAgent';
 			case 'meta.launchAtStartup': return 'Запуск при включении';

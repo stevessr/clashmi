@@ -120,6 +120,7 @@
         "ntp": "NTP",
         "tls": "TLS",
         "geo": "GEO",
+        "geoDownloadByProxy": "Загрузка GEO RuleSet через прокси",
         "sniffer": "Обнюхивание",
         "userAgent": "UserAgent",
         "launchAtStartup": "Запуск при включении",

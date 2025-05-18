@@ -1640,8 +1640,17 @@ class GroupHelper {
                   if (duration == null) {
                     return;
                   }
-                  setting.GeoUpdateInterval = duration.inSeconds;
+                  ruleset.UpdateInterval = duration.inSeconds;
                 })),
+        GroupItemOptions(
+            switchOptions: GroupItemSwitchOptions(
+                name: tcontext.meta.geoDownloadByProxy,
+                switchValue: ruleset.EnableProxy,
+                onSwitch: ruleset.UpdateInterval == null
+                    ? null
+                    : (bool value) async {
+                        ruleset.EnableProxy = value;
+                      })),
         GroupItemOptions(
             textFormFieldOptions: GroupItemTextFieldOptions(
                 name: "GeoSite",
