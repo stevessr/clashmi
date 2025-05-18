@@ -24,7 +24,6 @@ class ClashSettingManager {
       return getControlPort();
     };
     await load();
-    await initGeo();
   }
 
   static Future<void> reload() async {
@@ -222,7 +221,7 @@ class ClashSettingManager {
       RespectRules: false,
       NameServer: nameServer,
       Fallback: fallback,
-      FallbackFilter: RawFallbackFilter.by(GeoIP: false),
+      FallbackFilter: RawFallbackFilter.by(GeoIP: null),
       Listen: null,
       EnhancedMode: ClashDnsEnhancedMode.fakeIp.name,
       FakeIPRange: "$_gateWay.1/16",
@@ -241,19 +240,6 @@ class ClashSettingManager {
     return RawNTP.by(OverWrite: false, Enable: false);
   }
 
-  static RawGeoXUrl defaultGeoXUrl() {
-    return RawGeoXUrl.by(
-        OverWrite: true,
-        GeoIp:
-            "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat",
-        Mmdb:
-            "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb",
-        ASN:
-            "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb",
-        GeoSite:
-            "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat");
-  }
-
   static RawSniffer defaultSniffer() {
     return RawSniffer.by(OverWrite: false, Enable: false);
   }
@@ -264,6 +250,19 @@ class ClashSettingManager {
         Certificate: null,
         PrivateKey: null,
         CustomTrustCert: null);
+  }
+
+  static RawExtensionGeoRuleset defaultRawExtensionRuleset() {
+    return RawExtensionGeoRuleset.by(
+      GeoSiteUrl:
+          "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite",
+      GeoIpUrl:
+          "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip",
+      AsnUrl:
+          "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/asn",
+      UpdateInterval: 2 * 24 * 3600,
+      EnableProxy: true,
+    );
   }
 
   static RawExtension defaultExtension() {
@@ -290,6 +289,7 @@ class ClashSettingManager {
     ];
 
     return RawExtension.by(
+      Ruleset: defaultRawExtensionRuleset(),
       Tun: RawExtensionTun.by(
         httpProxy: RawExtensionTunHttpProxy.by(
             Enable: false, BypassDomain: bypassDomainCN + bypassDomainLocal),
@@ -313,9 +313,6 @@ class ClashSettingManager {
       DNS: defaultDNS(),
       NTP: defaultNTP(),
       Tun: defaultTun(),
-      GeoAutoUpdate: false,
-      GeoUpdateInterval: 7 * 24 * 3600,
-      GeoXUrl: defaultGeoXUrl(),
       Sniffer: defaultSniffer(),
       TLS: defaultTLS(),
       Extension: defaultExtension(),
@@ -336,11 +333,10 @@ class ClashSettingManager {
       ),
       NTP: RawNTP.by(OverWrite: false, Enable: false),
       Tun: _setting.Tun,
-      GeodataLoader: _setting.GeodataLoader,
-      GeoXUrl: RawGeoXUrl.by(),
       Sniffer: RawSniffer.by(OverWrite: false, Enable: false),
       TLS: RawTLS.by(OverWrite: false),
       Extension: RawExtension.by(
+        Ruleset: defaultRawExtensionRuleset(),
         Tun: RawExtensionTun.by(
           httpProxy: _setting.Extension?.Tun.httpProxy ??
               RawExtensionTunHttpProxy.by(Enable: false),
@@ -353,36 +349,6 @@ class ClashSettingManager {
   }
 
   static Future<void> uninit() async {}
-  static Future<void> initGeo() async {
-    const mmdbFileName = "geoip.metadb";
-    const asnFileName = "ASN.mmdb";
-    const geoIpFileName = "GeoIP.dat";
-    const geoSiteFileName = "GeoSite.dat";
-
-    final homePath = await PathUtils.profileDir();
-    const geoFileNameList = [
-      mmdbFileName,
-      geoIpFileName,
-      geoSiteFileName,
-      asnFileName,
-    ];
-    try {
-      for (final geoFileName in geoFileNameList) {
-        final geoFile = File(
-          path.join(homePath, geoFileName),
-        );
-        final isExists = await geoFile.exists();
-        if (isExists) {
-          continue;
-        }
-        final data = await rootBundle.load('assets/datas/$geoFileName');
-        List<int> bytes = data.buffer.asUint8List();
-        await geoFile.writeAsBytes(bytes, flush: true);
-      }
-    } catch (err) {
-      Log.w("ClashSettingManager.initGeo exception ${err.toString()} ");
-    }
-  }
 
   static Future<void> save() async {
     String filePath = await PathUtils.serviceCoreSettingFilePath();
@@ -456,7 +422,6 @@ class ClashSettingManager {
     _setting.NTP ??= defaultNTP();
     _setting.Tun ??= defaultTun();
 
-    _setting.GeoXUrl ??= defaultGeoXUrl();
     _setting.Sniffer ??= defaultSniffer();
     _setting.TLS ??= defaultTLS();
     _setting.Extension ??= defaultExtension();
@@ -464,8 +429,6 @@ class ClashSettingManager {
 
   static Future<void> _initFixed() async {
     _setting.Secret = await ClashHttpApi.getSecret();
-    _setting.GeodataMode = true;
-    _setting.GeodataLoader = "memconservative";
     _setting.UnifiedDelay = true;
     _setting.ExternalUI = "";
     _setting.ExternalUIName = "";

@@ -310,6 +310,32 @@ class RawExtensionTunPerApp {
 }
 
 @JsonSerializable(explicitToJson: true)
+class RawExtensionGeoRuleset {
+  @JsonKey(name: 'geosite_url')
+  String? GeoSiteUrl;
+  @JsonKey(name: 'geoip_url')
+  String? GeoIpUrl;
+  @JsonKey(name: 'asn_url')
+  String? AsnUrl;
+  @JsonKey(name: 'update-interval')
+  int? UpdateInterval;
+  @JsonKey(name: 'enable-proxy')
+  bool? EnableProxy;
+
+  RawExtensionGeoRuleset.by(
+      {this.GeoSiteUrl,
+      this.GeoIpUrl,
+      this.AsnUrl,
+      this.UpdateInterval,
+      this.EnableProxy});
+  RawExtensionGeoRuleset(this.GeoSiteUrl, this.GeoIpUrl, this.AsnUrl,
+      this.UpdateInterval, this.EnableProxy);
+  factory RawExtensionGeoRuleset.fromJson(Map<String, dynamic> json) =>
+      _$RawExtensionGeoRulesetFromJson(json);
+  Map<String, dynamic> toJson() => _$RawExtensionGeoRulesetToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class RawExtensionTun {
   @JsonKey(name: 'http_proxy')
   RawExtensionTunHttpProxy httpProxy;
@@ -331,23 +357,24 @@ class RawExtensionTun {
 
 @JsonSerializable(explicitToJson: true)
 class RawExtension {
+  @JsonKey(name: 'geo-rule-set')
+  RawExtensionGeoRuleset Ruleset;
   @JsonKey(name: 'tun')
   RawExtensionTun Tun;
   @JsonKey(name: 'pprof-addr')
   String? PprofAddr;
-
   RawExtension.by({
+    required this.Ruleset,
     required this.Tun,
     this.PprofAddr,
   });
-  RawExtension(this.Tun, this.PprofAddr);
+  RawExtension(this.Ruleset, this.Tun, this.PprofAddr);
   factory RawExtension.fromJson(Map<String, dynamic> json) =>
       _$RawExtensionFromJson(json);
   Map<String, dynamic> toJson() => _$RawExtensionToJson(this);
 }
 
 ///
-
 @JsonSerializable(explicitToJson: true)
 class RawTunnel {
   @JsonKey(name: 'overwrite')
@@ -1140,7 +1167,7 @@ class RawConfig {
       this.IPTables,
       this.Experimental,
       this.Profile,
-      required this.GeoXUrl,
+      this.GeoXUrl,
       required this.Sniffer,
       required this.TLS,
       this.ClashForAndroid,

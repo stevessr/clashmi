@@ -48,6 +48,26 @@ Map<String, dynamic> _$RawExtensionTunPerAppToJson(
       'package_ids': instance.PackageIds,
     };
 
+RawExtensionGeoRuleset _$RawExtensionGeoRulesetFromJson(
+        Map<String, dynamic> json) =>
+    RawExtensionGeoRuleset(
+      json['geosite_url'] as String?,
+      json['geoip_url'] as String?,
+      json['asn_url'] as String?,
+      (json['update-interval'] as num?)?.toInt(),
+      json['enable-proxy'] as bool?,
+    );
+
+Map<String, dynamic> _$RawExtensionGeoRulesetToJson(
+        RawExtensionGeoRuleset instance) =>
+    <String, dynamic>{
+      'geosite_url': instance.GeoSiteUrl,
+      'geoip_url': instance.GeoIpUrl,
+      'asn_url': instance.AsnUrl,
+      'update-interval': instance.UpdateInterval,
+      'enable-proxy': instance.EnableProxy,
+    };
+
 RawExtensionTun _$RawExtensionTunFromJson(Map<String, dynamic> json) =>
     RawExtensionTun(
       RawExtensionTunHttpProxy.fromJson(
@@ -62,12 +82,15 @@ Map<String, dynamic> _$RawExtensionTunToJson(RawExtensionTun instance) =>
     };
 
 RawExtension _$RawExtensionFromJson(Map<String, dynamic> json) => RawExtension(
+      RawExtensionGeoRuleset.fromJson(
+          json['geo-rule-set'] as Map<String, dynamic>),
       RawExtensionTun.fromJson(json['tun'] as Map<String, dynamic>),
       json['pprof-addr'] as String?,
     );
 
 Map<String, dynamic> _$RawExtensionToJson(RawExtension instance) =>
     <String, dynamic>{
+      'geo-rule-set': instance.Ruleset.toJson(),
       'tun': instance.Tun.toJson(),
       'pprof-addr': instance.PprofAddr,
     };

@@ -765,6 +765,12 @@ class GroupHelper {
                 onPush: () async {
                   showClashSettingsTUN(context);
                 })),
+        GroupItemOptions(
+            pushOptions: GroupItemPushOptions(
+                name: "Geo RuleSet",
+                onPush: () async {
+                  showClashSettingsGEORuleset(context);
+                })),
       ];
       List<GroupItemOptions> options3 = [
         GroupItemOptions(
@@ -860,12 +866,6 @@ class GroupHelper {
                 name: tcontext.meta.sniffer,
                 onPush: () async {
                   showClashSettingsSniffer(context);
-                })),
-        GroupItemOptions(
-            pushOptions: GroupItemPushOptions(
-                name: tcontext.meta.geo,
-                onPush: () async {
-                  showClashSettingsGEO(context);
                 })),
       ];
       if (currentPatch.id.isEmpty ||
@@ -1618,83 +1618,53 @@ class GroupHelper {
                 )));
   }
 
-  static Future<void> showClashSettingsGEO(BuildContext context) async {
+  static Future<void> showClashSettingsGEORuleset(BuildContext context) async {
     final tcontext = Translations.of(context);
     Future<List<GroupItem>> getOptions(
         BuildContext context, SetStateCallback? setstate) async {
       var setting = ClashSettingManager.getConfig();
-      var geo = setting.GeoXUrl!;
+      var ruleset = setting.Extension!.Ruleset;
       List<GroupItemOptions> options = [
-        GroupItemOptions(
-            switchOptions: GroupItemSwitchOptions(
-                name: tcontext.meta.overwrite,
-                switchValue: geo.OverWrite,
-                onSwitch: (bool value) async {
-                  geo.OverWrite = value;
-                })),
-        GroupItemOptions(
-            switchOptions: GroupItemSwitchOptions(
-                name: tcontext.meta.autoUpdate,
-                switchValue: setting.GeoAutoUpdate,
-                onSwitch: geo.OverWrite != true
-                    ? null
-                    : (bool value) async {
-                        setting.GeoAutoUpdate = value;
-                      })),
         GroupItemOptions(
             timerIntervalPickerOptions: GroupItemTimerIntervalPickerOptions(
                 name: tcontext.meta.updateInterval,
-                duration: Duration(
-                    seconds: setting.GeoUpdateInterval ?? 7 * 24 * 3600),
+                duration:
+                    Duration(seconds: ruleset.UpdateInterval ?? 2 * 24 * 3600),
                 showMinutes: false,
                 showSeconds: false,
                 showDisable: false,
-                onPicker: geo.OverWrite != true
-                    ? null
-                    : (bool canceled, Duration? duration) async {
-                        if (canceled) {
-                          return;
-                        }
-                        if (duration == null) {
-                          return;
-                        }
-                        setting.GeoUpdateInterval = duration.inSeconds;
-                      })),
-        GroupItemOptions(
-            textFormFieldOptions: GroupItemTextFieldOptions(
-                name: "GeoIp",
-                text: geo.GeoIp,
-                textWidthPercent: 0.5,
-                readOnly: geo.OverWrite != true,
-                onChanged: (String value) {
-                  geo.GeoIp = value;
+                onPicker: (bool canceled, Duration? duration) async {
+                  if (canceled) {
+                    return;
+                  }
+                  if (duration == null) {
+                    return;
+                  }
+                  setting.GeoUpdateInterval = duration.inSeconds;
                 })),
         GroupItemOptions(
             textFormFieldOptions: GroupItemTextFieldOptions(
                 name: "GeoSite",
-                text: geo.GeoSite,
-                textWidthPercent: 0.5,
-                readOnly: geo.OverWrite != true,
+                text: ruleset.GeoSiteUrl,
+                textWidthPercent: 0.6,
                 onChanged: (String value) {
-                  geo.GeoSite = value;
+                  ruleset.GeoSiteUrl = value;
                 })),
         GroupItemOptions(
             textFormFieldOptions: GroupItemTextFieldOptions(
-                name: "Mmdb",
-                text: geo.Mmdb,
-                textWidthPercent: 0.5,
-                readOnly: geo.OverWrite != true,
+                name: "GeoIp",
+                text: ruleset.GeoIpUrl,
+                textWidthPercent: 0.6,
                 onChanged: (String value) {
-                  geo.Mmdb = value;
+                  ruleset.GeoIpUrl = value;
                 })),
         GroupItemOptions(
             textFormFieldOptions: GroupItemTextFieldOptions(
                 name: "ASN",
-                text: geo.ASN,
-                textWidthPercent: 0.5,
-                readOnly: geo.OverWrite != true,
+                text: ruleset.AsnUrl,
+                textWidthPercent: 0.6,
                 onChanged: (String value) {
-                  geo.ASN = value;
+                  ruleset.AsnUrl = value;
                 })),
       ];
 
@@ -1708,7 +1678,7 @@ class GroupHelper {
         MaterialPageRoute(
             settings: GroupScreen.routSettings("geo"),
             builder: (context) => GroupScreen(
-                  title: tcontext.meta.geo,
+                  title: "Geo RuleSet",
                   getOptions: getOptions,
                 )));
   }
