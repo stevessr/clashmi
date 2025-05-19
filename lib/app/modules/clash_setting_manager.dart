@@ -24,6 +24,31 @@ class ClashSettingManager {
       return getControlPort();
     };
     await load();
+    await initGeo();
+  }
+
+  static Future<void> initGeo() async {
+    final homePath = await PathUtils.profileDir();
+    const geoFileNameList = [
+      "geosite.zip",
+      "geoip.zip",
+    ];
+    try {
+      for (final fileName in geoFileNameList) {
+        final geoFile = File(
+          path.join(homePath, fileName),
+        );
+        final isExists = await geoFile.exists();
+        if (isExists) {
+          continue;
+        }
+        final data = await rootBundle.load('assets/datas/$fileName');
+        List<int> bytes = data.buffer.asUint8List();
+        await geoFile.writeAsBytes(bytes, flush: true);
+      }
+    } catch (err) {
+      Log.w("ClashSettingManager.initGeo exception ${err.toString()} ");
+    }
   }
 
   static Future<void> reload() async {
