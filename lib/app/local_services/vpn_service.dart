@@ -139,6 +139,16 @@ class VPNService {
     final setting = ClashSettingManager.getConfig();
     final controlPort = ClashSettingManager.getControlPort();
 
+    bool overwrite = true;
+    if (profile.patch.isEmpty ||
+        !ProfilePatchManager.existProfilePatch(profile.patch)) {
+      overwrite = currentPatch.id.isEmpty ||
+          currentPatch.id == kProfilePatchBuildinOverwrite;
+    } else {
+      overwrite = profile.patch == kProfilePatchBuildinOverwrite;
+    }
+    await ClashSettingManager.saveCorePatchFinal(overwrite);
+
     var excludePorts = [
       controlPort,
     ];
@@ -167,6 +177,10 @@ class VPNService {
     config.name = name;
     config.secret = await ClashHttpApi.getSecret();
     config.install_refer = installReferrer;
+    config.prepare = (overwrite &&
+            setting.Tun?.OverWrite == true &&
+            setting.Tun?.Enable == true) ||
+        !overwrite;
 
     FlutterVpnService.prepareConfig(
       config: config,
@@ -178,15 +192,6 @@ class VPNService {
       uiLocalizedDescription: vpnName,
       excludePorts: excludePorts,
     );
-    bool overwrite = true;
-    if (profile.patch.isEmpty ||
-        !ProfilePatchManager.existProfilePatch(profile.patch)) {
-      overwrite = currentPatch.id.isEmpty ||
-          currentPatch.id == kProfilePatchBuildinOverwrite;
-    } else {
-      overwrite = profile.patch == kProfilePatchBuildinOverwrite;
-    }
-    await ClashSettingManager.saveCorePatchFinal(overwrite);
 
     File confFile = File(configFilePath);
     bool reinstall = false;
