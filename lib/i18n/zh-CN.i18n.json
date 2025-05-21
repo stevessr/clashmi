@@ -131,6 +131,7 @@
         "systemProxy": "系统代理",
         "autoConnectAfterLaunch": "启动后自动连接",
         "autoSetSystemProxy": "连接后自动设置系统代理",
+        "bypassSystemProxy": "允许绕过系统代理的域名",
         "website": "官网",
         "rule": "规则",
         "global": "全局",

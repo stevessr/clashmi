@@ -131,6 +131,7 @@
         "systemProxy": "وكيل النظام",
         "autoConnectAfterLaunch": "اتصال السيارات بعد الإطلاق",
         "autoSetSystemProxy": "وكيل نظام تعيين تلقائي عند الاتصال",
+        "bypassSystemProxy": "أسماء النطاقات المسموح لها بتجاوز وكيل النظام",
         "website": "موقع إلكتروني",
         "rule": "قاعدة",
         "global": "عالمي",

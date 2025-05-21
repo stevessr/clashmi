@@ -3,17 +3,16 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
-import 'package:clashmi/app/modules/profile_manager.dart';
-import 'package:clashmi/app/modules/profile_patch_manager.dart';
-import 'package:clashmi/app/modules/zashboard.dart';
-import 'package:clashmi/screens/add_profile_patch_by_import_from_file_screen.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 import 'package:clashmi/app/clash/clash_config.dart';
 import 'package:clashmi/app/local_services/vpn_service.dart';
 import 'package:clashmi/app/modules/auto_update_manager.dart';
 import 'package:clashmi/app/modules/clash_setting_manager.dart';
+import 'package:clashmi/app/modules/profile_manager.dart';
+import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/app/modules/remote_config_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
+import 'package:clashmi/app/modules/zashboard.dart';
 import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/backup_and_sync_utils.dart';
 import 'package:clashmi/app/utils/file_utils.dart';
@@ -21,6 +20,7 @@ import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/app/utils/platform_utils.dart';
 import 'package:clashmi/app/utils/url_launcher_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
+import 'package:clashmi/screens/add_profile_patch_by_import_from_file_screen.dart';
 import 'package:clashmi/screens/backup_and_sync_icloud_screen.dart';
 import 'package:clashmi/screens/backup_and_sync_webdav_screen.dart';
 import 'package:clashmi/screens/backup_helper.dart';
@@ -43,6 +43,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GroupHelper {
   static Future<void> newVersionUpdate(BuildContext context) async {
@@ -588,6 +589,25 @@ class GroupHelper {
                 onSwitch: (bool value) async {
                   setting.autoSetSystemProxy = value;
                 })),
+        PlatformUtils.isPC()
+            ? GroupItemOptions(
+                pushOptions: GroupItemPushOptions(
+                    name: tcontext.meta.bypassSystemProxy,
+                    onPush: !setting.autoSetSystemProxy
+                        ? null
+                        : () async {
+                            await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    settings: ListAddScreen.routSettings(
+                                        "systemProxyBypassDomain"),
+                                    builder: (context) => ListAddScreen(
+                                          title:
+                                              tcontext.meta.bypassSystemProxy,
+                                          data: setting.systemProxyBypassDomain,
+                                        )));
+                          }))
+            : GroupItemOptions(),
       ];
       List<GroupItemOptions> options5 = [
         GroupItemOptions(

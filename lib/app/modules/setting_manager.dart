@@ -5,12 +5,14 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:clashmi/app/local_services/vpn_service.dart';
+import 'package:clashmi/app/utils/convert_utils.dart';
 import 'package:clashmi/app/utils/log.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/widgets/text_field.dart';
 import 'package:country/country.dart' as country;
+import 'package:libclash_vpn_service/proxy_manager.dart';
 
 class SettingConfigItemUI {
   String theme = ThemeDefine.kThemeLight;
@@ -122,6 +124,7 @@ class SettingConfig {
   String autoUpdateChannel = "stable"; //stable, beta
   bool autoConnectAfterLaunch = false;
   bool autoSetSystemProxy = getAutoSetSystemProxyDefault();
+  List<String> systemProxyBypassDomain = [];
   String _userAgent = "";
   bool boardOnline = false;
   String boardUrl = kDefaultBoardUrl;
@@ -137,6 +140,7 @@ class SettingConfig {
         'auto_update_channel': autoUpdateChannel,
         'auto_connect_after_launch': autoConnectAfterLaunch,
         'auto_set_system_proxy': autoSetSystemProxy,
+        'system_proxy_bypass_domain': systemProxyBypassDomain,
         'user_agent': _userAgent,
         'board_online': boardOnline,
         'board_url': boardUrl,
@@ -160,6 +164,11 @@ class SettingConfig {
     autoConnectAfterLaunch = map["auto_connect_after_launch"] ?? false;
     autoSetSystemProxy =
         map["auto_set_system_proxy"] ?? getAutoSetSystemProxyDefault();
+    systemProxyBypassDomain = ConvertUtils.getListStringFromDynamic(
+        map["system_proxy_bypass_domain"],
+        true,
+        ProxyBypassDoaminsDefault.toList())!;
+
     _userAgent = map["user_agent"] ?? "";
 
     boardOnline = map["board_online"] ?? false;

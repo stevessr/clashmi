@@ -238,6 +238,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get systemProxy => 'Системный прокси';
 	@override String get autoConnectAfterLaunch => 'Автоматическое подключение после запуска';
 	@override String get autoSetSystemProxy => 'Установить системный прокси после подключения';
+	@override String get bypassSystemProxy => 'Доменные имена, которым разрешено обходить системный прокси-сервер';
 	@override String get website => 'Веб-сайт';
 	@override String get rule => 'Правила';
 	@override String get global => 'Глобально';
@@ -545,6 +546,7 @@ extension on TranslationsRu {
 			case 'meta.systemProxy': return 'Системный прокси';
 			case 'meta.autoConnectAfterLaunch': return 'Автоматическое подключение после запуска';
 			case 'meta.autoSetSystemProxy': return 'Установить системный прокси после подключения';
+			case 'meta.bypassSystemProxy': return 'Доменные имена, которым разрешено обходить системный прокси-сервер';
 			case 'meta.website': return 'Веб-сайт';
 			case 'meta.rule': return 'Правила';
 			case 'meta.global': return 'Глобально';

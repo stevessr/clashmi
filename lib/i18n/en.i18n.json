@@ -131,6 +131,7 @@
         "systemProxy": "System Proxy",
         "autoConnectAfterLaunch": "Auto Connection after Launch",
         "autoSetSystemProxy": "Auto Set System Proxy when Connected",
+        "bypassSystemProxy": "Domain names that are allowed to bypass the system proxy",
         "website": "Website",
         "rule": "Rule",
         "global": "Global",

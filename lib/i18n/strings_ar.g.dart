@@ -238,6 +238,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get systemProxy => 'وكيل النظام';
 	@override String get autoConnectAfterLaunch => 'اتصال السيارات بعد الإطلاق';
 	@override String get autoSetSystemProxy => 'وكيل نظام تعيين تلقائي عند الاتصال';
+	@override String get bypassSystemProxy => 'أسماء النطاقات المسموح لها بتجاوز وكيل النظام';
 	@override String get website => 'موقع إلكتروني';
 	@override String get rule => 'قاعدة';
 	@override String get global => 'عالمي';
@@ -545,6 +546,7 @@ extension on TranslationsAr {
 			case 'meta.systemProxy': return 'وكيل النظام';
 			case 'meta.autoConnectAfterLaunch': return 'اتصال السيارات بعد الإطلاق';
 			case 'meta.autoSetSystemProxy': return 'وكيل نظام تعيين تلقائي عند الاتصال';
+			case 'meta.bypassSystemProxy': return 'أسماء النطاقات المسموح لها بتجاوز وكيل النظام';
 			case 'meta.website': return 'موقع إلكتروني';
 			case 'meta.rule': return 'قاعدة';
 			case 'meta.global': return 'عالمي';

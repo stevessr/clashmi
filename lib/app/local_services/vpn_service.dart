@@ -503,9 +503,10 @@ class VPNService {
   }
 
   static Future<ProxyOption> getSystemProxyOptions() async {
+    final bypassDomain = SettingManager.getConfig().systemProxyBypassDomain;
     final mixedPort = ClashSettingManager.getMixedPort();
     if (mixedPort == null) {
-      return ProxyOption(localhost, 0);
+      return ProxyOption(localhost, 0, bypassDomain);
     }
 
     if (Platform.isMacOS) {
@@ -514,10 +515,10 @@ class VPNService {
 
       for (var face in interfaces) {
         if (face.name.startsWith("en")) {
-          return ProxyOption(face.address, mixedPort);
+          return ProxyOption(face.address, mixedPort, bypassDomain);
         }
       }
     }
-    return ProxyOption(localhost, mixedPort);
+    return ProxyOption(localhost, mixedPort, bypassDomain);
   }
 }

@@ -241,6 +241,7 @@ class TranslationsMetaEn {
 	String get systemProxy => 'System Proxy';
 	String get autoConnectAfterLaunch => 'Auto Connection after Launch';
 	String get autoSetSystemProxy => 'Auto Set System Proxy when Connected';
+	String get bypassSystemProxy => 'Domain names that are allowed to bypass the system proxy';
 	String get website => 'Website';
 	String get rule => 'Rule';
 	String get global => 'Global';
@@ -548,6 +549,7 @@ extension on Translations {
 			case 'meta.systemProxy': return 'System Proxy';
 			case 'meta.autoConnectAfterLaunch': return 'Auto Connection after Launch';
 			case 'meta.autoSetSystemProxy': return 'Auto Set System Proxy when Connected';
+			case 'meta.bypassSystemProxy': return 'Domain names that are allowed to bypass the system proxy';
 			case 'meta.website': return 'Website';
 			case 'meta.rule': return 'Rule';
 			case 'meta.global': return 'Global';

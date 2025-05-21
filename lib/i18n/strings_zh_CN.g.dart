@@ -238,6 +238,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get systemProxy => '系统代理';
 	@override String get autoConnectAfterLaunch => '启动后自动连接';
 	@override String get autoSetSystemProxy => '连接后自动设置系统代理';
+	@override String get bypassSystemProxy => '允许绕过系统代理的域名';
 	@override String get website => '官网';
 	@override String get rule => '规则';
 	@override String get global => '全局';
@@ -545,6 +546,7 @@ extension on TranslationsZhCn {
 			case 'meta.systemProxy': return '系统代理';
 			case 'meta.autoConnectAfterLaunch': return '启动后自动连接';
 			case 'meta.autoSetSystemProxy': return '连接后自动设置系统代理';
+			case 'meta.bypassSystemProxy': return '允许绕过系统代理的域名';
 			case 'meta.website': return '官网';
 			case 'meta.rule': return '规则';
 			case 'meta.global': return '全局';

@@ -238,6 +238,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get systemProxy => 'پروکسی سیستم';
 	@override String get autoConnectAfterLaunch => 'اتصال خودکار پس‌از راه‌اندازی';
 	@override String get autoSetSystemProxy => 'تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال';
+	@override String get bypassSystemProxy => 'نام های دامنه ای که مجاز به دور زدن پراکسی سیستم هستند';
 	@override String get website => 'وبسایت';
 	@override String get rule => 'قانون';
 	@override String get global => 'عمومی';
@@ -545,6 +546,7 @@ extension on TranslationsFa {
 			case 'meta.systemProxy': return 'پروکسی سیستم';
 			case 'meta.autoConnectAfterLaunch': return 'اتصال خودکار پس‌از راه‌اندازی';
 			case 'meta.autoSetSystemProxy': return 'تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال';
+			case 'meta.bypassSystemProxy': return 'نام های دامنه ای که مجاز به دور زدن پراکسی سیستم هستند';
 			case 'meta.website': return 'وبسایت';
 			case 'meta.rule': return 'قانون';
 			case 'meta.global': return 'عمومی';
