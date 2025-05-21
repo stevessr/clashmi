@@ -6,7 +6,7 @@ import UserNotifications
     import CoreWLAN
 #endif
 
-public class ExtensionPlatformInterface: NSObject, LibclashTunInterfaceProtocol{
+public class ExtensionPlatformInterface: NSObject, LibclashPlatformInterfaceProtocol{
     private let tunnel: ExtensionProvider
     private var networkSettings: NEPacketTunnelNetworkSettings?
 
