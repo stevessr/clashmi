@@ -631,7 +631,7 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
           String content = "";
           final filePath = await PathUtils.serviceLogFilePath();
           final item =
-              await FileUtils.readAsStringReverse(filePath, 10 * 1024, false);
+              await FileUtils.readAsStringReverse(filePath, 50 * 1024, false);
           if (item != null) {
             content = item.item1;
           }
