@@ -12,6 +12,7 @@ import 'package:clashmi/app/utils/app_utils.dart';
 import 'package:clashmi/app/utils/log.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:flutter/services.dart';
+import 'package:libclash_vpn_service/proxy_manager.dart';
 import 'package:path/path.dart' as path;
 
 class ClashSettingManager {
@@ -291,33 +292,22 @@ class ClashSettingManager {
   }
 
   static RawExtension defaultExtension() {
-    const bypassDomainLocal = [
-      "localhost",
-      "*.local",
-      "127.*",
-      "10.*",
-      "172.16.*",
-      "172.17.*",
-      "172.18.*",
-      "172.19.*",
-      "172.2*",
-      "172.30.*",
-      "172.31.*",
-      "192.168.*"
-    ];
-    const bypassDomainCN = [
-      "*zhihu.com",
-      "*zhimg.com",
-      "*jd.com",
-      "100ime-iat-api.xfyun.cn",
-      "*360buyimg.com",
-    ];
+    const bypassDomainLocal = ProxyBypassDoaminsDefault;
+    List<String> bypassDomainCN = Platform.isAndroid
+        ? [
+            "*zhihu.com",
+            "*zhimg.com",
+            "*jd.com",
+            "100ime-iat-api.xfyun.cn",
+            "*360buyimg.com",
+          ]
+        : [];
 
     return RawExtension.by(
       Ruleset: defaultRawExtensionRuleset(),
       Tun: RawExtensionTun.by(
         httpProxy: RawExtensionTunHttpProxy.by(
-            Enable: false, BypassDomain: bypassDomainCN + bypassDomainLocal),
+            Enable: false, BypassDomain: bypassDomainLocal + bypassDomainCN),
         perApp: RawExtensionTunPerApp.by(Enable: false),
       ),
       PprofAddr: null,
