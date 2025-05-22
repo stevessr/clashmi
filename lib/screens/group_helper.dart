@@ -514,20 +514,18 @@ class GroupHelper {
       ];
 
       List<GroupItemOptions> options2 = [
-        !Platform.isIOS
-            ? GroupItemOptions(
-                switchOptions: GroupItemSwitchOptions(
-                name: tcontext.meta.boardOnline,
-                switchValue: setting.boardOnline,
-                onSwitch: (bool value) async {
-                  setting.boardOnline = value;
-                  if (value) {
-                    Zashboard.stop();
-                  }
-                },
-              ))
-            : GroupItemOptions(),
-        !Platform.isIOS && setting.boardOnline
+        GroupItemOptions(
+            switchOptions: GroupItemSwitchOptions(
+          name: tcontext.meta.boardOnline,
+          switchValue: setting.boardOnline,
+          onSwitch: (bool value) async {
+            setting.boardOnline = value;
+            if (value) {
+              Zashboard.stop();
+            }
+          },
+        )),
+        setting.boardOnline
             ? GroupItemOptions(
                 textFormFieldOptions: GroupItemTextFieldOptions(
                     name: tcontext.meta.boardOnlineUrl,
@@ -537,7 +535,7 @@ class GroupHelper {
                       setting.boardUrl = value;
                     }))
             : GroupItemOptions(),
-        Platform.isIOS || !setting.boardOnline
+        !setting.boardOnline
             ? GroupItemOptions(
                 textFormFieldOptions: GroupItemTextFieldOptions(
                     name: tcontext.meta.boardLocalPort,
