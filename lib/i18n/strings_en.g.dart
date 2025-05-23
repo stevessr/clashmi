@@ -240,6 +240,7 @@ class TranslationsMetaEn {
 	String get portableModeDisableTips => 'If you need to exit portable mode, please exit [clashmi] and manually delete the [portable] folder in the same directory as [clashmi.exe]';
 	String get systemProxy => 'System Proxy';
 	String get autoConnectAfterLaunch => 'Auto Connection after Launch';
+	String get hideAfterLaunch => 'Hide window after startup';
 	String get autoSetSystemProxy => 'Auto Set System Proxy when Connected';
 	String get bypassSystemProxy => 'Domain names that are allowed to bypass the system proxy';
 	String get website => 'Website';
@@ -548,6 +549,7 @@ extension on Translations {
 			case 'meta.portableModeDisableTips': return 'If you need to exit portable mode, please exit [clashmi] and manually delete the [portable] folder in the same directory as [clashmi.exe]';
 			case 'meta.systemProxy': return 'System Proxy';
 			case 'meta.autoConnectAfterLaunch': return 'Auto Connection after Launch';
+			case 'meta.hideAfterLaunch': return 'Hide window after startup';
 			case 'meta.autoSetSystemProxy': return 'Auto Set System Proxy when Connected';
 			case 'meta.bypassSystemProxy': return 'Domain names that are allowed to bypass the system proxy';
 			case 'meta.website': return 'Website';

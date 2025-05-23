@@ -237,6 +237,7 @@ class _TranslationsMetaAr implements TranslationsMetaEn {
 	@override String get portableModeDisableTips => 'إذا كنت بحاجة إلى الخروج من الوضع المحمول، فيرجى الخروج من [clashmi] وحذف المجلد [portable] يدويًا في نفس الدليل مثل [clashmi.exe]';
 	@override String get systemProxy => 'وكيل النظام';
 	@override String get autoConnectAfterLaunch => 'اتصال السيارات بعد الإطلاق';
+	@override String get hideAfterLaunch => 'إخفاء النافذة بعد بدء التشغيل';
 	@override String get autoSetSystemProxy => 'وكيل نظام تعيين تلقائي عند الاتصال';
 	@override String get bypassSystemProxy => 'أسماء النطاقات المسموح لها بتجاوز وكيل النظام';
 	@override String get website => 'موقع إلكتروني';
@@ -545,6 +546,7 @@ extension on TranslationsAr {
 			case 'meta.portableModeDisableTips': return 'إذا كنت بحاجة إلى الخروج من الوضع المحمول، فيرجى الخروج من [clashmi] وحذف المجلد [portable] يدويًا في نفس الدليل مثل [clashmi.exe]';
 			case 'meta.systemProxy': return 'وكيل النظام';
 			case 'meta.autoConnectAfterLaunch': return 'اتصال السيارات بعد الإطلاق';
+			case 'meta.hideAfterLaunch': return 'إخفاء النافذة بعد بدء التشغيل';
 			case 'meta.autoSetSystemProxy': return 'وكيل نظام تعيين تلقائي عند الاتصال';
 			case 'meta.bypassSystemProxy': return 'أسماء النطاقات المسموح لها بتجاوز وكيل النظام';
 			case 'meta.website': return 'موقع إلكتروني';

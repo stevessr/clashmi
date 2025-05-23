@@ -130,6 +130,7 @@
         "portableModeDisableTips": "اگر نیاز دارین از حالت قابل‌حمل خارج شوید لطفا از [clashmi] خارج شده و به‌صورت دستی پوشه [portable] هم مسیر با فایل [clashmi.exe] را حذف کنید",
         "systemProxy": "پروکسی سیستم",
         "autoConnectAfterLaunch": "اتصال خودکار پس‌از راه‌اندازی",
+        "hideAfterLaunch": "پنهان کردن پنجره پس از راه اندازی",
         "autoSetSystemProxy": "تنظیم خودکار حالت پروکسی سیستم پس‌از اتصال",
         "bypassSystemProxy": "نام های دامنه ای که مجاز به دور زدن پراکسی سیستم هستند",
         "website": "وبسایت",

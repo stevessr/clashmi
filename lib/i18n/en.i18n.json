@@ -130,6 +130,7 @@
         "portableModeDisableTips": "If you need to exit portable mode, please exit [clashmi] and manually delete the [portable] folder in the same directory as [clashmi.exe]",
         "systemProxy": "System Proxy",
         "autoConnectAfterLaunch": "Auto Connection after Launch",
+        "hideAfterLaunch": "Hide window after startup",
         "autoSetSystemProxy": "Auto Set System Proxy when Connected",
         "bypassSystemProxy": "Domain names that are allowed to bypass the system proxy",
         "website": "Website",

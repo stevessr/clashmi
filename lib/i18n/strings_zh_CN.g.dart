@@ -237,6 +237,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get portableModeDisableTips => '如需退出便携模式,请退出[clashmi]后,手动删除[clashmi.exe]同目录下的[portable]文件夹即可';
 	@override String get systemProxy => '系统代理';
 	@override String get autoConnectAfterLaunch => '启动后自动连接';
+	@override String get hideAfterLaunch => '启动后隐藏窗口';
 	@override String get autoSetSystemProxy => '连接后自动设置系统代理';
 	@override String get bypassSystemProxy => '允许绕过系统代理的域名';
 	@override String get website => '官网';
@@ -545,6 +546,7 @@ extension on TranslationsZhCn {
 			case 'meta.portableModeDisableTips': return '如需退出便携模式,请退出[clashmi]后,手动删除[clashmi.exe]同目录下的[portable]文件夹即可';
 			case 'meta.systemProxy': return '系统代理';
 			case 'meta.autoConnectAfterLaunch': return '启动后自动连接';
+			case 'meta.hideAfterLaunch': return '启动后隐藏窗口';
 			case 'meta.autoSetSystemProxy': return '连接后自动设置系统代理';
 			case 'meta.bypassSystemProxy': return '允许绕过系统代理的域名';
 			case 'meta.website': return '官网';

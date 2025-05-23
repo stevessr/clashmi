@@ -127,7 +127,8 @@ class GroupItemTextField extends StatelessWidget {
               inputFormatters: options.inputFormatters,
               focusNode: options.focusNode,
               autocorrect: false,
-              enableSuggestions: false,
+              enableSuggestions:
+                  true, //Non-English input methods cannot be used after disabling
               autofocus: options.autoFocus,
               onChanged: options.onChanged,
               enabled: options.enabled,

@@ -237,6 +237,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get portableModeDisableTips => 'Если вам нужно выйти из портативного режима, выйдите из [clashmi] и вручную удалите папку [portable] в том же каталоге, что и [clashmi.exe]';
 	@override String get systemProxy => 'Системный прокси';
 	@override String get autoConnectAfterLaunch => 'Автоматическое подключение после запуска';
+	@override String get hideAfterLaunch => 'Скрыть окно после запуска';
 	@override String get autoSetSystemProxy => 'Установить системный прокси после подключения';
 	@override String get bypassSystemProxy => 'Доменные имена, которым разрешено обходить системный прокси-сервер';
 	@override String get website => 'Веб-сайт';
@@ -545,6 +546,7 @@ extension on TranslationsRu {
 			case 'meta.portableModeDisableTips': return 'Если вам нужно выйти из портативного режима, выйдите из [clashmi] и вручную удалите папку [portable] в том же каталоге, что и [clashmi.exe]';
 			case 'meta.systemProxy': return 'Системный прокси';
 			case 'meta.autoConnectAfterLaunch': return 'Автоматическое подключение после запуска';
+			case 'meta.hideAfterLaunch': return 'Скрыть окно после запуска';
 			case 'meta.autoSetSystemProxy': return 'Установить системный прокси после подключения';
 			case 'meta.bypassSystemProxy': return 'Доменные имена, которым разрешено обходить системный прокси-сервер';
 			case 'meta.website': return 'Веб-сайт';

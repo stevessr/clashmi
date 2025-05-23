@@ -573,6 +573,16 @@ class GroupHelper {
         )),
       ];
       List<GroupItemOptions> options4 = [
+        Platform.isWindows
+            ? GroupItemOptions(
+                switchOptions: GroupItemSwitchOptions(
+                name: tcontext.meta.hideAfterLaunch,
+                switchValue: setting.ui.hideAfterLaunch,
+                onSwitch: (bool value) async {
+                  setting.ui.hideAfterLaunch = value;
+                },
+              ))
+            : GroupItemOptions(),
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(
                 name: tcontext.meta.autoConnectAfterLaunch,

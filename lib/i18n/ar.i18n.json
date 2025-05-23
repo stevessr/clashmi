@@ -130,6 +130,7 @@
         "portableModeDisableTips": "إذا كنت بحاجة إلى الخروج من الوضع المحمول، فيرجى الخروج من [clashmi] وحذف المجلد [portable] يدويًا في نفس الدليل مثل [clashmi.exe]",
         "systemProxy": "وكيل النظام",
         "autoConnectAfterLaunch": "اتصال السيارات بعد الإطلاق",
+        "hideAfterLaunch": "إخفاء النافذة بعد بدء التشغيل",
         "autoSetSystemProxy": "وكيل نظام تعيين تلقائي عند الاتصال",
         "bypassSystemProxy": "أسماء النطاقات المسموح لها بتجاوز وكيل النظام",
         "website": "موقع إلكتروني",
