@@ -453,7 +453,7 @@ class ClashSettingManager {
     _setting.Tun?.Device = AppUtils.getName();
     _setting.Tun?.AutoRedirect = Platform.isLinux;
     _setting.Tun?.AutoRoute = !Platform.isAndroid;
-    _setting.Tun?.AutoDetectInterface = PlatformUtils.isPC();
+    _setting.Tun?.AutoDetectInterface = Platform.isWindows || Platform.isLinux;
     _setting.Profile = RawProfile.by(StoreSelected: true, StoreFakeIP: true);
     _setting.FindProcessMode = Platform.isIOS
         ? ClashFindProcessMode.off.name
