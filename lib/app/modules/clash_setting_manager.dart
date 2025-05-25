@@ -11,6 +11,7 @@ import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/app_utils.dart';
 import 'package:clashmi/app/utils/log.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
+import 'package:clashmi/app/utils/platform_utils.dart';
 import 'package:flutter/services.dart';
 import 'package:libclash_vpn_service/proxy_manager.dart';
 import 'package:path/path.dart' as path;
@@ -452,7 +453,7 @@ class ClashSettingManager {
     _setting.Tun?.Device = AppUtils.getName();
     _setting.Tun?.AutoRedirect = Platform.isLinux;
     _setting.Tun?.AutoRoute = !Platform.isAndroid;
-    _setting.Tun?.AutoDetectInterface = !Platform.isAndroid;
+    _setting.Tun?.AutoDetectInterface = PlatformUtils.isPC();
     _setting.Profile = RawProfile.by(StoreSelected: true, StoreFakeIP: true);
     _setting.FindProcessMode = Platform.isIOS
         ? ClashFindProcessMode.off.name
