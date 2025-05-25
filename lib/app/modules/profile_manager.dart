@@ -436,7 +436,7 @@ class ProfileManager {
 
     if (remark.isEmpty) {
       final result = await HttpUtils.httpGetTitle(url, userAgent);
-      remark = result.data ?? "";
+      remark = result.data ?? uri.host;
     }
 
     int index = _profileConfig.profiles.indexWhere((value) {
@@ -510,7 +510,7 @@ class ProfileManager {
       await FileUtils.append(savePath, "\n$urlComment${profile.url}\n");
       if (profile.remark.isEmpty) {
         final result = await HttpUtils.httpGetTitle(profile.url, userAgent);
-        profile.remark = result.data ?? "";
+        profile.remark = result.data ?? uri.host;
       }
       profile.update = DateTime.now();
       profile.updateSubscriptionTraffic(result.data);
