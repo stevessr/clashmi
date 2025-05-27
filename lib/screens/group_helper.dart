@@ -1137,7 +1137,7 @@ class GroupHelper {
             stringPickerOptions: GroupItemStringPickerOptions(
                 name: tcontext.tun.stack,
                 selected:
-                    tunStacks.contains(tun.Stack) ? tun.Stack : tunStacks.last,
+                    tunStacks.contains(tun.Stack) ? tun.Stack : tunStacks.first,
                 strings: tunStacks,
                 onPicker: tun.OverWrite != true || tun.Enable != true
                     ? null
@@ -1151,7 +1151,8 @@ class GroupHelper {
                 onSwitch: tun.OverWrite != true || tun.Enable != true
                     ? null
                     : (bool value) async {
-                        tun.DNSHijack = value ? ["172.19.0.2:53"] : null;
+                        tun.DNSHijack =
+                            value ? [ClashSettingManager.dnsHijack] : null;
                       })),
         GroupItemOptions(
             switchOptions: GroupItemSwitchOptions(

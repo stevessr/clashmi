@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 // https://github.com/MetaCubeX/mihomo/blob/Alpha/docs/config.yaml
+import 'dart:io';
+
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -239,9 +241,14 @@ enum ClashTunStack {
   const ClashTunStack({required this.name});
   final String name;
   static List<String> toList() {
+    if (Platform.isIOS || Platform.isMacOS) {
+      return [
+        ClashTunStack.gvisor.name,
+      ];
+    }
     return [
-      ClashTunStack.mixed.name,
       ClashTunStack.gvisor.name,
+      ClashTunStack.mixed.name,
       ClashTunStack.system.name,
     ];
   }
