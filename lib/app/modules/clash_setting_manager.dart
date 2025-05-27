@@ -383,6 +383,11 @@ class ClashSettingManager {
     if (Platform.isIOS || Platform.isMacOS) {
       _setting.Tun?.Stack = ClashTunStack.gvisor.name;
     }
+    if (_setting.IPv6 == true) {
+      _setting.Tun?.Inet6Address = ["$_gateWay6/126"];
+    } else {
+      _setting.Tun?.Inet6Address = null;
+    }
     if (overwrite) {
       final map = _setting.toJson();
       MapHelper.removeNullOrEmpty(map, true, true);
