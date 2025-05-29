@@ -41,7 +41,7 @@ class HomeScreenWidgetPart1 extends StatefulWidget {
 
 class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   static final String _kNoSpeed = "↑ 0 B/s   ↓ 0 B/s";
-  static final String _kNoConnection = "↑ 0 B   ↓ 0 B";
+  static final String _kNoTrafficTotal = "↑ 0 B   ↓ 0 B";
   //static final String _kNoMemory = "0 B   0 B";
   final FocusNode _focusNodeConnect = FocusNode();
   bool _working = false;
@@ -52,7 +52,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   //final ValueNotifier<String> _memory = ValueNotifier<String>(_kNoMemory);
   final ValueNotifier<String> _trafficSpeed = ValueNotifier<String>(_kNoSpeed);
   final ValueNotifier<String> _trafficTotal =
-      ValueNotifier<String>(_kNoConnection);
+      ValueNotifier<String>(_kNoTrafficTotal);
   final ValueNotifier<String> _proxyNow = ValueNotifier<String>("");
   bool _proxyNowUpdating = false;
 
@@ -443,7 +443,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
 
   Future<void> _onStatePaused() async {
     _stopStateCheckTimer();
-    _disconnectToCore();
+    _disconnectToCore(resetUI: false);
   }
 
   Future<void> _onCurrentChanged(String id) async {
@@ -525,13 +525,15 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     });
   }
 
-  Future<void> _disconnectToCore() async {
+  Future<void> _disconnectToCore({bool resetUI = true}) async {
     _timerConnectToCore?.cancel();
     _timerConnectToCore = null;
-    _trafficTotal.value = _kNoConnection;
-    _trafficSpeed.value = _kNoSpeed;
-    // _memory.value = _kNoMemory;
-    _proxyNow.value = "";
+    if (resetUI) {
+      _trafficTotal.value = _kNoTrafficTotal;
+      _trafficSpeed.value = _kNoSpeed;
+      // _memory.value = _kNoMemory;
+      _proxyNow.value = "";
+    }
   }
 
   Future<void> _updateProxyNow() async {
