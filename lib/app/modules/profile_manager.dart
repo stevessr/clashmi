@@ -203,17 +203,17 @@ class ProfileManager {
         .add((FlutterVpnServiceState state, Map<String, String> params) async {
       if (state == FlutterVpnServiceState.connected) {
         Future.delayed(const Duration(seconds: 3), () async {
-          updateProfileByTicker();
+          updateByTicker();
         });
       }
     });
     AppLifecycleStateNofity.onStateResumed(null, () {
       Future.delayed(const Duration(seconds: 3), () async {
-        updateProfileByTicker();
+        updateByTicker();
       });
     });
     Future.delayed(const Duration(seconds: 30), () async {
-      updateProfileByTicker();
+      updateByTicker();
     });
   }
 
@@ -335,7 +335,7 @@ class ProfileManager {
     try {
       if (!await File(filePath).exists()) {
         if (profile.isRemote()) {
-          final result = await updateProfile(profile.id);
+          final result = await update(profile.id);
           if (result == null) {
             return null;
           }
@@ -376,7 +376,7 @@ class ProfileManager {
     return _config.profiles;
   }
 
-  static Future<ReturnResultError?> addLocalProfile(String filePath,
+  static Future<ReturnResultError?> addLocal(String filePath,
       {String remark = ""}) async {
     final id = "${filePath.hashCode}.yaml";
     final savePath = path.join(await PathUtils.profilesDir(), id);
@@ -415,7 +415,7 @@ class ProfileManager {
     }
   }
 
-  static Future<ReturnResult<String>> addRemoteProfile(String url,
+  static Future<ReturnResult<String>> addRemote(String url,
       {String remark = "", bool overwrite = true}) async {
     final uri = Uri.tryParse(url);
     if (uri == null) {
@@ -468,13 +468,13 @@ class ProfileManager {
     return ReturnResult(data: id);
   }
 
-  static Future<void> updateAllProfile() async {
+  static Future<void> updateAll() async {
     for (var profile in _config.profiles) {
-      updateProfile(profile.id);
+      update(profile.id);
     }
   }
 
-  static Future<ReturnResultError?> updateProfile(String id) async {
+  static Future<ReturnResultError?> update(String id) async {
     if (updating.contains(id)) {
       return null;
     }
@@ -523,7 +523,7 @@ class ProfileManager {
     return result.error;
   }
 
-  static Future<void> updateProfileByTicker() async {
+  static Future<void> updateByTicker() async {
     DateTime now = DateTime.now();
     for (var profile in _config.profiles) {
       if (!profile.isRemote() || profile.updateInterval == null) {
@@ -532,12 +532,12 @@ class ProfileManager {
       if (profile.update == null ||
           now.difference(profile.update!).inSeconds >=
               profile.updateInterval!.inSeconds) {
-        updateProfile(profile.id);
+        update(profile.id);
       }
     }
   }
 
-  static Future<void> removeProfile(String id) async {
+  static Future<void> remove(String id) async {
     for (int i = 0; i < _config.profiles.length; ++i) {
       if (id == _config.profiles[i].id) {
         _config.profiles.removeAt(i);

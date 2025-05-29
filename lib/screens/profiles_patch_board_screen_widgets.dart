@@ -260,7 +260,7 @@ class _ProfilesPatchBoardScreenWidget
               minLeadingWidth: 40,
               onTap: () async {
                 Navigator.of(context).pop();
-                ProfilePatchManager.updateProfile(setting.id);
+                ProfilePatchManager.update(setting.id);
               },
             )
           : const SizedBox.shrink(),
@@ -296,7 +296,7 @@ class _ProfilesPatchBoardScreenWidget
         minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
-          ProfilePatchManager.removeProfilePatch(setting.id);
+          ProfilePatchManager.remove(setting.id);
         },
       ),
     ];

@@ -279,7 +279,7 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
               minLeadingWidth: 40,
               onTap: () async {
                 Navigator.of(context).pop();
-                ProfileManager.updateProfile(setting.id);
+                ProfileManager.update(setting.id);
               },
             )
           : const SizedBox.shrink(),
@@ -315,7 +315,7 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
         minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
-          ProfileManager.removeProfile(setting.id);
+          ProfileManager.remove(setting.id);
         },
       ),
     ];

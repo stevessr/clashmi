@@ -66,7 +66,7 @@ class _AddProfileByUrlScreenState
     _loading = true;
     setState(() {});
 
-    final result = await ProfileManager.addRemoteProfile(url,
+    final result = await ProfileManager.addRemote(url,
         remark: remark, overwrite: widget.overwrite);
 
     if (!mounted) {

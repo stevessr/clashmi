@@ -46,7 +46,7 @@ class _AddProfileByImportFromFileScreenState
     final tcontext = Translations.of(context);
     String text = _textControllerRemark.text.trim();
 
-    final error = await ProfileManager.addLocalProfile(_filePath, remark: text);
+    final error = await ProfileManager.addLocal(_filePath, remark: text);
 
     if (!mounted) {
       return;

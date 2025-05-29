@@ -5,6 +5,7 @@ import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/add_profile_by_import_from_file_screen.dart';
 import 'package:clashmi/screens/add_profile_by_scan_qrcode_screen.dart';
+import 'package:clashmi/screens/add_profile_patch_by_import_from_file_screen.dart';
 import 'package:clashmi/screens/add_profile_patch_by_url_screen.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/profiles_patch_board_screen_widgets.dart';
@@ -177,7 +178,7 @@ class _ProfilesPatchBoardScreenState
   }
 
   void onTapUpdateAll() async {
-    await ProfilePatchManager.updateAllProfile();
+    await ProfilePatchManager.updateAll();
   }
 
   void onTapAdd() async {
@@ -258,9 +259,10 @@ class _ProfilesPatchBoardScreenState
           Navigator.push(
               context,
               MaterialPageRoute(
-                  settings: AddProfileByImportFromFileScreen.routSettings(),
+                  settings:
+                      AddProfilePatchByImportFromFileScreen.routSettings(),
                   builder: (context) =>
-                      const AddProfileByImportFromFileScreen()));
+                      const AddProfilePatchByImportFromFileScreen()));
         },
       ),
     ];

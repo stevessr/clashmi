@@ -68,8 +68,7 @@ class _AddProfilePatchByUrlScreenState
     _loading = true;
     setState(() {});
 
-    final result =
-        await ProfilePatchManager.addRemoteProfile(url, remark: remark);
+    final result = await ProfilePatchManager.addRemote(url, remark: remark);
 
     if (!mounted) {
       return;

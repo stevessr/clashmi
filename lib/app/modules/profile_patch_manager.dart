@@ -332,7 +332,7 @@ class ProfilePatchManager {
     return _config.profiles;
   }
 
-  static Future<ReturnResultError?> addProfilePatch(String filePath,
+  static Future<ReturnResultError?> addLocal(String filePath,
       {String remark = ""}) async {
     final id = "${filePath.hashCode}.yaml";
     final savePath = path.join(await PathUtils.profilePatchsDir(), id);
@@ -362,7 +362,7 @@ class ProfilePatchManager {
     }
   }
 
-  static Future<ReturnResult<String>> addRemoteProfile(String url,
+  static Future<ReturnResult<String>> addRemote(String url,
       {String remark = ""}) async {
     final uri = Uri.tryParse(url);
     if (uri == null) {
@@ -412,13 +412,13 @@ class ProfilePatchManager {
     return ReturnResult(data: id);
   }
 
-  static Future<void> updateAllProfile() async {
+  static Future<void> updateAll() async {
     for (var profile in _config.profiles) {
-      updateProfile(profile.id);
+      update(profile.id);
     }
   }
 
-  static Future<ReturnResultError?> updateProfile(String id) async {
+  static Future<ReturnResultError?> update(String id) async {
     if (updating.contains(id)) {
       return null;
     }
@@ -466,7 +466,7 @@ class ProfilePatchManager {
     return result.error;
   }
 
-  static Future<void> updateProfileByTicker() async {
+  static Future<void> updateByTicker() async {
     DateTime now = DateTime.now();
     for (var profile in _config.profiles) {
       if (!profile.isRemote() || profile.updateInterval == null) {
@@ -475,12 +475,12 @@ class ProfilePatchManager {
       if (profile.update == null ||
           now.difference(profile.update!).inSeconds >=
               profile.updateInterval!.inSeconds) {
-        updateProfile(profile.id);
+        update(profile.id);
       }
     }
   }
 
-  static Future<void> removeProfilePatch(String id) async {
+  static Future<void> remove(String id) async {
     for (int i = 0; i < _config.profiles.length; ++i) {
       if (id == _config.profiles[i].id) {
         _config.profiles.removeAt(i);

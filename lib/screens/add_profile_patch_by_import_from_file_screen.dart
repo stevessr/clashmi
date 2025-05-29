@@ -47,8 +47,7 @@ class _AddProfilePatchByImportFromFileScreenState
     final tcontext = Translations.of(context);
     String text = _textControllerRemark.text.trim();
 
-    final error =
-        await ProfilePatchManager.addProfilePatch(_filePath, remark: text);
+    final error = await ProfilePatchManager.addLocal(_filePath, remark: text);
 
     if (!mounted) {
       return;
@@ -103,7 +102,7 @@ class _AddProfilePatchByImportFromFileScreenState
                   SizedBox(
                     width: windowSize.width - 50 * 2,
                     child: Text(
-                      "${tcontext.meta.import}-${tcontext.meta.overwriteSettings}",
+                      tcontext.meta.import,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

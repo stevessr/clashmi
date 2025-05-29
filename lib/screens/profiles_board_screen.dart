@@ -178,7 +178,7 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
   }
 
   void onTapUpdateAll() async {
-    await ProfileManager.updateAllProfile();
+    await ProfileManager.updateAll();
   }
 
   void onTapAdd() async {
