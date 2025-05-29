@@ -20,7 +20,6 @@ import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/app/utils/platform_utils.dart';
 import 'package:clashmi/app/utils/url_launcher_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
-import 'package:clashmi/screens/add_profile_patch_by_import_from_file_screen.dart';
 import 'package:clashmi/screens/backup_and_sync_icloud_screen.dart';
 import 'package:clashmi/screens/backup_and_sync_webdav_screen.dart';
 import 'package:clashmi/screens/backup_helper.dart';
@@ -32,6 +31,7 @@ import 'package:clashmi/screens/group_screen.dart';
 import 'package:clashmi/screens/language_settings_screen.dart';
 import 'package:clashmi/screens/list_add_screen.dart';
 import 'package:clashmi/screens/perapp_android_screen.dart';
+import 'package:clashmi/screens/profiles_patch_board_screen.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/themes.dart';
 import 'package:clashmi/screens/version_update_screen.dart';
@@ -809,7 +809,11 @@ class GroupHelper {
                 tips: tcontext.meta.overwriteTips,
                 textWidthPercent: 0.5,
                 onPush: () async {
-                  await showProfilePatch(context);
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          settings: ProfilesPatchBoardScreen.routSettings(),
+                          builder: (context) => ProfilesPatchBoardScreen()));
                 })),
       ];
       List<GroupItem> groups = [];
@@ -941,116 +945,6 @@ class GroupHelper {
     ClashSettingManager.save();
     ProfilePatchManager.save();
     ProfileManager.save();
-  }
-
-  static Future<void> showProfilePatch(BuildContext context) async {
-    final tcontext = Translations.of(context);
-    final currentPatch = ProfilePatchManager.getCurrent();
-    Future<List<GroupItem>> getOptions(
-        BuildContext context, SetStateCallback? setstate) async {
-      List<GroupItemOptions> options = [
-        GroupItemOptions(
-            textOptions: GroupItemTextOptions(
-                name: "",
-                text: tcontext.profilePatchMode.overwrite,
-                textStyle: TextStyle(
-                    color: currentPatch.id == kProfilePatchBuildinOverwrite
-                        ? ThemeDefine.kColorBlue
-                        : null),
-                onPush: () async {
-                  ProfilePatchManager.setCurrent(kProfilePatchBuildinOverwrite);
-                  Navigator.of(context).pop();
-                })),
-        GroupItemOptions(
-            textOptions: GroupItemTextOptions(
-                name: "",
-                text: tcontext.profilePatchMode.noOverwrite,
-                textStyle: TextStyle(
-                    color: currentPatch.id == kProfilePatchBuildinNoOverwrite
-                        ? ThemeDefine.kColorBlue
-                        : null),
-                onPush: () async {
-                  ProfilePatchManager.setCurrent(
-                      kProfilePatchBuildinNoOverwrite);
-                  Navigator.of(context).pop();
-                }))
-      ];
-      List<GroupItemOptions> options1 = [];
-      final profilePatchs = ProfilePatchManager.getProfilePatchs();
-      for (var patch in profilePatchs) {
-        options1.add(GroupItemOptions(
-            textOptions: GroupItemTextOptions(
-          name: "",
-          text: patch.remark,
-          textWidthPercent: 0.8,
-          textStyle: TextStyle(
-              color:
-                  currentPatch.id == patch.id ? ThemeDefine.kColorBlue : null),
-          child: InkWell(
-            onTap: () {
-              ProfilePatchManager.removeProfilePatch(patch.id);
-              ProfileManager.removePatch(patch.id);
-              setstate?.call();
-            },
-            child: Icon(
-              Icons.remove_circle_outlined,
-              color: Colors.red,
-            ),
-          ),
-          onPush: () async {
-            ProfilePatchManager.setCurrent(patch.id);
-            Navigator.of(context).pop();
-          },
-          onLongPress: () async {
-            final filePath =
-                await ProfilePatchManager.getProfilePatchPath(patch.id);
-            final content = await File(filePath).readAsString();
-
-            if (!context.mounted) {
-              return;
-            }
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    settings: FileViewScreen.routSettings(),
-                    builder: (context) => FileViewScreen(
-                          title: patch.id,
-                          content: content,
-                        )));
-          },
-        )));
-      }
-
-      if (options1.isNotEmpty) {
-        return [
-          GroupItem(options: options),
-          GroupItem(options: options1),
-        ];
-      }
-
-      return [
-        GroupItem(options: options),
-      ];
-    }
-
-    await Navigator.push(
-        context,
-        MaterialPageRoute(
-            settings: GroupScreen.routSettings("overwrite"),
-            builder: (context) => GroupScreen(
-                title: tcontext.meta.overwrite,
-                getOptions: getOptions,
-                onDoneIcon: Icons.add,
-                onDone: (BuildContext context) async {
-                  await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          settings: AddProfilePatchByImportFromFileScreen
-                              .routSettings(),
-                          builder: (context) =>
-                              const AddProfilePatchByImportFromFileScreen()));
-                  return false;
-                })));
   }
 
   static Future<void> showClashSettingsLanAccess(BuildContext context) async {

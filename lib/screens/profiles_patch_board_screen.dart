@@ -1,43 +1,42 @@
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
-import 'package:clashmi/app/modules/profile_manager.dart';
-import 'package:clashmi/app/modules/remote_config_manager.dart';
-import 'package:clashmi/app/utils/url_launcher_utils.dart';
+import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/add_profile_by_import_from_file_screen.dart';
-import 'package:clashmi/screens/add_profile_by_url_screen.dart';
 import 'package:clashmi/screens/add_profile_by_scan_qrcode_screen.dart';
+import 'package:clashmi/screens/add_profile_patch_by_url_screen.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
-import 'package:clashmi/screens/profiles_board_screen_widgets.dart';
+import 'package:clashmi/screens/profiles_patch_board_screen_widgets.dart';
 import 'package:clashmi/screens/theme_config.dart';
 import 'package:clashmi/screens/themes.dart';
-import 'package:clashmi/screens/webview_helper.dart';
 import 'package:clashmi/screens/widgets/framework.dart';
 import 'package:clashmi/screens/widgets/sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class ProfilesBoardScreen extends LasyRenderingStatefulWidget {
+class ProfilesPatchBoardScreen extends LasyRenderingStatefulWidget {
   static RouteSettings routSettings() {
     return const RouteSettings(name: "/");
   }
 
-  const ProfilesBoardScreen({super.key});
+  const ProfilesPatchBoardScreen({super.key});
 
   @override
-  State<ProfilesBoardScreen> createState() => _ProfilesBoardScreenState();
+  State<ProfilesPatchBoardScreen> createState() =>
+      _ProfilesPatchBoardScreenState();
 }
 
-class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
+class _ProfilesPatchBoardScreenState
+    extends LasyRenderingState<ProfilesPatchBoardScreen>
     with WidgetsBindingObserver, AfterLayoutMixin {
   @override
   void initState() {
     super.initState();
-    ProfileManager.onEventAdd.add(_onAdd);
-    ProfileManager.onEventRemove.add(_onRemove);
-    ProfileManager.onEventUpdate.add(_onUpdate);
+    ProfilePatchManager.onEventAdd.add(_onAdd);
+    ProfilePatchManager.onEventRemove.add(_onRemove);
+    ProfilePatchManager.onEventUpdate.add(_onUpdate);
   }
 
   @override
@@ -45,9 +44,9 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
 
   @override
   void dispose() {
-    ProfileManager.onEventAdd.remove(_onAdd);
-    ProfileManager.onEventRemove.remove(_onRemove);
-    ProfileManager.onEventUpdate.remove(_onUpdate);
+    ProfilePatchManager.onEventAdd.remove(_onAdd);
+    ProfilePatchManager.onEventRemove.remove(_onRemove);
+    ProfilePatchManager.onEventUpdate.remove(_onUpdate);
     super.dispose();
   }
 
@@ -90,7 +89,7 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
                   SizedBox(
                     width: windowSize.width - 50 * 3,
                     child: Text(
-                      tcontext.meta.myProfiles,
+                      tcontext.meta.overwrite,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -98,7 +97,7 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
                           fontSize: ThemeConfig.kFontSizeTitle),
                     ),
                   ),
-                  ProfileManager.updating.isNotEmpty
+                  ProfilePatchManager.updating.isNotEmpty
                       ? const Row(
                           children: [
                             SizedBox(
@@ -158,10 +157,10 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
                   child: FutureBuilder(
                     future: getProfiles(),
                     builder: (BuildContext context,
-                        AsyncSnapshot<List<ProfileSetting>> snapshot) {
-                      List<ProfileSetting> data =
+                        AsyncSnapshot<List<ProfilePatchSetting>> snapshot) {
+                      List<ProfilePatchSetting> data =
                           snapshot.hasData ? snapshot.data! : [];
-                      return ProfilesBoardScreenWidget(settings: data);
+                      return ProfilesPatchBoardScreenWidget(settings: data);
                     },
                   ),
                 ),
@@ -173,35 +172,17 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
     );
   }
 
-  Future<List<ProfileSetting>> getProfiles() async {
-    return ProfileManager.getProfiles();
+  Future<List<ProfilePatchSetting>> getProfiles() async {
+    return ProfilePatchManager.getProfiles();
   }
 
   void onTapUpdateAll() async {
-    await ProfileManager.updateAllProfile();
+    await ProfilePatchManager.updateAllProfile();
   }
 
   void onTapAdd() async {
     final tcontext = Translations.of(context);
     var widgets = [
-      ListTile(
-        title: Text(tcontext.meta.getProfile),
-        minLeadingWidth: 40,
-        onTap: () async {
-          Navigator.of(context).pop();
-          var remoteConfig = RemoteConfigManager.getConfig();
-
-          String url = remoteConfig.getTranffic;
-
-          url = await UrlLauncherUtils.reorganizationUrlWithAnchor(url);
-
-          if (!mounted) {
-            return;
-          }
-          await WebviewHelper.loadUrl(context, url, "getTranffic",
-              title: tcontext.meta.getProfile);
-        },
-      ),
       ListTile(
         title: Text(tcontext.meta.profileAddUrlOrContent),
         minLeadingWidth: 40,
@@ -210,8 +191,8 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
           await Navigator.push(
               context,
               MaterialPageRoute(
-                  settings: AddProfileByUrlScreen.routSettings(),
-                  builder: (context) => AddProfileByUrlScreen()));
+                  settings: AddProfilePatchByUrlScreen.routSettings(),
+                  builder: (context) => AddProfilePatchByUrlScreen()));
         },
       ),
       ListTile(
@@ -239,9 +220,9 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
           await Navigator.push(
               context,
               MaterialPageRoute(
-                  settings: AddProfileByUrlScreen.routSettings(),
+                  settings: AddProfilePatchByUrlScreen.routSettings(),
                   builder: (context) =>
-                      AddProfileByUrlScreen(url: data!.text!)));
+                      AddProfilePatchByUrlScreen(url: data!.text!)));
         },
       ),
       ListTile(
@@ -262,9 +243,9 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      settings: AddProfileByUrlScreen.routSettings(),
+                      settings: AddProfilePatchByUrlScreen.routSettings(),
                       builder: (context) =>
-                          AddProfileByUrlScreen(url: value.qrcode!)));
+                          AddProfilePatchByUrlScreen(url: value.qrcode!)));
             }
           });
         },

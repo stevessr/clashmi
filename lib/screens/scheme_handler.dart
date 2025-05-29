@@ -2,7 +2,7 @@ import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/platform_utils.dart';
 import 'package:clashmi/app/utils/system_scheme_utils.dart';
 import 'package:clashmi/app/utils/url_launcher_utils.dart';
-import 'package:clashmi/screens/add_profile_by_link_or_content_screen.dart';
+import 'package:clashmi/screens/add_profile_by_url_screen.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
@@ -78,7 +78,7 @@ class SchemeHandler {
   static Future<ReturnResultError?> addConfigBySubscriptionLink(
       BuildContext context, String url, String name, bool overwrite) async {
     int kMaxPush = 1;
-    if (AddProfileByLinkOrContentScreen.pushed >= kMaxPush) {
+    if (AddProfileByUrlScreen.pushed >= kMaxPush) {
       return ReturnResultError("addprofile request already exists");
     }
     UrlLauncherUtils.closeWebview();
@@ -89,8 +89,8 @@ class SchemeHandler {
     bool? ok = await Navigator.push(
         context,
         MaterialPageRoute(
-            settings: AddProfileByLinkOrContentScreen.routSettings(),
-            builder: (context) => AddProfileByLinkOrContentScreen(
+            settings: AddProfileByUrlScreen.routSettings(),
+            builder: (context) => AddProfileByUrlScreen(
                   url: url,
                   remark: name,
                   overwrite: overwrite,

@@ -188,7 +188,7 @@ class ProfileConfig {
 class ProfileManager {
   static const String yamlExtension = "yaml";
   static const String urlComment = "#url:";
-  static final ProfileConfig _profileConfig = ProfileConfig();
+  static final ProfileConfig _config = ProfileConfig();
 
   static final List<void Function(String)> onEventCurrentChanged = [];
   static final List<void Function(String)> onEventAdd = [];
@@ -222,14 +222,14 @@ class ProfileManager {
     final dir = await PathUtils.profilesDir();
     List<String> ids = [];
     List<String> idsToDelete = [];
-    for (var profile in _profileConfig.profiles) {
+    for (var profile in _config.profiles) {
       ids.add(profile.id);
     }
-    _profileConfig._currentId = "";
-    _profileConfig.profiles = [];
+    _config._currentId = "";
+    _config.profiles = [];
     await load();
     for (var id in ids) {
-      int index = _profileConfig.profiles.indexWhere((value) {
+      int index = _config.profiles.indexWhere((value) {
         return value.id == id;
       });
       if (index < 0) {
@@ -241,7 +241,7 @@ class ProfileManager {
       await FileUtils.deletePath(filePath);
     }
     for (var event in onEventCurrentChanged) {
-      event(_profileConfig._currentId);
+      event(_config._currentId);
     }
   }
 
@@ -252,7 +252,7 @@ class ProfileManager {
     _saving = true;
     String filePath = await PathUtils.profilesConfigFilePath();
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    String content = encoder.convert(_profileConfig);
+    String content = encoder.convert(_config);
     try {
       await File(filePath).writeAsString(content, flush: true);
     } catch (err, stacktrace) {
@@ -271,7 +271,7 @@ class ProfileManager {
         String content = await file.readAsString();
         if (content.isNotEmpty) {
           var config = jsonDecode(content);
-          _profileConfig.fromJson(config);
+          _config.fromJson(config);
         }
       } catch (err, stacktrace) {
         Log.w("ProfileManager.load exception ${err.toString()} ");
@@ -286,49 +286,47 @@ class ProfileManager {
       existProfiles[path.basename(file)] =
           line?.substring(urlComment.length).trim();
     }
-    for (int i = 0; i < _profileConfig.profiles.length; ++i) {
-      if (!existProfiles.containsKey(_profileConfig.profiles[i].id) &&
-          !_profileConfig.profiles[i].isRemote()) {
-        _profileConfig.profiles.removeAt(i);
+    for (int i = 0; i < _config.profiles.length; ++i) {
+      if (!existProfiles.containsKey(_config.profiles[i].id) &&
+          !_config.profiles[i].isRemote()) {
+        _config.profiles.removeAt(i);
         --i;
       }
     }
     existProfiles.forEach((key, existValue) {
-      int index = _profileConfig.profiles.indexWhere((value) {
+      int index = _config.profiles.indexWhere((value) {
         return value.id == key;
       });
       if (index < 0) {
-        _profileConfig.profiles
-            .add(ProfileSetting(id: key, url: existValue ?? ""));
+        _config.profiles.add(ProfileSetting(id: key, url: existValue ?? ""));
       }
     });
 
-    if (_profileConfig._currentId.isNotEmpty) {
-      int index = _profileConfig.profiles.indexWhere((value) {
-        return value.id == _profileConfig._currentId;
+    if (_config._currentId.isNotEmpty) {
+      int index = _config.profiles.indexWhere((value) {
+        return value.id == _config._currentId;
       });
 
       if (index < 0) {
-        _profileConfig._currentId = "";
+        _config._currentId = "";
       }
     }
-    if (_profileConfig._currentId.isEmpty &&
-        _profileConfig.profiles.isNotEmpty) {
-      _profileConfig._currentId = _profileConfig.profiles.first.id;
+    if (_config._currentId.isEmpty && _config.profiles.isNotEmpty) {
+      _config._currentId = _config.profiles.first.id;
     }
   }
 
   static ProfileSetting? getCurrent() {
-    if (_profileConfig._currentId.isEmpty) {
+    if (_config._currentId.isEmpty) {
       return null;
     }
-    int index = _profileConfig.profiles.indexWhere((value) {
-      return value.id == _profileConfig._currentId;
+    int index = _config.profiles.indexWhere((value) {
+      return value.id == _config._currentId;
     });
     if (index < 0) {
       return null;
     }
-    return _profileConfig.profiles[index];
+    return _config.profiles[index];
   }
 
   static Future<ReturnResultError?> prepare(ProfileSetting profile) async {
@@ -351,23 +349,23 @@ class ProfileManager {
   }
 
   static void setCurrent(String id) {
-    if (_profileConfig._currentId == id) {
+    if (_config._currentId == id) {
       return;
     }
-    int index = _profileConfig.profiles.indexWhere((value) {
+    int index = _config.profiles.indexWhere((value) {
       return value.id == id;
     });
     if (index < 0) {
       return;
     }
-    _profileConfig._currentId = id;
+    _config._currentId = id;
     for (var event in onEventCurrentChanged) {
       event(id);
     }
   }
 
   static void removePatch(String patch) {
-    for (var profile in _profileConfig.profiles) {
+    for (var profile in _config.profiles) {
       if (profile.patch == patch) {
         profile.patch = "";
       }
@@ -375,7 +373,7 @@ class ProfileManager {
   }
 
   static List<ProfileSetting> getProfiles() {
-    return _profileConfig.profiles;
+    return _config.profiles;
   }
 
   static Future<ReturnResultError?> addLocalProfile(String filePath,
@@ -388,17 +386,17 @@ class ProfileManager {
     }
     try {
       await file.copy(savePath);
-      int index = _profileConfig.profiles.indexWhere((value) {
+      int index = _config.profiles.indexWhere((value) {
         return value.id == id;
       });
       if (index < 0) {
-        _profileConfig.profiles.add(ProfileSetting(
+        _config.profiles.add(ProfileSetting(
           id: id,
           remark: remark,
           update: DateTime.now(),
         ));
       } else {
-        _profileConfig.profiles[index] =
+        _config.profiles[index] =
             ProfileSetting(id: id, remark: remark, update: DateTime.now());
       }
 
@@ -406,7 +404,7 @@ class ProfileManager {
         event(id);
       }
 
-      if (_profileConfig._currentId.isEmpty) {
+      if (_config._currentId.isEmpty) {
         setCurrent(id);
       }
 
@@ -439,7 +437,7 @@ class ProfileManager {
       remark = result.data ?? uri.host;
     }
 
-    int index = _profileConfig.profiles.indexWhere((value) {
+    int index = _config.profiles.indexWhere((value) {
       return value.id == id;
     });
     final profile = ProfileSetting(
@@ -453,16 +451,16 @@ class ProfileManager {
     }
     profile.updateSubscriptionTraffic(result.data);
     if (index < 0) {
-      _profileConfig.profiles.add(profile);
+      _config.profiles.add(profile);
     } else {
-      _profileConfig.profiles[index] = profile;
+      _config.profiles[index] = profile;
     }
 
     for (var event in onEventAdd) {
       event(id);
     }
 
-    if (_profileConfig._currentId.isEmpty) {
+    if (_config._currentId.isEmpty) {
       setCurrent(id);
     }
 
@@ -471,7 +469,7 @@ class ProfileManager {
   }
 
   static Future<void> updateAllProfile() async {
-    for (var profile in _profileConfig.profiles) {
+    for (var profile in _config.profiles) {
       updateProfile(profile.id);
     }
   }
@@ -480,13 +478,13 @@ class ProfileManager {
     if (updating.contains(id)) {
       return null;
     }
-    int index = _profileConfig.profiles.indexWhere((value) {
+    int index = _config.profiles.indexWhere((value) {
       return value.id == id;
     });
     if (index < 0) {
       return null;
     }
-    ProfileSetting profile = _profileConfig.profiles[index];
+    ProfileSetting profile = _config.profiles[index];
     if (!profile.isRemote()) {
       return null;
     }
@@ -527,7 +525,7 @@ class ProfileManager {
 
   static Future<void> updateProfileByTicker() async {
     DateTime now = DateTime.now();
-    for (var profile in _profileConfig.profiles) {
+    for (var profile in _config.profiles) {
       if (!profile.isRemote() || profile.updateInterval == null) {
         continue;
       }
@@ -540,9 +538,9 @@ class ProfileManager {
   }
 
   static Future<void> removeProfile(String id) async {
-    for (int i = 0; i < _profileConfig.profiles.length; ++i) {
-      if (id == _profileConfig.profiles[i].id) {
-        _profileConfig.profiles.removeAt(i);
+    for (int i = 0; i < _config.profiles.length; ++i) {
+      if (id == _config.profiles[i].id) {
+        _config.profiles.removeAt(i);
         --i;
       }
     }
@@ -550,13 +548,12 @@ class ProfileManager {
     for (var event in onEventRemove) {
       event(id);
     }
-    if (_profileConfig._currentId == id) {
-      _profileConfig._currentId = _profileConfig.profiles.isEmpty
-          ? ""
-          : _profileConfig.profiles.first.id;
+    if (_config._currentId == id) {
+      _config._currentId =
+          _config.profiles.isEmpty ? "" : _config.profiles.first.id;
 
       for (var event in onEventCurrentChanged) {
-        event(_profileConfig._currentId);
+        event(_config._currentId);
       }
     }
 
@@ -567,20 +564,20 @@ class ProfileManager {
 
   static Future<void> removeAllProfile() async {
     var dir = await PathUtils.profilesDir();
-    for (var profile in _profileConfig.profiles) {
+    for (var profile in _config.profiles) {
       final filePath = path.join(dir, profile.id);
       await FileUtils.deletePath(filePath);
     }
-    _profileConfig.profiles.clear();
-    _profileConfig._currentId = "";
+    _config.profiles.clear();
+    _config._currentId = "";
     for (var event in onEventCurrentChanged) {
-      event(_profileConfig._currentId);
+      event(_config._currentId);
     }
     await save();
   }
 
   static ProfileSetting? getProfile(String id) {
-    for (var profile in _profileConfig.profiles) {
+    for (var profile in _config.profiles) {
       if (id == profile.id) {
         return profile;
       }
@@ -597,11 +594,11 @@ class ProfileManager {
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
-    if (oldIndex >= _profileConfig.profiles.length ||
-        newIndex >= _profileConfig.profiles.length) {
+    if (oldIndex >= _config.profiles.length ||
+        newIndex >= _config.profiles.length) {
       return;
     }
-    var item = _profileConfig.profiles.removeAt(oldIndex);
-    _profileConfig.profiles.insert(newIndex, item);
+    var item = _config.profiles.removeAt(oldIndex);
+    _config.profiles.insert(newIndex, item);
   }
 }

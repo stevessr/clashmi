@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
-import 'package:clashmi/app/modules/profile_manager.dart';
+import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/app/utils/http_utils.dart';
 import 'package:clashmi/app/utils/platform_utils.dart';
@@ -14,16 +14,16 @@ import 'package:clashmi/screens/widgets/framework.dart';
 import 'package:clashmi/screens/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 
-class AddProfileByLinkOrContentScreen extends LasyRenderingStatefulWidget {
+class AddProfilePatchByUrlScreen extends LasyRenderingStatefulWidget {
   static RouteSettings routSettings() {
-    return const RouteSettings(name: "AddProfileByLinkOrContentScreen");
+    return const RouteSettings(name: "AddProfilePatchByUrlScreen");
   }
 
   static int pushed = 0;
   final String url;
   final String remark;
   final bool overwrite;
-  const AddProfileByLinkOrContentScreen({
+  const AddProfilePatchByUrlScreen({
     super.key,
     this.url = "",
     this.remark = "",
@@ -31,12 +31,12 @@ class AddProfileByLinkOrContentScreen extends LasyRenderingStatefulWidget {
   });
 
   @override
-  State<AddProfileByLinkOrContentScreen> createState() =>
-      _AddProfileByLinkOrContentScreenState();
+  State<AddProfilePatchByUrlScreen> createState() =>
+      _AddProfilePatchByUrlScreenState();
 }
 
-class _AddProfileByLinkOrContentScreenState
-    extends LasyRenderingState<AddProfileByLinkOrContentScreen>
+class _AddProfilePatchByUrlScreenState
+    extends LasyRenderingState<AddProfilePatchByUrlScreen>
     with AfterLayoutMixin {
   final _textControllerLink = TextEditingController();
   final _textControllerRemark = TextEditingController();
@@ -44,7 +44,7 @@ class _AddProfileByLinkOrContentScreenState
 
   @override
   void initState() {
-    ++AddProfileByLinkOrContentScreen.pushed;
+    ++AddProfilePatchByUrlScreen.pushed;
     _textControllerLink.text = widget.url.trim();
     _textControllerRemark.text = widget.remark.trim();
     super.initState();
@@ -55,7 +55,7 @@ class _AddProfileByLinkOrContentScreenState
 
   @override
   void dispose() {
-    --AddProfileByLinkOrContentScreen.pushed;
+    --AddProfilePatchByUrlScreen.pushed;
     _textControllerLink.dispose();
     _textControllerRemark.dispose();
     super.dispose();
@@ -68,8 +68,8 @@ class _AddProfileByLinkOrContentScreenState
     _loading = true;
     setState(() {});
 
-    final result = await ProfileManager.addRemoteProfile(url,
-        remark: remark, overwrite: widget.overwrite);
+    final result =
+        await ProfilePatchManager.addRemoteProfile(url, remark: remark);
 
     if (!mounted) {
       return;
