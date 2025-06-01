@@ -95,6 +95,15 @@ class ProfilesBoardItem extends StatelessWidget {
                 Align(
                   alignment: AlignmentDirectional.centerStart,
                   child: Text(
+                    setting.id,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: selected ? ThemeDefine.kColorBlue : null),
+                  ),
+                ),
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
                     patchRemark,
                     style: TextStyle(
                         color: selected ? ThemeDefine.kColorBlue : null,

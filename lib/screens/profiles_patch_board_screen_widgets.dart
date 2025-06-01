@@ -63,6 +63,17 @@ class ProfilesPatchBoardItem extends StatelessWidget {
                         fontSize: 12),
                   ),
                 ),
+                setting.isBuildIn()
+                    ? const SizedBox.shrink()
+                    : Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Text(
+                          setting.id,
+                          style: TextStyle(
+                              color: selected ? ThemeDefine.kColorBlue : null,
+                              fontSize: 12),
+                        ),
+                      ),
                 Align(
                   alignment: AlignmentDirectional.centerStart,
                   child: Text(

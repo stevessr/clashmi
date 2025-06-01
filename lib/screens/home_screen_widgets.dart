@@ -83,7 +83,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     final tcontext = Translations.of(context);
     bool connected = _state == FlutterVpnServiceState.connected;
     final currentProfile = ProfileManager.getCurrent();
-    final currentProfileName = currentProfile?.getShortShowName() ?? "";
+    final currentProfileName = currentProfile?.getShowName() ?? "";
 
     var widgets = [
       Column(

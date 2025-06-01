@@ -77,6 +77,12 @@ class ProfilePatchSetting {
     return url.isNotEmpty;
   }
 
+  bool isBuildIn() {
+    return id.isEmpty ||
+        id == kProfilePatchBuildinOverwrite ||
+        id == kProfilePatchBuildinNoOverwrite;
+  }
+
   String getShowName(BuildContext context) {
     final tcontext = Translations.of(context);
     if (id.isEmpty || id == kProfilePatchBuildinOverwrite) {
@@ -85,10 +91,6 @@ class ProfilePatchSetting {
     if (id == kProfilePatchBuildinNoOverwrite) {
       return tcontext.profilePatchMode.noOverwrite;
     }
-    return remark.isEmpty ? id : "$remark [$id]";
-  }
-
-  String getShortShowName() {
     return remark.isEmpty ? id : remark;
   }
 }
@@ -462,8 +464,8 @@ class ProfilePatchManager {
           profile.remark = result.data!;
         }
       }
-      profile.update = DateTime.now();
     }
+    profile.update = DateTime.now();
     await save();
     updating.remove(id);
     Future.delayed(const Duration(milliseconds: 10), () async {

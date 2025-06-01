@@ -89,10 +89,6 @@ class ProfileSetting {
   }
 
   String getShowName() {
-    return remark.isEmpty ? id : "$remark [$id]";
-  }
-
-  String getShortShowName() {
     return remark.isEmpty ? id : remark;
   }
 
