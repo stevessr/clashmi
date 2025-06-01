@@ -411,6 +411,19 @@ class ProfileManager {
     }
   }
 
+  static Future<ReturnResultError?> validFileContentFormat(
+      String filepath) async {
+    String? content = await FileUtils.readAsStringWithMaxLength(filepath, 100);
+    if (content != null) {
+      content = content.trim();
+      if (content.startsWith("<!DOCTYPE html>") ||
+          content.startsWith("<html")) {
+        return ReturnResultError("invalid content format:\n$content");
+      }
+    }
+    return null;
+  }
+
   static Future<ReturnResult<String>> addRemote(String url,
       {String remark = "", bool overwrite = true}) async {
     final uri = Uri.tryParse(url);
@@ -426,8 +439,13 @@ class ProfileManager {
     if (result.error != null) {
       return ReturnResult(error: result.error);
     }
-    await FileUtils.append(savePath, "\n$urlComment$url\n");
+    final err = await validFileContentFormat(savePath);
+    if (err != null) {
+      FileUtils.deletePath(savePath);
+      return ReturnResult(error: err);
+    }
 
+    await FileUtils.append(savePath, "\n$urlComment$url\n");
     if (remark.isEmpty) {
       final result = await HttpUtils.httpGetTitle(url, userAgent);
       if (result.data == null || result.data!.length > 32) {
@@ -501,10 +519,30 @@ class ProfileManager {
 
     final userAgent = SettingManager.getConfig().userAgent();
     final savePath = path.join(await PathUtils.profilesDir(), id);
+    final savePathTmp = "$savePath.tmp";
     final result = await DownloadUtils.downloadWithPort(
-        uri, savePath, userAgent, null,
+        uri, savePathTmp, userAgent, null,
         timeout: const Duration(seconds: 20));
+    profile.update = DateTime.now();
     if (result.error == null) {
+      final err = await validFileContentFormat(savePathTmp);
+      if (err != null) {
+        updating.remove(id);
+        await FileUtils.deletePath(savePathTmp);
+
+        Future.delayed(const Duration(milliseconds: 10), () async {
+          for (var event in onEventUpdate) {
+            event(id, true);
+          }
+        });
+        return err;
+      }
+      try {
+        await File(savePathTmp).rename(savePath);
+      } catch (err) {
+        return ReturnResultError(
+            "rename file from [$savePathTmp] to [$savePath] failed: ${err.toString()}");
+      }
       await FileUtils.append(savePath, "\n$urlComment${profile.url}\n");
       if (profile.remark.isEmpty) {
         final result = await HttpUtils.httpGetTitle(profile.url, userAgent);
@@ -517,7 +555,7 @@ class ProfileManager {
 
       profile.updateSubscriptionTraffic(result.data);
     }
-    profile.update = DateTime.now();
+
     await save();
     updating.remove(id);
     Future.delayed(const Duration(milliseconds: 10), () async {

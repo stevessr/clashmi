@@ -8,6 +8,33 @@ import 'package:open_dir/open_dir.dart';
 import 'package:tuple/tuple.dart';
 
 abstract final class FileUtils {
+  static Future<String?> readAsStringWithMaxLength(
+      String filePath, int? maxBytesLength) async {
+    var file = File(filePath);
+
+    try {
+      if (await file.exists()) {
+        if (maxBytesLength == null) {
+          return await file.readAsString();
+        }
+        var fileSize = await file.length();
+        if (fileSize < maxBytesLength) {
+          return await file.readAsString();
+        }
+
+        RandomAccessFile raf = await file.open(mode: FileMode.read);
+        await raf.setPosition(0);
+        Uint8List data = await raf.read(maxBytesLength);
+        await raf.close();
+        return utf8.decode(data);
+      }
+    } catch (err) {
+      return null;
+    }
+
+    return null;
+  }
+
   static Future<Tuple2<String, bool>?> readAsString(String filePath,
       int? maxBytesLength, bool splitIfMoreThanMaxLength) async {
     var file = File(filePath);
