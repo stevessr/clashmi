@@ -331,17 +331,14 @@ class ProfileManager {
     try {
       if (!await File(filePath).exists()) {
         if (profile.isRemote()) {
-          final result = await update(profile.id);
-          if (result == null) {
-            return null;
-          }
-          return ReturnResultError(
-              "Profile download failed: ${profile.id} ${result.message}");
+          return await update(profile.id);
         }
-        return ReturnResultError("Profile not exist: $filePath");
+        return ReturnResultError("file not exist: $filePath");
       }
-    } catch (err) {}
-    return null;
+      return await validFileContentFormat(filePath);
+    } catch (err) {
+      return ReturnResultError(err.toString());
+    }
   }
 
   static void setCurrent(String id) {
@@ -416,9 +413,11 @@ class ProfileManager {
     String? content = await FileUtils.readAsStringWithMaxLength(filepath, 100);
     if (content != null) {
       content = content.trim();
+      final filename = path.basename(filepath);
       if (content.startsWith("<!DOCTYPE html>") ||
           content.startsWith("<html")) {
-        return ReturnResultError("invalid content format:\n$content");
+        return ReturnResultError(
+            "$filename:invalid content format:\n\n$content");
       }
     }
     return null;

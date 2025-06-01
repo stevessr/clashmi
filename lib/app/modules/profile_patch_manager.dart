@@ -270,6 +270,22 @@ class ProfilePatchManager {
     return _config.profiles[index];
   }
 
+  static Future<ReturnResultError?> prepare(ProfilePatchSetting profile) async {
+    String dir = await PathUtils.profilePatchsDir();
+    final filePath = path.join(dir, profile.id);
+    try {
+      if (!await File(filePath).exists()) {
+        if (profile.isRemote()) {
+          return await update(profile.id);
+        }
+        return ReturnResultError("file not exist: $filePath");
+      }
+      return await validFileContentFormat(filePath);
+    } catch (err) {
+      return ReturnResultError(err.toString());
+    }
+  }
+
   static void setCurrent(String id) {
     if (_config._currentId == id) {
       return;
@@ -369,9 +385,11 @@ class ProfilePatchManager {
     String? content = await FileUtils.readAsStringWithMaxLength(filepath, 100);
     if (content != null) {
       content = content.trim();
+      final filename = path.basename(filepath);
       if (content.startsWith("<!DOCTYPE html>") ||
           content.startsWith("<html")) {
-        return ReturnResultError("invalid content format:\n$content");
+        return ReturnResultError(
+            "$filename:invalid content format:\n\n$content");
       }
     }
     return null;
