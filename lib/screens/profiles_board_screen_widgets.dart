@@ -4,7 +4,9 @@ import 'package:clashmi/app/clash/clash_http_api.dart';
 import 'package:clashmi/app/modules/profile_manager.dart';
 import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
+import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/i18n/strings.g.dart';
+import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/file_view_screen.dart';
 import 'package:clashmi/screens/profile_settings_edit_screen.dart';
 import 'package:clashmi/screens/theme_define.dart';
@@ -279,7 +281,15 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
               minLeadingWidth: 40,
               onTap: () async {
                 Navigator.of(context).pop();
-                ProfileManager.update(setting.id);
+                ReturnResultError? err =
+                    await ProfileManager.update(setting.id);
+                if (err != null) {
+                  if (!mounted) {
+                    return;
+                  }
+                  DialogUtils.showAlertDialog(context, err.message,
+                      showCopy: true, showFAQ: true, withVersion: true);
+                }
               },
             )
           : const SizedBox.shrink(),

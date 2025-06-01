@@ -381,7 +381,11 @@ class ProfilePatchManager {
 
     if (remark.isEmpty) {
       final result = await HttpUtils.httpGetTitle(url, userAgent);
-      remark = result.data ?? uri.host;
+      if (result.data == null || result.data!.length > 32) {
+        remark = uri.host;
+      } else {
+        remark = result.data!;
+      }
     }
 
     int index = _config.profiles.indexWhere((value) {
@@ -452,7 +456,11 @@ class ProfilePatchManager {
       await FileUtils.append(savePath, "\n$urlComment${profile.url}\n");
       if (profile.remark.isEmpty) {
         final result = await HttpUtils.httpGetTitle(profile.url, userAgent);
-        profile.remark = result.data ?? uri.host;
+        if (result.data == null || result.data!.length > 32) {
+          profile.remark = uri.host;
+        } else {
+          profile.remark = result.data!;
+        }
       }
       profile.update = DateTime.now();
     }
