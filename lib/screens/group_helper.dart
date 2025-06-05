@@ -428,6 +428,7 @@ class GroupHelper {
                   ThemeDefine.kThemeDark,
                   ThemeDefine.kThemeSystem
                 ],
+                textWidthPercent: 0.3,
                 onPicker: (String? selected) async {
                   if (selected == null) {
                     return;
@@ -472,6 +473,7 @@ class GroupHelper {
                     name: tcontext.meta.updateChannel,
                     selected: setting.autoUpdateChannel,
                     strings: AutoUpdateManager.updateChannels(),
+                    textWidthPercent: 0.3,
                     onPicker: (String? selected) async {
                       if (selected == null ||
                           setting.autoUpdateChannel == selected) {
@@ -506,7 +508,7 @@ class GroupHelper {
             textFormFieldOptions: GroupItemTextFieldOptions(
                 name: tcontext.meta.delayTestTimeout,
                 text: setting.delayTestTimeout.toString(),
-                textWidthPercent: 0.5,
+                textWidthPercent: 0.3,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 onChanged: (String value) {
                   setting.delayTestTimeout = int.tryParse(value) ?? 5000;
@@ -540,7 +542,7 @@ class GroupHelper {
                 textFormFieldOptions: GroupItemTextFieldOptions(
                     name: tcontext.meta.boardLocalPort,
                     text: setting.boardLocalPort.toString(),
-                    textWidthPercent: 0.5,
+                    textWidthPercent: 0.3,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     onChanged: (String value) {
                       setting.boardLocalPort = int.tryParse(value) ??
@@ -862,6 +864,7 @@ class GroupHelper {
                 name: tcontext.meta.globalClientFingerprint,
                 selected: setting.GlobalClientFingerprint,
                 tupleStrings: globalFingerprintsTuple,
+                textWidthPercent: 0.3,
                 onPicker: (String? selected) async {
                   setting.GlobalClientFingerprint = selected;
                 })),

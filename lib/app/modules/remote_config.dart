@@ -173,7 +173,7 @@ class RemoteConfig {
     download = map["download"] ?? kDefaultDownload;
     telegram = map["telegram"] ?? kDefaultTelegram;
     follow = map["follow"] ?? kDefaultFollow;
-    donateUrl = map["donate_url"] ?? "";
+    donateUrl = map["donate_url"] ?? kDefaultDonate;
     if (!isSelfHost(donateUrl, host)) {
       donateUrl = "";
     }
