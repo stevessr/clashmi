@@ -1,3 +1,4 @@
+import 'package:clashmi/screens/theme_config.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/themes.dart';
 import 'package:flutter/material.dart';
@@ -60,8 +61,11 @@ class _SegmentedElevatedButton extends State<SegmentedElevatedButton> {
     }
 
     List<Widget> widgets = [];
+    widgets.add(const SizedBox(
+      width: 10,
+    ));
     for (int i = 0; i < widget.segments.length; ++i) {
-      widgets.add(ElevatedButton(
+      final button = ElevatedButton(
         statesController: _controllers[i],
         style: widget.buttonStyle ??
             ButtonStyle(
@@ -93,12 +97,20 @@ class _SegmentedElevatedButton extends State<SegmentedElevatedButton> {
         },
         child: Text(
           widget.segments[i].text,
+          maxLines: 2,
           style: TextStyle(
-              color:
-                  widget.selected == i ? ThemeDefine.kColorBlue : Colors.black),
+            color: widget.selected == i ? ThemeDefine.kColorBlue : Colors.black,
+          ),
         ),
+      );
+      widgets.add(button);
+      widgets.add(const SizedBox(
+        width: 5,
       ));
     }
+    widgets.add(const SizedBox(
+      width: 5,
+    ));
     return Container(
       decoration: BoxDecoration(
         color: widget.background ?? color,
@@ -106,10 +118,12 @@ class _SegmentedElevatedButton extends State<SegmentedElevatedButton> {
       ),
       child: Padding(
         padding: widget.padding ?? const EdgeInsets.fromLTRB(0, 3, 0, 3),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: widgets,
-        ),
+        child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: widgets,
+            )),
       ),
     );
   }
