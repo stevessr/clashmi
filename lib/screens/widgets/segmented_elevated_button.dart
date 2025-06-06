@@ -62,10 +62,7 @@ class _SegmentedElevatedButton extends State<SegmentedElevatedButton> {
             i == widget.selected ? {WidgetState.selected} : {};
       }
       const double space = 5;
-      double width = space;
-      for (int i = 0; i < widget.segments.length; ++i) {
-        width += space;
-      }
+      double spaceWidth = (widget.segments.length + 1) * space;
 
       List<Widget> widgets = [];
       widgets.add(const SizedBox(
@@ -74,7 +71,7 @@ class _SegmentedElevatedButton extends State<SegmentedElevatedButton> {
 
       for (int i = 0; i < widget.segments.length; ++i) {
         final button = SizedBox(
-            width: (constraints.maxWidth - width) / widget.segments.length,
+            width: (constraints.maxWidth - spaceWidth) / widget.segments.length,
             child: ElevatedButton(
               statesController: _controllers[i],
               style: widget.buttonStyle ??
