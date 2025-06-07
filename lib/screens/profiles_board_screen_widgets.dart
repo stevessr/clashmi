@@ -135,7 +135,9 @@ class ProfilesBoardItem extends StatelessWidget {
                         child: Text(
                           tranfficExpire.item2,
                           style: TextStyle(
-                              color: selected ? ThemeDefine.kColorBlue : null,
+                              color: tranfficExpire.item1
+                                  ? Colors.red
+                                  : (selected ? ThemeDefine.kColorBlue : null),
                               fontSize: 12),
                         ))
                     : SizedBox.shrink(),
