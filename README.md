@@ -1,7 +1,7 @@
 <h1 align="center">
   <img src="./assets/demo/icon_256.png" alt="Clash Mi" width="256" />
   <br>
-  Clash Mi - 又一款mihomo核心的简单代理工具
+  Clash Mi - 又一款mihomo核心的代理工具
   <br>
 </h1>
 
@@ -9,7 +9,7 @@
 基于 <a href="https://github.com/flutter/flutter">flutter</a> 的 <a href="https://github.com/MetaCubeX/mihomo">mihomo(clash.meta)</a> 图形用户界面。
 </h3>
 
-### 注意: ClashMi或KaringX未在任何视频平台开设过任何频道
+
 ## 特点
 - 内置Mihomo内核
     - 基于最新且持续更新的Mihomo(Clash.Meta)内核. 内核及客户端均持续更新维护，放心使用.
@@ -18,6 +18,8 @@
 - 自带[zashboard面板](https://github.com/Zephyruso/zashboard)
     - web面板 或许你更加熟悉.
 - 用户手册: [clashmi.app](https://clashmi.app)
+
+##### 注意: ClashMi或KaringX未在任何视频平台开设过任何频道
 
 ## 推广
 <details>
@@ -44,13 +46,6 @@
 </details>
 
 
-## 系统要求
-
-- IOS >= 15
-- MacOS >= 12
-- TvOS >= 17
-- Android >= 8  (arm64-v8a, armeabi-v7a)
-- Windows >= 10 （仅支持64位）
 
 
 ## 安装
@@ -63,12 +58,21 @@
 - **Windows**:
   - https://github.com/KaringX/clashmi/releases/latest
 
+
+### 系统要求
+
+- IOS >= 15
+- MacOS >= 12
+- TvOS >= 17
+- Android >= 8  (arm64-v8a, armeabi-v7a)
+- Windows >= 10 （仅支持64位）
+
 ### 常见问题
 
 > [FAQ|cn](https://clashmi.app/guide/faq)
 
 
-## 截图
+### 截图
 
 <div align="center">
   <img src="./assets/demo/home.png" alt="app: home" width="50%" />
