@@ -1,7 +1,7 @@
 <h1 align="center">
-  <img src="./assets/images/icon_256.png" alt="Clash Mi" width="256" />
+  <img src="./assets/demo/icon_256.png" alt="Clash Mi" width="256" />
   <br>
-  Clash Mi - 又一款mihomo简单代理工具
+  Clash Mi - 又一款mihomo核心的简单代理工具
   <br>
 </h1>
 
@@ -16,7 +16,7 @@
 - 操作简单
     - 支持metacubex的推荐配置, 内核基于yaml配置运行. 小白用户使用机场订阅即可使用.
 - 自带[zashboard面板](https://github.com/Zephyruso/zashboard)
-    - web面板 后续你更加熟悉.
+    - web面板 或许你更加熟悉.
 - 用户手册: [clashmi.app](https://clashmi.app)
 
 ## 推广
@@ -27,7 +27,7 @@
 
 ### ✈️推荐机场
 
-[狗狗加速 —— 技术流机场 Doggygo VPN](https://1.x31415926.top/redir.html?url=aHR0cHM6Ly93d3cuZGc2LnRvcC8jL3JlZ2lzdGVyP2NvZGU9bEZINGlpOUQ=&i=3eb&t=1723644053)
+[🐶狗狗加速 —— 技术流机场 Doggygo VPN](https://1.x31415926.top/redir.html?url=aHR0cHM6Ly93d3cuZGc2LnRvcC8jL3JlZ2lzdGVyP2NvZGU9bEZINGlpOUQ=&i=3eb&t=1723644053)
 
 - 高性能海外机场，海外团队，无跑路风险
 - 专属链接注册送 3 天，每天 1G 流量 [免费试用](https://1.x31415926.top/redir.html?url=aHR0cHM6Ly93d3cuZGc2LnRvcC8jL3JlZ2lzdGVyP2NvZGU9bEZINGlpOUQ=&i=3eb&t=1723644053)
@@ -76,12 +76,12 @@
 </div>
 
 ## 提交需求/bug
-[欢迎报告问题！](https://github.com/KaringX/clashmi/issues)
-[ClashMiApp 电报群](https://t.me/ClashMiApp)
+- [欢迎报告bug及需求！](https://github.com/KaringX/clashmi/issues)
+- [ClashMiApp 电报群](https://t.me/ClashMiApp)
 
 
 ## 捐赠
-![donate](https://clashmi.app/donate)
+- [请开发者喝一杯](https://clashmi.app/donate)
 
 ## 致谢
 Clash Mi 基于或受到这些项目的启发：
