@@ -397,7 +397,17 @@ class _PerAppAndroidScreenState
       child: Material(
         borderRadius: ThemeDefine.kBorderRadius,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            bool value = perapp.PackageIds != null &&
+                perapp.PackageIds!.contains(current.info.packageName!);
+            if (value != true) {
+              perapp.PackageIds!.add(current.info.packageName!);
+            } else {
+              perapp.PackageIds!.remove(current.info.packageName!);
+            }
+
+            setState(() {});
+          },
           child: Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 10,
