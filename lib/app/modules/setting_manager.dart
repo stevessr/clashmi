@@ -74,7 +74,8 @@ class SettingConfigItemUI {
   static bool maybeTv() {
     if (Platform.isAndroid) {
       final abis = VPNService.getABIs();
-      if (abis.length == 1 && abis.contains("armeabi")) {
+      if (abis.length == 1 &&
+          (abis.contains("armeabi") || abis.contains("x86"))) {
         return true;
       }
     }
