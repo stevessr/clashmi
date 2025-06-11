@@ -16,10 +16,10 @@ import 'package:libclash_vpn_service/proxy_manager.dart';
 
 class SettingConfigItemUI {
   String theme = ThemeDefine.kThemeLight;
-  bool autoOrientation = maybeTv();
+  bool autoOrientation = false;
   bool disableFontScaler = false;
   bool hideAfterLaunch = false;
-  bool tvMode = maybeTv();
+  bool tvMode = false;
   bool perAppHideSystemApp = true;
   bool perAppHideAppIcon = false;
   Map<String, dynamic> toJson() => {

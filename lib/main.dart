@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:clashmi/app/local_services/vpn_service.dart';
 import 'package:clashmi/app/modules/biz.dart';
 import 'package:clashmi/app/modules/remote_config_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
@@ -42,6 +43,7 @@ void main(List<String> args) async {
   processArgs = args;
   WidgetsFlutterBinding.ensureInitialized();
   await RemoteConfigManager.init();
+  await VPNService.initABI();
   await LocaleSettings.useDeviceLocale();
 
   SemanticsBinding.instance.ensureSemantics();

@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
-import 'package:clashmi/app/utils/platform_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/theme_config.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/widgets/framework.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class LanguageSettingsScreen extends LasyRenderingStatefulWidget {
   static RouteSettings routSettings() {
@@ -78,6 +77,7 @@ class _LanguageSettingsScreenState
   Widget build(BuildContext context) {
     final tcontext = Translations.of(context);
     Size windowSize = MediaQuery.of(context).size;
+    var setting = SettingManager.getConfig();
     return PopScope(
         canPop: widget.canPop,
         child: Scaffold(
@@ -130,7 +130,7 @@ class _LanguageSettingsScreenState
                                     width: 65,
                                     height: 30,
                                     child: InkWell(
-                                      autofocus: PlatformUtils.maybeTV(),
+                                      autofocus: setting.ui.tvMode,
                                       focusNode: _focusNodeNext,
                                       onTap: () {
                                         Navigator.pop(context);

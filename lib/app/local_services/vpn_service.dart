@@ -43,6 +43,13 @@ class VPNService {
               FlutterVpnServiceState state, Map<String, String> params)>
       onEventStateChanged = [];
 
+  static initABI() async {
+    if (Platform.isAndroid) {
+      String abisAll = await FlutterVpnService.getABIs();
+      _abis = abisAll.replaceAll("[", "").replaceAll("]", "").split(",");
+    }
+  }
+
   static init() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     if (Platform.isWindows) {
@@ -57,10 +64,7 @@ class VPNService {
         appName: packageInfo.appName,
         appPath: Platform.resolvedExecutable,
         args: [AppArgs.launchStartup]);
-    if (Platform.isAndroid) {
-      String abisAll = await FlutterVpnService.getABIs();
-      _abis = abisAll.replaceAll("[", "").replaceAll("]", "").split(",");
-    }
+
     FlutterVpnService.onStateChanged(
         (FlutterVpnServiceState state, Map<String, String> params) async {
       if (getSupportSystemProxy()) {
