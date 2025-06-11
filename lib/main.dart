@@ -42,8 +42,8 @@ String? startFailedReasonDesc;
 void main(List<String> args) async {
   processArgs = args;
   WidgetsFlutterBinding.ensureInitialized();
-  await RemoteConfigManager.init();
   await VPNService.initABI();
+  await RemoteConfigManager.init();
   await LocaleSettings.useDeviceLocale();
 
   SemanticsBinding.instance.ensureSemantics();
