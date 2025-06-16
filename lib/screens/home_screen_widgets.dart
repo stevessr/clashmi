@@ -420,15 +420,15 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
                 title: tcontext.meta.board, inappWebViewOpenExternal: false);
             return;
           }
-          ReturnResultError? err = await Zashboard.start();
-          if (err != null) {
+          ReturnResult result = await Zashboard.start();
+          if (result.error != null) {
             if (!context.mounted) {
               return;
             }
-            DialogUtils.showAlertDialog(context, err.message);
+            DialogUtils.showAlertDialog(context, result.error!.message);
             return;
           }
-          String url = await Zashboard.getUrl();
+          String url = result.data!;
           if (!context.mounted) {
             return;
           }
