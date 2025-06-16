@@ -29,6 +29,7 @@ import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/webview_helper.dart';
 import 'package:clashmi/screens/widgets/segmented_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:tuple/tuple.dart';
 import 'package:libclash_vpn_service/state.dart';
 import 'package:libclash_vpn_service/vpn_service.dart';
 
@@ -84,7 +85,25 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     bool connected = _state == FlutterVpnServiceState.connected;
     final currentProfile = ProfileManager.getCurrent();
     final currentProfileName = currentProfile?.getShowName() ?? "";
-
+    final settings = SettingManager.getConfig();
+    String tranffic = "";
+    Tuple2<bool, String>? tranfficExpire;
+    if (currentProfile != null && currentProfile.isRemote()) {
+      if (currentProfile.upload != 0 ||
+          currentProfile.download != 0 ||
+          currentProfile.total != 0) {
+        String upload =
+            ClashHttpApi.convertTrafficToStringDouble(currentProfile.upload);
+        String download =
+            ClashHttpApi.convertTrafficToStringDouble(currentProfile.download);
+        String total =
+            ClashHttpApi.convertTrafficToStringDouble(currentProfile.total);
+        tranffic = "↑ $upload ↓ $download/$total";
+      }
+      if (currentProfile.expire.isNotEmpty) {
+        tranfficExpire = currentProfile.getExpireTime(settings.languageTag);
+      }
+    }
     var widgets = [
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -233,10 +252,38 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
       ),
       ListTile(
         title: Text(tcontext.meta.myProfiles),
-        subtitle: Text(currentProfileName,
-            style: TextStyle(
-              color: ThemeDefine.kColorBlue,
-            )),
+        subtitle: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              currentProfile != null
+                  ? Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(currentProfileName,
+                          style: TextStyle(
+                            color: ThemeDefine.kColorBlue,
+                          )))
+                  : SizedBox.shrink(),
+              tranffic.isNotEmpty
+                  ? Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(tranffic,
+                          style: TextStyle(
+                            color: ThemeDefine.kColorBlue,
+                          )))
+                  : SizedBox.shrink(),
+              tranfficExpire != null
+                  ? Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        tranfficExpire.item2,
+                        style: TextStyle(
+                            color: tranfficExpire.item1
+                                ? Colors.red
+                                : ThemeDefine.kColorBlue,
+                            fontSize: 12),
+                      ))
+                  : SizedBox.shrink(),
+            ]),
         trailing: Icon(
           Icons.keyboard_arrow_right,
           size: 20,
