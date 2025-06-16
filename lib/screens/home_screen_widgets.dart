@@ -255,7 +255,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Text(tcontext.meta.myProfiles),
           Row(children: [
-            currentProfile != null && currentProfile.isRemote()
+            /*currentProfile != null && currentProfile.isRemote()
                 ? (ProfileManager.updating.contains(currentProfile.id)
                     ? const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -294,7 +294,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
                 : const SizedBox.shrink(),
             SizedBox(
               width: 5,
-            ),
+            ),*/
             InkWell(
               onTap: () async {
                 await Navigator.push(
