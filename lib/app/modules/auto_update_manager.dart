@@ -295,7 +295,7 @@ class AutoUpdateManager {
           if (item.version.isEmpty || item.url.isEmpty) {
             continue;
           }
-          if (abis.isNotEmpty) {
+          if (item.abis.isNotEmpty) {
             bool hasAbi = false;
             for (var abi in abis) {
               abi = abi.trim();
