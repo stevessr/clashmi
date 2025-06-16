@@ -24,7 +24,8 @@ class ProfilesBoardScreen extends LasyRenderingStatefulWidget {
     return const RouteSettings(name: "/");
   }
 
-  const ProfilesBoardScreen({super.key});
+  final bool navigateToAdd;
+  const ProfilesBoardScreen({super.key, this.navigateToAdd = false});
 
   @override
   State<ProfilesBoardScreen> createState() => _ProfilesBoardScreenState();
@@ -41,7 +42,11 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
   }
 
   @override
-  FutureOr<void> afterFirstLayout(BuildContext context) async {}
+  FutureOr<void> afterFirstLayout(BuildContext context) async {
+    if (widget.navigateToAdd) {
+      onTapAdd();
+    }
+  }
 
   @override
   void dispose() {

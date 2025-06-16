@@ -251,7 +251,71 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
         ),
       ),
       ListTile(
-        title: Text(tcontext.meta.myProfiles),
+        title:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Text(tcontext.meta.myProfiles),
+          Row(children: [
+            currentProfile != null && currentProfile.isRemote()
+                ? (ProfileManager.updating.contains(currentProfile.id)
+                    ? const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: RepaintBoundary(
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            ),
+                          ),
+                        ],
+                      )
+                    : InkWell(
+                        onTap: () async {
+                          ReturnResultError? err =
+                              await ProfileManager.update(currentProfile.id);
+                          if (err != null) {
+                            if (!context.mounted) {
+                              return;
+                            }
+                            DialogUtils.showAlertDialog(context, err.message,
+                                showCopy: true,
+                                showFAQ: true,
+                                withVersion: true);
+                          }
+                        },
+                        child: Container(
+                          width: 50,
+                          alignment: Alignment.center,
+                          child: Icon(
+                            Icons.cloud_download_outlined,
+                            size: 30,
+                          ),
+                        )))
+                : const SizedBox.shrink(),
+            SizedBox(
+              width: 5,
+            ),
+            InkWell(
+              onTap: () async {
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        settings: ProfilesBoardScreen.routSettings(),
+                        builder: (context) => ProfilesBoardScreen(
+                              navigateToAdd: true,
+                            )));
+                setState(() {});
+              },
+              child: Container(
+                  width: 50,
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.add,
+                    size: 30,
+                  )),
+            ),
+          ])
+        ]),
         subtitle: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -508,7 +572,10 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     }
   }
 
-  Future<void> _onUpdate(String id, bool finish) async {}
+  Future<void> _onUpdate(String id, bool finish) async {
+    setState(() {});
+  }
+
   Future<void> _checkState() async {
     var state = await VPNService.getState();
     await _onStateChanged(state, {});
