@@ -31,12 +31,12 @@ class ClashSettingManager {
 
   static Future<void> initGeo() async {
     final homePath = await PathUtils.profileDir();
-    const gileNameList = [
+    const fileNameList = [
       "geosite.zip",
       "geoip.zip",
     ];
     try {
-      for (final fileName in gileNameList) {
+      for (final fileName in fileNameList) {
         final filePath = File(
           path.join(homePath, fileName),
         );
