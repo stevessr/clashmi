@@ -31,22 +31,27 @@ class ClashSettingManager {
 
   static Future<void> initGeo() async {
     final homePath = await PathUtils.profileDir();
-    const geoFileNameList = [
+    const gileNameList = [
       "geosite.zip",
       "geoip.zip",
     ];
     try {
-      for (final fileName in geoFileNameList) {
-        final geoFile = File(
+      for (final fileName in gileNameList) {
+        final filePath = File(
           path.join(homePath, fileName),
         );
-        final isExists = await geoFile.exists();
+        final isExists = await filePath.exists();
         if (isExists) {
-          continue;
+          final stat = await filePath.stat();
+          final dur = DateTime.now().difference(stat.modified);
+          if (dur.inDays < 7) {
+            continue;
+          }
         }
+
         final data = await rootBundle.load('assets/datas/$fileName');
         List<int> bytes = data.buffer.asUint8List();
-        await geoFile.writeAsBytes(bytes, flush: true);
+        await filePath.writeAsBytes(bytes, flush: true);
       }
     } catch (err) {
       Log.w("ClashSettingManager.initGeo exception ${err.toString()} ");
