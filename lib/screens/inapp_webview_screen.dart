@@ -315,7 +315,10 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
   @override
   void dispose() {
     resetJavaScriptHandler();
-    _webViewController?.dispose();
+    try {
+      _webViewController?.dispose();
+    } catch (err) {}
+
     InAppWebViewScreen.delRef();
     super.dispose();
   }
