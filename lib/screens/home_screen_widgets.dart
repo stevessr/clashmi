@@ -14,6 +14,7 @@ import 'package:clashmi/app/modules/zashboard.dart';
 import 'package:clashmi/app/runtime/return_result.dart';
 import 'package:clashmi/app/utils/app_lifecycle_state_notify.dart';
 import 'package:clashmi/app/utils/file_utils.dart';
+import 'package:clashmi/app/utils/move_to_background_utils.dart';
 import 'package:clashmi/app/utils/network_utils.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/app/utils/platform_utils.dart';
@@ -24,6 +25,7 @@ import 'package:clashmi/screens/group_helper.dart';
 import 'package:clashmi/screens/profiles_board_screen.dart';
 import 'package:clashmi/screens/proxy_board_screen.dart';
 import 'package:clashmi/screens/richtext_viewer.screen.dart';
+import 'package:clashmi/screens/scheme_handler.dart';
 import 'package:clashmi/screens/theme_config.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/webview_helper.dart';
@@ -45,7 +47,6 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   static final String _kNoTrafficTotal = "↑ 0 B   ↓ 0 B";
   //static final String _kNoMemory = "0 B   0 B";
   final FocusNode _focusNodeConnect = FocusNode();
-  bool _working = false;
   FlutterVpnServiceState _state = FlutterVpnServiceState.disconnected;
   Timer? _timerStateChecker;
   Timer? _timerConnectToCore;
@@ -138,37 +139,11 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
                       value: _state == FlutterVpnServiceState.connected,
                       focusNode: _focusNodeConnect,
                       onChanged: (bool value) async {
-                        if (currentProfile == null) {
-                          await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  settings: ProfilesBoardScreen.routSettings(),
-                                  builder: (context) => ProfilesBoardScreen()));
-                          setState(() {});
-                          return;
-                        }
-                        if (_working ||
-                            _state == FlutterVpnServiceState.connecting ||
-                            _state == FlutterVpnServiceState.disconnecting ||
-                            _state == FlutterVpnServiceState.reasserting) {
-                          return;
-                        }
-                        _working = true;
-
                         if (value) {
-                          var err = await VPNService.start(
-                              const Duration(seconds: 60));
-                          if (!context.mounted) {
-                            return;
-                          }
-                          if (err != null) {
-                            DialogUtils.showAlertDialog(context, err.message);
-                          }
+                          await start("switch");
                         } else {
-                          await VPNService.stop();
+                          await stop();
                         }
-                        _working = false;
-                        setState(() {});
                       },
                     ),
                   ),
@@ -179,8 +154,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
                     child: SizedBox(
                         width: 25,
                         height: 25,
-                        child: _working ||
-                                _state == FlutterVpnServiceState.connecting ||
+                        child: _state == FlutterVpnServiceState.connecting ||
                                 _state ==
                                     FlutterVpnServiceState.disconnecting ||
                                 _state == FlutterVpnServiceState.reasserting
@@ -502,20 +476,84 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   }
 
   Future<void> _onInitAllFinish() async {
+    SchemeHandler.vpnConnect = _vpnSchemeConnect;
+    SchemeHandler.vpnDisconnect = _vpnSchemeDisconnect;
+    SchemeHandler.vpnReconnect = _vpnSchemeReconnect;
     if (PlatformUtils.isPC()) {
       if (SettingManager.getConfig().autoConnectAfterLaunch) {
-        if (ProfileManager.getCurrent() != null) {
-          var state = await VPNService.getState();
-          if (state == FlutterVpnServiceState.invalid ||
-              state == FlutterVpnServiceState.disconnected) {
-            _working = true;
-            await VPNService.start(const Duration(seconds: 60));
-            _working = false;
-            setState(() {});
-          }
-        }
+        await start("launch");
       }
     }
+  }
+
+  Future<void> stop() async {
+    await VPNService.stop();
+  }
+
+  Future<bool> start(String from) async {
+    final currentProfile = ProfileManager.getCurrent();
+    if (currentProfile == null) {
+      await Navigator.push(
+          context,
+          MaterialPageRoute(
+              settings: ProfilesBoardScreen.routSettings(),
+              builder: (context) => ProfilesBoardScreen()));
+      setState(() {});
+      return false;
+    }
+    var state = await VPNService.getState();
+    if (state == FlutterVpnServiceState.connecting ||
+        state == FlutterVpnServiceState.disconnecting ||
+        state == FlutterVpnServiceState.reasserting) {
+      setState(() {});
+      return false;
+    }
+
+    var err = await VPNService.start(const Duration(seconds: 60));
+    if (!mounted) {
+      return false;
+    }
+    if (err != null) {
+      DialogUtils.showAlertDialog(context, err.message);
+    }
+
+    setState(() {});
+    return true;
+  }
+
+  Future<void> _vpnSchemeConnect(bool background) async {
+    Future.delayed(const Duration(seconds: 0), () async {
+      bool ok = await start("scheme");
+      if (ok) {
+        if (background) {
+          MoveToBackgroundUtils.moveToBackground(
+              duration: const Duration(milliseconds: 300));
+        }
+      }
+    });
+  }
+
+  Future<void> _vpnSchemeDisconnect(bool background) async {
+    Future.delayed(const Duration(seconds: 0), () async {
+      await stop();
+      if (background) {
+        MoveToBackgroundUtils.moveToBackground(
+            duration: const Duration(milliseconds: 300));
+      }
+    });
+  }
+
+  Future<void> _vpnSchemeReconnect(bool background) async {
+    Future.delayed(const Duration(seconds: 0), () async {
+      await stop();
+      bool ok = await start("scheme");
+      if (ok) {
+        if (background) {
+          MoveToBackgroundUtils.moveToBackground(
+              duration: const Duration(milliseconds: 300));
+        }
+      }
+    });
   }
 
   Future<void> _onStateChanged(
@@ -523,7 +561,6 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     if (_state == state) {
       return;
     }
-    //print("_onStateChanged $_state->$state");
     _state = state;
     if (state == FlutterVpnServiceState.disconnected) {
       _disconnectToCore();
