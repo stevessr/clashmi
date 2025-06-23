@@ -436,6 +436,8 @@ class ClashSettingManager {
       } catch (err, stacktrace) {
         Log.w("ClashSettingManager.load exception ${err.toString()} ");
       }
+    } else {
+      await save();
     }
     await _initFixed();
   }

@@ -272,6 +272,8 @@ class ProfileManager {
       } catch (err, stacktrace) {
         Log.w("ProfileManager.load exception ${err.toString()} ");
       }
+    } else {
+      await save();
     }
 
     Map<String, String?> existProfiles = {};

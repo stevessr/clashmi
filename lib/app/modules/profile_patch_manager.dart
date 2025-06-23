@@ -203,6 +203,8 @@ class ProfilePatchManager {
       } catch (err, stacktrace) {
         Log.w("ProfilePatchManager.load exception ${err.toString()} ");
       }
+    } else {
+      await save();
     }
     Set<String> existProfiles = {};
 
