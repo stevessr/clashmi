@@ -271,7 +271,6 @@ class _HomeScreenState extends LasyRenderingState<HomeScreen>
       appBar: PreferredSize(
         preferredSize: Size.zero,
         child: AppBar(
-          backgroundColor: color,
           systemOverlayStyle: SystemUiOverlayStyle(
             systemNavigationBarIconBrightness:
                 themes.getStatusBarIconBrightness(context),
@@ -283,7 +282,6 @@ class _HomeScreenState extends LasyRenderingState<HomeScreen>
           ),
         ),
       ),
-      backgroundColor: color,
       body: SafeArea(
         child: Column(
           children: [
