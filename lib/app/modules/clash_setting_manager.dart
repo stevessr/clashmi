@@ -291,7 +291,7 @@ class ClashSettingManager {
       GeoIpUrl:
           "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip",
       AsnUrl:
-          "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/asn",
+          "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/asn",
       UpdateInterval: 2 * 24 * 3600,
       EnableProxy: true,
     );
@@ -459,6 +459,12 @@ class ClashSettingManager {
     _setting.Sniffer ??= defaultSniffer();
     _setting.TLS ??= defaultTLS();
     _setting.Extension ??= defaultExtension();
+    if (_setting.Extension?.Ruleset.AsnUrl ==
+        "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/asn") {
+      _setting.Extension?.Ruleset.AsnUrl =
+          "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/asn";
+      save();
+    }
   }
 
   static Future<void> _initFixed() async {
