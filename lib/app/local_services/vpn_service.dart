@@ -37,6 +37,7 @@ class VPNServiceSetServerOptions {
 class VPNService {
   static const localhost = "127.0.0.1";
   static bool _runAsAdmin = false;
+  static bool _systemExtension = false;
   static List<String> _abis = [];
   static final List<
           void Function(
@@ -185,13 +186,19 @@ class VPNService {
             setting.Tun?.OverWrite == true &&
             setting.Tun?.Enable == true) ||
         !overwrite;
+    var bundleIdentifier = getBundleId();
+    if (Platform.isMacOS) {
+      if (_systemExtension) {
+        bundleIdentifier = "$bundleIdentifier.system";
+      }
+    }
 
     FlutterVpnService.prepareConfig(
       config: config,
       tunnelServicePath: PathUtils.serviceExePath(),
       configFilePath: configFilePath,
-      systemExtension: false,
-      bundleIdentifier: getBundleId(),
+      systemExtension: _systemExtension,
+      bundleIdentifier: bundleIdentifier,
       uiServerAddress: name,
       uiLocalizedDescription: vpnName,
       excludePorts: excludePorts,
