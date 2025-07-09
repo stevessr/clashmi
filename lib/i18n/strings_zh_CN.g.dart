@@ -280,7 +280,8 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get autoOrientation => '跟随屏幕旋转';
 	@override String get restartTakesEffect => '重启生效';
 	@override String get runtimeProfile => '运行时配置';
-	@override String get willCompleteAfterReboot => '请重启设备,以便完成系统扩展安装';
+	@override String get willCompleteAfterRebootInstall => '请重启设备,以便完成系统扩展安装';
+	@override String get willCompleteAfterRebootUninstall => '请重启设备,以便完成系统扩展卸载';
 	@override String get proxy => '代理';
 	@override String get theme => '主题';
 	@override String get tvMode => 'TV模式';
@@ -591,7 +592,8 @@ extension on TranslationsZhCn {
 			case 'meta.autoOrientation': return '跟随屏幕旋转';
 			case 'meta.restartTakesEffect': return '重启生效';
 			case 'meta.runtimeProfile': return '运行时配置';
-			case 'meta.willCompleteAfterReboot': return '请重启设备,以便完成系统扩展安装';
+			case 'meta.willCompleteAfterRebootInstall': return '请重启设备,以便完成系统扩展安装';
+			case 'meta.willCompleteAfterRebootUninstall': return '请重启设备,以便完成系统扩展卸载';
 			case 'meta.proxy': return '代理';
 			case 'meta.theme': return '主题';
 			case 'meta.tvMode': return 'TV模式';
