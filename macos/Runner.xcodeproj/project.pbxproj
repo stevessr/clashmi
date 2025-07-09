@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -27,14 +27,12 @@
 		33CC10F32044A3C60003C045 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F22044A3C60003C045 /* Assets.xcassets */; };
 		33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F42044A3C60003C045 /* MainMenu.xib */; };
 		33CC11132044BFA00003C045 /* MainFlutterWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CC11122044BFA00003C045 /* MainFlutterWindow.swift */; };
-		CE5C44D02A39840D00E15AC8 /* libbox_bridge.c in Sources */ = {isa = PBXBuildFile; fileRef = CE5C44CF2A39840D00E15AC8 /* libbox_bridge.c */; };
 		CEBE65DC2A22EAE0004691A4 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBE65DB2A22EAE0004691A4 /* NetworkExtension.framework */; };
 		CEBE65DF2A22EAE1004691A4 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBE65DE2A22EAE1004691A4 /* PacketTunnelProvider.swift */; };
 		CEBE65E42A22EAE1004691A4 /* clashmiService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CEBE65DA2A22EAE0004691A4 /* clashmiService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CEE689F62A85CA38007EF854 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBE65DB2A22EAE0004691A4 /* NetworkExtension.framework */; };
 		CEE689F92A85CA39007EF854 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE689F82A85CA39007EF854 /* PacketTunnelProvider.swift */; };
 		CEE689FB2A85CA39007EF854 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE689FA2A85CA39007EF854 /* main.swift */; };
-		CEE68A092A85CA88007EF854 /* libbox_bridge.c in Sources */ = {isa = PBXBuildFile; fileRef = CEE68A082A85CA88007EF854 /* libbox_bridge.c */; };
 		CEEC19FE2B142FA90076CA70 /* LibVpnCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEC19F82B142FA90076CA70 /* LibVpnCore.framework */; };
 		CEEC19FF2B142FA90076CA70 /* LibVpnCore.framework in Bundle Framework */ = {isa = PBXBuildFile; fileRef = CEEC19F82B142FA90076CA70 /* LibVpnCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CEEC1A062B142FFC0076CA70 /* Libclash.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEC1A042B142FCC0076CA70 /* Libclash.xcframework */; };
@@ -159,9 +157,6 @@
 		8A4FBC6D9CAAB254EC3732DA /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		B5EC3A85ADBD29579C7DF776 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE5C44CD2A39840C00E15AC8 /* clashmiService-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "clashmiService-Bridging-Header.h"; sourceTree = "<group>"; };
-		CE5C44CE2A39840D00E15AC8 /* libbox_bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libbox_bridge.h; sourceTree = "<group>"; };
-		CE5C44CF2A39840D00E15AC8 /* libbox_bridge.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = libbox_bridge.c; sourceTree = "<group>"; };
 		CE8B929F2A5C07360071C495 /* clashmiService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = clashmiService.entitlements; sourceTree = "<group>"; };
 		CEBE65DA2A22EAE0004691A4 /* clashmiService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = clashmiService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBE65DB2A22EAE0004691A4 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
@@ -171,9 +166,6 @@
 		CEE689F82A85CA39007EF854 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		CEE689FA2A85CA39007EF854 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		CEE689FC2A85CA39007EF854 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CEE68A062A85CA87007EF854 /* clashmiServiceSE-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "clashmiServiceSE-Bridging-Header.h"; sourceTree = "<group>"; };
-		CEE68A072A85CA88007EF854 /* libbox_bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libbox_bridge.h; sourceTree = "<group>"; };
-		CEE68A082A85CA88007EF854 /* libbox_bridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = libbox_bridge.c; sourceTree = "<group>"; };
 		CEE68A0A2A85D2CC007EF854 /* clashmiServiceSE.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = clashmiServiceSE.entitlements; sourceTree = "<group>"; };
 		CEEC19F82B142FA90076CA70 /* LibVpnCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LibVpnCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEC1A042B142FCC0076CA70 /* Libclash.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Libclash.xcframework; path = ../bind/apple/Libclash.xcframework; sourceTree = "<group>"; };
@@ -313,9 +305,6 @@
 				CEBE65DE2A22EAE1004691A4 /* PacketTunnelProvider.swift */,
 				CEBE65E02A22EAE1004691A4 /* Info.plist */,
 				CE8B929F2A5C07360071C495 /* clashmiService.entitlements */,
-				CE5C44CE2A39840D00E15AC8 /* libbox_bridge.h */,
-				CE5C44CF2A39840D00E15AC8 /* libbox_bridge.c */,
-				CE5C44CD2A39840C00E15AC8 /* clashmiervice-Bridging-Header.h */,
 			);
 			path = clashmiService;
 			sourceTree = "<group>";
@@ -323,13 +312,10 @@
 		CEE689F72A85CA39007EF854 /* clashmiServiceSE */ = {
 			isa = PBXGroup;
 			children = (
-				CEE68A082A85CA88007EF854 /* libbox_bridge.c */,
-				CEE68A072A85CA88007EF854 /* libbox_bridge.h */,
 				CEE689F82A85CA39007EF854 /* PacketTunnelProvider.swift */,
 				CEE689FA2A85CA39007EF854 /* main.swift */,
 				CEE689FC2A85CA39007EF854 /* Info.plist */,
 				CEE68A0A2A85D2CC007EF854 /* clashmiServiceSE.entitlements */,
-				CEE68A062A85CA87007EF854 /* clashmiServiceSE-Bridging-Header.h */,
 			);
 			path = clashmiServiceSE;
 			sourceTree = "<group>";
@@ -639,7 +625,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE5C44D02A39840D00E15AC8 /* libbox_bridge.c in Sources */,
 				CEBE65DF2A22EAE1004691A4 /* PacketTunnelProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -650,7 +635,6 @@
 			files = (
 				CEE689FB2A85CA39007EF854 /* main.swift in Sources */,
 				CEE689F92A85CA39007EF854 /* PacketTunnelProvider.swift in Sources */,
-				CEE68A092A85CA88007EF854 /* libbox_bridge.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1010,7 +994,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "clashmiService/clashmiService-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1055,7 +1038,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "clashmiService/clashmiService-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1099,7 +1081,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "clashmiService/clashmiService-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Profile;
@@ -1145,7 +1126,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "clashmiServiceSE/clashmiServiceSE-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1190,7 +1170,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "clashmiServiceSE/clashmiServiceSE-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1234,7 +1213,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "clashmiServiceSE/clashmiServiceSE-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Profile;
