@@ -396,8 +396,7 @@ class ClashSettingManager {
     } else {
       _setting.Tun?.Inet6Address = null;
     }
-    _setting.Extension?.RuntimeProfileSavePath =
-        await PathUtils.serviceCoreRuntimeProfileFilePath();
+
     if (overwrite) {
       final map = _setting.toJson();
       MapHelper.removeNullOrEmpty(map, true, true);
@@ -484,6 +483,8 @@ class ClashSettingManager {
     _setting.FindProcessMode = Platform.isIOS
         ? ClashFindProcessMode.off.name
         : ClashFindProcessMode.always.name;
+    _setting.Extension?.RuntimeProfileSavePath =
+        await PathUtils.serviceCoreRuntimeProfileFilePath();
   }
 
   static Future<ReturnResultError?> setConfigsMode(

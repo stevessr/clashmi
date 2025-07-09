@@ -279,6 +279,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get disableFontScaler => '禁用字体缩放';
 	@override String get autoOrientation => '跟随屏幕旋转';
 	@override String get restartTakesEffect => '重启生效';
+	@override String get runtimeProfile => '运行时配置';
 	@override String get proxy => '代理';
 	@override String get theme => '主题';
 	@override String get tvMode => 'TV模式';
@@ -588,6 +589,7 @@ extension on TranslationsZhCn {
 			case 'meta.disableFontScaler': return '禁用字体缩放';
 			case 'meta.autoOrientation': return '跟随屏幕旋转';
 			case 'meta.restartTakesEffect': return '重启生效';
+			case 'meta.runtimeProfile': return '运行时配置';
 			case 'meta.proxy': return '代理';
 			case 'meta.theme': return '主题';
 			case 'meta.tvMode': return 'TV模式';

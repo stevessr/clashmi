@@ -282,6 +282,7 @@ class TranslationsMetaEn {
 	String get disableFontScaler => 'Disable Font scaling(Restart takes effect)';
 	String get autoOrientation => 'Rotate with the screen';
 	String get restartTakesEffect => 'Restart takes effect';
+	String get runtimeProfile => 'Runtime Profile';
 	String get proxy => 'Proxy';
 	String get theme => 'Theme';
 	String get tvMode => 'TV Mode';
@@ -591,6 +592,7 @@ extension on Translations {
 			case 'meta.disableFontScaler': return 'Disable Font scaling(Restart takes effect)';
 			case 'meta.autoOrientation': return 'Rotate with the screen';
 			case 'meta.restartTakesEffect': return 'Restart takes effect';
+			case 'meta.runtimeProfile': return 'Runtime Profile';
 			case 'meta.proxy': return 'Proxy';
 			case 'meta.theme': return 'Theme';
 			case 'meta.tvMode': return 'TV Mode';

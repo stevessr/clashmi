@@ -172,6 +172,7 @@
         "disableFontScaler": "禁用字体缩放",
         "autoOrientation": "跟随屏幕旋转",
         "restartTakesEffect": "重启生效",
+        "runtimeProfile": "运行时配置",
         "proxy": "代理",
         "theme": "主题",
         "tvMode": "TV模式",

@@ -172,6 +172,7 @@
         "disableFontScaler": "Отключить масштабирование шрифта",
         "autoOrientation": "Следовать за поворотом экрана",
         "restartTakesEffect": "Требуется перезапуск",
+        "runtimeProfile": "Конфигурация времени выполнения",
         "proxy": "Прокси",
         "theme": "Тема",
         "tvMode": "Режим ТВ",

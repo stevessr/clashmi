@@ -21,6 +21,7 @@ import 'package:clashmi/app/utils/platform_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/about_screen.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
+import 'package:clashmi/screens/file_view_screen.dart';
 import 'package:clashmi/screens/group_helper.dart';
 import 'package:clashmi/screens/profiles_board_screen.dart';
 import 'package:clashmi/screens/proxy_board_screen.dart';
@@ -339,6 +340,30 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     ];
 
     if (connected) {
+      widgets.add(ListTile(
+        title: Text(tcontext.meta.runtimeProfile),
+        trailing: Icon(
+          Icons.keyboard_arrow_right,
+          size: 20,
+        ),
+        minVerticalPadding: 20,
+        onTap: () async {
+          final path = await PathUtils.serviceCoreRuntimeProfileFilePath();
+          final content = await File(path).readAsString();
+          if (!context.mounted) {
+            return;
+          }
+          await Navigator.push(
+              context,
+              MaterialPageRoute(
+                  settings: FileViewScreen.routSettings(),
+                  builder: (context) => FileViewScreen(
+                        title: tcontext.meta.runtimeProfile,
+                        content: content,
+                      )));
+        },
+      ));
+
       widgets.add(ListTile(
         title: Text(tcontext.meta.proxy),
         subtitle: ValueListenableBuilder<String>(

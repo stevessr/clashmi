@@ -279,6 +279,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get disableFontScaler => 'غیرفعال‌سازی مقیاس‌بندی فونت(با راه‌اندازی مجدد اعمال می‌شود)';
 	@override String get autoOrientation => 'چرخش صفحه را دنبال کنید';
 	@override String get restartTakesEffect => 'با راه‌اندازی مجدد اعمال می‌شود';
+	@override String get runtimeProfile => 'پیکربندی زمان اجرا';
 	@override String get proxy => 'بازیگری';
 	@override String get theme => 'موضوع';
 	@override String get tvMode => 'حالت تلویزیون';
@@ -588,6 +589,7 @@ extension on TranslationsFa {
 			case 'meta.disableFontScaler': return 'غیرفعال‌سازی مقیاس‌بندی فونت(با راه‌اندازی مجدد اعمال می‌شود)';
 			case 'meta.autoOrientation': return 'چرخش صفحه را دنبال کنید';
 			case 'meta.restartTakesEffect': return 'با راه‌اندازی مجدد اعمال می‌شود';
+			case 'meta.runtimeProfile': return 'پیکربندی زمان اجرا';
 			case 'meta.proxy': return 'بازیگری';
 			case 'meta.theme': return 'موضوع';
 			case 'meta.tvMode': return 'حالت تلویزیون';

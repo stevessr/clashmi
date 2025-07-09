@@ -279,6 +279,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get disableFontScaler => 'Отключить масштабирование шрифта';
 	@override String get autoOrientation => 'Следовать за поворотом экрана';
 	@override String get restartTakesEffect => 'Требуется перезапуск';
+	@override String get runtimeProfile => 'Конфигурация времени выполнения';
 	@override String get proxy => 'Прокси';
 	@override String get theme => 'Тема';
 	@override String get tvMode => 'Режим ТВ';
@@ -588,6 +589,7 @@ extension on TranslationsRu {
 			case 'meta.disableFontScaler': return 'Отключить масштабирование шрифта';
 			case 'meta.autoOrientation': return 'Следовать за поворотом экрана';
 			case 'meta.restartTakesEffect': return 'Требуется перезапуск';
+			case 'meta.runtimeProfile': return 'Конфигурация времени выполнения';
 			case 'meta.proxy': return 'Прокси';
 			case 'meta.theme': return 'Тема';
 			case 'meta.tvMode': return 'Режим ТВ';
