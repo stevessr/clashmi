@@ -370,12 +370,16 @@ class RawExtension {
   RawExtensionTun Tun;
   @JsonKey(name: 'pprof-addr')
   String? PprofAddr;
+  @JsonKey(name: 'runtime-profile-save-path')
+  String? RuntimeProfileSavePath;
   RawExtension.by({
     required this.Ruleset,
     required this.Tun,
     this.PprofAddr,
+    this.RuntimeProfileSavePath,
   });
-  RawExtension(this.Ruleset, this.Tun, this.PprofAddr);
+  RawExtension(
+      this.Ruleset, this.Tun, this.PprofAddr, this.RuntimeProfileSavePath);
   factory RawExtension.fromJson(Map<String, dynamic> json) =>
       _$RawExtensionFromJson(json);
   Map<String, dynamic> toJson() => _$RawExtensionToJson(this);

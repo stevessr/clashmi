@@ -396,6 +396,8 @@ class ClashSettingManager {
     } else {
       _setting.Tun?.Inet6Address = null;
     }
+    _setting.Extension?.RuntimeProfileSavePath =
+        await PathUtils.serviceCoreRuntimeProfileFilePath();
     if (overwrite) {
       final map = _setting.toJson();
       MapHelper.removeNullOrEmpty(map, true, true);

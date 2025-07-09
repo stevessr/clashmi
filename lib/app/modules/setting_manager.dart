@@ -181,7 +181,7 @@ class SettingConfig {
 
   String userAgent() {
     if (_userAgent.isEmpty) {
-      return "ClashMeta/1.19.10; mihomo/1.19.10";
+      return "ClashMeta/1.19.11; mihomo/1.19.11";
     }
     return _userAgent;
   }
