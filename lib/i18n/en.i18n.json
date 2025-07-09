@@ -173,6 +173,7 @@
         "autoOrientation": "Rotate with the screen",
         "restartTakesEffect": "Restart takes effect",
         "runtimeProfile": "Runtime Profile",
+        "willCompleteAfterReboot": "Please restart your device to complete the system extension installation",
         "proxy": "Proxy",
         "theme": "Theme",
         "tvMode": "TV Mode",

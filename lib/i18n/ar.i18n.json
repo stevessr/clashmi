@@ -173,6 +173,7 @@
         "autoOrientation": "Rotate with the screen",
         "restartTakesEffect": "Restart takes effect",
         "runtimeProfile": "تكوين وقت التشغيل",
+        "willCompleteAfterReboot": "يرجى إعادة تشغيل جهازك لإكمال تثبيت توسيع النظام",
         "proxy": "التمثيل",
         "theme": "سمة",
         "tvMode": "وضع التلفزيون",

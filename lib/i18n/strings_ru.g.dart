@@ -280,6 +280,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get autoOrientation => 'Следовать за поворотом экрана';
 	@override String get restartTakesEffect => 'Требуется перезапуск';
 	@override String get runtimeProfile => 'Конфигурация времени выполнения';
+	@override String get willCompleteAfterReboot => 'Пожалуйста, перезагрузите устройство, чтобы завершить установку расширения системы.';
 	@override String get proxy => 'Прокси';
 	@override String get theme => 'Тема';
 	@override String get tvMode => 'Режим ТВ';
@@ -590,6 +591,7 @@ extension on TranslationsRu {
 			case 'meta.autoOrientation': return 'Следовать за поворотом экрана';
 			case 'meta.restartTakesEffect': return 'Требуется перезапуск';
 			case 'meta.runtimeProfile': return 'Конфигурация времени выполнения';
+			case 'meta.willCompleteAfterReboot': return 'Пожалуйста, перезагрузите устройство, чтобы завершить установку расширения системы.';
 			case 'meta.proxy': return 'Прокси';
 			case 'meta.theme': return 'Тема';
 			case 'meta.tvMode': return 'Режим ТВ';

@@ -539,7 +539,11 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
       return false;
     }
     if (err != null) {
-      DialogUtils.showAlertDialog(context, err.message);
+      if (err.message == "willCompleteAfterReboot") {
+        DialogUtils.showAlertDialog(context, t.meta.willCompleteAfterReboot);
+      } else {
+        DialogUtils.showAlertDialog(context, err.message);
+      }
     }
 
     setState(() {});

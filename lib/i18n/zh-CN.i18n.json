@@ -173,6 +173,7 @@
         "autoOrientation": "跟随屏幕旋转",
         "restartTakesEffect": "重启生效",
         "runtimeProfile": "运行时配置",
+        "willCompleteAfterReboot": "请重启设备,以便完成系统扩展安装",
         "proxy": "代理",
         "theme": "主题",
         "tvMode": "TV模式",
