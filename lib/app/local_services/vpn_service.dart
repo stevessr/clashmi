@@ -187,9 +187,13 @@ class VPNService {
             setting.Tun?.Enable == true) ||
         !overwrite;
     var bundleIdentifier = getBundleId();
+    var uiServerAddress = name;
+    var uiLocalizedDescription = vpnName;
     if (Platform.isMacOS) {
       if (_systemExtension) {
         bundleIdentifier = "$bundleIdentifier.system";
+        uiServerAddress = "$uiServerAddress.system";
+        uiLocalizedDescription = "$uiLocalizedDescription.system";
       }
     }
 
@@ -199,8 +203,8 @@ class VPNService {
       configFilePath: configFilePath,
       systemExtension: _systemExtension,
       bundleIdentifier: bundleIdentifier,
-      uiServerAddress: name,
-      uiLocalizedDescription: vpnName,
+      uiServerAddress: uiServerAddress,
+      uiLocalizedDescription: uiLocalizedDescription,
       excludePorts: excludePorts,
     );
 
