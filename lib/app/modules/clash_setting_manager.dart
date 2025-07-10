@@ -240,6 +240,10 @@ class ClashSettingManager {
       "*.msftncsi.com",
       "*.msftconnecttest.com",
       "*.mcdn.bilivideo.cn",
+      "+.bilibili.com",
+      "+.bilicdn.com",
+      "+.bilivideo.com",
+      "+.market.xiaomi.com",
       "WORKGROUP",
     ];
     return RawDNS.by(
