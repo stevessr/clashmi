@@ -519,7 +519,7 @@ class ProfilePatchManager {
           }
         });
         return ReturnResultError(
-            "rename file from [$savePathTmp] to [$savePath] failed: ${err.toString()}");
+            "Rename file from [$savePathTmp] to [$savePath] failed: ${err.toString()}");
       }
       await FileUtils.append(savePath, "\n$urlComment${profile.url}\n");
       if (profile.remark.isEmpty) {
