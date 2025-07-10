@@ -348,8 +348,18 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
         ),
         minVerticalPadding: 20,
         onTap: () async {
-          final path = await PathUtils.serviceCoreRuntimeProfileFilePath();
-          final content = await File(path).readAsString();
+          late String content;
+          try {
+            final path = await PathUtils.serviceCoreRuntimeProfileFilePath();
+            content = await File(path).readAsString();
+          } catch (err) {
+            if (!context.mounted) {
+              return;
+            }
+            DialogUtils.showAlertDialog(context, err.toString(),
+                showCopy: true, showFAQ: true, withVersion: true);
+            return;
+          }
           if (!context.mounted) {
             return;
           }
