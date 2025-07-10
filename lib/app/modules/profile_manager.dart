@@ -538,11 +538,33 @@ class ProfileManager {
         });
         return err;
       }
+      var file = File(savePathTmp);
+      final content = await file.readAsString();
+      int indexProxy = content.indexOf("proxies:");
+      if (indexProxy < 0) {
+        updating.remove(id);
+        await FileUtils.deletePath(savePathTmp);
+
+        Future.delayed(const Duration(milliseconds: 10), () async {
+          for (var event in onEventUpdate) {
+            event(id, true);
+          }
+        });
+        return ReturnResultError("Invalid Clash Yaml file: proxies not found");
+      }
       try {
-        await File(savePathTmp).rename(savePath);
+        file.rename(savePath);
       } catch (err) {
+        updating.remove(id);
+        await FileUtils.deletePath(savePathTmp);
+
+        Future.delayed(const Duration(milliseconds: 10), () async {
+          for (var event in onEventUpdate) {
+            event(id, true);
+          }
+        });
         return ReturnResultError(
-            "rename file from [$savePathTmp] to [$savePath] failed: ${err.toString()}");
+            "Rename file from [$savePathTmp] to [$savePath] failed: ${err.toString()}");
       }
       await FileUtils.append(savePath, "\n$urlComment${profile.url}\n");
       if (profile.remark.isEmpty) {

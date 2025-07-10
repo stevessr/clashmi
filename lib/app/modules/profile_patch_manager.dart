@@ -510,6 +510,14 @@ class ProfilePatchManager {
       try {
         await File(savePathTmp).rename(savePath);
       } catch (err) {
+        updating.remove(id);
+        await FileUtils.deletePath(savePathTmp);
+
+        Future.delayed(const Duration(milliseconds: 10), () async {
+          for (var event in onEventUpdate) {
+            event(id, true);
+          }
+        });
         return ReturnResultError(
             "rename file from [$savePathTmp] to [$savePath] failed: ${err.toString()}");
       }
