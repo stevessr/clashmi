@@ -63,7 +63,6 @@
 
 - IOS >= 15
 - MacOS >= 12
-- TvOS >= 17
 - Android >= 8  (arm64-v8a, armeabi-v7a)
 - Windows >= 10 （仅支持64位）
 
