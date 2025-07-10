@@ -18,7 +18,7 @@ import 'package:path/path.dart' as path;
 class ClashSettingManager {
   static const _gateWay = "172.19.0";
   static const _gateWay6 = "fdfe:dcbe:9876::1";
-  static const dnsHijack = "$_gateWay.2:53";
+  static const dnsHijack = "0.0.0.0:53";
   static RawConfig _setting = defaultConfig();
 
   static Future<void> init() async {
