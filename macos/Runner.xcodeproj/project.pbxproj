@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -27,10 +27,10 @@
 		33CC10F32044A3C60003C045 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F22044A3C60003C045 /* Assets.xcassets */; };
 		33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F42044A3C60003C045 /* MainMenu.xib */; };
 		33CC11132044BFA00003C045 /* MainFlutterWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CC11122044BFA00003C045 /* MainFlutterWindow.swift */; };
+		CE6C8AC82E26585000B6ACEA /* LibVpnCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEC19F82B142FA90076CA70 /* LibVpnCore.framework */; };
+		CE6C8AC92E26585000B6ACEA /* LibVpnCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEEC19F82B142FA90076CA70 /* LibVpnCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CECF3FC82E24E9AF0029BC7E /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBE65DB2A22EAE0004691A4 /* NetworkExtension.framework */; };
 		CECF3FD22E24E9AF0029BC7E /* com.nebula.clashmi.clashmiServiceSE.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = CECF3FC72E24E9AF0029BC7E /* com.nebula.clashmi.clashmiServiceSE.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		CEEC19FE2B142FA90076CA70 /* LibVpnCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEC19F82B142FA90076CA70 /* LibVpnCore.framework */; };
-		CEEC19FF2B142FA90076CA70 /* LibVpnCore.framework in Bundle Framework */ = {isa = PBXBuildFile; fileRef = CEEC19F82B142FA90076CA70 /* LibVpnCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CEEC1A062B142FFC0076CA70 /* Libclash.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEC1A042B142FCC0076CA70 /* Libclash.xcframework */; };
 		CEEC1A172B1430910076CA70 /* ExtensionPlatformInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC1A132B1430910076CA70 /* ExtensionPlatformInterface.swift */; };
 		CEEC1A182B1430910076CA70 /* LibVpnCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC1A142B1430910076CA70 /* LibVpnCore.swift */; };
@@ -47,6 +47,13 @@
 			remoteGlobalIDString = 33CC111A2044C6BA0003C045;
 			remoteInfo = FLX;
 		};
+		CE6C8ACA2E26585000B6ACEA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33CC10E52044A3C60003C045 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEEC19F72B142FA90076CA70;
+			remoteInfo = LibVpnCore;
+		};
 		CECF3FD02E24E9AF0029BC7E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 33CC10E52044A3C60003C045 /* Project object */;
@@ -54,27 +61,9 @@
 			remoteGlobalIDString = CECF3FC62E24E9AF0029BC7E;
 			remoteInfo = clashmiServiceSE;
 		};
-		CEEC19FC2B142FA90076CA70 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33CC10E52044A3C60003C045 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CEEC19F72B142FA90076CA70;
-			remoteInfo = LibVpnCore;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		33CC110E2044A8840003C045 /* Bundle Framework */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				CEEC19FF2B142FA90076CA70 /* LibVpnCore.framework in Bundle Framework */,
-			);
-			name = "Bundle Framework";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CE04E7CA29EEC43E005A52B5 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -83,6 +72,17 @@
 			files = (
 			);
 			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE6C8ACC2E26585100B6ACEA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CE6C8AC92E26585000B6ACEA /* LibVpnCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CEBE65E52A22EAE1004691A4 /* Embed Foundation Extensions */ = {
@@ -162,7 +162,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEEC19FE2B142FA90076CA70 /* LibVpnCore.framework in Frameworks */,
 				12E9609A611DDA9B43588B28 /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -171,6 +170,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE6C8AC82E26585000B6ACEA /* LibVpnCore.framework in Frameworks */,
 				CECF3FC82E24E9AF0029BC7E /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,7 +322,6 @@
 				33CC10E92044A3C60003C045 /* Sources */,
 				33CC10EA2044A3C60003C045 /* Frameworks */,
 				33CC10EB2044A3C60003C045 /* Resources */,
-				33CC110E2044A8840003C045 /* Bundle Framework */,
 				CEBE65E52A22EAE1004691A4 /* Embed Foundation Extensions */,
 				99C3439515FD7ECFBA91E2AB /* [CP] Embed Pods Frameworks */,
 				CE04E7CA29EEC43E005A52B5 /* Copy Files */,
@@ -332,7 +331,6 @@
 			);
 			dependencies = (
 				33CC11202044C79F0003C045 /* PBXTargetDependency */,
-				CEEC19FD2B142FA90076CA70 /* PBXTargetDependency */,
 				CECF3FD12E24E9AF0029BC7E /* PBXTargetDependency */,
 			);
 			name = Runner;
@@ -347,10 +345,12 @@
 				CECF3FC32E24E9AF0029BC7E /* Sources */,
 				CECF3FC42E24E9AF0029BC7E /* Frameworks */,
 				CECF3FC52E24E9AF0029BC7E /* Resources */,
+				CE6C8ACC2E26585100B6ACEA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CE6C8ACB2E26585000B6ACEA /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				CECF3FC92E24E9AF0029BC7E /* clashmiServiceSE */,
@@ -576,15 +576,15 @@
 			target = 33CC111A2044C6BA0003C045 /* Flutter Assemble */;
 			targetProxy = 33CC111F2044C79F0003C045 /* PBXContainerItemProxy */;
 		};
+		CE6C8ACB2E26585000B6ACEA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEEC19F72B142FA90076CA70 /* LibVpnCore */;
+			targetProxy = CE6C8ACA2E26585000B6ACEA /* PBXContainerItemProxy */;
+		};
 		CECF3FD12E24E9AF0029BC7E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CECF3FC62E24E9AF0029BC7E /* clashmiServiceSE */;
 			targetProxy = CECF3FD02E24E9AF0029BC7E /* PBXContainerItemProxy */;
-		};
-		CEEC19FD2B142FA90076CA70 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CEEC19F72B142FA90076CA70 /* LibVpnCore */;
-			targetProxy = CEEC19FC2B142FA90076CA70 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
