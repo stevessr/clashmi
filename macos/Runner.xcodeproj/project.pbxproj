@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -27,15 +27,11 @@
 		33CC10F32044A3C60003C045 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F22044A3C60003C045 /* Assets.xcassets */; };
 		33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F42044A3C60003C045 /* MainMenu.xib */; };
 		33CC11132044BFA00003C045 /* MainFlutterWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CC11122044BFA00003C045 /* MainFlutterWindow.swift */; };
-		CEBE65DC2A22EAE0004691A4 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBE65DB2A22EAE0004691A4 /* NetworkExtension.framework */; };
-		CEBE65DF2A22EAE1004691A4 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBE65DE2A22EAE1004691A4 /* PacketTunnelProvider.swift */; };
-		CEBE65E42A22EAE1004691A4 /* clashmiService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CEBE65DA2A22EAE0004691A4 /* clashmiService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CECF3FC82E24E9AF0029BC7E /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBE65DB2A22EAE0004691A4 /* NetworkExtension.framework */; };
 		CECF3FD22E24E9AF0029BC7E /* com.nebula.clashmi.clashmiServiceSE.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = CECF3FC72E24E9AF0029BC7E /* com.nebula.clashmi.clashmiServiceSE.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CEEC19FE2B142FA90076CA70 /* LibVpnCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEC19F82B142FA90076CA70 /* LibVpnCore.framework */; };
 		CEEC19FF2B142FA90076CA70 /* LibVpnCore.framework in Bundle Framework */ = {isa = PBXBuildFile; fileRef = CEEC19F82B142FA90076CA70 /* LibVpnCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CEEC1A062B142FFC0076CA70 /* Libclash.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEC1A042B142FCC0076CA70 /* Libclash.xcframework */; };
-		CEEC1A092B1430070076CA70 /* LibVpnCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEC19F82B142FA90076CA70 /* LibVpnCore.framework */; };
 		CEEC1A172B1430910076CA70 /* ExtensionPlatformInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC1A132B1430910076CA70 /* ExtensionPlatformInterface.swift */; };
 		CEEC1A182B1430910076CA70 /* LibVpnCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC1A142B1430910076CA70 /* LibVpnCore.swift */; };
 		CEEC1A192B1430910076CA70 /* Extension+RunBlocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC1A152B1430910076CA70 /* Extension+RunBlocking.swift */; };
@@ -51,13 +47,6 @@
 			remoteGlobalIDString = 33CC111A2044C6BA0003C045;
 			remoteInfo = FLX;
 		};
-		CEBE65E22A22EAE1004691A4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33CC10E52044A3C60003C045 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CEBE65D92A22EAE0004691A4;
-			remoteInfo = clashmiService;
-		};
 		CECF3FD02E24E9AF0029BC7E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 33CC10E52044A3C60003C045 /* Project object */;
@@ -66,13 +55,6 @@
 			remoteInfo = clashmiServiceSE;
 		};
 		CEEC19FC2B142FA90076CA70 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 33CC10E52044A3C60003C045 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CEEC19F72B142FA90076CA70;
-			remoteInfo = LibVpnCore;
-		};
-		CEEC1A0B2B1430070076CA70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 33CC10E52044A3C60003C045 /* Project object */;
 			proxyType = 1;
@@ -109,7 +91,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				CEBE65E42A22EAE1004691A4 /* clashmiService.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,16 +104,6 @@
 				CECF3FD22E24E9AF0029BC7E /* com.nebula.clashmi.clashmiServiceSE.systemextension in Embed System Extensions */,
 			);
 			name = "Embed System Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CEEC1A0D2B1430080076CA70 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -157,7 +128,6 @@
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		B5EC3A85ADBD29579C7DF776 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE8B929F2A5C07360071C495 /* clashmiService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = clashmiService.entitlements; sourceTree = "<group>"; };
-		CEBE65DA2A22EAE0004691A4 /* clashmiService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = clashmiService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEBE65DB2A22EAE0004691A4 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		CEBE65DE2A22EAE1004691A4 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		CEBE65E02A22EAE1004691A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -194,15 +164,6 @@
 			files = (
 				CEEC19FE2B142FA90076CA70 /* LibVpnCore.framework in Frameworks */,
 				12E9609A611DDA9B43588B28 /* Pods_Runner.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CEBE65D72A22EAE0004691A4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CEEC1A092B1430070076CA70 /* LibVpnCore.framework in Frameworks */,
-				CEBE65DC2A22EAE0004691A4 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,7 +217,6 @@
 			isa = PBXGroup;
 			children = (
 				33CC10ED2044A3C60003C045 /* Clash Mi.app */,
-				CEBE65DA2A22EAE0004691A4 /* clashmiService.appex */,
 				CEEC19F82B142FA90076CA70 /* LibVpnCore.framework */,
 				CECF3FC72E24E9AF0029BC7E /* com.nebula.clashmi.clashmiServiceSE.systemextension */,
 			);
@@ -372,7 +332,6 @@
 			);
 			dependencies = (
 				33CC11202044C79F0003C045 /* PBXTargetDependency */,
-				CEBE65E32A22EAE1004691A4 /* PBXTargetDependency */,
 				CEEC19FD2B142FA90076CA70 /* PBXTargetDependency */,
 				CECF3FD12E24E9AF0029BC7E /* PBXTargetDependency */,
 			);
@@ -380,25 +339,6 @@
 			productName = Runner;
 			productReference = 33CC10ED2044A3C60003C045 /* Clash Mi.app */;
 			productType = "com.apple.product-type.application";
-		};
-		CEBE65D92A22EAE0004691A4 /* clashmiService */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CEBE65E92A22EAE1004691A4 /* Build configuration list for PBXNativeTarget "clashmiService" */;
-			buildPhases = (
-				CEBE65D62A22EAE0004691A4 /* Sources */,
-				CEBE65D72A22EAE0004691A4 /* Frameworks */,
-				CEBE65D82A22EAE0004691A4 /* Resources */,
-				CEEC1A0D2B1430080076CA70 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CEEC1A0C2B1430070076CA70 /* PBXTargetDependency */,
-			);
-			name = clashmiService;
-			productName = clashmiService;
-			productReference = CEBE65DA2A22EAE0004691A4 /* clashmiService.appex */;
-			productType = "com.apple.product-type.app-extension";
 		};
 		CECF3FC62E24E9AF0029BC7E /* clashmiServiceSE */ = {
 			isa = PBXNativeTarget;
@@ -463,10 +403,6 @@
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Manual;
 					};
-					CEBE65D92A22EAE0004691A4 = {
-						CreatedOnToolsVersion = 14.3;
-						LastSwiftMigration = 1430;
-					};
 					CECF3FC62E24E9AF0029BC7E = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -491,7 +427,6 @@
 			targets = (
 				33CC10EC2044A3C60003C045 /* Runner */,
 				33CC111A2044C6BA0003C045 /* Flutter Assemble */,
-				CEBE65D92A22EAE0004691A4 /* clashmiService */,
 				CEEC19F72B142FA90076CA70 /* LibVpnCore */,
 				CECF3FC62E24E9AF0029BC7E /* clashmiServiceSE */,
 			);
@@ -505,13 +440,6 @@
 			files = (
 				33CC10F32044A3C60003C045 /* Assets.xcassets in Resources */,
 				33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CEBE65D82A22EAE0004691A4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,14 +550,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CEBE65D62A22EAE0004691A4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CEBE65DF2A22EAE1004691A4 /* PacketTunnelProvider.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CECF3FC32E24E9AF0029BC7E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -656,11 +576,6 @@
 			target = 33CC111A2044C6BA0003C045 /* Flutter Assemble */;
 			targetProxy = 33CC111F2044C79F0003C045 /* PBXContainerItemProxy */;
 		};
-		CEBE65E32A22EAE1004691A4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CEBE65D92A22EAE0004691A4 /* clashmiService */;
-			targetProxy = CEBE65E22A22EAE1004691A4 /* PBXContainerItemProxy */;
-		};
 		CECF3FD12E24E9AF0029BC7E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CECF3FC62E24E9AF0029BC7E /* clashmiServiceSE */;
@@ -670,11 +585,6 @@
 			isa = PBXTargetDependency;
 			target = CEEC19F72B142FA90076CA70 /* LibVpnCore */;
 			targetProxy = CEEC19FC2B142FA90076CA70 /* PBXContainerItemProxy */;
-		};
-		CEEC1A0C2B1430070076CA70 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CEEC19F72B142FA90076CA70 /* LibVpnCore */;
-			targetProxy = CEEC1A0B2B1430070076CA70 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -957,138 +867,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
-		};
-		CEBE65E62A22EAE1004691A4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = clashmiService/clashmiService.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = TNPM9PFX3W;
-				ENABLE_HARDENED_RUNTIME = NO;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = clashmiService/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = clashmiService;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nebula.clashmi.clashmiService;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		CEBE65E72A22EAE1004691A4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = clashmiService/clashmiService.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = TNPM9PFX3W;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = clashmiService/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = clashmiService;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
-				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nebula.clashmi.clashmiService;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		CEBE65E82A22EAE1004691A4 /* Profile */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = clashmiService/clashmiService.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = TNPM9PFX3W;
-				ENABLE_HARDENED_RUNTIME = NO;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = clashmiService/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = clashmiService;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
-				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nebula.clashmi.clashmiService;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Profile;
 		};
 		CECF3FD42E24E9AF0029BC7E /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1441,16 +1219,6 @@
 				33CC111C2044C6BA0003C045 /* Debug */,
 				33CC111D2044C6BA0003C045 /* Release */,
 				338D0CEB231458BD00FA5F75 /* Profile */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CEBE65E92A22EAE1004691A4 /* Build configuration list for PBXNativeTarget "clashmiService" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CEBE65E62A22EAE1004691A4 /* Debug */,
-				CEBE65E72A22EAE1004691A4 /* Release */,
-				CEBE65E82A22EAE1004691A4 /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
