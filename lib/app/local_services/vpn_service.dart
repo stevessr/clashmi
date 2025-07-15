@@ -192,8 +192,8 @@ class VPNService {
     if (Platform.isMacOS) {
       if (_systemExtension) {
         bundleIdentifier = "com.nebula.clashmi.clashmiServiceSE";
-        uiServerAddress = "$uiServerAddress.system";
-        uiLocalizedDescription = "$uiLocalizedDescription.system";
+        uiServerAddress = "$uiServerAddress (system)";
+        uiLocalizedDescription = "$uiLocalizedDescription (system)";
       }
     }
 
