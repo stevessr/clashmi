@@ -169,17 +169,6 @@ class PathUtils {
     return "";
   }
 
-  static String tunnelServiceSEPath() {
-    if (Platform.isMacOS) {
-      String filepath = PathUtils.exeDir();
-      filepath = path.dirname(filepath);
-      filepath = path.join(filepath, "Library", "SystemExtensions",
-          "com.nebula.clashmi.clashmiServiceSE.systemextension");
-      return filepath;
-    }
-    return "";
-  }
-
   static String getExeName() {
     if (Platform.isWindows) {
       return "clashmi.exe";
