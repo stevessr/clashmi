@@ -23,7 +23,8 @@ class _ProxyScreenProxiesNodeWidget
     for (var node in widget.nodes) {
       if (node.type != ClashProtocolType.urltest.name &&
           node.type != ClashProtocolType.selector.name &&
-          node.type != ClashProtocolType.fallback.name) {
+          node.type != ClashProtocolType.fallback.name &&
+          node.type != ClashProtocolType.loadBalance.name) {
         continue;
       }
       String subtitle = "";

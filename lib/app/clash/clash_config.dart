@@ -92,6 +92,7 @@ enum ClashProtocolType {
   fallback(name: "Fallback"),
   direct(name: "Direct"),
   pass(name: "Pass"),
+  loadBalance(name: "LoadBalance"),
   reject(name: "RejectDrop");
 
   const ClashProtocolType({required this.name});
@@ -104,6 +105,7 @@ enum ClashProtocolType {
       ClashProtocolType.fallback.name,
       ClashProtocolType.direct.name,
       ClashProtocolType.pass.name,
+      ClashProtocolType.loadBalance.name,
       ClashProtocolType.reject.name,
     ];
   }
