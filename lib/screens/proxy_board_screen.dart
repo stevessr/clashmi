@@ -179,9 +179,7 @@ class _ProxyBoardScreenState extends LasyRenderingState<ProxyBoardScreen>
     final setting = SettingManager.getConfig();
     List<ClashProxiesNode> nodes = [];
     for (var node in _nodes) {
-      if (node.type == ClashProtocolType.urltest.name ||
-          node.type == ClashProtocolType.selector.name ||
-          node.type == ClashProtocolType.fallback.name) {
+      if (node.hidden) {
         continue;
       }
       nodes.add(node);
