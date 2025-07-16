@@ -282,6 +282,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get runtimeProfile => '运行时配置';
 	@override String get willCompleteAfterRebootInstall => '请重启设备,以便完成系统扩展安装';
 	@override String get willCompleteAfterRebootUninstall => '请重启设备,以便完成系统扩展卸载';
+	@override String get requestNeedsUserApproval => '请‘允许’clashmi安装系统扩展,安装完成后重新连接';
 	@override String get proxy => '代理';
 	@override String get theme => '主题';
 	@override String get tvMode => 'TV模式';
@@ -594,6 +595,7 @@ extension on TranslationsZhCn {
 			case 'meta.runtimeProfile': return '运行时配置';
 			case 'meta.willCompleteAfterRebootInstall': return '请重启设备,以便完成系统扩展安装';
 			case 'meta.willCompleteAfterRebootUninstall': return '请重启设备,以便完成系统扩展卸载';
+			case 'meta.requestNeedsUserApproval': return '请‘允许’clashmi安装系统扩展,安装完成后重新连接';
 			case 'meta.proxy': return '代理';
 			case 'meta.theme': return '主题';
 			case 'meta.tvMode': return 'TV模式';

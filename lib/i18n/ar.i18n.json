@@ -175,6 +175,7 @@
         "runtimeProfile": "تكوين وقت التشغيل",
         "willCompleteAfterRebootInstall": "يرجى إعادة تشغيل جهازك لإكمال تثبيت توسيع النظام",
         "willCompleteAfterRebootUninstall": "يرجى إعادة تشغيل جهازك لإكمال إلغاء تثبيت ملحق النظام",
+        "requestNeedsUserApproval":"يرجى السماح لـ Clashmi بتثبيت ملحقات النظام، وإعادة الاتصال بعد اكتمال التثبيت",
         "proxy": "التمثيل",
         "theme": "سمة",
         "tvMode": "وضع التلفزيون",

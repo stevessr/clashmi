@@ -282,6 +282,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get runtimeProfile => 'Конфигурация времени выполнения';
 	@override String get willCompleteAfterRebootInstall => 'Пожалуйста, перезагрузите устройство, чтобы завершить установку расширения системы.';
 	@override String get willCompleteAfterRebootUninstall => 'Пожалуйста, перезагрузите устройство, чтобы завершить удаление системного расширения.';
+	@override String get requestNeedsUserApproval => 'Пожалуйста, «разрешите» Clashmi установить системные расширения и переподключитесь после завершения установки.';
 	@override String get proxy => 'Прокси';
 	@override String get theme => 'Тема';
 	@override String get tvMode => 'Режим ТВ';
@@ -594,6 +595,7 @@ extension on TranslationsRu {
 			case 'meta.runtimeProfile': return 'Конфигурация времени выполнения';
 			case 'meta.willCompleteAfterRebootInstall': return 'Пожалуйста, перезагрузите устройство, чтобы завершить установку расширения системы.';
 			case 'meta.willCompleteAfterRebootUninstall': return 'Пожалуйста, перезагрузите устройство, чтобы завершить удаление системного расширения.';
+			case 'meta.requestNeedsUserApproval': return 'Пожалуйста, «разрешите» Clashmi установить системные расширения и переподключитесь после завершения установки.';
 			case 'meta.proxy': return 'Прокси';
 			case 'meta.theme': return 'Тема';
 			case 'meta.tvMode': return 'Режим ТВ';

@@ -285,6 +285,7 @@ class TranslationsMetaEn {
 	String get runtimeProfile => 'Runtime Profile';
 	String get willCompleteAfterRebootInstall => 'Please restart your device to complete the system extension installation';
 	String get willCompleteAfterRebootUninstall => 'Please restart your device to complete the the system extension uninstallation';
+	String get requestNeedsUserApproval => 'Please \'allow\' clashmi to install system extensions, and reconnect after installation is complete';
 	String get proxy => 'Proxy';
 	String get theme => 'Theme';
 	String get tvMode => 'TV Mode';
@@ -597,6 +598,7 @@ extension on Translations {
 			case 'meta.runtimeProfile': return 'Runtime Profile';
 			case 'meta.willCompleteAfterRebootInstall': return 'Please restart your device to complete the system extension installation';
 			case 'meta.willCompleteAfterRebootUninstall': return 'Please restart your device to complete the the system extension uninstallation';
+			case 'meta.requestNeedsUserApproval': return 'Please \'allow\' clashmi to install system extensions, and reconnect after installation is complete';
 			case 'meta.proxy': return 'Proxy';
 			case 'meta.theme': return 'Theme';
 			case 'meta.tvMode': return 'TV Mode';

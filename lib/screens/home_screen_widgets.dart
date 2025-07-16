@@ -548,16 +548,19 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     if (!mounted) {
       return false;
     }
+    setState(() {});
     if (err != null) {
       if (err.message == "willCompleteAfterRebootInstall") {
         DialogUtils.showAlertDialog(
             context, t.meta.willCompleteAfterRebootInstall);
+      } else if (err.message == "requestNeedsUserApproval") {
+        DialogUtils.showAlertDialog(context, t.meta.requestNeedsUserApproval);
       } else {
         DialogUtils.showAlertDialog(context, err.message);
       }
+      return false;
     }
 
-    setState(() {});
     return true;
   }
 
