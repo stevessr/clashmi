@@ -51,7 +51,9 @@ class GroupHelper {
     if (!versionCheck.newVersion) {
       return;
     }
-
+    String url = versionCheck.downloadUrl.isEmpty
+        ? versionCheck.url
+        : versionCheck.downloadUrl;
     if (AutoUpdateManager.isSupport()) {
       String? installerNew = await AutoUpdateManager.checkReplace();
       if (!context.mounted) {
@@ -65,17 +67,11 @@ class GroupHelper {
                 fullscreenDialog: true,
                 builder: (context) => const VersionUpdateScreen(force: false)));
       } else {
-        if (Platform.isAndroid) {
-          await UrlLauncherUtils.loadUrl(versionCheck.url,
-              mode: LaunchMode.externalApplication);
-        } else {
-          await WebviewHelper.loadUrl(
-              context, versionCheck.url, "newVersionUpdate");
-        }
+        await UrlLauncherUtils.loadUrl(url,
+            mode: LaunchMode.externalApplication);
       }
     } else {
-      await WebviewHelper.loadUrl(
-          context, versionCheck.url, "newVersionUpdate");
+      await UrlLauncherUtils.loadUrl(url, mode: LaunchMode.externalApplication);
     }
   }
 
