@@ -191,7 +191,6 @@ class VPNService {
     var uiLocalizedDescription = vpnName;
     if (Platform.isMacOS) {
       if (_systemExtension) {
-        bundleIdentifier = "com.nebula.clashmi.clashmiServiceSE";
         uiServerAddress = "$uiServerAddress (system)";
         uiLocalizedDescription = "$uiLocalizedDescription (system)";
       }
@@ -468,7 +467,13 @@ class VPNService {
   }
 
   static String getBundleId() {
-    if (Platform.isIOS || Platform.isMacOS) {
+    if (Platform.isIOS) {
+      return AppUtils.getBundleId();
+    }
+    if (Platform.isMacOS) {
+      if (_systemExtension) {
+        return "com.nebula.clashmi.clashmiServiceSE";
+      }
       return AppUtils.getBundleId();
     }
     return "";
