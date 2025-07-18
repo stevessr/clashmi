@@ -51,9 +51,10 @@ class GroupHelper {
     if (!versionCheck.newVersion) {
       return;
     }
-    String url = versionCheck.downloadUrl.isEmpty
+    var remoteConfig = RemoteConfigManager.getConfig();
+    String url = remoteConfig.download.isEmpty
         ? versionCheck.url
-        : versionCheck.downloadUrl;
+        : remoteConfig.download;
     if (AutoUpdateManager.isSupport()) {
       String? installerNew = await AutoUpdateManager.checkReplace();
       if (!context.mounted) {
@@ -349,8 +350,8 @@ class GroupHelper {
                 name: tcontext.meta.download,
                 onPush: () async {
                   var remoteConfig = RemoteConfigManager.getConfig();
-                  await WebviewHelper.loadUrl(
-                      context, remoteConfig.download, tcontext.meta.download);
+                  await UrlLauncherUtils.loadUrl(remoteConfig.download,
+                      mode: LaunchMode.externalApplication);
                 })),
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(

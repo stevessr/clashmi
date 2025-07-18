@@ -25,14 +25,12 @@ class AutoUpdateCheckVersion {
   bool newVersion = false;
   String version = "";
   String url = "";
-  String downloadUrl = "";
   bool force = false;
   Map<String, dynamic> toJson() => {
         'latest_check': latestCheck,
         'new_version': newVersion,
         "version": version,
         "url": url,
-        "download_url": downloadUrl,
         "force": force,
       };
   void fromJson(Map<String, dynamic>? map) {
@@ -43,7 +41,6 @@ class AutoUpdateCheckVersion {
     newVersion = map["new_version"] ?? "";
     version = map["version"] ?? "";
     url = map["url"] ?? "";
-    downloadUrl = map["download_url"] ?? "";
     force = map["force"] ?? false;
   }
 
