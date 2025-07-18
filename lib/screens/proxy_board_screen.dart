@@ -166,27 +166,25 @@ class _ProxyBoardScreenState extends LasyRenderingState<ProxyBoardScreen>
   }
 
   Future<List<ClashProxiesNode>> getProxies() async {
+    List<ClashProxiesNode> nodes = [];
     var result = await ClashHttpApi.getProxies();
-    if (result.error != null) {
-      _nodes = [];
-      return _nodes;
+    if (result.error == null) {
+      for (var node in result.data!) {
+        if (node.hidden) {
+          continue;
+        }
+        nodes.add(node);
+      }
     }
-    _nodes = result.data!;
-    return _nodes;
+    _nodes = nodes;
+    return nodes;
   }
 
   Future<void> onTapTestDelay() async {
     final setting = SettingManager.getConfig();
-    List<ClashProxiesNode> nodes = [];
-    for (var node in _nodes) {
-      if (node.hidden) {
-        continue;
-      }
-      nodes.add(node);
-    }
-    _testing = nodes.length;
+    _testing = _nodes.length;
     setState(() {});
-    for (var node in nodes) {
+    for (var node in _nodes) {
       final result = await ClashHttpApi.getDelay(
         node.name,
         url: setting.delayTestUrl,
