@@ -356,6 +356,7 @@ class ClashSettingManager {
       DNS: RawDNS.by(
         OverWrite: false,
         Enable: false,
+        IPv6: _setting.IPv6,
       ),
       NTP: RawNTP.by(OverWrite: false, Enable: false),
       Tun: _setting.Tun,
@@ -395,6 +396,7 @@ class ClashSettingManager {
     if (Platform.isIOS || Platform.isMacOS) {
       _setting.Tun?.Stack = ClashTunStack.gvisor.name;
     }
+    _setting.DNS?.IPv6 = _setting.IPv6;
     if (_setting.IPv6 == true) {
       _setting.Tun?.Inet6Address = ["$_gateWay6/126"];
     } else {

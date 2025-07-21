@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
-import 'package:clashmi/app/clash/clash_config.dart';
 import 'package:clashmi/app/clash/clash_http_api.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/i18n/strings.g.dart';

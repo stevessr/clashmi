@@ -323,6 +323,11 @@ class AutoUpdateManager {
           }
         }
 
+        Future.delayed(const Duration(milliseconds: 300), () async {
+          for (var callback in onEventCheck) {
+            callback();
+          }
+        });
         saveConfig();
         await download();
       }

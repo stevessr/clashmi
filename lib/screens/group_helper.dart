@@ -785,6 +785,7 @@ class GroupHelper {
                 tupleStrings: ipv6Tuple,
                 onPicker: (String? selected) async {
                   setting.IPv6 = BoolToTuple.getSelectedKey(context, selected);
+                  setting.DNS?.IPv6 = setting.IPv6;
                 })),
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(

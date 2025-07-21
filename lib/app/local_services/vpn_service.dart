@@ -37,7 +37,7 @@ class VPNServiceSetServerOptions {
 class VPNService {
   static const localhost = "127.0.0.1";
   static bool _runAsAdmin = false;
-  static bool _systemExtension = true;
+  static final bool _systemExtension = true;
   static List<String> _abis = [];
   static final List<
           void Function(
