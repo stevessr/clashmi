@@ -203,6 +203,7 @@ class _ServerSelectSearchSettingsScreenState
               : tcontext.meta.add,
           "",
           widget.dialogTextHit.isNotEmpty ? widget.dialogTextHit : "",
+          null,
           null, (text) {
         text = text.trim();
         if (text.isEmpty) {

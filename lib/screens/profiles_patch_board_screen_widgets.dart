@@ -323,7 +323,6 @@ class _ProfilesPatchBoardScreenWidget
     ];
 
     showSheet(
-      title: setting.id,
       context: context,
       body: SizedBox(
           height: 400,

@@ -152,7 +152,6 @@ class _ProxyScreenProxiesNodeWidget
       );
     }
     showSheet(
-      title: node.name,
       context: context,
       body: SizedBox(
           height: 400,

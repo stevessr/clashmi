@@ -210,7 +210,7 @@ class GroupHelper {
   static Future<void> onTapImportFromUrl(BuildContext context) async {
     final tcontext = Translations.of(context);
     String? text = await DialogUtils.showTextInputDialog(
-        context, tcontext.meta.url, "", null, null, (text) {
+        context, tcontext.meta.url, "", null, null, null, (text) {
       text = text.trim();
 
       Uri? uri = Uri.tryParse(text);

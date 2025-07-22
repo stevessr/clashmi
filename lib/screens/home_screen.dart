@@ -159,7 +159,7 @@ class _HomeScreenState extends LasyRenderingState<HomeScreen>
     AutoUpdateManager.onEventCheck.add(() {
       setState(() {});
     });
-    DialogUtils.faqCallback = (String text) async {
+    DialogUtils.faqCallback = (BuildContext context, String text) async {
       final tcontext = Translations.of(context);
       var remoteConfig = RemoteConfigManager.getConfig();
       await WebviewHelper.loadUrl(context, remoteConfig.faq, "faqCallback",

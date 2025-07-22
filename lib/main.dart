@@ -160,10 +160,6 @@ Future<void> run(List<String> args) async {
     String cmdline = args.toString();
     Log.w("main.run exception: ${err.toString()}, $cmdline");
   }
-
-  runApp(TranslationProvider(
-    child: const MyApp(),
-  ));
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -171,6 +167,9 @@ Future<void> run(List<String> args) async {
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
+  runApp(TranslationProvider(
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {

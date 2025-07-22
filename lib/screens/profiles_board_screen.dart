@@ -290,7 +290,6 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
     ];
 
     showSheet(
-      title: tcontext.meta.addProfile,
       context: context,
       body: SizedBox(
           height: 400,

@@ -267,7 +267,6 @@ class _ProfilesPatchBoardScreenState
     ];
 
     showSheet(
-      title: tcontext.meta.addProfile,
       context: context,
       body: SizedBox(
           height: 400,

@@ -142,6 +142,11 @@ class _PerAppAndroidScreenState
         PackageInfoEx info = PackageInfoEx();
         info.info = app;
         info.name = await getAppName(app.packageName!);
+        if (info.name.contains("{") &&
+            info.name.contains(":") &&
+            info.name.contains("\"")) {
+          continue;
+        }
         if (!mounted) {
           return;
         }
