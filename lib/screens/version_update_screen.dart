@@ -14,7 +14,6 @@ import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:open_file/open_file.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class VersionUpdateScreen extends LasyRenderingStatefulWidget {
@@ -121,15 +120,15 @@ class _VersionUpdateScreenState
     }
 
     try {
+      await VPNService.stop();
       if (Platform.isWindows) {
-        await VPNService.uninit();
-        await OpenFile.open(installer, type: "application/octet-stream");
+        await launchUrl(Uri(path: installer, scheme: 'file'));
         await ServicesBinding.instance.exitApplication(AppExitType.required);
-      } else if (Platform.isAndroid) {
-        await AppInstaller.installApk(installer);
       } else if (Platform.isMacOS) {
         await launchUrl(Uri(path: installer, scheme: 'file'));
         await ServicesBinding.instance.exitApplication(AppExitType.required);
+      } else if (Platform.isAndroid) {
+        await AppInstaller.installApk(installer);
       }
     } catch (err, stacktrace) {
       Log.w("VersionUpdateScreen.checkReplace exception ${err.toString()}");
