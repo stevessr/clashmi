@@ -552,9 +552,18 @@ class ProfileManager {
         });
         return ReturnResultError("Invalid Clash Yaml file: proxies not found");
       }
-      try {
-        file.rename(savePath);
-      } catch (err) {
+      String renameError = "";
+      for (var i = 0; i < 3; ++i) {
+        try {
+          await file.rename(savePath);
+          renameError = "";
+          break;
+        } catch (err) {
+          renameError = err.toString();
+          await Future.delayed(const Duration(seconds: 1));
+        }
+      }
+      if (renameError.isNotEmpty) {
         updating.remove(id);
         await FileUtils.deletePath(savePathTmp);
 
@@ -564,8 +573,9 @@ class ProfileManager {
           }
         });
         return ReturnResultError(
-            "Rename file from [$savePathTmp] to [$savePath] failed: ${err.toString()}");
+            "Rename file from [$savePathTmp] to [$savePath] failed: $renameError");
       }
+
       await FileUtils.append(savePath, "\n$urlComment${profile.url}\n");
       if (profile.remark.isEmpty) {
         final result = await HttpUtils.httpGetTitle(profile.url, userAgent);
@@ -575,10 +585,8 @@ class ProfileManager {
           profile.remark = result.data!;
         }
       }
-
       profile.updateSubscriptionTraffic(result.data);
     }
-
     await save();
     updating.remove(id);
     Future.delayed(const Duration(milliseconds: 10), () async {

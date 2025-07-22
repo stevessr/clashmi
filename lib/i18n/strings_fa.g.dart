@@ -282,6 +282,7 @@ class _TranslationsMetaFa implements TranslationsMetaEn {
 	@override String get runtimeProfile => 'پیکربندی زمان اجرا';
 	@override String get willCompleteAfterRebootInstall => 'لطفاً دستگاه خود را مجدداً راه اندازی کنید تا نصب افزونه سیستم تکمیل شود.';
 	@override String get willCompleteAfterRebootUninstall => 'لطفاً دستگاه خود را مجدداً راه‌اندازی کنید تا حذف نصب افزونه سیستم تکمیل شود';
+	@override String get requestNeedsUserApproval => 'لطفاً به clashmi اجازه دهید افزونه‌های سیستم را نصب کند و پس از اتمام نصب دوباره متصل شوید.';
 	@override String get proxy => 'بازیگری';
 	@override String get theme => 'موضوع';
 	@override String get tvMode => 'حالت تلویزیون';
@@ -594,6 +595,7 @@ extension on TranslationsFa {
 			case 'meta.runtimeProfile': return 'پیکربندی زمان اجرا';
 			case 'meta.willCompleteAfterRebootInstall': return 'لطفاً دستگاه خود را مجدداً راه اندازی کنید تا نصب افزونه سیستم تکمیل شود.';
 			case 'meta.willCompleteAfterRebootUninstall': return 'لطفاً دستگاه خود را مجدداً راه‌اندازی کنید تا حذف نصب افزونه سیستم تکمیل شود';
+			case 'meta.requestNeedsUserApproval': return 'لطفاً به clashmi اجازه دهید افزونه‌های سیستم را نصب کند و پس از اتمام نصب دوباره متصل شوید.';
 			case 'meta.proxy': return 'بازیگری';
 			case 'meta.theme': return 'موضوع';
 			case 'meta.tvMode': return 'حالت تلویزیون';

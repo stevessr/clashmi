@@ -37,7 +37,7 @@ class VPNServiceSetServerOptions {
 class VPNService {
   static const localhost = "127.0.0.1";
   static bool _runAsAdmin = false;
-  static bool _systemExtension = false;
+  static final bool _systemExtension = true;
   static List<String> _abis = [];
   static final List<
           void Function(
@@ -191,9 +191,8 @@ class VPNService {
     var uiLocalizedDescription = vpnName;
     if (Platform.isMacOS) {
       if (_systemExtension) {
-        bundleIdentifier = "$bundleIdentifier.system";
-        uiServerAddress = "$uiServerAddress.system";
-        uiLocalizedDescription = "$uiLocalizedDescription.system";
+        uiServerAddress = "$uiServerAddress (system)";
+        uiLocalizedDescription = "$uiLocalizedDescription (system)";
       }
     }
 
@@ -468,7 +467,13 @@ class VPNService {
   }
 
   static String getBundleId() {
-    if (Platform.isIOS || Platform.isMacOS) {
+    if (Platform.isIOS) {
+      return AppUtils.getBundleId();
+    }
+    if (Platform.isMacOS) {
+      if (_systemExtension) {
+        return "com.nebula.clashmi.clashmiServiceSE";
+      }
       return AppUtils.getBundleId();
     }
     return "";

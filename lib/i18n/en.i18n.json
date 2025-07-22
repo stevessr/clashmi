@@ -175,6 +175,7 @@
         "runtimeProfile": "Runtime Profile",
         "willCompleteAfterRebootInstall": "Please restart your device to complete the system extension installation",
         "willCompleteAfterRebootUninstall": "Please restart your device to complete the the system extension uninstallation",
+        "requestNeedsUserApproval":"Please 'allow' clashmi to install system extensions, and reconnect after installation is complete",
         "proxy": "Proxy",
         "theme": "Theme",
         "tvMode": "TV Mode",

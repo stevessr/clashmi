@@ -548,16 +548,18 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     if (!mounted) {
       return false;
     }
+    setState(() {});
     if (err != null) {
       if (err.message == "willCompleteAfterRebootInstall") {
-        DialogUtils.showAlertDialog(
-            context, t.meta.willCompleteAfterRebootInstall);
-      } else {
-        DialogUtils.showAlertDialog(context, err.message);
+        err.message = t.meta.willCompleteAfterRebootInstall;
+      } else if (err.message == "requestNeedsUserApproval") {
+        err.message = t.meta.requestNeedsUserApproval;
       }
+
+      DialogUtils.showAlertDialog(context, err.message);
+      return false;
     }
 
-    setState(() {});
     return true;
   }
 
@@ -604,11 +606,13 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
     _state = state;
     if (state == FlutterVpnServiceState.disconnected) {
       _disconnectToCore();
+      Biz.vpnStateChanged(false);
     } else if (state == FlutterVpnServiceState.connecting) {
     } else if (state == FlutterVpnServiceState.connected) {
       if (!AppLifecycleStateNofity.isPaused()) {
         _connectToCore();
       }
+      Biz.vpnStateChanged(true);
     } else if (state == FlutterVpnServiceState.reasserting) {
       _disconnectToCore();
     } else if (state == FlutterVpnServiceState.disconnecting) {
@@ -616,6 +620,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
       Zashboard.stop();
     } else {
       _disconnectToCore();
+      Biz.vpnStateChanged(false);
     }
 
     setState(() {});
@@ -661,16 +666,20 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
   void _startStateCheckTimer() {
     const Duration duration = Duration(seconds: 1);
     _timerStateChecker ??= Timer.periodic(duration, (timer) async {
-      if (AppLifecycleStateNofity.isPaused()) {
-        return;
+      if (!Platform.isMacOS) {
+        if (AppLifecycleStateNofity.isPaused()) {
+          return;
+        }
       }
       await _checkState();
     });
   }
 
   void _stopStateCheckTimer() {
-    _timerStateChecker?.cancel();
-    _timerStateChecker = null;
+    if (!Platform.isMacOS) {
+      _timerStateChecker?.cancel();
+      _timerStateChecker = null;
+    }
   }
 
   Future<void> _connectToCore() async {

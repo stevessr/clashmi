@@ -51,7 +51,10 @@ class GroupHelper {
     if (!versionCheck.newVersion) {
       return;
     }
-
+    var remoteConfig = RemoteConfigManager.getConfig();
+    String url = remoteConfig.download.isEmpty
+        ? versionCheck.url
+        : remoteConfig.download;
     if (AutoUpdateManager.isSupport()) {
       String? installerNew = await AutoUpdateManager.checkReplace();
       if (!context.mounted) {
@@ -65,17 +68,11 @@ class GroupHelper {
                 fullscreenDialog: true,
                 builder: (context) => const VersionUpdateScreen(force: false)));
       } else {
-        if (Platform.isAndroid) {
-          await UrlLauncherUtils.loadUrl(versionCheck.url,
-              mode: LaunchMode.externalApplication);
-        } else {
-          await WebviewHelper.loadUrl(
-              context, versionCheck.url, "newVersionUpdate");
-        }
+        await UrlLauncherUtils.loadUrl(url,
+            mode: LaunchMode.externalApplication);
       }
     } else {
-      await WebviewHelper.loadUrl(
-          context, versionCheck.url, "newVersionUpdate");
+      await UrlLauncherUtils.loadUrl(url, mode: LaunchMode.externalApplication);
     }
   }
 
@@ -353,8 +350,8 @@ class GroupHelper {
                 name: tcontext.meta.download,
                 onPush: () async {
                   var remoteConfig = RemoteConfigManager.getConfig();
-                  await WebviewHelper.loadUrl(
-                      context, remoteConfig.download, tcontext.meta.download);
+                  await UrlLauncherUtils.loadUrl(remoteConfig.download,
+                      mode: LaunchMode.externalApplication);
                 })),
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
@@ -788,6 +785,7 @@ class GroupHelper {
                 tupleStrings: ipv6Tuple,
                 onPicker: (String? selected) async {
                   setting.IPv6 = BoolToTuple.getSelectedKey(context, selected);
+                  setting.DNS?.IPv6 = setting.IPv6;
                 })),
         GroupItemOptions(
             pushOptions: GroupItemPushOptions(
