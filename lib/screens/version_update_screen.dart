@@ -7,7 +7,6 @@ import 'package:app_installer/app_installer.dart';
 import 'package:clashmi/app/local_services/vpn_service.dart';
 import 'package:clashmi/app/modules/auto_update_manager.dart';
 import 'package:clashmi/app/utils/log.dart';
-import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/theme_config.dart';
@@ -16,7 +15,7 @@ import 'package:clashmi/screens/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
-import 'package:path/path.dart' as path;
+import 'package:url_launcher/url_launcher.dart';
 
 class VersionUpdateScreen extends LasyRenderingStatefulWidget {
   static RouteSettings routSettings() {
@@ -129,18 +128,7 @@ class _VersionUpdateScreenState
       } else if (Platform.isAndroid) {
         await AppInstaller.installApk(installer);
       } else if (Platform.isMacOS) {
-        final script = '''#/bin/sh
-VOLUME=`hdiutil attach \$1 | grep Volumes | awk '{print \$3}'`
-cp -rf \$VOLUME/*.app /Applications
-open /Applications/Clash\\ Mi.app
-hdiutil detach \$VOLUME
-''';
-        final filePath =
-            path.join(await PathUtils.cacheDir(), 'install_dmg.sh');
-        final file = File(filePath);
-        await file.writeAsString(script, flush: true);
-        await Process.run('chmod', ['+x', filePath]);
-        Process.run('sh', [filePath, installer]);
+        await launchUrl(Uri(path: installer, scheme: 'file'));
         await ServicesBinding.instance.exitApplication(AppExitType.required);
       }
     } catch (err, stacktrace) {
