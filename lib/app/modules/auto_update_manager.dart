@@ -56,6 +56,8 @@ class AutoUpdateCheckVersion {
       ext = ".apk";
     } else if (Platform.isWindows) {
       ext = ".exe";
+    } else if (Platform.isMacOS) {
+      ext = ".dmg";
     }
     final newPath = path.join(await PathUtils.cacheDir(), version);
     return "$newPath$ext";
@@ -78,7 +80,7 @@ class AutoUpdateManager {
   static final AutoUpdateCheckVersion _versionCheck = AutoUpdateCheckVersion();
 
   static bool isSupport() {
-    return Platform.isWindows || Platform.isAndroid;
+    return Platform.isAndroid || Platform.isWindows || Platform.isMacOS;
   }
 
   static List<String> updateChannels() {
