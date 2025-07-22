@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:clashmi/app/local_services/vpn_service.dart';
+import 'package:clashmi/app/modules/auto_update_manager.dart';
 import 'package:clashmi/app/modules/biz.dart';
 import 'package:clashmi/app/modules/remote_config_manager.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
@@ -140,6 +141,7 @@ Future<void> run(List<String> args) async {
     }
 
     await SettingManager.init();
+    await AutoUpdateManager.init();
     if (PlatformUtils.isMobile()) {
       if (SettingManager.getConfig().ui.autoOrientation) {
         SystemChrome.setPreferredOrientations([
