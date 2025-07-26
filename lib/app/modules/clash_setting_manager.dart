@@ -331,16 +331,16 @@ class ClashSettingManager {
       LogLevel: ClashLogLevel.error.name,
       ExternalController: "127.0.0.1:9090",
       IPv6: false,
+      DNS: defaultDNS(),
+      NTP: defaultNTP(),
+      Sniffer: defaultSniffer(),
+      TLS: defaultTLS(),
+      Tun: defaultTun(),
+      Extension: defaultExtension(),
       GlobalClientFingerprint: ClashGlobalClientFingerprint.chrome.name,
       DisableKeepAlive: false,
       KeepAliveIdle: 30,
       KeepAliveInterval: 30,
-      DNS: defaultDNS(),
-      NTP: defaultNTP(),
-      Tun: defaultTun(),
-      Sniffer: defaultSniffer(),
-      TLS: defaultTLS(),
-      Extension: defaultExtension(),
     );
   }
 
@@ -351,29 +351,16 @@ class ClashSettingManager {
       LogLevel: _setting.LogLevel,
       ExternalController: _setting.ExternalController,
       Secret: _setting.Secret,
-      UnifiedDelay: _setting.UnifiedDelay,
       IPv6: _setting.IPv6,
-      DNS: RawDNS.by(
-        OverWrite: false,
-        Enable: false,
-        IPv6: _setting.IPv6,
-      ),
-      NTP: RawNTP.by(OverWrite: false, Enable: false),
+      DNS: null,
+      NTP: null,
+      Sniffer: null,
+      TLS: null,
       Tun: _setting.Tun,
-      Profile: _setting.Profile,
+      Extension: _setting.Extension,
+      UnifiedDelay: _setting.UnifiedDelay,
       FindProcessMode: _setting.FindProcessMode,
-      Sniffer: RawSniffer.by(OverWrite: false, Enable: false),
-      TLS: RawTLS.by(OverWrite: false),
-      Extension: RawExtension.by(
-        Ruleset: defaultRawExtensionRuleset(),
-        Tun: RawExtensionTun.by(
-          httpProxy: _setting.Extension?.Tun.httpProxy ??
-              RawExtensionTunHttpProxy.by(Enable: false),
-          perApp: _setting.Extension?.Tun.perApp ??
-              RawExtensionTunPerApp.by(Enable: false),
-        ),
-        PprofAddr: _setting.Extension?.PprofAddr,
-      ),
+      Profile: _setting.Profile,
     );
   }
 
