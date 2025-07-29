@@ -375,6 +375,14 @@ class VPNService {
     if (SettingManager.getConfig().autoSetSystemProxy) {
       await setSystemProxy(true);
     }
+    Future.delayed(const Duration(seconds: 1), () async {
+      final state = await getState();
+      if (state != FlutterVpnServiceState.connected) {
+        for (var callback in onEventStateChanged) {
+          callback(state, {});
+        }
+      }
+    });
 
     return null;
   }
