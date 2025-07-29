@@ -540,8 +540,9 @@ class ProfileManager {
       }
       var file = File(savePathTmp);
       final content = await file.readAsString();
-      int indexProxy = content.indexOf("proxies:");
-      if (indexProxy < 0) {
+
+      if (!content.contains("proxies:") &&
+          !content.contains("proxy-providers:")) {
         updating.remove(id);
         await FileUtils.deletePath(savePathTmp);
 
@@ -550,7 +551,8 @@ class ProfileManager {
             event(id, true);
           }
         });
-        return ReturnResultError("Invalid Clash Yaml file: proxies not found");
+        return ReturnResultError(
+            "Invalid Clash Yaml file: proxies and proxy-providers not found");
       }
       String renameError = "";
       for (var i = 0; i < 3; ++i) {
