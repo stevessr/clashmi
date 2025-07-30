@@ -30,6 +30,22 @@ class GroupItemText extends StatelessWidget {
                   width: 5,
                 )
               : SizedBox.shrink(),
+          if ((options.tips != null) && options.tips!.isNotEmpty) ...[
+            InkWell(
+                onTap: () {
+                  DialogUtils.showAlertDialog(context, options.tips!);
+                },
+                child: Tooltip(
+                  message: options.tips,
+                  child: const Icon(
+                    Icons.info_outlined,
+                    size: 26,
+                  ),
+                )),
+            const SizedBox(
+              width: 5,
+            )
+          ],
           Expanded(
             flex: ((1 - options.textWidthPercent) * 10).toInt(),
             child: Align(

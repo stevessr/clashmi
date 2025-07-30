@@ -153,6 +153,7 @@ class _TranslationsMetaRu implements TranslationsMetaEn {
 	@override String get edit => 'Редактировать';
 	@override String get view => 'Просмотр';
 	@override String get remark => 'Примечание';
+	@override String get byDefault => 'по умолчанию';
 	@override String get editRemark => 'Заметки об изменениях';
 	@override String get more => 'Больше';
 	@override String get tips => 'Инфо';
@@ -389,9 +390,11 @@ class _TranslationsDnsRu implements TranslationsDnsEn {
 	@override String get enhancedMode => 'Расширенный режим';
 	@override String get fakeIPFilterMode => '${_root.dns.fakeIp} режим фильтра';
 	@override String get fakeIPFilter => '${_root.dns.fakeIp} фильтрация';
-	@override String get defaultNameServer => 'DNS-сервер по умолчанию';
 	@override String get nameServer => 'DNS-сервер';
-	@override String get fallbackNameServer => '${_root.dns.fallback} сервер разрешения доменных имен';
+	@override String get defaultNameServer => '${_root.meta.byDefault} ${_root.dns.nameServer}';
+	@override String get proxyNameServer => '${_root.meta.proxy} ${_root.dns.nameServer}';
+	@override String get directNameServer => '${_root.meta.direct} ${_root.dns.nameServer}';
+	@override String get fallbackNameServer => '${_root.dns.fallback} ${_root.dns.nameServer}';
 	@override String get fallbackGeoIp => '${_root.dns.fallback} GeoIp';
 	@override String get fallbackGeoIpCode => '${_root.dns.fallback} GeoIpCode';
 }
@@ -466,6 +469,7 @@ extension on TranslationsRu {
 			case 'meta.edit': return 'Редактировать';
 			case 'meta.view': return 'Просмотр';
 			case 'meta.remark': return 'Примечание';
+			case 'meta.byDefault': return 'по умолчанию';
 			case 'meta.editRemark': return 'Заметки об изменениях';
 			case 'meta.more': return 'Больше';
 			case 'meta.tips': return 'Инфо';
@@ -666,9 +670,11 @@ extension on TranslationsRu {
 			case 'dns.enhancedMode': return 'Расширенный режим';
 			case 'dns.fakeIPFilterMode': return '${_root.dns.fakeIp} режим фильтра';
 			case 'dns.fakeIPFilter': return '${_root.dns.fakeIp} фильтрация';
-			case 'dns.defaultNameServer': return 'DNS-сервер по умолчанию';
 			case 'dns.nameServer': return 'DNS-сервер';
-			case 'dns.fallbackNameServer': return '${_root.dns.fallback} сервер разрешения доменных имен';
+			case 'dns.defaultNameServer': return '${_root.meta.byDefault} ${_root.dns.nameServer}';
+			case 'dns.proxyNameServer': return '${_root.meta.proxy} ${_root.dns.nameServer}';
+			case 'dns.directNameServer': return '${_root.meta.direct} ${_root.dns.nameServer}';
+			case 'dns.fallbackNameServer': return '${_root.dns.fallback} ${_root.dns.nameServer}';
 			case 'dns.fallbackGeoIp': return '${_root.dns.fallback} GeoIp';
 			case 'dns.fallbackGeoIpCode': return '${_root.dns.fallback} GeoIpCode';
 			case 'sniffer.overrideDest': return 'Переназначить';

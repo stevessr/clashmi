@@ -156,6 +156,7 @@ class TranslationsMetaEn {
 	String get edit => 'Edit';
 	String get view => 'View';
 	String get remark => 'Remark';
+	String get byDefault => 'Default';
 	String get editRemark => 'Edit Remark';
 	String get more => 'More';
 	String get tips => 'Info';
@@ -392,9 +393,11 @@ class TranslationsDnsEn {
 	String get enhancedMode => 'Enhanced Mode';
 	String get fakeIPFilterMode => '${_root.dns.fakeIp} Filter Mode';
 	String get fakeIPFilter => 'fake-ip Filter';
-	String get defaultNameServer => 'Default NameServer';
 	String get nameServer => 'NameServer';
-	String get fallbackNameServer => '${_root.dns.fallback} NameServer';
+	String get defaultNameServer => '${_root.meta.byDefault} ${_root.dns.nameServer}';
+	String get proxyNameServer => '${_root.meta.proxy} ${_root.dns.nameServer}';
+	String get directNameServer => '${_root.meta.direct} ${_root.dns.nameServer}';
+	String get fallbackNameServer => '${_root.dns.fallback} ${_root.dns.nameServer}';
 	String get fallbackGeoIp => '${_root.dns.fallback} GeoIp';
 	String get fallbackGeoIpCode => '${_root.dns.fallback} GeoIpCode';
 }
@@ -469,6 +472,7 @@ extension on Translations {
 			case 'meta.edit': return 'Edit';
 			case 'meta.view': return 'View';
 			case 'meta.remark': return 'Remark';
+			case 'meta.byDefault': return 'Default';
 			case 'meta.editRemark': return 'Edit Remark';
 			case 'meta.more': return 'More';
 			case 'meta.tips': return 'Info';
@@ -669,9 +673,11 @@ extension on Translations {
 			case 'dns.enhancedMode': return 'Enhanced Mode';
 			case 'dns.fakeIPFilterMode': return '${_root.dns.fakeIp} Filter Mode';
 			case 'dns.fakeIPFilter': return 'fake-ip Filter';
-			case 'dns.defaultNameServer': return 'Default NameServer';
 			case 'dns.nameServer': return 'NameServer';
-			case 'dns.fallbackNameServer': return '${_root.dns.fallback} NameServer';
+			case 'dns.defaultNameServer': return '${_root.meta.byDefault} ${_root.dns.nameServer}';
+			case 'dns.proxyNameServer': return '${_root.meta.proxy} ${_root.dns.nameServer}';
+			case 'dns.directNameServer': return '${_root.meta.direct} ${_root.dns.nameServer}';
+			case 'dns.fallbackNameServer': return '${_root.dns.fallback} ${_root.dns.nameServer}';
 			case 'dns.fallbackGeoIp': return '${_root.dns.fallback} GeoIp';
 			case 'dns.fallbackGeoIpCode': return '${_root.dns.fallback} GeoIpCode';
 			case 'sniffer.overrideDest': return 'Override';

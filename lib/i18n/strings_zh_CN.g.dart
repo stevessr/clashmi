@@ -153,6 +153,7 @@ class _TranslationsMetaZhCn implements TranslationsMetaEn {
 	@override String get edit => '编辑';
 	@override String get view => '查看';
 	@override String get remark => '备注';
+	@override String get byDefault => '默认';
 	@override String get editRemark => '修改备注';
 	@override String get more => '更多';
 	@override String get tips => '提示';
@@ -389,9 +390,11 @@ class _TranslationsDnsZhCn implements TranslationsDnsEn {
 	@override String get enhancedMode => '增强模式';
 	@override String get fakeIPFilterMode => '${_root.dns.fakeIp} 过滤模式';
 	@override String get fakeIPFilter => '${_root.dns.fakeIp} 过滤';
-	@override String get defaultNameServer => '默认域名解析服务器';
 	@override String get nameServer => '域名解析服务器';
-	@override String get fallbackNameServer => '${_root.dns.fallback} 域名解析服务器';
+	@override String get defaultNameServer => '${_root.meta.byDefault} ${_root.dns.nameServer}';
+	@override String get proxyNameServer => '${_root.meta.proxy} ${_root.dns.nameServer}';
+	@override String get directNameServer => '${_root.meta.direct} ${_root.dns.nameServer}';
+	@override String get fallbackNameServer => '${_root.dns.fallback} ${_root.dns.nameServer}';
 	@override String get fallbackGeoIp => '${_root.dns.fallback} GeoIp';
 	@override String get fallbackGeoIpCode => '${_root.dns.fallback} GeoIpCode';
 }
@@ -466,6 +469,7 @@ extension on TranslationsZhCn {
 			case 'meta.edit': return '编辑';
 			case 'meta.view': return '查看';
 			case 'meta.remark': return '备注';
+			case 'meta.byDefault': return '默认';
 			case 'meta.editRemark': return '修改备注';
 			case 'meta.more': return '更多';
 			case 'meta.tips': return '提示';
@@ -666,9 +670,11 @@ extension on TranslationsZhCn {
 			case 'dns.enhancedMode': return '增强模式';
 			case 'dns.fakeIPFilterMode': return '${_root.dns.fakeIp} 过滤模式';
 			case 'dns.fakeIPFilter': return '${_root.dns.fakeIp} 过滤';
-			case 'dns.defaultNameServer': return '默认域名解析服务器';
 			case 'dns.nameServer': return '域名解析服务器';
-			case 'dns.fallbackNameServer': return '${_root.dns.fallback} 域名解析服务器';
+			case 'dns.defaultNameServer': return '${_root.meta.byDefault} ${_root.dns.nameServer}';
+			case 'dns.proxyNameServer': return '${_root.meta.proxy} ${_root.dns.nameServer}';
+			case 'dns.directNameServer': return '${_root.meta.direct} ${_root.dns.nameServer}';
+			case 'dns.fallbackNameServer': return '${_root.dns.fallback} ${_root.dns.nameServer}';
 			case 'dns.fallbackGeoIp': return '${_root.dns.fallback} GeoIp';
 			case 'dns.fallbackGeoIpCode': return '${_root.dns.fallback} GeoIpCode';
 			case 'sniffer.overrideDest': return '覆盖';
