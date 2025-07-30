@@ -186,7 +186,7 @@ class VPNService {
             setting.Tun?.OverWrite == true &&
             setting.Tun?.Enable == true) ||
         !overwrite;
-    var bundleIdentifier = getBundleId();
+    var bundleIdentifier = AppUtils.getBundleId(_systemExtension);
     var uiServerAddress = name;
     var uiLocalizedDescription = vpnName;
     if (Platform.isMacOS) {
@@ -472,19 +472,6 @@ class VPNService {
 
   static Future<ReturnResultError?> reload(Duration timeout) async {
     return restart(timeout);
-  }
-
-  static String getBundleId() {
-    if (Platform.isIOS) {
-      return AppUtils.getBundleId();
-    }
-    if (Platform.isMacOS) {
-      if (_systemExtension) {
-        return "com.nebula.clashmi.clashmiServiceSE";
-      }
-      return AppUtils.getBundleId();
-    }
-    return "";
   }
 
   static String getLaunchAtStartupTaskName() {

@@ -33,8 +33,11 @@ abstract final class AppUtils {
     return "group.com.nebula.clashmi";
   }
 
-  static String getBundleId() {
+  static String getBundleId(bool systemExtension) {
     if (Platform.isIOS || Platform.isMacOS) {
+      if (Platform.isMacOS && systemExtension) {
+        return "com.nebula.clashmi.clashmiServiceSE";
+      }
       return "com.nebula.clashmi.clashmiService";
     }
     return "";
