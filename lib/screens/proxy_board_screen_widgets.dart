@@ -23,15 +23,36 @@ class _ProxyScreenProxiesNodeWidget
     for (var node in widget.nodes) {
       if (node.type != ClashProtocolType.urltest.name &&
           node.type != ClashProtocolType.selector.name &&
-          node.type != ClashProtocolType.fallback.name) {
+          node.type != ClashProtocolType.fallback.name &&
+          node.type != ClashProtocolType.loadBalance.name) {
         continue;
+      }
+      String subtitle = "";
+      Color? color;
+      if (node.delay != null && node.delay! > 0) {
+        subtitle = " (${node.delay} ms)";
+        if (node.delay! < 800) {
+          color = ThemeDefine.kColorGreenBright;
+        } else if (node.delay! < 1500) {
+          color = Colors.black;
+        } else {
+          color = Colors.red;
+        }
       }
       widgets.add(
         ListTile(
           title: Text(node.name),
-          subtitle: Text(node.delay != null
-              ? "${node.type} (${node.delay} ms)"
-              : node.type),
+          subtitle: node.delay == null
+              ? Text(node.type)
+              : Row(
+                  children: [
+                    Text(node.type),
+                    Text(
+                      subtitle,
+                      style: TextStyle(color: color),
+                    )
+                  ],
+                ),
           minLeadingWidth: 40,
           trailing: SizedBox(
             width: windowSize.width * 0.4,
@@ -88,10 +109,28 @@ class _ProxyScreenProxiesNodeWidget
           break;
         }
       }
+      String subtitle = "";
+      Color? color;
+      if (delay != null && delay > 0) {
+        subtitle = "$delay ms";
+        if (delay < 800) {
+          color = ThemeDefine.kColorGreenBright;
+        } else if (delay < 1500) {
+          color = Colors.black;
+        } else {
+          color = Colors.red;
+        }
+      }
+
       widgets.add(
         ListTile(
           title: Text(name),
-          subtitle: delay != null && delay != 0 ? Text("$delay ms") : null,
+          subtitle: delay == null
+              ? null
+              : Text(
+                  subtitle,
+                  style: TextStyle(color: color),
+                ),
           minLeadingWidth: 40,
           selected: node.now == name,
           selectedColor: ThemeDefine.kColorBlue,
@@ -113,7 +152,6 @@ class _ProxyScreenProxiesNodeWidget
       );
     }
     showSheet(
-      title: node.name,
       context: context,
       body: SizedBox(
           height: 400,

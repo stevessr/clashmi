@@ -342,7 +342,6 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
     ];
 
     showSheet(
-      title: setting.id,
       context: context,
       body: SizedBox(
           height: 400,

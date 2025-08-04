@@ -17,7 +17,7 @@
     - 支持metacubex的推荐配置, 内核基于yaml配置运行. 小白用户使用机场订阅即可使用.
 - 自带[zashboard面板](https://github.com/Zephyruso/zashboard)
     - web面板 或许你更加熟悉.
-- 用户手册: [clashmi.app](https://clashmi.app)
+- 官网/用户手册: [clashmi.app](https://clashmi.app)
 
 ##### 注意: 
 - **Clash Mi或KaringX未在任何视频平台开设过任何频道**
@@ -52,9 +52,9 @@
 
 
 ## 安装
-- **IOS/MacOS/TvOS AppStore**: （搜索关键词：clash mi）
+- **IOS/MacOS AppStore**: （搜索关键词：clash mi）
   - https://apps.apple.com/us/app/clash-mi/id6744321968
-- **IOS/MacOS/TvOS TestFlight**:
+- **IOS/MacOS TestFlight**:
   - https://testflight.apple.com/join/bjHXktB3
 - **Android**:
   - https://github.com/KaringX/clashmi/releases/latest
@@ -66,7 +66,6 @@
 
 - IOS >= 15
 - MacOS >= 12
-- TvOS >= 17
 - Android >= 8  (arm64-v8a, armeabi-v7a)
 - Windows >= 10 （仅支持64位）
 

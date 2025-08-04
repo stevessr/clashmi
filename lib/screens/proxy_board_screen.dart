@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
-import 'package:clashmi/app/clash/clash_config.dart';
 import 'package:clashmi/app/clash/clash_http_api.dart';
 import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/i18n/strings.g.dart';
@@ -166,29 +165,25 @@ class _ProxyBoardScreenState extends LasyRenderingState<ProxyBoardScreen>
   }
 
   Future<List<ClashProxiesNode>> getProxies() async {
+    List<ClashProxiesNode> nodes = [];
     var result = await ClashHttpApi.getProxies();
-    if (result.error != null) {
-      _nodes = [];
-      return _nodes;
+    if (result.error == null) {
+      for (var node in result.data!) {
+        if (node.hidden) {
+          continue;
+        }
+        nodes.add(node);
+      }
     }
-    _nodes = result.data!;
-    return _nodes;
+    _nodes = nodes;
+    return nodes;
   }
 
   Future<void> onTapTestDelay() async {
     final setting = SettingManager.getConfig();
-    List<ClashProxiesNode> nodes = [];
-    for (var node in _nodes) {
-      if (node.type == ClashProtocolType.urltest.name ||
-          node.type == ClashProtocolType.selector.name ||
-          node.type == ClashProtocolType.fallback.name) {
-        continue;
-      }
-      nodes.add(node);
-    }
-    _testing = nodes.length;
+    _testing = _nodes.length;
     setState(() {});
-    for (var node in nodes) {
+    for (var node in _nodes) {
       final result = await ClashHttpApi.getDelay(
         node.name,
         url: setting.delayTestUrl,

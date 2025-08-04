@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:after_layout/after_layout.dart';
 import 'package:clashmi/app/modules/profile_patch_manager.dart';
 import 'package:clashmi/i18n/strings.g.dart';
-import 'package:clashmi/screens/add_profile_by_import_from_file_screen.dart';
 import 'package:clashmi/screens/add_profile_by_scan_qrcode_screen.dart';
 import 'package:clashmi/screens/add_profile_patch_by_import_from_file_screen.dart';
 import 'package:clashmi/screens/add_profile_patch_by_url_screen.dart';
@@ -268,7 +267,6 @@ class _ProfilesPatchBoardScreenState
     ];
 
     showSheet(
-      title: tcontext.meta.addProfile,
       context: context,
       body: SizedBox(
           height: 400,
