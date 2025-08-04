@@ -19,7 +19,10 @@
     - web面板 或许你更加熟悉.
 - 用户手册: [clashmi.app](https://clashmi.app)
 
-##### 注意: ClashMi或KaringX未在任何视频平台开设过任何频道
+##### 注意: 
+- **Clash Mi或KaringX未在任何视频平台开设过任何频道**
+- [Clash Mi唯一官网](https://clashmi.app): https://clashmi.app
+	- **请勿相信其他网址提供的信息、下载二次打包的软件**
 
 ## 推广
 <details>
@@ -87,11 +90,17 @@
 ## 捐赠
 - [请开发者喝一杯](https://clashmi.app/donate)
 
-## 致谢
-Clash Mi 基于或受到这些项目的启发：
+## Projects 
+
+### 致谢: Clash Mi 基于或受到这些项目的启发：
 
 - [flutter](https://flutter.dev/)：使构建美观应用变得轻松快捷.
 - [mihomo](https://github.com/MetaCubeX/mihomo)：另一款 clash核心.
 - [zashboard](https://github.com/Zephyruso/zashboard): 使用 Clash API 的仪表板.
 
+
+### Karing Team:
+- [Karing](https://karing.app): https://karing.app
+- [Clash Mi](https://clashmi.app/): https://clashmi.app/
+- [sing-poet](https://github.com/KaringX/sing-poet)
 
