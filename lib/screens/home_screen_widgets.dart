@@ -554,6 +554,8 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
         err.message = t.meta.willCompleteAfterRebootInstall;
       } else if (err.message == "requestNeedsUserApproval") {
         err.message = t.meta.requestNeedsUserApproval;
+      } else if (err.message.contains("FullDiskAccessPermissionRequired")) {
+        err.message = t.meta.FullDiskAccessPermissionRequired;
       }
 
       DialogUtils.showAlertDialog(context, err.message);
