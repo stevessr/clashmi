@@ -22,7 +22,7 @@ class InAppWebViewScreen extends StatefulWidget {
     return RouteSettings(name: "InAppWebViewScreen:$viewTag");
   }
 
-  static bool _inited = false;
+  static bool? _inited;
   static bool _notSupportSubmited = true;
   static bool _available = false;
   static bool _enableWebViewEnvironmentDebug = kDebugMode;
@@ -31,9 +31,10 @@ class InAppWebViewScreen extends StatefulWidget {
   static String? _defaultUserAgent;
   static String _defaultUserAgentWithKaring = "";
   static Future<void> _init() async {
-    if (_inited) {
+    if (_inited != null) {
       return;
     }
+    _inited = false;
     if (!await isSupported()) {
       return;
     }
@@ -156,7 +157,7 @@ class InAppWebViewScreen extends StatefulWidget {
   }
 
   static bool isInited() {
-    return _inited;
+    return _inited == true;
   }
 
   static bool isAvailable() {
@@ -193,8 +194,9 @@ class InAppWebViewScreen extends StatefulWidget {
     this.javaScriptHandlers = const {},
     this.javaScriptHandlerArgument,
   }) {
-    if (!_inited && _notSupportSubmited) {
+    if (_inited != null && _notSupportSubmited) {
       _notSupportSubmited = false;
+      Log.w("webview is not initialized:$title");
     }
   }
 

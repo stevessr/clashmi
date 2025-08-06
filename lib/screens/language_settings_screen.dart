@@ -167,7 +167,6 @@ class _LanguageSettingsScreenState
                           controller: _searchController,
                           textInputAction: TextInputAction.done,
                           onChanged: _loadSearch,
-                     
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,

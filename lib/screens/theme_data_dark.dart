@@ -30,6 +30,32 @@ class ThemeDataDark {
             borderRadius: BorderRadius.all(Radius.circular(4))),
       ),
       listTileTheme: ListTileThemeData(dense: true),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.focused)) {
+                return ThemeDefine.kColorBlue[800];
+              }
+              if (states.contains(WidgetState.selected)) {
+                return ThemeDefine.kColorBlue[200];
+              }
+              return ThemeDefine.kColorBlue;
+            },
+          ),
+          foregroundColor: WidgetStateProperty.resolveWith(
+            (Set<WidgetState> states) {
+              return Colors.black;
+            },
+          ),
+          shape: WidgetStateProperty.resolveWith(
+            (Set<WidgetState> states) {
+              return RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(35));
+            },
+          ),
+        ),
+      ),
     );
   }
 }
