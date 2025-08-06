@@ -30,7 +30,7 @@ class _ProxyScreenProxiesNodeWidget
       String subtitle = "";
       Color? color;
       if (node.delay != null && node.delay! > 0) {
-        subtitle = " (${node.delay} ms)";
+        subtitle = "(${node.delay} ms)";
         if (node.delay! < 800) {
           color = ThemeDefine.kColorGreenBright;
         } else if (node.delay! < 1500) {
@@ -53,7 +53,6 @@ class _ProxyScreenProxiesNodeWidget
                     )
                   ],
                 ),
-          minLeadingWidth: 40,
           trailing: SizedBox(
             width: windowSize.width * 0.4,
             child: Row(
@@ -101,6 +100,7 @@ class _ProxyScreenProxiesNodeWidget
 
   void showNodeSelect(List<ClashProxiesNode> nodes, ClashProxiesNode node) {
     var widgets = [];
+    final theme = Theme.of(context);
     for (var name in node.all) {
       int? delay;
       for (var n in nodes) {
@@ -116,7 +116,7 @@ class _ProxyScreenProxiesNodeWidget
         if (delay < 800) {
           color = ThemeDefine.kColorGreenBright;
         } else if (delay < 1500) {
-          color = Colors.black;
+          color = theme.colorScheme.secondary;
         } else {
           color = Colors.red;
         }
