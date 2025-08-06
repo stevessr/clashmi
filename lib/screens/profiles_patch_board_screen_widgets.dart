@@ -243,7 +243,6 @@ class _ProfilesPatchBoardScreenWidget
       ListTile(
         title:
             Text(setting.isRemote() ? tcontext.meta.view : tcontext.meta.edit),
-        minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
           final path =
@@ -270,7 +269,6 @@ class _ProfilesPatchBoardScreenWidget
       setting.isRemote()
           ? ListTile(
               title: Text(tcontext.meta.update),
-              minLeadingWidth: 40,
               onTap: () async {
                 Navigator.of(context).pop();
                 ReturnResultError? err =
@@ -288,7 +286,6 @@ class _ProfilesPatchBoardScreenWidget
       setting.isRemote()
           ? ListTile(
               title: Text(tcontext.meta.copyUrl),
-              minLeadingWidth: 40,
               onTap: () async {
                 Navigator.of(context).pop();
                 try {
@@ -299,7 +296,6 @@ class _ProfilesPatchBoardScreenWidget
           : const SizedBox.shrink(),
       ListTile(
         title: Text(tcontext.meta.profileEdit),
-        minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
           await Navigator.push(
@@ -314,7 +310,6 @@ class _ProfilesPatchBoardScreenWidget
       ),
       ListTile(
         title: Text(tcontext.meta.remove),
-        minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
           ProfilePatchManager.remove(setting.id);

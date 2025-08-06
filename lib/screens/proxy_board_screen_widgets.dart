@@ -131,7 +131,6 @@ class _ProxyScreenProxiesNodeWidget
                   subtitle,
                   style: TextStyle(color: color),
                 ),
-          minLeadingWidth: 40,
           selected: node.now == name,
           selectedColor: ThemeDefine.kColorBlue,
           onTap: () async {

@@ -158,7 +158,6 @@ class _RichtextViewScreenState extends LasyRenderingState<RichtextViewScreen> {
         leading: Icon(
           Icons.copy,
         ),
-        minLeadingWidth: 40,
         onTap: () async {
           Navigator.pop(context);
           try {
@@ -173,7 +172,6 @@ class _RichtextViewScreenState extends LasyRenderingState<RichtextViewScreen> {
         leading: Icon(
           Icons.share_outlined,
         ),
-        minLeadingWidth: 40,
         onTap: () async {
           Navigator.pop(context);
           String fileName = "file_view_share.txt";

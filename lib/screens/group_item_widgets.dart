@@ -430,7 +430,6 @@ class GroupItemStringPicker extends StatelessWidget {
                     ? ThemeDefine.kColorBlue
                     : null),
           ),
-          minLeadingWidth: 40,
           onTap: () async {
             Navigator.pop(context);
             options.selected = key.item1;
@@ -446,7 +445,6 @@ class GroupItemStringPicker extends StatelessWidget {
             style: TextStyle(
                 color: options.selected == key ? ThemeDefine.kColorBlue : null),
           ),
-          minLeadingWidth: 40,
           onTap: () async {
             Navigator.pop(context);
             options.selected = key;

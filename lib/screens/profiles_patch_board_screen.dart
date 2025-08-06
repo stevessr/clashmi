@@ -176,7 +176,6 @@ class _ProfilesPatchBoardScreenState
     var widgets = [
       ListTile(
         title: Text(tcontext.meta.profileAddUrlOrContent),
-        minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
           await Navigator.push(
@@ -188,7 +187,6 @@ class _ProfilesPatchBoardScreenState
       ),
       ListTile(
         title: Text(tcontext.meta.importFromClipboard),
-        minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
           ClipboardData? data;
@@ -218,7 +216,6 @@ class _ProfilesPatchBoardScreenState
       ),
       ListTile(
         title: Text(tcontext.meta.qrcodeScan),
-        minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
           Navigator.push(
@@ -243,7 +240,6 @@ class _ProfilesPatchBoardScreenState
       ),
       ListTile(
         title: Text(tcontext.meta.profileImport),
-        minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
           Navigator.push(

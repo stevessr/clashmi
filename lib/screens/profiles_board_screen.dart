@@ -182,7 +182,6 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
     var widgets = [
       ListTile(
         title: Text(tcontext.meta.getProfile),
-        minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
           var remoteConfig = RemoteConfigManager.getConfig();
@@ -200,7 +199,6 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
       ),
       ListTile(
         title: Text(tcontext.meta.profileAddUrlOrContent),
-        minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
           await Navigator.push(
@@ -212,7 +210,6 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
       ),
       ListTile(
         title: Text(tcontext.meta.importFromClipboard),
-        minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
           ClipboardData? data;
@@ -242,7 +239,6 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
       ),
       ListTile(
         title: Text(tcontext.meta.qrcodeScan),
-        minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
           Navigator.push(
@@ -267,7 +263,6 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
       ),
       ListTile(
         title: Text(tcontext.meta.profileImport),
-        minLeadingWidth: 40,
         onTap: () async {
           Navigator.of(context).pop();
           Navigator.push(
