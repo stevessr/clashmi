@@ -2,12 +2,13 @@ import 'package:clashmi/screens/theme_define.dart';
 import 'package:flutter/material.dart';
 
 class ThemeDataDark {
+  static const Color mainColor = Color(0xFF303030);
+  static const Color mainBgColor = Color(0xff121212);
   static ThemeData theme(BuildContext context) {
-    final color = const Color(0xff121212);
     final ColorScheme scheme = ColorScheme.fromSeed(
       seedColor: const Color(0xFF293CA0),
       brightness: Brightness.dark,
-      surface: color,
+      surface: mainBgColor,
     );
     return ThemeData(
       useMaterial3: true,
@@ -15,6 +16,8 @@ class ThemeDataDark {
       platform: TargetPlatform.iOS,
       scaffoldBackgroundColor: scheme.surface,
       inputDecorationTheme: const InputDecorationTheme(
+        fillColor: mainBgColor,
+        filled: true,
         labelStyle: TextStyle(color: Colors.grey),
         floatingLabelStyle: TextStyle(color: ThemeDefine.kColorBlue),
         helperStyle: TextStyle(color: Colors.grey),

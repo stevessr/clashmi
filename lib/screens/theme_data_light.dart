@@ -2,12 +2,13 @@ import 'package:clashmi/screens/theme_define.dart';
 import 'package:flutter/material.dart';
 
 class ThemeDataLight {
+  static const Color mainColor = Colors.white;
+  static const Color mainBgColor = Color(0xFFF0F0F0);
   static ThemeData theme(BuildContext context) {
-    final color = const Color(0xFFF0F0F0);
     final ColorScheme scheme = ColorScheme.fromSeed(
       seedColor: const Color(0xFF293CA0),
       brightness: Brightness.light,
-      surface: color,
+      surface: mainBgColor,
     );
 
     return ThemeData(
@@ -20,6 +21,8 @@ class ThemeDataLight {
         backgroundColor: Colors.white,
       ),
       inputDecorationTheme: const InputDecorationTheme(
+        fillColor: mainBgColor,
+        filled: true,
         labelStyle: TextStyle(color: Colors.grey),
         floatingLabelStyle: TextStyle(color: ThemeDefine.kColorBlue),
         helperStyle: TextStyle(color: Colors.grey),
