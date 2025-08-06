@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:clashmi/app/modules/setting_manager.dart';
 import 'package:clashmi/app/utils/app_utils.dart';
+import 'package:clashmi/app/utils/log.dart';
 import 'package:clashmi/app/utils/path_utils.dart';
 import 'package:clashmi/app/utils/url_launcher_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
