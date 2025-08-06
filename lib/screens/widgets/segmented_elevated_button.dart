@@ -1,3 +1,4 @@
+import 'package:clashmi/app/extension/colors.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:clashmi/screens/themes.dart';
 import 'package:flutter/material.dart';
@@ -82,12 +83,12 @@ class _SegmentedElevatedButton extends State<SegmentedElevatedButton> {
                         if (states.contains(WidgetState.selected)) {
                           return Colors.white;
                         }
-                        return Colors.white.withOpacity(0.3);
+                        return Colors.white.withValues(alpha: 0.3);
                       },
                     ),
                     shadowColor: WidgetStateProperty.resolveWith(
                       (Set<WidgetState> states) {
-                        return Colors.white.withOpacity(0.0);
+                        return Colors.white.withValues(alpha: 0.0);
                       },
                     ),
                   ),

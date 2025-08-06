@@ -1,3 +1,4 @@
+import 'package:clashmi/app/extension/colors.dart';
 import 'package:clashmi/screens/theme_define.dart';
 import 'package:flutter/material.dart';
 
@@ -20,8 +21,8 @@ class ThemeDataLight {
       bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: Colors.white,
       ),
-      inputDecorationTheme: const InputDecorationTheme(
-        fillColor: mainBgColor,
+      inputDecorationTheme: InputDecorationTheme(
+        fillColor: mainBgColor.withValues(alpha: 0.5),
         filled: true,
         labelStyle: TextStyle(color: Colors.grey),
         floatingLabelStyle: TextStyle(color: ThemeDefine.kColorBlue),
