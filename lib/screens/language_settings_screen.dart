@@ -167,7 +167,7 @@ class _LanguageSettingsScreenState
                           controller: _searchController,
                           textInputAction: TextInputAction.done,
                           onChanged: _loadSearch,
-                          cursorColor: Colors.black,
+                     
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -214,12 +214,17 @@ class _LanguageSettingsScreenState
   Widget _loadListView() {
     return Scrollbar(
         thumbVisibility: true,
-        child: ListView.builder(
+        child: ListView.separated(
           itemCount: _searchedData.length,
-          itemExtent: ThemeConfig.kListItemHeight2,
           itemBuilder: (BuildContext context, int index) {
             var current = _searchedData[index];
             return createWidget(current);
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return const Divider(
+              height: 1,
+              thickness: 0.3,
+            );
           },
         ));
   }
@@ -241,7 +246,7 @@ class _LanguageSettingsScreenState
               horizontal: 10,
             ),
             width: double.infinity,
-            //height: ThemeConfig.kListItemHeight2,
+            height: ThemeConfig.kListItemHeight2,
             child: Row(
               children: [
                 Row(

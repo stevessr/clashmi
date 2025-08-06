@@ -6,18 +6,16 @@ import 'package:clashmi/app/modules/remote_config_manager.dart';
 import 'package:clashmi/app/utils/url_launcher_utils.dart';
 import 'package:clashmi/i18n/strings.g.dart';
 import 'package:clashmi/screens/add_profile_by_import_from_file_screen.dart';
-import 'package:clashmi/screens/add_profile_by_url_screen.dart';
 import 'package:clashmi/screens/add_profile_by_scan_qrcode_screen.dart';
+import 'package:clashmi/screens/add_profile_by_url_screen.dart';
 import 'package:clashmi/screens/dialog_utils.dart';
 import 'package:clashmi/screens/profiles_board_screen_widgets.dart';
 import 'package:clashmi/screens/theme_config.dart';
-import 'package:clashmi/screens/themes.dart';
 import 'package:clashmi/screens/webview_helper.dart';
 import 'package:clashmi/screens/widgets/framework.dart';
 import 'package:clashmi/screens/widgets/sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 class ProfilesBoardScreen extends LasyRenderingStatefulWidget {
   static RouteSettings routSettings() {
@@ -60,19 +58,12 @@ class _ProfilesBoardScreenState extends LasyRenderingState<ProfilesBoardScreen>
   Widget build(BuildContext context) {
     final tcontext = Translations.of(context);
     Size windowSize = MediaQuery.of(context).size;
-    var themes = Provider.of<Themes>(context, listen: false);
-    Color? color = themes.getThemeHomeColor(context);
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.zero,
-        child: AppBar(
-          backgroundColor: color,
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: color,
-          ),
-        ),
+        child: AppBar(),
       ),
-      backgroundColor: color,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),

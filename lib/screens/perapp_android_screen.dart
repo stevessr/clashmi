@@ -326,7 +326,6 @@ class _PerAppAndroidScreenState
                   controller: _searchController,
                   textInputAction: TextInputAction.done,
                   onChanged: _loadSearch,
-                  cursorColor: Colors.black,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     icon: Icon(
@@ -385,12 +384,17 @@ class _PerAppAndroidScreenState
           ]);
     }
     Size windowSize = MediaQuery.of(context).size;
-    return ListView.builder(
+    return ListView.separated(
       itemCount: _searchedData.length,
-      itemExtent: 66,
       itemBuilder: (BuildContext context, int index) {
         PackageInfoEx current = _searchedData[index];
         return createWidget(current, windowSize);
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return const Divider(
+          height: 1,
+          thickness: 0.3,
+        );
       },
     );
   }
@@ -418,7 +422,7 @@ class _PerAppAndroidScreenState
               horizontal: 10,
             ),
             width: double.infinity,
-            //height: 66,
+            height: 66,
             child: Row(
               children: [
                 Row(

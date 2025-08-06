@@ -129,7 +129,6 @@ class GroupItemTextField extends StatelessWidget {
               readOnly: options.readOnly,
               controller: controller,
               textInputAction: options.textInputAction,
-              cursorColor: Colors.black,
               obscureText: options.obscureText,
               decoration: InputDecoration(
                 hintText: options.hint,

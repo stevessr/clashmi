@@ -191,7 +191,7 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
                 ])
               : const SizedBox.shrink(),
           SizedBox(
-            height: 10,
+            height: connected ? 10 : 0,
           ),
         ],
       ),
@@ -624,7 +624,9 @@ class _HomeScreenWidgetPart1 extends State<HomeScreenWidgetPart1> {
       _disconnectToCore();
       Biz.vpnStateChanged(false);
     }
-
+    if (!mounted) {
+      return;
+    }
     setState(() {});
   }
 
@@ -791,7 +793,6 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
           Icons.settings,
           size: 20,
         ),
-        minLeadingWidth: 40,
         trailing: Icon(
           Icons.keyboard_arrow_right,
           size: 20,
@@ -807,7 +808,6 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
           Icons.settings,
           size: 20,
         ),
-        minLeadingWidth: 40,
         trailing: Icon(
           Icons.keyboard_arrow_right,
           size: 20,
@@ -823,7 +823,6 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
           Icons.set_meal,
           size: 20,
         ),
-        minLeadingWidth: 40,
         trailing: Icon(
           Icons.keyboard_arrow_right,
           size: 20,
@@ -856,7 +855,6 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
           Icons.backup,
           size: 20,
         ),
-        minLeadingWidth: 40,
         trailing: Icon(
           Icons.keyboard_arrow_right,
           size: 20,
@@ -876,7 +874,6 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
             size: 20,
             color: Colors.red,
           ),
-          minLeadingWidth: 40,
           trailing: Icon(
             Icons.keyboard_arrow_right,
             size: 20,
@@ -896,7 +893,6 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
           Icons.help,
           size: 20,
         ),
-        minLeadingWidth: 40,
         trailing: Icon(
           Icons.keyboard_arrow_right,
           size: 20,
@@ -912,7 +908,6 @@ class HomeScreenWidgetPart2 extends StatelessWidget {
           Icons.info,
           size: 20,
         ),
-        minLeadingWidth: 40,
         trailing: Icon(
           Icons.keyboard_arrow_right,
           size: 20,

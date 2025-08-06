@@ -226,7 +226,7 @@ class _ProfilesBoardScreenWidget extends State<ProfilesBoardScreenWidget> {
       var setting = widget.settings[i];
       final isCurrent = current?.id == setting.id;
 
-      widgets.add(Material(
+      widgets.add(SizedBox(
           key: Key(setting.id),
           child: ProfilesBoardItem(
               setting: setting,

@@ -54,8 +54,7 @@ class _SegmentedElevatedButton extends State<SegmentedElevatedButton> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-      var themes = Provider.of<Themes>(context, listen: false);
-      Color? color = themes.getThemeHomeColor(context);
+      final theme = Theme.of(context);
       for (int i = 0; i < _controllers.length; ++i) {
         _controllers[i].value =
             i == widget.selected ? {WidgetState.selected} : {};
@@ -121,7 +120,7 @@ class _SegmentedElevatedButton extends State<SegmentedElevatedButton> {
       return Container(
         width: constraints.maxWidth - 40,
         decoration: BoxDecoration(
-          color: widget.background ?? color,
+          color: widget.background ?? theme.colorScheme.surface,
           borderRadius: BorderRadius.all(Radius.circular(25)),
         ),
         child: Padding(

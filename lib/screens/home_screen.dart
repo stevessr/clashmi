@@ -236,7 +236,6 @@ class _HomeScreenState extends LasyRenderingState<HomeScreen>
   @override
   Widget build(BuildContext context) {
     var themes = Provider.of<Themes>(context, listen: false);
-    Color? color = themes.getThemeHomeColor(context);
 
     return Scaffold(
       appBar: PreferredSize(
@@ -245,9 +244,7 @@ class _HomeScreenState extends LasyRenderingState<HomeScreen>
           systemOverlayStyle: SystemUiOverlayStyle(
             systemNavigationBarIconBrightness:
                 themes.getStatusBarIconBrightness(context),
-            systemNavigationBarColor: color,
             systemNavigationBarDividerColor: Colors.transparent,
-            statusBarColor: color,
             statusBarBrightness: themes.getStatusBarBrightness(context),
             statusBarIconBrightness: themes.getStatusBarIconBrightness(context),
           ),
