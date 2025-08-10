@@ -93,9 +93,20 @@ dependencies:
       ref: f0a01b386c45c4a3513811720e2b5fc765ca45f2
       path: packages/window_manager
   libclash_vpn_service:
-    git:
-      url: https://github.com/KaringX/libclash-vpn-service.git
-      ref: master
+    path: ../libclash-vpn-service/
+    # DEPENDENCY SETUP REQUIRED:
+    # This dependency requires manual setup as the repository is private.
+    # 
+    # Option 1 (Recommended for CI/CD with private repo access):
+    # Replace the above path configuration with:
+    #   git:
+    #     url: https://github.com/KaringX/libclash-vpn-service.git
+    #     ref: master
+    #
+    # Option 2 (For local development):
+    # Clone or provide the libclash-vpn-service package to the path: ../libclash-vpn-service/
+    #
+    # This is required because the GitHub repository is private and not publicly accessible.
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.3
