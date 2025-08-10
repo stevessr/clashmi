@@ -1,0 +1,93 @@
+name: Build Android APK (x86_64)
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag for the APK'
+        required: false
+        default: 'latest'
+        type: string
+  push:
+    tags:
+      - 'v*'
+  pull_request:
+    paths:
+      - 'android/**'
+      - 'lib/**'
+      - 'pubspec.yaml'
+
+jobs:
+  build-android-x86_64:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+    
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.0'
+        channel: 'stable'
+    
+    - name: Get dependencies
+      run: flutter pub get
+    
+    - name: Create Android keystore (for demo purposes)
+      run: |
+        cd android
+        if [ ! -f key.properties ]; then
+          echo "Creating demo keystore..."
+          keytool -genkey -v -keystore demo.keystore -alias demo -keyalg RSA -keysize 2048 -validity 10000 \
+            -dname "CN=Demo,OU=Demo,O=Demo,L=Demo,S=Demo,C=US" -storepass demo123 -keypass demo123
+          echo "storeFile.release=demo.keystore" > key.properties
+          echo "storePassword.release=demo123" >> key.properties
+          echo "keyAlias.release=demo" >> key.properties
+          echo "keyPassword.release=demo123" >> key.properties
+        fi
+    
+    - name: Build x86_64 APK
+      run: |
+        flutter build apk --release \
+          --target-platform android-x64 \
+          --dart-define=FLUTTER_WEB_AUTO_DETECT=true
+    
+    - name: Rename APK
+      run: |
+        VERSION="${{ github.event.inputs.version }}"
+        if [ "$VERSION" = "" ] || [ "$VERSION" = "latest" ]; then
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            VERSION="${{ github.ref_name }}"
+          else
+            VERSION="$(date +%Y%m%d)-$(echo ${{ github.sha }} | cut -c1-7)"
+          fi
+        fi
+        
+        mkdir -p dist
+        cp build/app/outputs/flutter-apk/app-release.apk "dist/clashmi_${VERSION}_android_x86_64.apk"
+        echo "VERSION=${VERSION}" >> $GITHUB_ENV
+    
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: clashmi-android-x86_64-${{ env.VERSION }}
+        path: dist/clashmi_*.apk
+        retention-days: 30
+    
+    - name: Release APK (if tag)
+      if: github.ref_type == 'tag'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: dist/clashmi_*.apk
+        tag_name: ${{ github.ref_name }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
