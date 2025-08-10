@@ -15,5 +15,6 @@ if "%version%" == "" (
 copy ".\build\app\outputs\flutter-apk\app-release.apk"             ".\dist\clashmi_%version%_android_arm.apk"
 copy ".\build\app\outputs\flutter-apk\app-arm64-v8a-release.apk"   ".\dist\clashmi_%version%_android_arm64-v8a.apk"
 copy ".\build\app\outputs\flutter-apk\app-armeabi-v7a-release.apk" ".\dist\clashmi_%version%_android_armeabi-v7a.apk"
+copy ".\build\app\outputs\flutter-apk\app-x86_64-release.apk"      ".\dist\clashmi_%version%_android_x86_64.apk"
 
 :End
