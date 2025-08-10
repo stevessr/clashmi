@@ -85,6 +85,28 @@
 - [欢迎报告bug及需求！](https://github.com/KaringX/clashmi/issues)
 - [ClashMiApp 电报群](https://t.me/ClashMiApp)
 
+## Development Setup
+
+### Dependencies Issue
+This project has a dependency on `libclash_vpn_service` which is hosted in a private repository. To build this project locally, you have two options:
+
+1. **For CI/CD with private repository access**: Update `pubspec.yaml` to use the git dependency:
+   ```yaml
+   libclash_vpn_service:
+     git:
+       url: https://github.com/KaringX/libclash-vpn-service.git
+       ref: master
+   ```
+
+2. **For local development**: Obtain the `libclash-vpn-service` package and place it in the parent directory:
+   ```
+   your-projects/
+   ├── libclash-vpn-service/  # Place the dependency here
+   └── clashmi/               # This project
+   ```
+
+Without proper setup of this dependency, `flutter pub get` will fail with a dependency resolution error.
+
 
 ## 捐赠
 - [请开发者喝一杯](https://clashmi.app/donate)
